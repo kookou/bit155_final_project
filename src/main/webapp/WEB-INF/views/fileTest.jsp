@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Hello, Spring Boot App <br>
-	<a href="file.do">클라우드 테스트</a>
+	<input type="file" />
+	
+	<!-- "/write-file/{fileName}" -->
 </body>
 </html>
