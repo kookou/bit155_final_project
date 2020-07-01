@@ -12,6 +12,7 @@
 	
 	
 	
-	<a href="board.do">board Test</a>
+	<a href="boardList.do">boardList Test</a>
+	<a href="insertForm.do">insertForm Test</a>
 </body>
 </html>

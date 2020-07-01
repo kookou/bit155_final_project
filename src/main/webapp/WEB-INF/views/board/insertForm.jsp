@@ -21,6 +21,9 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+	
+	<!-- SummerNote -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
 </head>
 
@@ -491,7 +494,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">FreeBoard</h4>
+                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">FreeBoard</h2>
                     </div>
                 </div>
             </div>
@@ -511,10 +514,7 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="form-group">
-                                                    <h4 class="card-title">
-                                                        Title
-                                                        <input type="text" class="form-control" placeholder="제목을 입력하세요.">
-                                                    </h4>
+	                                                <input type="text" class="form-control" placeholder="제목을 입력하세요.">
                                                 </div>
                                                 <div class="custom-file col-md-12">
                                                     <input type="file" class="custom-file-input" id="inputGroupFile01">
@@ -524,10 +524,7 @@
                                             <div class="col-md-12">
                                                 <h4 class="card-title"></h4>
                                                 <div class="form-group">
-                                                    <h4 class="card-title">
-                                                        Content
-                                                        <textarea style="resize: none;" class="form-control" rows="20" placeholder="내용을 입력하세요."></textarea>
-                                                    </h4>
+                                            	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" placeholder="내용을 입력하세요."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -597,6 +594,18 @@
     <script src="dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="dist/js/custom.min.js"></script>
+    <!-- SummerNote -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script type="text/javascript">
+	    $('#summernote').summernote({
+	       	height: 300,                 // 에디터 높이
+	       	minHeight: null,             // 최소 높이
+	       	maxHeight: null,             // 최대 높이
+	       	focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+	       	lang: "ko-KR",               // 한글 설정
+	       	placeholder: '내용을 입력하세요.'   //placeholder 설정
+	  	});
+    </script>
 </body>
 
 </html>
