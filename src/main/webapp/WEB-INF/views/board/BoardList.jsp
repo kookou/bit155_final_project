@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
- 
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -494,15 +494,7 @@
                     <div class="col-7 align-self-center">
                         <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">FreeBoard</h4>
                     </div>
-                    <div class="col-5 align-self-center">
-                        <div class="customize-input float-right">
-                            <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
-                                <option selected>Aug 19</option>
-                                <option value="1">July 19</option>
-                                <option value="2">Jun 19</option>
-                            </select>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <!-- ============================================================== -->
@@ -551,8 +543,7 @@
                                 </div>
                                 <div class="form-actions">
                                     <div class="text-right">
-                                        <button type="submit" class="btn btn-info">글쓰기</button>
-                                        <button type="reset" class="btn btn-dark">메인화면</button>
+                                        <button type="submit" class="btn btn-dark">글쓰기</button>
                                     </div>
                                 </div>
                                 <div class="col-12">
