@@ -8,11 +8,15 @@
 </head>
 <body>
 	Hello, Spring Boot App<br>
+
 	
 	
 	
 	
 	<a href="boardList.do">boardList Test</a>
 	<a href="insertForm.do">insertForm Test</a>
+
+	<a href="include.do">인클루드 테스트</a>
+
 </body>
 </html>
