@@ -19,4 +19,10 @@ public class TestController {
 		return "test";
 	}
 	
+	@RequestMapping("/include.do")
+	public String includeTest() {
+		
+		return "include";
+	}
+	
 }
