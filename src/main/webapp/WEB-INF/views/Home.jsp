@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Hello, Spring Boot App
+	Hello, Spring Boot App<br>
+	
+	
+	
+	
+	<a href="board.do">board Test</a>
 </body>
 </html>
