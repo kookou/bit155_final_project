@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -513,31 +514,26 @@
                             <div class="card-body">
                                 <h4 class="card-title">자유게시판</h4>
                                 <div class="table-responsive">
+                                	
                                     <table class="table">
                                         <thead class="bg-primary text-white">
-                                            <tr>
-                                                <th>글번호</th>
-                                                <th>제목</th>
-                                                <th>작성자</th>
-                                                <th>작성일시</th>
-                                                <th>조회수</th>
+                                        	<tr>
+	                                            <th style="width:15%; text-align: center;">작성자</th>
+	                                            <th style="width:55%; text-align: center;">제목</th>
+	                                            <th style="width:20%; text-align: center;">작성일시</th>
+	                                            <th style="width:10%; text-align: center;">조회수</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Nigam</td>
-                                                <td>Eichmann</td>
-                                                <td>@Sonu</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Deshmukh</td>
-                                                <td>Prohaska</td>
-                                                <td>@Genelia</td>
-                                                <td>1</td>
-                                            </tr>
+                                        	<c:forEach var="board" items="${boardList}">
+	                                            <tr>
+	                                                <td style="width:15%; text-align: center;">${board.nickname}</td>
+	                                                <td style="width:55%;">${board.title}</td>
+	                                                <td style="width:20%; text-align: center;">${board.writeDate}</td>
+	                                                <td style="width:10%; text-align: center;">${board.views}</td>
+	                                            </tr>
+                                        	</c:forEach>
+                                        
                                         </tbody>
                                     </table>
                                 </div>
