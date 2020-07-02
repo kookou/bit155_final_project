@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <html>
   <head>
-    <title></title>
+<link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+    <title>그림판</title>
     <style>
       canvas {
         border: 1px solid blue;
