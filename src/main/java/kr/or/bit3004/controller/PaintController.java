@@ -17,12 +17,12 @@ public class PaintController {
 			System.out.println("로그인해야..");
 			
 			//return "redirect:/main"; 로그인구현하면 풀기!!!!!★★
-			return "paint";
+			return "paint/paint";
 		}
 		
 	
 		
-		return "paint";
+		return "paint/paint";
 	}
 	
 }

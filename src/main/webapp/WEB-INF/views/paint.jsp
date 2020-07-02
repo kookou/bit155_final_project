@@ -63,7 +63,7 @@
 				var ws= null;
 				
 				$(function(){
-				ws = new WebSocket("ws://192.168.0.35:8090/paint");			
+				ws = new WebSocket("ws://localhost:8090/paint");			
 				ws.onopen = function(){
 					console.log("웹소켓 서버접속 성공");
 					console.log("${id}");
@@ -96,7 +96,7 @@
 			paintCtx.lineCap = "round";
 
 			$(document).ready(function(){
-				paintWs = new WebSocket("ws://192.168.0.35:8090/paint");
+				paintWs = new WebSocket("ws://localhost:8090/paint");
 
 				$("canvas").on({
 					mousedown: function(e){
