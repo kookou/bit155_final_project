@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Hello, Spring Boot App <br>
-	<a href="file.do">클라우드 테스트</a>
+	Hello, Spring Boot App<br>
+	<a href="include.do">인클루드 테스트</a>
 </body>
 </html>
