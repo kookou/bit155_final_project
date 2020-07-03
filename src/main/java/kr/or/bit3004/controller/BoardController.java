@@ -41,8 +41,8 @@ public class BoardController {
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoard(Board board , HttpServletRequest request) {
-		
-		return "board/insertForm";
+		service.insertBoard(board, request);
+		return "redirect : insertForm";
 	}
 	
 	

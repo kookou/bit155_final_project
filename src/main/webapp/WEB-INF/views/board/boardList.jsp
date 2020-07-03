@@ -538,13 +538,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="form-actions">
-                                    <div style="float: right;">
-                                        <a type="button" class="btn btn-info btn-sm" href="insertBoard.do" style="color: white">
-                                        	<i class="fas fa-pencil-alt"></i> 
-                                        	글쓰기
-                                       	</a>
-                                    </div>
+                                <div class="form-actions text-right">
+                                	<a href="insertBoard.do" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
                                 </div>
                                 <div class="col-12">
                                  	<ul class="pagination pagination-sm">

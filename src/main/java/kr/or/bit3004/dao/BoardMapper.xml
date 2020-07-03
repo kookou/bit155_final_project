@@ -13,7 +13,7 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.dto.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.no, b.id, a.name
+		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.no, b.id, a.name, u.nickname
 		  from board_list b
 		 inner join `user` u
 			on b.id = u.id
@@ -23,5 +23,8 @@
 	</select>
 	
 	<!-- 게시판 글쓰기 -->
-	<insert id="insertBoard" parameterType="kr.or.bit3004.dto.Board"></insert>
+	<insert id="insertBoard" parameterType="kr.or.bit3004.dto.Board">
+		insert into board_list(board_no, title, content, views, write_date, comment_count, no, id)
+		values(#{boardNo}, #{title}, #{content}, #{views}, #{write_date}, #{comment_count}, #{no}, #{id})
+	</insert>
 </mapper>
