@@ -75,4 +75,11 @@ public class UserController {
 		return "redirect:edituserinfo";
 	}
 	
+	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다
+	@RequestMapping(value="/deleteuser", method=RequestMethod.GET)
+	public String deleteUser(String id) {
+		service.deleteUser(id);
+		return "redirect:signin";
+	}
+	
 }

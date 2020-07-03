@@ -12,7 +12,8 @@
 	
 		<br><hr><br>
 		<c:if test="${currentUser != null}">	
-		${currentUser}
+		${currentUser}<br>
+		${currentUser.id}<br>
 		</c:if>
 	<br><hr><br>
 		
@@ -21,6 +22,7 @@
 	<a href="signup">sign up</a><br>
 	<a href="resetpassword">reset Password</a><br>
 	<a href="edituserinfo">edit User Info</a><br>
+	<a href="deleteuser?id=${currentUser.id}">현재 접속 회원 삭제</a><br>
 	
 	
 </body>
