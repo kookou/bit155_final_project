@@ -20,7 +20,7 @@
 		padding-bottom:10px;
 		}
 		.padd{
-		padding-top:145px;
+		padding-top:60px;
 		}
       canvas {
         border: 1px solid grey;
@@ -66,14 +66,14 @@
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/red.png" onclick="selectColor('red')" />
-                  <img src="../../../dist/img/brown.png" onclick="selectColor('brown')"/>
+                  <img src="../../../dist/img/red.png" id="red" onclick="selectColor('red')" />
+                  <img src="../../../dist/img/brown.png" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
                    <img src="../../../dist/img/orange.png" onclick="selectColor('#FF8800')"/>
-                   <img src="../../../dist/img/pink.png" onclick="selectColor('pink')"/>    		
+                   <img src="../../../dist/img/pink.png" onclick="selectColor('#FF61CA')"/>    		
                 </span>
               </div>
               <div class="row">
@@ -96,7 +96,7 @@
               </div>
               <div class="row">
                 <span class="cell">
-                <img src="../../../dist/img/lightblue.png" onclick="selectColor('lightblue')" />
+                <img src="../../../dist/img/lightblue.png" onclick="selectColor('#3DB8FF')" />
                 <img src="../../../dist/img/gray.png" onclick="selectColor('gray')" />
                 </span>
               </div>
@@ -208,9 +208,13 @@
       function clearText(idOfTextArea) {
         document.getElementById(idOfTextArea).value = "";
       }
+	 	$('.cell').click(function() {
+			$(this).style.border="thick solid #0000FF";
+			} );
       
 		$('#colorPicker').change(function() {
 			selectColor($('#colorPicker').val());
+			pos.color=$('#colorPicker').val();
 		});
 
 /* 		$('.cell').click(function() {
@@ -222,14 +226,13 @@
       var ctx = canvas.getContext("2d");
       
       $("#fill").click ( function () {
-          // fillStyle : 컬러피커의 value 값으로 색 채우기
-           /* ctx.fillStyle = $("input[name='selectColor']").value;   */
-           ctx.fillStyle =$('#colorPicker').val(); 
-          /* ctx.fillStyle = $('selectColor').val();*/
+           ctx.fillStyle=pos.color;
           console.log($('selectColor').val());
           ctx.fillRect(0, 0, 720, 720);
       });
 
+
+ 
    </script>
   </body>
 </html>
