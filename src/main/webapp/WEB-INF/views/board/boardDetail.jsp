@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -22,6 +22,18 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<style>
+    #content-outer{
+        border: 1px solid silver;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+    .comment-content {
+        margin-left: 35px;
+    }
+</style>
+
 </head>
 
 <body>
@@ -359,8 +371,9 @@
                                 aria-expanded="false"><i data-feather="box" class="feather-icon"></i><span
                                     class="hide-menu">UI Elements </span></a>
                             <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                                <li class="sidebar-item"><a href="ui-buttons.html" class="sidebar-link">
-                                        <span class="hide-menu">Buttons</span></a>
+                                <li class="sidebar-item"><a href="ui-buttons.html" class="sidebar-link"><span
+                                            class="hide-menu"> Buttons
+                                        </span></a>
                                 </li>
                                 <li class="sidebar-item"><a href="ui-modals.html" class="sidebar-link"><span
                                             class="hide-menu"> Modals </span></a>
@@ -487,90 +500,116 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-7 align-self-center">
-                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
-                    </div>
-                   
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                	
-                                    <table class="table">
-                                        <thead class="bg-primary text-white">
-                                        	<tr>
-	                                            <th style="width:15%; text-align: center;">작성자</th>
-	                                            <th style="width:55%; text-align: center;">제목</th>
-	                                            <th style="width:20%; text-align: center;">작성일시</th>
-	                                            <th style="width:10%; text-align: center;">조회수</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        	<c:forEach var="board" items="${boardList}">
-	                                            <tr>
-	                                                <td style="width:15%; text-align: center;">${board.nickname}</td>
-	                                                <td style="width:55%;">
-	                                                	<a href="selectBoard.do?boardNo=${board.boardNo}">${board.title}</a>
-	                                                </td>
-	                                                <td style="width:20%; text-align: center;">${board.writeDate}</td>
-	                                                <td style="width:10%; text-align: center;">${board.views}</td>
-	                                            </tr>
-                                        	</c:forEach>
-                                        
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="form-actions">
-                                    <div style="float: right;">
-                                        <a type="button" class="btn btn-info btn-sm" href="insertBoard.do" style="color: white">
-                                        	<i class="fas fa-pencil-alt"></i> 
-                                        	글쓰기
-                                       	</a>
+                                <form action="#">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                               
+                                                <!-- 본문 내용 -->
+                                                <div id="content-outer">
+			                                       	<c:set var="board" value="${selectBoard}"/>
+                                                    <h6><a href="#">${board.name} > </a></h6>
+                                                    <h2>${board.title}</h2>
+                                                    <div style="float: left; margin-bottom: 15px;">
+                                                        <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+                                                        ${board.nickname}<br>
+                                                    </div>
+                                                    <div style="float: right;">
+                                                        ${board.writeDate} 조회수:${board.views}
+                                                    </div>
+                                                    <div style="clear: both;">
+                                                        <hr>
+                                                        <div id="main-content" style="min-height: 250px;">
+                                                            <p class="lead">
+                                                                ${board.content}
+                                                            </p>
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <div id="comment-area">
+                                                            <h4>Comment</h4>
+                                                            <div id="comment-list">
+                                                                <div class="comment" style="background-color:rgb(242, 242, 242)">
+                                                                    <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+                                                                    <b>${board.nickname}</b>
+                                                                    <span class="text-info">작성자</span>
+                                                                    <br>
+                                                                    <div class="comment-content">
+                                                                        <h5>
+                                                                            sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
+                                                                            sdfsdfsd<br>
+                                                                            sdfsdf
+                                                                        </h5>
+                                                                        <h6 style="color: rgb(180, 180, 180);">
+                                                                            2020.07.01. 12:56
+                                                                        </h6>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="my-1">
+                                                                <div class="comment">
+                                                                    <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+                                                                    <b>Hyerin</b>
+                                                                    <br>
+                                                                    <div class="comment-content">
+                                                                        <h6>
+                                                                            sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
+                                                                            sdfsdfsd<br>
+                                                                            sdfsdf
+                                                                        </h6>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="my-1">
+                                                                <div class="comment">
+                                                                    <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+                                                                    <b>Hyerin</b>
+                                                                    <br>
+                                                                    <div class="comment-content">
+                                                                        <h6>
+                                                                            sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
+                                                                            sdfsdfsd<br>
+                                                                            sdfsdf
+                                                                        </h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="comment-writeForm" style="border: 1px solid silver;">
+                                                                <div style="padding: 10px 10px 0px 15px;">Jinwon</div>
+                                                                <textarea class="form-control autosize" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
+                                                                <div style="padding: 0px 10px 10px 10px;">
+                                                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm">등록</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                              
+                                    <div class="form-actions">
+                                        <div style="float: left;">
+                                            <button type="button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> 글쓰기</button>
+                                            <button type="button" class="btn btn-light btn-sm">답글</button>
+                                            <button type="button" class="btn btn-light btn-sm">수정</button>
+                                            <button type="button" class="btn btn-light btn-sm">삭제</button>
+                                        </div>
+                                        <div style="float: right;">
+                                            <a type="button" class="btn btn-light btn-sm" href="boardList.do?no=2">목록</a>
+                                            <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                 	<ul class="pagination pagination-sm">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="javascript:void(0)"
-                                                tabindex="-1">Previous</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0)">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0)">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0)">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0)">Next</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -604,6 +643,7 @@
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- End Wrapper -->
+
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -624,6 +664,24 @@
     <script src="dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="dist/js/custom.min.js"></script>
+
+    <script>
+        // textarea 자동 크기 조절
+        function resize(obj) {
+            obj.style.height = "1px";
+            obj.style.height = (12+obj.scrollHeight)+"px";
+        }
+
+        $('.autosize').keydown(function() {
+            resize(this);
+        });
+
+        $('.autosize').keyup(function() {
+            resize(this);
+        });
+        
+    </script>
+
 </body>
 
 </html>

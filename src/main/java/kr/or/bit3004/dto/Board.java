@@ -20,4 +20,5 @@ public class Board {
 	private int no;
 	private String id;
 	private String nickname;
+	private String name;
 }
