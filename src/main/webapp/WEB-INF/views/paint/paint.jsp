@@ -212,18 +212,25 @@
 		$('#colorPicker').change(function() {
 			selectColor($('#colorPicker').val());
 		});
+
+/* 		$('.cell').click(function() {
+			$('#colorPicker').val()=selectColor;
+			console.log('ddddd');
+		}); */
       
       var canvas = document.querySelector("#canvas");
       var ctx = canvas.getContext("2d");
       
-      $("#fill").onclick = function () {
+      $("#fill").click ( function () {
           // fillStyle : 컬러피커의 value 값으로 색 채우기
-          /* ctx.fillStyle = $("input[name='selectColor']").value; */
-          ctx.fillStyle = 'red';
+           /* ctx.fillStyle = $("input[name='selectColor']").value;   */
+           ctx.fillStyle =$('#colorPicker').val(); 
+          /* ctx.fillStyle = $('selectColor').val();*/
+          console.log($('selectColor').val());
           ctx.fillRect(0, 0, 720, 720);
-      };
-      
-    </script>
+      });
+
+   </script>
   </body>
 </html>
 
