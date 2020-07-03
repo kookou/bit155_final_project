@@ -67,8 +67,8 @@ $(function () {
 
     // For Custom File Input
     $('.custom-file-input').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
+        //get the file name, 가짜경로가 자꾸 딸려와서 잘라버림 
+        var fileName = ($(this).val()).substring(12);
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
     })
