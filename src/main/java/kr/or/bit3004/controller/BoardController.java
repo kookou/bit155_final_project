@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit3004.dto.Board;
 import kr.or.bit3004.service.BoardService;
@@ -43,8 +45,20 @@ public class BoardController {
 	public String insertBoard(Board board , HttpServletRequest request) {
 		service.insertBoard(board, request);
 		return "redirect : insertForm";
+		
+		//여기서부터 해야돼
+		//StringBuilder fileName = new StringBuilder();
+		//for(MultipartFile file :) {
+			
+		//}
 	}
 	
+	public static String uploadDirectory = System.getProperty("user.dir")+"/upload";
+	
+	@RequestMapping("insertBoard.do")
+	public String insertBoard(Model model) {
+		return "board/boardList";
+	}
 	
 }
  
