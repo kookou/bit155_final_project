@@ -52,7 +52,7 @@
                         </a>
                     </div>
 
-                    <form class="pl-3 pr-3 mt-4" action="#" method="POST" enctype="multipart/form-data">
+                    <form class="pl-3 pr-3 mt-4" action="" method="POST" enctype="multipart/form-data">
 
                         <!--이미지 가운데만 자르는거 혜정언니한테 물어보기-->
                         <div class="form-group">

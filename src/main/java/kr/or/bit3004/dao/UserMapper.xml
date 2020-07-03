@@ -21,13 +21,13 @@
 		WHERE ID = #{id}
 	</select>
 	
-	<select id="loginCheck">
+	<select id="loginCheck" resultType="int">
 		SELECT COUNT(*) 
 		FROM USER
 		WHERE ID = #{param1} and PWD = #{param2}	
 	</select>
 	
-	<update id="updateUserInfo" parameterType="kr.or.bit3004.dto.User">
+	<update id="updateUser" parameterType="kr.or.bit3004.dto.User">
 		UPDATE USER
 		SET PWD = #{pwd},
 			NICKNAME = #{nickname},
@@ -42,13 +42,13 @@
 	</update>
 	
 	<select id="getUser" resultType="kr.or.bit3004.dto.User">
-		SELECT ID, PWD, NICKNAME, IMAGE
+		SELECT ID, PWD, NICKNAME, IMAGE, ENABLE, QUIT
 		FROM USER
 		WHERE ID = #{id}
 	</select>
 	
 	<select id="getUserList" resultType="kr.or.bit3004.dto.User">
-		SELECT ID, PWD, NICKNAME, IMAGE
+		SELECT ID, PWD, NICKNAME, IMAGE, ENABLE, QUIT
 		FROM USER
 	</select>
 	

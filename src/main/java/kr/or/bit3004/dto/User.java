@@ -1,5 +1,7 @@
 package kr.or.bit3004.dto;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +14,9 @@ public class User {
 	private String pwd;
 	private String nickname;
 	private String image;
+	private CommonsMultipartFile file; //파일 첨부를 위한 file
+	
 	private int enable;
 	private String quit;
-	
+		
 }

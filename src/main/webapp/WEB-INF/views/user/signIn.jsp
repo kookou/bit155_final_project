@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-    <title>Adminmart Template - The Ultimate Multipurpose admin template</title>
+    <title>sign in</title>
     <!-- Custom CSS -->
     <link href="dist/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -57,16 +57,16 @@
                                 </a>
                             </div>
 
-                            <form action="#" class="pl-3 pr-3 mt-4" onsubmit='return submitCheck();'>
+                            <form action="" class="pl-3 pr-3 mt-4" onsubmit='return submitCheck();' method="post">
 
                                 <div class="form-group">
-                                    <input class="form-control" type="email" id="email" placeholder="john@deo.com">
+                                    <input class="form-control" type="text" id="id" name="id" placeholder="john@deo.com">
                                     <div class="invalid-feedback">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <input class="form-control" type="password" id="password" placeholder="Enter your password">
+                                    <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your password">
                                     <div class="invalid-feedback">
                                     </div>        
                                 </div>
@@ -119,19 +119,19 @@
             $('.invalid-feedback').empty();
             $('input').removeClass('is-invalid');
 
-            if($('#email').val() == ""){
-                $('#email').addClass('is-invalid');
+            if($('#id').val() == ""){
+                $('#id').addClass('is-invalid');
                 
                 invalidMessage = "이메일" + invalidMessage;
-                $('#email').next().append(invalidMessage);
+                $('#id').next().append(invalidMessage);
                 return false;
             }
 
-            if($('#password').val() == ""){
-                $('#password').addClass('is-invalid');
+            if($('#pwd').val() == ""){
+                $('#pwd').addClass('is-invalid');
 
                 invalidMessage = "비밀번호" + invalidMessage;
-                $('#password').next().append(invalidMessage);
+                $('#pwd').next().append(invalidMessage);
                 return false;
             }
             return true;

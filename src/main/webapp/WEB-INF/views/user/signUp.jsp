@@ -55,17 +55,17 @@
                         </a>
                     </div>
 
-                    <form class="pl-3 pr-3 mt-4" action="#">
+                    <form class="pl-3 pr-3 mt-4" action="" method="post">
 
                         <div class="form-group">
-                            <input class="form-control" type="text" id="nickName"
+                            <input class="form-control" type="text" id="nickName" name="nickname"
                                 required="" placeholder="Nick Name">
                             <div class="invalid-feedback">
                             </div>
                         </div>
 
                         <div class="form-group" style="background-color: ">
-                            <input class="form-control" type="email" id="email"
+                            <input class="form-control" type="email" id="email" name="id"
                                 required="" placeholder="john@deo.com">
                             <div class="invalid-feedback">
                             </div>
@@ -75,7 +75,7 @@
 
                         <div class="form-group">
                             <input class="form-control" type="password" required=""
-                                id="password" placeholder="Enter your password">
+                                id="password" name="pwd" placeholder="Enter your password">
                             <div class="invalid-feedback">
                             </div>
 
