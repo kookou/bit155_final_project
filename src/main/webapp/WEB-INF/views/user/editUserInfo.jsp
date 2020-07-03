@@ -55,12 +55,15 @@
                     <form class="pl-3 pr-3 mt-4" action="#" method="POST" enctype="multipart/form-data">
 
                         <!--이미지 가운데만 자르는거 혜정언니한테 물어보기-->
-                        <div class="form-group user-img text-center">
-                            <span>
-                                <img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" class="rounded-circle" width="200" height="200">
-                            </span>
+                        <div class="form-group">
+                        <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
+                           	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+                            	<span>
+                                	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	</span>
+                           	</div>
                         </div>
-
+						</div>
 
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
