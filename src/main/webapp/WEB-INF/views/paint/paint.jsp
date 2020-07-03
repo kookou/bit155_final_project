@@ -7,6 +7,9 @@
     <title>그림판</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
+    	.paintcellborder{
+		border:1px solid grey;
+    	}
 		i {
 		padding-top:12px;
 		padding-right:12px;
@@ -66,44 +69,44 @@
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/red.png" id="red" onclick="selectColor('red')" />
-                  <img src="../../../dist/img/brown.png" onclick="selectColor('#FFC7EC')"/>
+                  <img src="../../../dist/img/red.png" class="colorChip" onclick="selectColor('red')" />
+                  <img src="../../../dist/img/brown.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                   <img src="../../../dist/img/orange.png" onclick="selectColor('#FF8800')"/>
-                   <img src="../../../dist/img/pink.png" onclick="selectColor('#FF61CA')"/>    		
+                   <img src="../../../dist/img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
+                   <img src="../../../dist/img/pink.png" class="colorChip" onclick="selectColor('#FF61CA')"/>    		
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/yellow.png" onclick="selectColor('#FFF705')" />
-                  <img src="../../../dist/img/purple.png" onclick="selectColor('darkviolet')" />
+                  <img src="../../../dist/img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" />
+                  <img src="../../../dist/img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" />
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/lightgreen.png" onclick="selectColor('lightgreen')"/>
-                  <img src="../../../dist/img/white.png" onclick="selectColor('white')"/>
+                  <img src="../../../dist/img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')"/>
+                  <img src="../../../dist/img/white.png" class="colorChip" onclick="selectColor('white')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                 <img src="../../../dist/img/green.png" onclick="selectColor('green')"/>
-                 <img src="../../../dist/img/lightgray.png" onclick="selectColor('lightgray')"/>
+                 <img src="../../../dist/img/green.png" class="colorChip" onclick="selectColor('green')"/>
+                 <img src="../../../dist/img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                <img src="../../../dist/img/lightblue.png" onclick="selectColor('#3DB8FF')" />
-                <img src="../../../dist/img/gray.png" onclick="selectColor('gray')" />
+                <img src="../../../dist/img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" />
+                <img src="../../../dist/img/gray.png" class="colorChip" onclick="selectColor('gray')" />
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-              	   <img src="../../../dist/img/blue.png" onclick="selectColor('blue')" />
-                   <img src="../../../dist/img/black.png" onclick="selectColor('black')"/>
+              	   <img src="../../../dist/img/blue.png" class="colorChip" onclick="selectColor('blue')" />
+                   <img src="../../../dist/img/black.png" class="colorChip" onclick="selectColor('black')"/>
                 </span>
               </div>
               <div class="row">
@@ -208,9 +211,10 @@
       function clearText(idOfTextArea) {
         document.getElementById(idOfTextArea).value = "";
       }
-	 	$('.cell').click(function() {
-			$(this).style.border="thick solid #0000FF";
-			} );
+	 	$('.colorChip').click(function() {
+		 	$('.colorChip').removeClass('paintcellborder');
+			$(this).addClass('paintcellborder');
+		});
       
 		$('#colorPicker').change(function() {
 			selectColor($('#colorPicker').val());
