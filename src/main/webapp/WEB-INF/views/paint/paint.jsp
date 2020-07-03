@@ -2,13 +2,30 @@
     pageEncoding="UTF-8"%>
 <html>
   <head>
-<link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+<!-- <link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet"> -->
+ <link href="dist/css/style.min.css" rel="stylesheet">
     <title>그림판</title>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
+		i {
+		padding-top:12px;
+		padding-right:12px;
+		padding-left:12px;
+		padding-bottom:12px;
+		}
+		.pad{
+		padding-top:10px;
+		padding-right:10px;
+		padding-left:10px;
+		padding-bottom:10px;
+		}
+		.padd{
+		padding-top:145px;
+		}
       canvas {
-        border: 1px solid blue;
+        border: 1px solid grey;
       }
-
+		
       .jb_table {
         display: table;
       }
@@ -27,207 +44,110 @@
         background-color: #fcf3cf;
       }
     </style>
-    <script language="JavaScript">
-      // Date: 2019.04.24
-
-      var textareaList = ["history"];
-
-      function clearText(idOfTextArea) {
-        document.getElementById(idOfTextArea).value = "";
-      }
-
-      function SaveAsTxt() {
-        var fileName = document.getElementById("title").value;
-        if (fileName.length == 0) {
-          fileName = "image";
-        }
-        fileName += ".txt";
-
-        var preData = 'version: V0.617a1\n';
-        var postData =  preData + document.getElementById("history").value;
-
-        var link = document.createElement("a");
-        link.setAttribute("download", fileName);
-        link.setAttribute(
-          "href",
-          "data:" +
-            "application/[txt]" +
-            ";charset=utf-8," +
-            encodeURIComponent(postData)
-        );
-        link.click();
-      }
-
-      function SaveAsJson() {
-        console.log("SaveAsJson");
-        var fileName = document.getElementById("title").value;
-        if (fileName.length == 0) {
-          fileName = "imsge";
-        }
-
-        fileName += ".json";
-
-        var preData = {'version':'V0.617a1'};
-        textareaList.forEach(function(e) {
-          preData[e] = document.getElementById(e).value;
-        });
-
-        var jsonData = JSON.stringify(preData);
-
-        var link = document.createElement("a");
-        var file = new Blob([jsonData], { type: "text/plain" });
-        link.href = URL.createObjectURL(file);
-        link.download = fileName;
-        link.click();
-      }
-
-      function isJsonFile(filename) {
-        var ridx = filename.lastIndexOf(".");
-        var extension = filename.substring(ridx + 1);
-
-        console.log(extension);
-
-        if (extension.length != 4 || extension.toLowerCase() != "json") {
-          return false;
-        }
-        return true;
-      }
-
-      function isTextFile(filename) {
-        var ridx = filename.lastIndexOf(".");
-        var extension = filename.substring(ridx + 1);
-
-        console.log(extension);
-
-        if (extension.length != 3 || extension.toLowerCase() != "txt") {
-          return false;
-        }
-        return true;
-      }
 
 
-      function loadFile() {
-        var loadFile = document.getElementById("load_filename");
-        var file = loadFile.files[0];
-          
-        if (!file) {
-          return;
-        }
-
-        var fileName = document.getElementById("load_filename").value;
-        var ridx = fileName.lastIndexOf("\\");
-
-        fileName = fileName.substring(ridx + 1);
-
-        if (isJsonFile(fileName)) {
-          LoadJson(file, fileName);
-        } else if(isTextFile(fileName)) {
-          LoadText(file, fileName);
-        } 
-      }
-
-      function LoadJson(file, fileName) {
-        document.getElementById("title").value = fileName;
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var contents = e.target.result;
-          displayLoadJsonData(contents);
-        };
-        reader.readAsText(file);
-      }
-
-      function displayLoadJsonData(contents) {
-        var noteData = JSON.parse(contents);
-
-        var version = noteData['version'];
-        console.log(version);
-        document.getElementById('history').value = noteData['history'];
-        reDrawCanvas();
-      }
-
-      function LoadText(file, fileName) {
-        document.getElementById("title").value = fileName;
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var contents = e.target.result;
-          displayLoadTextData(contents);
-        };
-        reader.readAsText(file);
-      }
-
-      function displayLoadTextData(contents) {
-        var noteData = contents.split('\n');
-        var history = "";
-         
-        noteData.forEach(function (e){
-          if (e[0] != 'v') {
-            history += e + "\n";
-          }
-        }); 
-        document.getElementById('history').value = history;
-        reDrawCanvas();
-      }
-
-    </script>
   </head>
 
   <body>
+  
     <div class="jb_table">
       <div class="row">
-        <span class="cell" width="82">
+        
+        <span class="cell">
+          <div>
+            <canvas id="canvas" width="720" height="720"></canvas>
+          </div>
+        </span>
+        <span class="cell">
+        <!--   <INPUT type="file" id="load_filename" value="Load" onChange="loadFile()" /> -->
+       <!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
+       
           <div>
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
                   <img src="../../../dist/img/red.png" onclick="selectColor('red')" />
-                  <img src="../../../dist/img/orange.png" onclick="selectColor('orange')"/>
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/yellow.png" onclick="selectColor('yellow')" />
-                  <img src="../../../dist/img/green.png" onclick="selectColor('green')"/>
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/blue.png" onclick="selectColor('blue')" />
-                  <img src="../../../dist/img/lightblue.png" onclick="selectColor('lightblue')" />
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/lightgreen.png" onclick="selectColor('lightgreen')"/>
                   <img src="../../../dist/img/brown.png" onclick="selectColor('brown')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/purple.png" onclick="selectColor('purple')" />
-                  <img src="../../../dist/img/pink.png" onclick="selectColor('pink')"/>
+                   <img src="../../../dist/img/orange.png" onclick="selectColor('#FF8800')"/>
+                   <img src="../../../dist/img/pink.png" onclick="selectColor('pink')"/>    		
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/gray.png" onclick="selectColor('gray')" />
-                  <img src="../../../dist/img/lightgray.png" onclick="selectColor('lightgray')"/>
+                  <img src="../../../dist/img/yellow.png" onclick="selectColor('#FFF705')" />
+                  <img src="../../../dist/img/purple.png" onclick="selectColor('darkviolet')" />
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/black.png" onclick="selectColor('black')"/>
+                  <img src="../../../dist/img/lightgreen.png" onclick="selectColor('lightgreen')"/>
                   <img src="../../../dist/img/white.png" onclick="selectColor('white')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/pencil.png"  onclick="selectTool('pencil')" />
-                  <img src="../../../dist/img/line.png"  onclick="selectTool('line')" />
+                 <img src="../../../dist/img/green.png" onclick="selectColor('green')"/>
+                 <img src="../../../dist/img/lightgray.png" onclick="selectColor('lightgray')"/>
                 </span>
               </div>
               <div class="row">
+                <span class="cell">
+                <img src="../../../dist/img/lightblue.png" onclick="selectColor('lightblue')" />
+                <img src="../../../dist/img/gray.png" onclick="selectColor('gray')" />
+                </span>
+              </div>
+              <div class="row">
+                <span class="cell">
+              	   <img src="../../../dist/img/blue.png" onclick="selectColor('blue')" />
+                   <img src="../../../dist/img/black.png" onclick="selectColor('black')"/>
+                </span>
+              </div>
+              <div class="row">
+                  <span class="cell">
+                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF">
+ 				<!--   <i class="fas fa-eye-dropper"></i>    -->
+                  </span>
+              </div>
+                 <div class="row">
+                 <span class="cell">
+                  <i class="fas fa-pencil-alt" onclick="selectTool('pencil')"></i>
+                  <i class="fas fa-minus" onclick="selectTool('line')"></i>
+                </span>
+          	    </div> 
+            <!--   <div class="row">
+                <span class="cell">
+                  <img src="../../../dist/img/pencil.png"  onclick="selectTool('pencil')" />
+                  <img src="../../../dist/img/line.png"  onclick="selectTool('line')" />
+                </span>
+              </div> -->
+              <div class="row">
+                 <span class="cell">
+                  <i class="far fa-circle" onclick="selectTool('circle')"></i>
+                  <i class="fas fa-circle" onclick="selectTool('filledcircle')"></i>
+                </span>
+          	    </div> 
+     	        <div class="row">
+                 <span class="cell">
+                  <i class="far fa-square" onclick="selectTool('square')"></i>
+                  <i class="fas fa-square" onclick="selectTool('filledsquare')"></i>
+                </span>
+          	    </div>
+               <div class="row">
+                <span class="cell">
+                  <img src="../../../dist/img/triangles.png" class="pad" onclick="selectTool('tri')" />
+                  <img src="../../../dist/img/filltriangle.png" class="pad" onclick="selectTool('filledtri')" />
+                </span>
+              </div>
+         	<div class="row">
+                <span class="cell">
+                  <img src="../../../dist/img/bucket.png" class="pad" id="fill"  />
+                </span>
+              </div>
+ <!--             <div class="row">
                 <span class="cell">
                   <img src="../../../dist/img/circle.png" onclick="selectTool('circle')"/>
                   <img src="../../../dist/img/filledcircle.png" onclick="selectTool('filledcircle')"/>
@@ -250,53 +170,67 @@
                   <img src="../../../dist/img/rect.png" onclick="selectTool('rect')" />
                   <img src="../../../dist/img/filledrect.png" onclick="selectTool('filledrect')" />
                 </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/triangle.png" onclick="selectTool('tri')" />
-                  <img src="../../../dist/img/filledtriangle.png" onclick="selectTool('filledtri')" />
-                </span>
-              </div>
+              </div> -->
+
               <div class="row">
                   <span class="cell">
-                    <img src="../../../dist/img/undo.png" onclick="undo()"/>
-                    <img src="../../../dist/img/redo.png" onclick="redo()"/>
+                   <i class="fas fa-angle-double-left" onclick="undo()"></i>
+                   <i class="fas fa-angle-double-right" onclick="redo()"></i>
                   </span>
-                </div>
-            </div>
-          </div>
-        </span>
-        <span class="cell">
-          <div>
-            <canvas id="canvas" width="720" height="720"></canvas>
-          </div>
-        </span>
-        <span class="cell">
-          <INPUT type="file" id="load_filename" value="Load" onChange="loadFile()" />
-          <div>Title <input id="title" size="15" /></div>
+              </div>
+              
+          <div> <i class="fas fa-quidditch" onClick="initPage()"></i> Clear</div>
+          <div class="padd"></div>
+          <div>Title <input id="title" size="10" /></div>
           <div>
             <a id="saveImage" download="image.png">
-                <INPUT type="button" value="Save" onClick="saveImage()" />
-            </a>
-            <INPUT type="button" value="Clear" onClick="initPage()" />
-            <INPUT type="button" value="History" onClick="showHistory()" />
-          </div>
-          <div>
-            <input type="button" value="Save as Json" onClick="SaveAsJson()" />
-            <input type="button" value="Save as Txt" onClick="SaveAsTxt()" />
-          </div>
+                <i class="fas fa-save" onClick="saveImage()"></i>
+            </a>&nbsp;Save</div>
+           <!--  <INPUT type="button" value="History" onClick="showHistory()" /> -->
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>
-          <div id="command">
-          </div>
-              <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />
-          <div>
+          
+            </div>
           </div>
         </span>
       </div>
     </div>
+    
     <script src="../../../dist/js/painter.js"></script>
     <script src="../../../dist/js/drawengine.js"></script>
+    <!-- 컬러피커 -->
+<!--     <input id="colorPicker" type="color" class="form-control" value="#ffffff"> -->
+	
+    <script language="JavaScript">
+    
+/*       var textareaList = ["history"]; */
+      function clearText(idOfTextArea) {
+        document.getElementById(idOfTextArea).value = "";
+      }
+      
+		$('#colorPicker').change(function() {
+			selectColor($('#colorPicker').val());
+		});
+      
+      var canvas = document.querySelector("#canvas");
+      var ctx = canvas.getContext("2d");
+      
+      $("#fill").onclick = function () {
+          // fillStyle : 컬러피커의 value 값으로 색 채우기
+          /* ctx.fillStyle = $("input[name='selectColor']").value; */
+          ctx.fillStyle = 'red';
+          ctx.fillRect(0, 0, 720, 720);
+      };
+      
+    </script>
   </body>
 </html>
+
+
+
+
+
+
+
+

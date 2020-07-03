@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>캔버스 테스트</h2>
+    <canvas id="myCanvas" width="500" height="300"></canvas>
+    <br>
+    <input type="color" name="color"/>
+    <button id="fill">채우기</button>
+    <button id="stroke">선그리기</button>
+    <button id="clear">지우기</button>
+
+    <script>
+//      var canvas = $("#myCanvas")[0]; // 제이쿼리로 선택할 경우.. 
+        var canvas = document.querySelector("#myCanvas");
+        // 그림을 그리기 위한 객체
+        var ctx = canvas.getContext("2d");
+        
+        document.querySelector("#fill").onclick = function () {
+            // fillStyle : 컬러피커의 value 값으로 색 채우기
+            ctx.fillStyle = document.querySelector("input[name='color']").value;
+            // fillRect(x, y, w, h) : 사각형 색으로 채우기(캔버스기준 x,y값과 높이, 넓이)
+            ctx.fillRect(0, 0, 500, 300);
+        };
+        document.querySelector("#stroke").onclick = function () {
+            ctx.clearRect(0, 0, 500, 300);
+            ctx.strokeStyle = document.querySelector("input[name='color']").value;
+            ctx.strokeRect(0, 0, 500, 300);
+        };
+        document.querySelector("#clear").onclick = function () {
+            ctx.clearRect(0, 0, 500, 300);
+        };
+    </script>
+</body>
+</html>
