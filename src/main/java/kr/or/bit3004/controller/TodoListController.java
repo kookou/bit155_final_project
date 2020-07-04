@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit3004.service.TodoListService;
 
 @Controller
-public class todoListController {
+public class TodoListController {
 	
 	@Autowired
 	private TodoListService service;
@@ -17,12 +17,6 @@ public class todoListController {
 	public String todoList(int teamNo, Model model) {
 		model.addAttribute("todoList", service.selectTodoList(teamNo));
 		return "todoList/include";
-	}
-	
-	@RequestMapping("todoList2.do")
-	public String todoList2(int teamNo, Model model) {
-		model.addAttribute("todoList", service.selectTodoList(teamNo));
-		return "jsonView";
 	}
 	
 }

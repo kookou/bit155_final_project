@@ -42,9 +42,9 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="userInputTitle" @keyup.enter="addTodoList" v-if="isStatusOn"/>
+                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
                         <div v-if="isStatusOff">
-                            <h4 class="card-title mb-3">{{ userInputTitle }}</h4>
+                            <h4 class="card-title mb-3">{{ title }}</h4>
                             <div style="width: 100%;">
                                 <input type="text" class="form-control" placeholder="할 일을 입력하세요" v-model="userInput" @keyup.enter="addNewTodo"/>
                             </div>
@@ -62,9 +62,9 @@
                                     <div class="tab-pane show active">
                                         <div class="custom-control custom-checkbox">
                                             <div style="float: left;">
-                                                <input type="checkbox" class="custom-control-input" :id="todo.lable" :value="todo.lable" 
+                                                <input type="checkbox" class="custom-control-input" :id="todo.content" :value="todo.content" 
                                                     @click="toggleTodoState(todo)" :checked="todo.state == 'done' ? true : false">
-                                                <label class="custom-control-label" :for="todo.lable" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.lable }}</label>
+                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
                                             </div>
                                             <div style="float: right;">
                                                 <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp
@@ -81,7 +81,7 @@
         `,
         data() {
             return {
-                userInputTitle: '',
+                title: '',
                 userInput: '',
                 todoList: [],
                 currentState: 'all', //출력할 상태값을 가질 변수
@@ -89,14 +89,26 @@
                 isStatusOff: false
             };
         },
-        methods: {
-            //상태값을 변경할 메소드
+        //클릭하면 값 들어오는거까지는 했는데...ㅠ 어렵다..
+        created() {
+        	axios.get('todoList2.do?teamNo=1')
+            .then((response) => {
+                for(var s in response.data) {
+	                console.log(response.data[s].content); // 객체 형태로 반환. 파싱작업 불필요
+	                this.todoList.push({
+	                    content: response.data[s].content,
+	                    state: 'active' //완료하지 않은 항목
+	                });
+                }
+            });
+        },
+        methods: {//상태값을 변경할 메소드
             changeCurrentState(state) {
                 this.currentState = state;
             },
             addNewTodo() {
                 this.todoList.push({
-                    lable: this.userInput,
+                    content: this.userInput,
                     state: 'active' //완료하지 않은 항목
                 });
                 this.userInput = '';
@@ -109,7 +121,18 @@
                 this.isStatusOn = false;
                 this.isStatusOff = true;
                 this.$root.addListBtnisStatusOn = true;
-                
+
+                //axios통신으로 todoList Title DB에 insert하기
+	            var params = new URLSearchParams();
+	            params.append('title', this.title);
+	            params.append('teamNo', 1);
+	            params.append('id', 'hyerin');
+	            axios.post('insertTodoTitle.do', params
+	    	    ).then(response => {
+	                console.log(response);
+	            }).catch((ex) => {
+	                console.log("ERROR!!!!! : ",ex);
+	            });
             }
         },
         // computed에 선언해놓은 것은 내부변수처럼 불러서 사용할 수 있기 때문에 activeTodoList() 이렇게 부르는 것이 아니라 activeTodoList일케 부름..
@@ -121,6 +144,8 @@
             }
         },
     };
+
+    
     
     var app = new Vue({
         el: '#app',
@@ -130,19 +155,37 @@
                 addListBtnisStatusOn: true
             };
         },
+        /*
+        mounted() {
+        	axios.get('todoList2.do?teamNo=1')
+            .then(function(response) {
+                console.log(response.data); // 객체 형태로 반환. 파싱작업 불필요
+                this.todoLists = response.data;
+            });
+        },
+        */
         methods: {
+            /*
+        	list: function() {
+            	axios.get('todoList2.do?teamNo=1')
+                .then(function(response) {
+                    console.log(response.data.todoList); // 객체 형태로 반환. 파싱작업 불필요
+                });
+            },
+            */
             addTodoTitle() {
                 this.todoLists.push('todoList');
                 this.addListBtnisStatusOn = false;
-
-                axios.get('todoList2.do?teamNo=1')
-                .then(function(response) {
-                    console.log(response); // 객체 형태로 반환. 파싱작업 불필요
-                });
             }
         },
         components: {
             'todoList': todoListComponent
         }
     });
+	/*
+    axios.get('todoList2.do?teamNo=1')
+    .then(function(response) {
+        console.log(response.data); // 객체 형태로 반환. 파싱작업 불필요
+    });
+    */
 </script>
