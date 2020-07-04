@@ -26,6 +26,6 @@
 	<a href="paint.do">그림판 테스트</a>
 
 
-	<a href="todoList.do">todoList 테스트</a>
+	<a href="todoList.do?teamNo=1">todoList 테스트</a>
 </body>
 </html>

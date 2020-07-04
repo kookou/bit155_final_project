@@ -233,7 +233,7 @@ ALTER TABLE `ALL_BOARD_LIST` modify `NO` INT auto_increment;
 CREATE TABLE `TODO_CONTENT` (
 	`TODO_CONTENT_NO` INT         NOT NULL, -- 투두리스트내용식별번호
 	`CONTENT`         VARCHAR(50) NOT NULL, -- 투두리스트내용
-	`DONE`            VARCHAR(2)  NOT NULL, -- 완료여부
+	`DONE`            VARCHAR(2)  NOT NULL default 'N', -- 완료여부
 	`NO`              INT         NOT NULL, -- 투두리스트목록식별번호
 	`ID`              VARCHAR(50) NOT NULL  -- 아이디
 );

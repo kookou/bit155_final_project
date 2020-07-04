@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <!-- Vue.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 엑시오스 CDN (ajax같은 것) -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <div id="app">
     <div class="page-wrapper">
@@ -9,6 +11,7 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+			${todoList}
             <!-- ============================================================== -->
             <!-- Start Page Content -->
             <!-- ============================================================== -->
@@ -131,6 +134,11 @@
             addTodoTitle() {
                 this.todoLists.push('todoList');
                 this.addListBtnisStatusOn = false;
+
+                axios.get('todoList2.do?teamNo=1')
+                .then(function(response) {
+                    console.log(response); // 객체 형태로 반환. 파싱작업 불필요
+                });
             }
         },
         components: {
