@@ -9,7 +9,7 @@ import kr.or.bit3004.dto.User;
 public interface UserService {
 	public void insertUser(User user);
 	public void idCheck(String id);
-	public User loginCheck(String id, String pwd);
+//	public User loginCheck(String id, String pwd);
 	public void updateUser(User user, HttpServletRequest request);
 	public void updateUserPwd(String id, String pwd);
 	

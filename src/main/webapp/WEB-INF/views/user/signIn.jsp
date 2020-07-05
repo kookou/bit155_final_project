@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>	
 <html dir="ltr" lang="ko">
 <head>
@@ -78,6 +79,14 @@
                                         <label class="custom-control-label"
                                             for="customCheck2">Remember me</label>
                                     </div>
+                                </div>
+                                
+                                <div>
+                                dd
+                                	<c:if test="${param.error != null}">
+                                		${param.error}
+                                		${error }
+                                	</c:if>
                                 </div>
 
                                 <div class="form-group text-center mt-4">

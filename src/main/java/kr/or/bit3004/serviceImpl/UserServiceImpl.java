@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.UserDao;
@@ -18,9 +19,15 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao dao;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+
 	@Override
 	public void insertUser(User user) {
 		System.out.println("dao");
+		
+		user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
 		dao.insertUser(user);	
 	}
 
@@ -30,24 +37,24 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
-	@Override
-	public User loginCheck(String id, String pwd) {
-		System.out.println("serviceImple");
-		
-		int result = dao.loginCheck(id, pwd);
-		
-//		System.out.println(result);
-		User user = null;
-		
-		if(result == 1) {
-			user = dao.getUser(id);
-		}else {
-			System.out.println("로그인 실패");
-		}
-		
-//		System.out.println(user);
-		return user;
-	}
+//	@Override
+//	public User loginCheck(String id, String pwd) {
+//		System.out.println("serviceImple");
+//		
+//		int result = dao.loginCheck(id, pwd);
+//		
+////		System.out.println(result);
+//		User user = null;
+//		
+//		if(result == 1) {
+//			user = dao.getUser(id);
+//		}else {
+//			System.out.println("로그인 실패");
+//		}
+//		
+////		System.out.println(user);
+//		return user;
+//	}
 
 	@Override
 	public void updateUser(User user, HttpServletRequest request) {
