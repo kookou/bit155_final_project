@@ -69,7 +69,8 @@
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/red.png" class="colorChip" onclick="selectColor('red')" />
+                  <img src="../../../dist/img/red.png" class="
+Chip" onclick="selectColor('red')" />
                   <img src="../../../dist/img/brown.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
@@ -246,14 +247,16 @@
 		};
 		$("canvas").on({
             mousedown: function (e) {
+                console.log("마우스연결되나연");
             	e.preventDefault();
 		        isPress = true;
                 ctx.beginPath();
 				prevX = e.offsetX;
 				prevY = e.offsetY;
-            	now.push({"prevX":prevX, "prevY":prevY, "color":color});
+            	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color});
             },
             mouseup: function (e) {
+            	console.log("마우스떼는거되나연");
                 isPress = false;
                 ctx.closePath();
             	paintWs.send(JSON.stringify(now));
@@ -261,12 +264,12 @@
             }
         });
 		paintWs.onmessage = function(evt){
-			var c = $("#canvas");
+			var c = document.querySelector("#canvas");
             var otherCtx = c.getContext("2d");
         	var drawData;
         	var fillData;
-        	console.log("ddd");
-        	if (evt.data.startsWith('{"')) {
+        	if (evt.data.startsWith('{')) {
+	console.log("on메시지이벤트");
         		fillData = JSON.parse(evt.data);
 		            console.log(fillData);
 	            if(fillData.mode != undefined && fillData.mode == "fill") {
@@ -283,12 +286,12 @@
 	            }
         	}
         	if (evt.data.startsWith('[{"')) {
+            	console.log("json parse들어잇는거");
         		drawData = JSON.parse(evt.data);
-		            console.log("drawData: ",drawData);
-	            
+		        console.log("drawData: ",drawData);
 	            otherCtx.strokeStyle = drawData[0].color;
 	            otherCtx.beginPath();
-		            console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
+		       console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
 	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
 				for (let i = 1; i < drawData.length; i++) {
 //						console.log(drawData[i].x, drawData[i].y);

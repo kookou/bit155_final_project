@@ -31,6 +31,9 @@ public class PaintHandler extends TextWebSocketHandler{
 		connectedUsers.add(session);
 		Map<String,Object> attrs= session.getAttributes();
 		String id = (String)attrs.get("id");
+		for (int i = 0; i < connectedUsers.size(); i++) {
+			connectedUsers.get(i).sendMessage(new TextMessage("{ \"mode\" : \"fill\", \"color\" : \"#f0f0f0\" }"));
+		}
 	}
 	
 
@@ -48,6 +51,12 @@ public class PaintHandler extends TextWebSocketHandler{
 		if(message.getPayload().equals("end")) {
 			end(session);
 		}
+		for (WebSocketSession wss : connectedUsers) {
+			if ( !wss.getId().equals(session.getId()) ) {
+				wss.sendMessage(new TextMessage(message.getPayload()));
+				System.out.println(message.getPayload());
+			}
+		}
 	}
 	
 	private void end(WebSocketSession session) throws InterruptedIOException{
@@ -60,7 +69,6 @@ public class PaintHandler extends TextWebSocketHandler{
 		Map<String,Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		connectedUsers.remove(session);
-		
 	}
 }                 
 
