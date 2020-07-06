@@ -15,20 +15,22 @@ import org.springframework.security.oauth2.core.OAuth2AuthorizationException;
 import org.springframework.security.oauth2.core.OAuth2Error; 
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User; 
 import org.springframework.security.oauth2.core.user.OAuth2User; 
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority; 
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert; 
 import org.springframework.util.StringUtils; 
 import org.springframework.web.client.RestClientException; 
 import org.springframework.web.client.RestOperations; 
 import org.springframework.web.client.RestTemplate;
 
-
+import lombok.Getter;
 
 import java.util.LinkedHashMap; 
 import java.util.LinkedHashSet; 
 import java.util.Map; 
 import java.util.Set; 
 
+//@Component
 public class CustomOAuth2UserService extends DefaultOAuth2UserService { 
 	private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri"; 
 	private static final String MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE = "missing_user_name_attribute"; 
@@ -38,6 +40,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			
 	private Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter = new OAuth2UserRequestEntityConverter(); 
 	private RestOperations restOperations; 
+	
+//	
+//	@Getter
+//	public OAuth2AccessToken accessToken;
+	
 	public CustomOAuth2UserService() { 
 		RestTemplate restTemplate = new RestTemplate(); 
 		restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler()); 
@@ -97,6 +104,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		authorities.add(new OAuth2UserAuthority(userAttributes)); 
 		OAuth2AccessToken token = userRequest.getAccessToken(); 
 		System.out.println(token.getScopes());
+//		accessToken = token;
 		
 		
 		for (String authority : token.getScopes()) { 
@@ -127,4 +135,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		System.out.println(userAttributes.toString());
 		return userAttributes; 
 	}
+	
+	
 }

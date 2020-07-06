@@ -1,14 +1,18 @@
 package kr.or.bit3004.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit3004.dto.User;
-//import kr.or.bit3004.service.UserService;
+import kr.or.bit3004.serviceImpl.CustomOAuth2UserService;
 import kr.or.bit3004.serviceImpl.UserServiceImpl;
 
 @Controller
@@ -22,6 +26,20 @@ public class UserController {
 	public String signIn() {
 		return "user/signIn";
 	}
+	
+//	//이거 안먹음 
+//	@RequestMapping("/login/oauth2/code/naver")
+//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session) {
+//		
+//		
+//		System.out.println("여기는 naver callback");
+//		OAuth2AccessToken oauthToken;
+//		oauthToken = customOAuth2Service.getAccessToken();
+//		System.out.println(oauthToken.getScopes());
+//		
+//		return "user/signIn";
+//	}
+	
 	
 	// 가입 폼
 	@RequestMapping(value="/signup", method=RequestMethod.GET)

@@ -116,10 +116,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Bean 
 	public ClientRegistrationRepository clientRegistrationRepository( 
 			OAuth2ClientProperties oAuth2ClientProperties, 
-			@Value("${custom.oauth2.kakao.client-id}") String kakaoClientId, 
-			@Value("${custom.oauth2.kakao.client-secret}") String kakaoClientSecret, 
-			@Value("${custom.oauth2.naver.client-id}") String naverClientId, 
-			@Value("${custom.oauth2.naver.client-secret}") String naverClientSecret) { 
+			@Value("${custom.oauth2.kakao.client-id}") 
+			String kakaoClientId, 
+			@Value("${custom.oauth2.kakao.client-secret}") 
+			String kakaoClientSecret, 
+			@Value("${custom.oauth2.naver.client-id}") 
+			String naverClientId, 
+			@Value("${custom.oauth2.naver.client-secret}") 
+			String naverClientSecret) { 
 		List<ClientRegistration> registrations = oAuth2ClientProperties 
 				.getRegistration().keySet().stream() 
 				.map(client -> getRegistration(oAuth2ClientProperties, client)) 
