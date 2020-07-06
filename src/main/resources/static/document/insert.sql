@@ -47,6 +47,7 @@ commit;
 
 -- 투두리스트 목록
 insert into `TODO_LIST`(`title`, `team_no`, `id`) values('팀원 혜린의 투두리스트', 1, 'hyerin');
+insert into `TODO_LIST`(`title`, `team_no`, `id`) values('오늘 할 일', 1, 'hyerin');
 commit;
 
 -- 투두리스트 내용
@@ -60,6 +61,8 @@ commit;
 
 select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
   from `todo_content` c
- inner join `todo_list` l
+ right outer join `todo_list` l
     on c.no = l.no
  where l.TEAM_NO = 1;
+ 
+select * from todo_list;

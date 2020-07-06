@@ -20,6 +20,11 @@ public class TodoListAjaxController {
 		return service.selectTodoList(teamNo);
 	}
 	
+	@RequestMapping("getTodoTitle.do")
+	public List<TodoList> getTodoTitle(int teamNo) {
+		return service.selectTodoTitle(teamNo);
+	}
+	
 	@RequestMapping("insertTodoTitle.do")
 	public void insertTodoTitle(TodoList todoList) {
 		System.out.println(todoList);
