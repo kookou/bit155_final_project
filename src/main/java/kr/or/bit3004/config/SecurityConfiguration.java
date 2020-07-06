@@ -82,6 +82,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 							.logoutSuccessUrl("/")
 							.invalidateHttpSession(true);
+			
+			
 		} catch (Exception e) {
 			e.getMessage();
 		}
