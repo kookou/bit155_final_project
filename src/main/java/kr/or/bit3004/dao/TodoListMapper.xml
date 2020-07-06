@@ -9,4 +9,8 @@
 		    on c.no = l.no
 		 where l.TEAM_NO = #{l.TEAM_NO}
 	</select>
+	
+	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.dto.TodoList">
+		insert into `TODO_LIST`(`title`, `TEAM_NO`, `id`) values(#{title}, 1, #{id})
+	</insert>
 </mapper>

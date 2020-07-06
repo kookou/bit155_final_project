@@ -87,28 +87,23 @@
 			<scope>test</scope>
 		</dependency> -->
 		
-		<!-- jsp 사용 설정 -->
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jstl</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
-		
 		<!-- @ConfigurationProperties 을 사용할 때는 spring-boot-configuration-processor를 클래스패스에 설정하는 것을 권장 -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 
-
 	<!-- 클라우드  Error creating bean with name 오류날때 이거 주석.
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
 		</dependency> -->
+		
+		<!-- thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
