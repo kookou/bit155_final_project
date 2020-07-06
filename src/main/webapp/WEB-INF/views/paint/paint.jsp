@@ -239,6 +239,7 @@ Chip" onclick="selectColor('red')" />
 	 var paintWs = null;
 	 var now = [];
 	 var color = pos.color;
+	 var isPress = false;
 	 
 	 $(document).ready(function(){
 		paintWs  = new WebSocket("ws://localhost:8090/paint");
@@ -255,6 +256,24 @@ Chip" onclick="selectColor('red')" />
 				prevY = e.offsetY;
             	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color});
             },
+            mousemove: function (e) {
+                var x = e.offsetX;
+                var y = e.offsetY;
+                if (isPress) {
+                	now.push({x, y});
+                	
+                	ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    
+                    prevX = e.offsetX;
+                    prevY = e.offsetY;
+                    
+                    if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
+                        isPress = false;
+                    }
+                }
+            },
             mouseup: function (e) {
             	console.log("마우스떼는거되나연");
                 isPress = false;
@@ -269,24 +288,17 @@ Chip" onclick="selectColor('red')" />
         	var drawData;
         	var fillData;
         	if (evt.data.startsWith('{')) {
-	console.log("on메시지이벤트");
+		console.log("on메시지이벤트");
         		fillData = JSON.parse(evt.data);
 		            console.log(fillData);
 	            if(fillData.mode != undefined && fillData.mode == "fill") {
 	            	otherCtx.fillStyle = fillData.color;
 	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 	            	otherCtx.closePath();
-	            	if (fillData.color == '#f4f5ed') {
-		            	$("#time").css("color", "black");
-	            	}
-	            	else {
-		            	$("#time").css("color", "white");
-	            	}
 	            	return;
 	            }
         	}
         	if (evt.data.startsWith('[{"')) {
-            	console.log("json parse들어잇는거");
         		drawData = JSON.parse(evt.data);
 		        console.log("drawData: ",drawData);
 	            otherCtx.strokeStyle = drawData[0].color;
@@ -298,7 +310,7 @@ Chip" onclick="selectColor('red')" />
 		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
 				}
 	            otherCtx.stroke();
-//		           otherCtx.closePath();
+//		        otherCtx.closePath();
         	}
 		};
 		paintWs.onclose=function(){
