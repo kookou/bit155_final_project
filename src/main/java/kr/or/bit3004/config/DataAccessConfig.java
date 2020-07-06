@@ -27,6 +27,7 @@ public class DataAccessConfig {
 		sessionFactory.setDataSource(dataSource);
 		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:kr/or/bit3004/dao/*.xml"));
 
+		//카멜케이스, 스네이크 맵핑
 		Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
 		sessionFactory.setConfigLocation(myBatisConfig);
 		

@@ -1,9 +1,14 @@
 package kr.or.bit3004.serviceImpl;
 
+import java.io.FileOutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit3004.dao.BoardDao;
 import kr.or.bit3004.dto.Board;
@@ -14,9 +19,22 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	BoardDao dao;
-	
+
+	//게시판 목록보기 
 	@Override
 	public List<Board> selectBoardList(int no){
 		return dao.getBoardList(no);
 	}
+
+	//게시판 상세보기
+	@Override
+	public Board selectBoardByBoardNo(int boardNo) {
+		return dao.selectBoardByNo(boardNo);
+	}
+	
+	//게시판 글쓰기
+	public void insertBoard(Board board , HttpServletRequest request) {
+		
+	}
+		
 }

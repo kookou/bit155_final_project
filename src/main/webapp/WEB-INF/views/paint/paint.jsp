@@ -242,7 +242,7 @@ Chip" onclick="selectColor('red')" />
 	 var isPress = false;
 	 
 	 $(document).ready(function(){
-		paintWs  = new WebSocket("ws://localhost:8090/paint");
+		paintWs  = new WebSocket("ws://192.168.0.35:8090/paint");
 		paintWs.onopen=function(){
 			console.log("웹소켓 접속 성공");
 		};

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -494,7 +494,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">FreeBoard</h2>
+                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
                     </div>
                 </div>
             </div>
@@ -509,7 +509,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#">
+                                <form method="post" action="insertBoard.do" enctype="multipart/form-data">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6">
@@ -533,7 +533,7 @@
                                         <div class="text-right">
                                             <button type="submit" class="btn btn-info">등록</button>
                                             <button type="reset" class="btn btn-dark">초기화</button>
-                                            <button type="reset" class="btn btn-dark">뒤로가기</button>
+                                            <a type="reset" class="btn btn-dark" href="boardList.do?no=2">목록으로</a>
                                         </div>
                                     </div>
                                 </form>
