@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit3004.service.TodoListService;
 
 @Controller
-public class todoListController {
+public class TodoListController {
 	
 	@Autowired
 	private TodoListService service;
