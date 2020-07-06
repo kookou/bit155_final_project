@@ -242,7 +242,7 @@ Chip" onclick="selectColor('red')" />
 	 var isPress = false;
 	 
 	 $(document).ready(function(){
-		paintWs  = new WebSocket("ws://localhost:8090/paint");
+		paintWs  = new WebSocket("ws://192.168.0.35:8090/paint");
 		paintWs.onopen=function(){
 			console.log("웹소켓 접속 성공");
 		};
@@ -272,7 +272,11 @@ Chip" onclick="selectColor('red')" />
                     if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
                         isPress = false;
                     }
+                    if (){
+                        
+                        }
                 }
+                
             },
             mouseup: function (e) {
             	console.log("마우스떼는거되나연");
