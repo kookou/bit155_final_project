@@ -23,24 +23,13 @@ public class UserController {
 		return "user/signIn";
 	}
 	
-//	//로그인 처리 (어차피 security가 해주겠지만 DB연결 확인용)
-//	@RequestMapping(value="/signin", method=RequestMethod.POST)
-//	public String signIn(String id, String pwd, HttpSession session) {
-////		System.out.println(id);
-////		System.out.println(pwd);
-//		
-//		User currentUser = service.loginCheck(id, pwd);
-//		
-//		session.setAttribute("currentUser", currentUser);
-//		return "Home";
-//	}	
-	
 	// 가입 폼
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signUp() {
 		return "user/signUp";
 	}
 	
+
 	//가입 처리
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signUp(User user) {
@@ -55,6 +44,7 @@ public class UserController {
 	@RequestMapping(value="/resetpassword", method=RequestMethod.GET)
 	public String resetPassword() {
 		return "user/resetPassword";
+
 	}
 	
 	// 비번 수정 처리
@@ -81,5 +71,6 @@ public class UserController {
 		service.deleteUser(id);
 		return "redirect:signin";
 	}
+
 	
 }

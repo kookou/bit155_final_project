@@ -11,25 +11,28 @@
 <title>Insert title here</title>
 </head>
 <body>
-<se:authentication var="principal" property="principal"/>
+
+
+
 	Hello, Spring Boot App<br>
+
+	
+	
+	
+	
+	<a href="boardList.do?no=2">boardList Test</a>
+	<a href="insertForm.do">insertForm Test</a>
+
 	<a href="include.do">인클루드 테스트</a>
-	
-		<br><hr><br>
-		<c:if test="${not empty pageContext.request.userPrincipal}">	
-			<se:authentication property="name"/> <br>
-			<se:authentication property="authorities"/> <br>
-			
-		</c:if>
-	<br><hr><br>
-		
-	
-	<a href="signin">sign in</a><br>
-	<a href="signup">sign up</a><br>
-	<a href="resetpassword">reset Password</a><br>
-	<a href="edituserinfo">edit User Info</a><br>
-	<a href="deleteuser?id=${pageContext.request.userPrincipal.name}">현재 접속 회원 삭제</a><br>
-	
-	
+
+
+
+	Hello, Spring Boot App <br>
+	<a href="include.do">인클루드 테스트</a>
+	<a href="file.do">클라우드 테스트(임시폐업)</a>
+	<a href="paint.do">그림판 테스트</a>
+
+
+	<a href="todoList.do?teamNo=1">todoList 테스트</a>
 </body>
 </html>
