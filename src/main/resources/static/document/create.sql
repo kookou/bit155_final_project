@@ -152,7 +152,8 @@ ALTER TABLE `TEAM` modify `TEAM_NO` INT auto_increment;
 -- 그룹
 CREATE TABLE `GROUP` (
 	`GROUP_NO`   INT         NOT NULL, -- 그룹식별번호
-	`GROUP_NAME` VARCHAR(50) NOT NULL  -- 그룹명
+	`GROUP_NAME` VARCHAR(50) NOT NULL, -- 그룹명
+	`ID`         VARCHAR(50) NOT NULL      -- 아이디
 );
 
 -- 그룹
@@ -445,6 +446,16 @@ ALTER TABLE `TEAM`
 		REFERENCES `GROUP` ( -- 그룹
 			`GROUP_NO` -- 그룹식별번호
 		);
+	
+-- 그룹
+ALTER TABLE `GROUP`
+	ADD CONSTRAINT `FK_USER_TO_GROUP` -- 사용자 -> 그룹
+		FOREIGN KEY (
+			`ID` -- 아이디
+		)
+		REFERENCES `USER` ( -- 사용자
+			`ID` -- 아이디
+		);
 
 -- 팀구성원
 ALTER TABLE `TEAM_MEMBER`
@@ -474,7 +485,7 @@ ALTER TABLE `ROLE_MEMBER`
 		)
 		REFERENCES `ROLE` ( -- 권한
 			`AUTHORITY` -- 권한코드
-		); ----------------------------------------------------------------------------------------------------
+		);
 
 -- 사용자-권한 매핑
 ALTER TABLE `ROLE_MEMBER`
