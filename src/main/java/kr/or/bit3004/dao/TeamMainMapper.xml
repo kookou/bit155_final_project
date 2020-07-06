@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit3004.dao.TeamMainDao">
+	<select id="getGroupAndTeam" resultType="kr.or.bit3004.dto.GroupAndTeam">
+		select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
+		  from `group` g
+		 inner join team t
+		    on g.group_no = t.group_no 
+		where id=#{id};
+	</select>
+</mapper>

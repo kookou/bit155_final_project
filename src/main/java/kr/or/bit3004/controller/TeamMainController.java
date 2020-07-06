@@ -5,17 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.or.bit3004.service.TodoListService;
+import kr.or.bit3004.service.TeamMainService;
 
 @Controller
 public class TeamMainController {
 
 	@Autowired
-	private TodoListService service;
+	private TeamMainService service;
 	
 	@RequestMapping("teamMain.do")
-	public String selectTeamName(int teamNo, Model model) {
-		model.addAttribute("todoList", service.selectTodoList(teamNo));
+	public String selectTeamName(String id, Model model) {
+		model.addAttribute("groupAndTeam", service.selectGroupAndTeam(id));
 		return "teamMain/teamMain";
 	}
 	
