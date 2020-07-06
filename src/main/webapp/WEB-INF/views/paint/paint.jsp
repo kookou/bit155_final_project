@@ -294,11 +294,11 @@ Chip" onclick="selectColor('red')" />
 		       console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
 	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
 				for (let i = 1; i < drawData.length; i++) {
-//						console.log(drawData[i].x, drawData[i].y);
+//					console.log(drawData[i].x, drawData[i].y);
 		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
 				}
 	            otherCtx.stroke();
-//		            otherCtx.closePath();
+//		           otherCtx.closePath();
         	}
 		};
 		paintWs.onclose=function(){
