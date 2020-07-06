@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html>
-  <head>
-<!-- <link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet"> -->
- <link href="dist/css/style.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<link href="dist/css/style.min.css" rel="stylesheet">
     <title>그림판</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
@@ -272,9 +272,9 @@ Chip" onclick="selectColor('red')" />
                     if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
                         isPress = false;
                     }
-                    if (){
+                   /*  if (){
                         
-                        }
+                        } */
                 }
                 
             },
@@ -326,11 +326,3 @@ Chip" onclick="selectColor('red')" />
    </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
