@@ -1,7 +1,5 @@
 package kr.or.bit3004.dto;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,6 +21,9 @@ public class Board {
 	private String id;
 	private String nickname;
 	private String name;
-	private CommonsMultipartFile file;
+	private int fileNo;
 	private String fileName;
+	private String fileSize;
+	private String fileOriginName;
+	private String fileUrl;
 }

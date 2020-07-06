@@ -24,7 +24,14 @@
 	
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.dto.Board">
-		insert into board_list(board_no, title, content, views, write_date, comment_count, no, id)
-		values(#{boardNo}, #{title}, #{content}, #{views}, #{write_date}, #{comment_count}, #{no}, #{id})
+		insert into board_list(board_no, title, content, views, write_date, comment_count, refer, depth, step, no, id)
+		values(#{boardNo}, #{title}, #{content}, #{views}, #{writeDate}, #{commentCount}, #{refer}, #{depth}, #{step}, #{no}, #{id});
 	</insert>
+	
+	<!-- 게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete
+		  from board_list
+		 where board_no=#{boardNo}
+	</delete>
 </mapper>
