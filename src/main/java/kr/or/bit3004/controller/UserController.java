@@ -1,7 +1,6 @@
 package kr.or.bit3004.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.bit3004.dto.User;
-import kr.or.bit3004.service.UserService;
+//import kr.or.bit3004.service.UserService;
+import kr.or.bit3004.serviceImpl.UserServiceImpl;
 
 @Controller
 public class UserController {
 	
 	@Autowired
-	private UserService service;
+	private UserServiceImpl service;
 	
 	//로그인 폼
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
