@@ -225,17 +225,84 @@
 			$('#colorPicker').val()=selectColor;
 			console.log('ddddd');
 		}); */
-      
-      var canvas = document.querySelector("#canvas");
-      var ctx = canvas.getContext("2d");
-      
       $("#fill").click ( function () {
            ctx.fillStyle=pos.color;
           console.log($('selectColor').val());
           ctx.fillRect(0, 0, 720, 720);
       });
+	      
+      var canvas = document.querySelector("#canvas");
+      var ctx = canvas.getContext("2d");
 
-
+	//웹소켓실험중
+	 var paintWs = null;
+	 var now = [];
+	 var color = pos.color;
+	 
+	 $(document).ready(function(){
+		paintWs  = new WebSocket("ws://localhost:8090/paint");
+		paintWs.onopen=function(){
+			console.log("웹소켓 접속 성공");
+		};
+		$("canvas").on({
+            mousedown: function (e) {
+            	e.preventDefault();
+		        isPress = true;
+                ctx.beginPath();
+				prevX = e.offsetX;
+				prevY = e.offsetY;
+            	now.push({"prevX":prevX, "prevY":prevY, "color":color});
+            },
+            mouseup: function (e) {
+                isPress = false;
+                ctx.closePath();
+            	paintWs.send(JSON.stringify(now));
+            	now =[];
+            }
+        });
+		paintWs.onmessage = function(evt){
+			var c = $("#canvas");
+            var otherCtx = c.getContext("2d");
+        	var drawData;
+        	var fillData;
+        	console.log("ddd");
+        	if (evt.data.startsWith('{"')) {
+        		fillData = JSON.parse(evt.data);
+		            console.log(fillData);
+	            if(fillData.mode != undefined && fillData.mode == "fill") {
+	            	otherCtx.fillStyle = fillData.color;
+	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
+	            	otherCtx.closePath();
+	            	if (fillData.color == '#f4f5ed') {
+		            	$("#time").css("color", "black");
+	            	}
+	            	else {
+		            	$("#time").css("color", "white");
+	            	}
+	            	return;
+	            }
+        	}
+        	if (evt.data.startsWith('[{"')) {
+        		drawData = JSON.parse(evt.data);
+		            console.log("drawData: ",drawData);
+	            
+	            otherCtx.strokeStyle = drawData[0].color;
+	            otherCtx.beginPath();
+		            console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
+	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
+				for (let i = 1; i < drawData.length; i++) {
+//						console.log(drawData[i].x, drawData[i].y);
+		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
+				}
+	            otherCtx.stroke();
+//		            otherCtx.closePath();
+        	}
+		};
+		paintWs.onclose=function(){
+			console.log("웹소켓 접속 종료");
+		};
+		 
+		 });	
  
    </script>
   </body>
