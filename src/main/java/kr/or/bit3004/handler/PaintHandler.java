@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
-@Component("paint")
+@Component("paint/paint")
 public class PaintHandler extends TextWebSocketHandler{
 
 	//GamePaintHandler 따온거.
@@ -27,10 +27,13 @@ public class PaintHandler extends TextWebSocketHandler{
 	
 	//세션이 생성될 때 시작되는 함수
 	@Override
-	public synchronized void afterConnectionEstablished(WebSocketSession session) {
+	public synchronized void afterConnectionEstablished(WebSocketSession session)throws Exception {
+		connectedUsers.add(session);
 		Map<String,Object> attrs= session.getAttributes();
 		String id = (String)attrs.get("id");
-		connectedUsers.add(session);
+		for (int i = 0; i < connectedUsers.size(); i++) {
+			connectedUsers.get(i).sendMessage(new TextMessage("{ \"mode\" : \"fill\", \"color\" : \"#f0f0f0\" }"));
+		}
 	}
 	
 
@@ -48,6 +51,12 @@ public class PaintHandler extends TextWebSocketHandler{
 		if(message.getPayload().equals("end")) {
 			end(session);
 		}
+		for (WebSocketSession wss : connectedUsers) {
+			if ( !wss.getId().equals(session.getId()) ) {
+				wss.sendMessage(new TextMessage(message.getPayload()));
+				System.out.println(message.getPayload());
+			}
+		}
 	}
 	
 	private void end(WebSocketSession session) throws InterruptedIOException{
@@ -60,7 +69,6 @@ public class PaintHandler extends TextWebSocketHandler{
 		Map<String,Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		connectedUsers.remove(session);
-		
 	}
 }                 
 

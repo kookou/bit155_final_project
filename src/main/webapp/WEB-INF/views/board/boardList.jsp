@@ -493,7 +493,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-7 align-self-center">
-                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">FreeBoard</h2>
+                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
                     </div>
                    
                 </div>
@@ -512,7 +512,6 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">자유게시판</h4>
                                 <div class="table-responsive">
                                 	
                                     <table class="table">
@@ -528,7 +527,9 @@
                                         	<c:forEach var="board" items="${boardList}">
 	                                            <tr>
 	                                                <td style="width:15%; text-align: center;">${board.nickname}</td>
-	                                                <td style="width:55%;">${board.title}</td>
+	                                                <td style="width:55%;">
+	                                                	<a href="selectBoard.do?boardNo=${board.boardNo}">${board.title}</a>
+	                                                </td>
 	                                                <td style="width:20%; text-align: center;">${board.writeDate}</td>
 	                                                <td style="width:10%; text-align: center;">${board.views}</td>
 	                                            </tr>
@@ -537,32 +538,28 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="form-actions">
-                                    <div class="text-right">
-                                        <button type="submit" class="btn btn-dark">글쓰기</button>
-                                    </div>
+                                <div class="form-actions text-right">
+                                	<a href="insertBoard.do" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
                                 </div>
                                 <div class="col-12">
-                                    <nav aria-label="...">
-                                        <ul class="pagination pagination-sm">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="javascript:void(0)"
-                                                    tabindex="-1">Previous</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">Next</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                 	<ul class="pagination pagination-sm">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="javascript:void(0)"
+                                                tabindex="-1">Previous</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">Next</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
