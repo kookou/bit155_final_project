@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit3004.dao.TodoListDao">
+	<select id="getTodoList" resultType="kr.or.bit3004.dto.TodoList">
+		select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
+		  from `todo_content` c
+		 inner join `todo_list` l
+		    on c.no = l.no
+		 where l.TEAM_NO = #{l.TEAM_NO}
+	</select>
+	
+	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.dto.TodoList">
+		insert into `TODO_LIST`(`title`, `TEAM_NO`, `id`) values(#{title}, 1, #{id})
+	</insert>
+</mapper>
