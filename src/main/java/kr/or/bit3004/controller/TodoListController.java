@@ -16,7 +16,7 @@ public class TodoListController {
 	@RequestMapping("todoList.do")
 	public String todoList(int teamNo, Model model) {
 		model.addAttribute("todoList", service.selectTodoList(teamNo));
-		return "todoList/include";
+		return "todoList/todoList";
 	}
 	
 }
