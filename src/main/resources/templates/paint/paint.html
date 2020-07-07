@@ -69,8 +69,7 @@
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/red.png" class="
-Chip" onclick="selectColor('red')" />
+                  <img src="../../../dist/img/red.png" class="colorChip" onclick="selectColor('red')" />
                   <img src="../../../dist/img/brown.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
@@ -130,25 +129,25 @@ Chip" onclick="selectColor('red')" />
               </div> -->
               <div class="row">
                  <span class="cell">
-                  <i class="far fa-circle" onclick="selectTool('circle')"></i>
-                  <i class="fas fa-circle" onclick="selectTool('filledcircle')"></i>
+                  <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
+                  <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
                 </span>
           	    </div> 
      	        <div class="row">
                  <span class="cell">
-                  <i class="far fa-square" onclick="selectTool('square')"></i>
-                  <i class="fas fa-square" onclick="selectTool('filledsquare')"></i>
+                  <i class="far fa-square"  onclick="selectTool('square')"></i>
+                  <i class="fas fa-square"  onclick="selectTool('filledsquare')"></i>
                 </span>
           	    </div>
                <div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/triangles.png" class="pad" onclick="selectTool('tri')" />
+                  <img src="../../../dist/img/triangles.png" class="pad hi" onclick="selectTool('tri')" />
                   <img src="../../../dist/img/filltriangle.png" class="pad" onclick="selectTool('filledtri')" />
                 </span>
               </div>
          	<div class="row">
                 <span class="cell">
-                  <img src="../../../dist/img/bucket.png" class="pad" id="fill"  />
+                  <img src="../../../dist/img/bucket.png" class="pad fill" id="fill"  />
                 </span>
               </div>
  <!--             <div class="row">
@@ -201,8 +200,8 @@ Chip" onclick="selectColor('red')" />
       </div>
     </div>
     
-    <script src="../../../dist/js/painter.js"></script>
-    <script src="../../../dist/js/drawengine.js"></script>
+    <script src="../../js/painter.js"></script>
+    <script src="../../js/drawengine.js"></script>
     <!-- 컬러피커 -->
 <!--     <input id="colorPicker" type="color" class="form-control" value="#ffffff"> -->
 	
@@ -216,7 +215,6 @@ Chip" onclick="selectColor('red')" />
 		 	$('.colorChip').removeClass('paintcellborder');
 			$(this).addClass('paintcellborder');
 		});
-      
 		$('#colorPicker').change(function() {
 			selectColor($('#colorPicker').val());
 			pos.color=$('#colorPicker').val();
@@ -234,8 +232,7 @@ Chip" onclick="selectColor('red')" />
 	      
       var canvas = document.querySelector("#canvas");
       var ctx = canvas.getContext("2d");
-
-	//웹소켓실험중
+	//웹소켓
 	 var paintWs = null;
 	 var now = [];
 	 var color = pos.color;
@@ -246,45 +243,72 @@ Chip" onclick="selectColor('red')" />
 		paintWs.onopen=function(){
 			console.log("웹소켓 접속 성공");
 		};
-		$("canvas").on({
-            mousedown: function (e) {
-                console.log("마우스연결되나연");
+		$("canvas").on(
+				{
+			mousedown: function (e) {
             	e.preventDefault();
 		        isPress = true;
                 ctx.beginPath();
 				prevX = e.offsetX;
 				prevY = e.offsetY;
-            	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color});
+				//console.log("과연",drwaCommand().mode);
+				console.log("추주툴",chooseTool);
+            	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
+              	//selectTool('circle');
+   	 /*	$('.colorChip').click(function() {
+   		 	$('.colorChip').removeClass('paintcellborder');
+   			$(this).addClass('paintcellborder');
+   		});	*/	
+            		
             },
             mousemove: function (e) {
                 var x = e.offsetX;
                 var y = e.offsetY;
                 if (isPress) {
                 	now.push({x, y});
-                	
                 	ctx.moveTo(prevX, prevY);
                     ctx.lineTo(x, y);
                     ctx.stroke();
-                    
                     prevX = e.offsetX;
                     prevY = e.offsetY;
-                    
-                    if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
+                   if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
                         isPress = false;
-                    }
-                   /*  if (){
-                        
-                        } */
+                    } 
                 }
-                
             },
             mouseup: function (e) {
-            	console.log("마우스떼는거되나연");
                 isPress = false;
                 ctx.closePath();
-            	paintWs.send(JSON.stringify(now));
-            	now =[];
-            }
+            	paintWs.send(JSON.stringify(now));//now를 json객체로변환
+            	now =[]; //now 배열을 다시 비워줌
+            }/* ,
+   			linemousedown: function (e) {
+               	e.preventDefault();
+   		        isPress = true;
+                ctx.beginPath();
+   				prevX = e.offsetX;
+   				prevY = e.offsetY;
+               	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color}); //now 배열에 이거 집어넣음
+                 	
+             },
+            linemousemove: function (e) {
+                   var x = e.offsetX;
+                   var y = e.offsetY;
+                   if (isPress) {
+                   	now.push({x, y});
+                   	ctx.moveTo(prevX, prevY);
+                       ctx.lineTo(x, y);
+                       ctx.stroke();
+                       prevX = e.offsetX;
+                       prevY = e.offsetY;
+                   }
+             },
+             linemouseup: function (e) {
+                   isPress = false;
+                   ctx.closePath();
+              	 	paintWs.send(JSON.stringify(now));//now를 json객체로변환
+             	  	now =[]; //now 배열을 다시 비워줌
+             } */
         });
 		paintWs.onmessage = function(evt){
 			var c = document.querySelector("#canvas");
@@ -292,29 +316,44 @@ Chip" onclick="selectColor('red')" />
         	var drawData;
         	var fillData;
         	if (evt.data.startsWith('{')) {
-		console.log("on메시지이벤트");
         		fillData = JSON.parse(evt.data);
-		            console.log(fillData);
+		        console.log(fillData);
 	            if(fillData.mode != undefined && fillData.mode == "fill") {
 	            	otherCtx.fillStyle = fillData.color;
 	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
-	            	otherCtx.closePath();
+	            	otherCtx.closePath()
+	            	
 	            	return;
 	            }
         	}
         	if (evt.data.startsWith('[{"')) {
         		drawData = JSON.parse(evt.data);
 		        console.log("drawData: ",drawData);
+		        //if(drawData[0])
 	            otherCtx.strokeStyle = drawData[0].color;
 	            otherCtx.beginPath();
-		       console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
+		        console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color,drawData[0].mode)
 	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
 				for (let i = 1; i < drawData.length; i++) {
 //					console.log(drawData[i].x, drawData[i].y);
 		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
 				}
+				switch(drawData[0].mode){
+				case "pencil":
+					console.log("펜슬 ㅎㅎ");
+					break;
+				case "circle":
+					console.log("원 ㅎㅎ");
+					break;	
+				case "square":
+					console.log("네모 ㅎㅎ");
+					break;
+				case "tri":
+					console.log("세모 ㅎㅎ");
+				}
 	            otherCtx.stroke();
-//		        otherCtx.closePath();
+		        otherCtx.closePath();
+		    	//selectTool('circle');
         	}
 		};
 		paintWs.onclose=function(){

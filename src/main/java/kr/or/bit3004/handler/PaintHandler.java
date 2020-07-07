@@ -54,7 +54,7 @@ public class PaintHandler extends TextWebSocketHandler{
 		for (WebSocketSession wss : connectedUsers) {
 			if ( !wss.getId().equals(session.getId()) ) {
 				wss.sendMessage(new TextMessage(message.getPayload()));
-				System.out.println(message.getPayload());
+				System.out.println("handler에서보내는"+message.getPayload());
 			}
 		}
 	}
