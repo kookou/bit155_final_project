@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit3004.dto.Board;
 import kr.or.bit3004.service.BoardService;
@@ -42,23 +40,17 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoard(Board board , HttpServletRequest request) {
+	public String insertBoard(Board board , HttpServletRequest request){
 		service.insertBoard(board, request);
-		return "redirect : insertForm";
-		
-		//여기서부터 해야돼
-		//StringBuilder fileName = new StringBuilder();
-		//for(MultipartFile file :) {
-			
-		//}
+		return "redirect:boardList.do?no=5";
 	}
 	
-	public static String uploadDirectory = System.getProperty("user.dir")+"/upload";
-	
-	@RequestMapping("insertBoard.do")
-	public String insertBoard(Model model) {
-		return "board/boardList";
+	//게시판 삭제하기
+	@RequestMapping("deleteBoard.do")
+	public String deleteBoard(int boardNo) {
+		System.out.println(boardNo);
+		service.deleteBoard(boardNo);
+		return "redirect:boardList.do?no=5";
 	}
-	
 }
  
