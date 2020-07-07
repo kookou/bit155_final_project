@@ -16,6 +16,7 @@
     max-height: 100%;
     position: relative;
     white-space: normal;
+    
 }
 .kanban-list-scroll{
     display: flex;
@@ -29,11 +30,22 @@
     vertical-align: top;
     white-space: nowrap;
 }
+.kanban-addlistdone{
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    text-align: center;
+    padding: 4px;
+    margin: 0 0 10px 0;
+    color: #ffffff !important ;
+}
 .kanban-list-add-header{
     flex: 0 0 auto;
     padding: 10px 8px;
     position: relative;
     min-height: 20px;
+    color : #ffffff ; 
+    
 }
 .kanban-list-add{
     background-color: #5f76e8;
@@ -54,14 +66,14 @@
     z-index: 1;
     color: #6b778c;
     float: left;
-    padding: 6px;
+    padding: 8px 6px 6px 6px;
 }
 .kanban-list-header{
-  
     flex: 0 0 auto;
-    padding: 10px 8px;
+    padding: 10px 8px ;
     position: relative;
-    min-height: 20px;
+    min-height: 36px;
+    width: 90%;
 }
 .lkanban-list-wrapper:first-child {
     margin-left: 8px;
@@ -82,9 +94,10 @@
 }
 .kanban-card-element{
     overflow: hidden;
-    padding: 6px 8px 2px;
+    padding: 8px 8px 2px 8px;
     position: relative;
     z-index: 10;
+    white-space: normal;
 }
 .kanban-card-title{
     clear: both;
@@ -124,6 +137,7 @@
     padding: 0 4px;
     z-index: 1;
     min-height: 0;
+    white-space: normal;
    
 }
 .kanban-card-list{
@@ -141,9 +155,10 @@
 }
 .kanban-card-form{
     overflow: hidden;
-    padding: 6px 8px 2px;
+    
     position: relative;
     z-index: 10;
+    min-height: 44px;
 }
 
 .kanban-canvas{
@@ -222,12 +237,23 @@ div {
     font-size: 14px;
 }
 
+.kanban-list-header-input{
+    flex: 0 0 auto;
+    padding: 10px 0;
+    position: relative;
+    min-height: 20px;
+    width: 100%;
+}
 
 .kanban-list-title{
     margin-bottom: 0;
     color: rgb(38, 38, 38);
     font-size: 16px;
     font-weight: 400;
+    width: 100%;
+    word-wrap: break-word;
+    padding: 8px 0 0 0;
+
 }
 
 .card-modal-content{
@@ -237,13 +263,13 @@ div {
     width: 100%;
     pointer-events: auto;
     background-clip: padding-box;
-   
+    
     outline: 0;
     background-color: #f4f5f7;
     border-radius: 2px;
     margin: 48px 0 40px;
     overflow: hidden;
-    z-index: 25;
+    z-index: 2;
     padding: 0 0 20px 0;
 } 
 .card-modal-close{
@@ -256,13 +282,13 @@ div {
     overflow: hidden;
     padding: 4px;
     margin: 4px;
-    width: 32px;
+    width: 110px;
     z-index: 2;
     transition: background-color 85ms,color 85ms;
-    font-size: 25px;
+    font-size: 15px;
 }
 .card-modal-header{
-    margin: 20px 45px 8px 56px;
+    margin: 40px 45px 8px 56px;
     min-height: 32px;
     position: relative;
     z-index: 1;
@@ -282,19 +308,30 @@ div {
     font-weight: 500;
 }
 
+.card-modal-reply-title{
+    margin: 4px 0 0;
+    padding: 8px 0 0 10px;
+    color: rgb(38, 38, 53);
+    font-size: 18px;
+    font-weight: 500;
+    
+}
+
 .card-modal-title-icon{
     left: -30px;
     position: absolute;
     top: 10px;
     color: rgb(54, 54, 109);
+    
 }
 .card-modal-title{
-    margin: 4px 0 0;
+    margin: 4px 0 3px;
     padding: 8px 0 0 10px;
     color: rgb(38, 38, 53);
     word-wrap: break-word;
 }
 .card-modal-list-name{
+    
     padding: 5px 0 0 10px;
 
 }
@@ -357,11 +394,10 @@ a {
 .card-modal-reply-el{
     margin: 0;
     word-wrap: break-word;
-   
+    max-width: 100%;
 }
 .card-modal-reply-input{
     padding: 0 0 0 10px;
-    
 }
 .card-modal-username{
     margin: 10px 0 0 0;
@@ -369,9 +405,12 @@ a {
 .card-modal-reply{
     margin: 16px 0 0 0;
     z-index: -3;
+    clear: both;
 }
 .card-modal-reply-document{
     padding: 0 0 0 10px;
+    max-width: 100%;
+    
 }
 .card-modal-reply-username{
     font-size: 16px;
@@ -382,6 +421,7 @@ a {
     font-size: 14px;
     margin: 0 0 0 10px;
 }
+
 .card-modal-reply-comment{
     padding: 12px;
     background-color: #fff;
@@ -389,11 +429,12 @@ a {
     box-shadow: 0 1px 2px -1px rgba(9,30,66,.25), 0 0 0 1px rgba(9,30,66,.08);
     box-sizing: border-box;
     clear: both;
-    display: inline-block;
     margin: 4px 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    min-width: 100%;
+    
+   
 }
 .card-modal-reply-userinfo{
     padding: 0 0 0 10px;
@@ -448,4 +489,162 @@ a {
     color: #212529;
     background-color: #ccd1d5;
     border-color: #c5cacf;
+}
+
+
+
+
+textarea.list-card-composer-textarea, textarea.list-card-composer-textarea:focus {
+    background: none;
+    border: none;
+    box-shadow: none;
+    min-height: 24px;
+    width: 100%;
+    overflow-y: auto;
+    padding: 2px 0 0 0;
+
+}
+
+
+
+textarea {
+    width: 100;
+    background-color: #fafbfc;
+    border: none;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
+    color: #172b4d;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    display: block;
+    line-height: 20px;
+    
+    transition-property: background-color,border-color,box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+   
+}
+
+.kanban-list-header-input > textarea {
+    width: 100;
+    background-color: #fafbfc;
+    border: none;
+    box-shadow: inset 0 0 0 2px #dfe1e6;
+    color: #172b4d;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    display: block;
+    line-height: 20px;
+    padding: 8px;
+   
+    transition-property: background-color,border-color,box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+   
+    
+}
+
+textarea.list-composer-textarea, textarea.list-composer-textarea:focus{
+    width: 100%;
+    overflow-y: auto;
+    /* background: none;
+    border: none;
+    box-shadow: none;
+    height: auto;
+    width: 100%;
+    overflow-y: auto;
+    padding: 0; */
+
+}
+
+.list-composer-textarea-edit{
+    border-radius: 3px;
+    width: 256px;
+    overflow-y: auto;
+    height: 36px;
+    margin-left: -9px;
+    padding: 8px;
+}
+
+.modal-textarea-edit{
+    font-size: 14px;
+    line-height: 1.2;
+    border-radius: 3px;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 30px;
+    margin-left: 5px;
+    margin-top: 6px;
+    padding: 6px;
+    vertical-align: middle;
+}
+
+.modal-textarea-title-edit{
+    font-size: 21px;
+    line-height: 1.2;
+    border-radius: 3px;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 36px;
+    margin-left: 4px;
+    vertical-align: middle;
+    padding: 8px 0px 0px 6px;
+}
+
+.modal-textarea-reply{
+    font-size: 16px;
+    line-height: 1.2;
+    border-radius: 3px;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 40px;
+    padding: 10px;
+    vertical-align: middle;
+}
+.reply-done{
+    margin: 6px 0 0 0;
+    float: right;
+}
+
+.card-modal-reply-top{
+    margin: 16px 0 0 0;
+    z-index: -3;
+    clear: both;
+}
+
+textarea.reply-textarea-edit, textarea.reply-textarea-edit:focus {
+    max-height: fit-content;
+    background: none;
+    border: none;
+    box-shadow: none;
+    /* height: auto; */
+    min-width: 100%;
+    overflow-y: auto;
+    padding: 0;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.display{
+    display : inline-grid;
+}
+
+.modal-reply-btn{
+    padding: 0 0 0 10px;   
+}
+
+textarea.modal-textarea-description-edit, textarea.modal-textarea-description-editt:focus {
+    font-size: 16px;
+    line-height: 20px;
+    border-radius: 3px;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 40px;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.modal-textarea-description{
+    padding: 4px 0 0 10px;
 }
