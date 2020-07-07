@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://wwww.thymeleaf.org">
+<html xmlns:th="http://wwww.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -53,38 +53,43 @@
 
                     <form class="pl-3 pr-3 mt-4" action="" method="POST" enctype="multipart/form-data">
 
-                        <!--이미지 가운데만 자르는거 혜정언니한테 물어보기-->
+                        
                         <div class="form-group">
                         <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
                            	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                            	<span>
+                            	<span th:if="${currentUser.image == null}">
                                 	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
                             	</span>
+                            	<span th:unless="${currentUser.image == null}">
+                                	<img th:src="@{assets/images/userImage/}+${currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	</span>
+                            	 
+
                            	</div>
                         </div>
 						</div>
 
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="userImage" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;"></label>
+                                <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${currentUser.image}"></label>
                             </div>
                         </div> 
 
                         <div class="form-group">
-                            <input class="form-control" type="nickName" id="nickName" placeholder="Nickname">
+                        	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${currentUser.nickname}" placeholder="Nickname">
                             <div class="invalid-feedback">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control" type="email" id="email" placeholder="john@deo.com">
-                            <div class="invalid-feedback">
+                            <input class="form-control" type="email" id="id" name="id" th:value="${currentUser.id}" readonly>
+							<div class="invalid-feedback">
                             </div>                            
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control" type="password" id="password" placeholder="Enter your password">                            
+                            <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your password">                            
                             <div class="invalid-feedback">
                             </div>
                             <input class="form-control mt-2" type="password" id="passwordCheck" placeholder="Password check">                            
@@ -148,8 +153,8 @@
             function regCheck(input, regExp, name) { // 정규표현식 검증
                 
                 if(name == "비밀번호확인"){
-                   if( $('#password').hasClass('is-valid') === true ){
-                        if($('#password').val() != input.val()){
+                   if( $('#pwd').hasClass('is-valid') === true ){
+                        if($('#pwd').val() != input.val()){
                             let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
                             input.removeClass("is-valid");
                             input.addClass("is-invalid");
@@ -200,17 +205,17 @@
                     }
                 });
             }
-            inputCheck($('#email'), emailRegExp, "이메일");
+            //inputCheck($('#id'), emailRegExp, "이메일");
             inputCheck($('#nickName'), nickRegExp, "별명");
-            inputCheck($('#password'), pwdRegExp, "비밀번호"); 
+            inputCheck($('#pwd'), pwdRegExp, "비밀번호"); 
             inputCheck($('#passwordCheck'), pwdRegExp, "비밀번호확인");
             //submit 버튼 활성화
             $('input').on('change keyup', function() {
                let nickOk = $('#nickName').hasClass('is-valid');
-               let emailOk = $('#email').hasClass('is-valid');
-               let pwdOk = $('#password').hasClass('is-valid');
+               //let idOk = $('#id').hasClass('is-valid');
+               let pwdOk = $('#pwd').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
-               if(nickOk && emailOk && pwdOk && pwdChckOk){
+               if(nickOk && pwdOk && pwdChckOk){
                    console.log("if");
                    $('#submit').removeAttr('disabled');
                }else{

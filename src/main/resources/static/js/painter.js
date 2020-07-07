@@ -101,6 +101,9 @@ var pos = {
   mouseDownAction: paintMouseDownAction[paintMode[0]],
   mouseUpAction: paintMouseUpAction[paintMode[0]],
   mouseMoveAction: paintMouseMoveAction[paintMode[0]],
+  lineMouseDownAction : paintMouseDownAction[paintMode[1]],
+  lineMouseUpAction: paintMouseUpAction[paintMode[1]],
+  lineMouseMoveAction: paintMouseMoveAction[paintMode[1]],
   x: 0,
   y: 0,
   update: function (drawMode) {
@@ -108,6 +111,9 @@ var pos = {
     this.mouseDownAction = paintMouseDownAction[paintMode[drawMode]];
     this.mouseUpAction = paintMouseUpAction[paintMode[drawMode]];
     this.mouseMoveAction = paintMouseMoveAction[paintMode[drawMode]];
+    this.lineMouseDownAction = paintMouseDownAction[paintMode[drawMode]];
+    this.lineMouseUpAction = paintMouseUpAction[paintMode[drawMode]];
+    this.lineMouseMoveAction = paintMouseMoveAction[paintMode[drawMode]];
   }
 };
 
@@ -119,7 +125,7 @@ function point() {
 }
 
 function drwaCommand() {
-  return {
+	return {
     mode: paintMode[0],
     color: "white",
     filled: false,
@@ -131,7 +137,6 @@ function drwaCommand() {
     B: 0,
     lines: [],
     toCommand: function () {
-      console.log("toCommand");
       var newCommand = this.mode + " ";
       var isFilled = this.filled == true ? 'F' : 'E';
       switch (this.mode) {
@@ -210,7 +215,7 @@ function drwaCommand() {
       console.log("toCommand: " + newCommand);
       return newCommand;
     }
-  };
+  }
 }
 
 function getMousePosition(event) {
@@ -240,6 +245,27 @@ function mouseListener(event) {
   }
 }
 
+function lineMouseListener(event) {
+	  switch (event.type) {
+	    case "linemousedown":
+	      if (!pos.isDraw) {
+	        pos.lineMouseDownAction(event);
+	      }
+	      break;
+	    case "linemousemove":
+	      if (pos.isDraw) {
+	        pos.lineMouseMoveAction(event);
+	      }
+	      break;
+	    case "linemouseup":
+	    case "linemouseout":
+	      if (pos.isDraw) {
+	        pos.lineMouseUpAction(event);
+	      }
+	      break;
+	  }
+	}
+
 function selectColor(choosedColor) {
   console.log("selectColor:" + choosedColor);
   var colorTableIdx = {
@@ -267,9 +293,10 @@ function selectColor(choosedColor) {
   commandHistory.push(newColor.toCommand());
   addHistory(newColor.toCommand());
 }
-
+var chooseTool;
 function selectTool(choosedTool) {
-  console.log(choosedTool);
+  chooseTool = choosedTool;
+  console.log("선택된툴"+choosedTool);
   if (choosedTool.indexOf("filled") != -1) {
     pos.filled = true;
   } else {
@@ -662,7 +689,6 @@ function triMouseUp(event) {
 
     bufCtx.beginPath();
     bufCtx.strokeStyle = pos.color;
-
     bufCtx.moveTo(pos.X, pos.Y);
     bufCtx.lineTo(currentPos.X, currentPos.Y);
     bufCtx.lineTo(tri.P.X, tri.P.Y);
@@ -916,6 +942,10 @@ function onLoadPage() {
   canvas.addEventListener("mousemove", mouseListener);
   canvas.addEventListener("mouseout", mouseListener);
   canvas.addEventListener("mouseup", mouseListener);
+  canvas.addEventListener("linemousedown", lineMouseListener);
+  canvas.addEventListener("linemousemove", lineMouseListener);
+  canvas.addEventListener("linemouseout", lineMouseListener);
+  canvas.addEventListener("linemouseup", lineMouseListener);
 
   initPage();
 }
