@@ -42,7 +42,7 @@ public class BoardController {
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoard(Board board , HttpServletRequest request){
 		service.insertBoard(board, request);
-		return "redirect:board/boardList";
+		return "redirect:boardList.do?no=5";
 	}
 	
 	//게시판 삭제하기
@@ -50,7 +50,7 @@ public class BoardController {
 	public String deleteBoard(int boardNo) {
 		System.out.println(boardNo);
 		service.deleteBoard(boardNo);
-		return "board/boardList.do";
+		return "redirect:boardList.do?no=5";
 	}
 }
  

@@ -24,8 +24,8 @@
 	
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.dto.Board">
-		insert into board_list(board_no, title, content, views, write_date, comment_count, refer, depth, step, no, id)
-		values(#{boardNo}, #{title}, #{content}, #{views}, #{writeDate}, #{commentCount}, #{refer}, #{depth}, #{step}, #{no}, #{id});
+		insert into board_list(`title`, `content`, `write_date`, `no`, `id`) 
+		values(#{title}, #{content}, now(), 5, 'jinwon');
 	</insert>
 	
 	<!-- 게시판 삭제하기 -->

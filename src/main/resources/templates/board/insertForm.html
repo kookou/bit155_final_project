@@ -506,14 +506,16 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form method="post" action="insertBoard.do" enctype="multipart/form-data">
+                                <form method="post" th:action="@{insertBoard.do}">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="form-group">
-	                                                <input type="text" class="form-control" placeholder="제목을 입력하세요.">
+                                                	<!-- <input type="hidden" value="${no}" name="no"/> -->
+	                                                <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요.">
                                                 </div>
                                                 <div class="custom-file col-md-12">
+                                                
                                                     <input type="file" class="custom-file-input" id="inputGroupFile01">
                                                     <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
                                                 </div>
@@ -521,7 +523,7 @@
                                             <div class="col-md-12">
                                                 <h4 class="card-title"></h4>
                                                 <div class="form-group">
-                                            	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" placeholder="내용을 입력하세요."></textarea>
+                                            	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" placeholder="내용을 입력하세요."></textarea>
                                                 </div>
                                             </div>
                                         </div>
