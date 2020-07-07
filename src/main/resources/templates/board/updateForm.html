@@ -507,15 +507,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <form method="post" th:action="@{updateBoard.do}">
-                                    <div class="form-body" th:with="board=${selectBoard}">
+                                  <div class="form-body">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="form-group">
-                                                	<!-- <input type="hidden" value="${no}" name="no"/> -->
-	                                                <input type="text" class="form-control" name="title" th:value="${title}">
+	                                                <input type="text" class="form-control" name="title" th:value="${board.title}">
                                                 </div>
                                                 <div class="custom-file col-md-12">
-                                                
                                                     <input type="file" class="custom-file-input" id="inputGroupFile01">
                                                     <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
                                                 </div>
@@ -523,16 +521,16 @@
                                             <div class="col-md-12">
                                                 <h4 class="card-title"></h4>
                                                 <div class="form-group">
-                                            	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" placeholder="내용을 입력하세요."></textarea>
+                                            	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" th:text="${board.content}"></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                              
+                              		</div>
                                     <div class="form-actions">
                                         <div class="text-right">
                                             <button type="submit" class="btn btn-info">수정</button>
                                             <button type="reset" class="btn btn-dark">초기화</button>
-                                            <a type="reset" class="btn btn-dark" href="boardList.do?no=2">목록으로</a>
+                                            <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1">목록으로</a>
                                         </div>
                                     </div>
                                 </form>
