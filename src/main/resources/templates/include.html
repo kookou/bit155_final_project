@@ -12,8 +12,8 @@
     <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
     <!-- Custom CSS -->
-    <link href="../../dist/css/style.min.css" rel="stylesheet">
-    <link href="../../dist/css/kanban.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/kanban.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,13 +22,14 @@
     <![endif]-->
 
 </head>
+
 <body>
- 	<div class="preloader">
+ 	<!-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
-    </div>
+    </div> -->
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -44,7 +45,23 @@
         
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <th:block th:replace="common/script :: script"></th:block>
+   <!--  <th:block th:replace="common/script :: script"></th:block> -->
+    <script src="../../static/assets/libs/jquery/dist/jquery.min.js"></script>
+	<script
+		src="../../static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- apps -->
+	<!-- apps -->
+	<script src="../../static/js/app-style-switcher.js"></script>
+	<script src="../../static/js/feather.min.js"></script>
+	<script
+		src="../../static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../../static/js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="../../static/js/custom.min.js"></script>
+	<script src="../../static/js/kanban.js"></script>
+	<!--This page JavaScript -->
+	<script src="../../static/js/pages/dashboards/dashboard1.min.js"></script>
+    
     
 
 </body>

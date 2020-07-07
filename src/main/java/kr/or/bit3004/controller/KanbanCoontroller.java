@@ -8,7 +8,7 @@ public class KanbanCoontroller {
 	
 	@RequestMapping("/include.do")
 	public String home() {
-		return "include";
+		return "kanban/kanban";
 	}
 	
 }
