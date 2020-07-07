@@ -13,6 +13,15 @@
     <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <style>
+    	.teamBtn {
+    		cursor:pointer;
+    	}
+    	.teamBtn:hover {
+    		background-color: rgba(0, 0, 0, 0.1);
+    		border-radius: 4px;
+    	}
+    </style>
 </head>
 
 <body>
@@ -336,7 +345,7 @@
         			</div>
         			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupName == team.groupName}">
         				<div class="card" >
-        					<div class="card-body collapse show">
+        					<div class="card-body collapse show teamBtn">
         						<h4 class="card-title" th:text="${team.teamName}"></h4>
         					</div>
         				</div>
