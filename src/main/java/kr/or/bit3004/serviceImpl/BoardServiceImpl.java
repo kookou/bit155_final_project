@@ -35,6 +35,12 @@ public class BoardServiceImpl implements BoardService{
 		return dao.insertBoard(board);
 	}
 	
+	//게시판 수정하기
+	@Override
+	public void updateBoard(Board board , HttpServletRequest request) {
+		dao.updateBoard(board);
+	}
+	
 	//게시판 삭제하기
 	@Override
 	public void deleteBoard(int boardNo) {
