@@ -112,7 +112,7 @@
 }
 canvas {
     margin-top: 55px; margin-left: -10px;
-    cursor: url(../images/game/cursor.cur), auto;
+    /* cursor: url(../images/game/cursor.cur), auto; */
 }
 #canvasDiv {width: 550px; height: 100%; float: left;}
 #chatDiv {width: 225px; height: 100%; float: left;}

@@ -12,19 +12,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
-    <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
-    <link href="../../dist/css/kanban.css" rel="stylesheet">
     <!-- Vue.js CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<!-- 엑시오스 CDN (ajax같은 것) -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style>
         #addTodoListBtn {
             cursor: pointer;
@@ -382,47 +374,47 @@
 		
 		<script>
 		    var todoListComponent = {
-		        template: `
-		            <div class="col-xl-4">
-		                <div class="card">
-		                    <div class="card-body">
-		                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
-		                        <div v-if="isStatusOff">
-		                            <h4 class="card-title mb-3">{{ title }}</h4>
-		                            <div style="width: 100%;">
-		                                <input type="text" class="form-control" placeholder="할 일을 입력하세요" v-model="userInput" @keyup.enter="addNewTodo"/>
-		                            </div>
-		                            <br>
-		
-		                            <div class="text-right">
-		                                <button type="button" class="btn btn-outline-warning" @click="changeCurrentState('all')"><i class="fa fa-heart"></i> All</button>
-		                                <button type="button" class="btn btn-outline-danger" @click="changeCurrentState('active')"><i class="far fa-heart"></i> Active</button>
-		                                <button type="button" class="btn btn-outline-success" @click="changeCurrentState('done')"><i class="fa fa-check"></i> Done</button>
-		                            </div>
-		                            <br>
-		                            
-		                            <div class="tab-content">
-		                                <template v-for="todo in activeTodoList">
-		                                    <div class="tab-pane show active">
-		                                        <div class="custom-control custom-checkbox">
-		                                            <div style="float: left;">
-		                                                <input type="checkbox" class="custom-control-input" :id="todo.content" :value="todo.content" 
-		                                                    @click="toggleTodoState(todo)" :checked="todo.state == 'done' ? true : false">
-		                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
-		                                            </div>
-		                                            <div style="float: right;">
-		                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp
-		                                                <a href="#"><i class="fas fa-trash-alt iconStyle"></i></a>
-		                                            </div>
-		                                        </div>
-		                                    </div>
-		                                </template>
-		                            </div>
-		                        </div>
-		                    </div> <!-- end card-body-->
-		                </div> <!-- end card-->
-		            </div> <!-- end col -->
-		        `,
+		    		template: `
+			            <div class="col-xl-4">
+			                <div class="card">
+			                    <div class="card-body">
+			                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
+			                        <div v-if="isStatusOff">
+			                            <h4 class="card-title mb-3">{{ title }}</h4>
+			                            <div style="width: 100%;">
+			                                <input type="text" class="form-control" placeholder="할 일을 입력하세요" v-model="userInput" @keyup.enter="addNewTodo"/>
+			                            </div>
+			                            <br>
+			
+			                            <div class="text-right">
+			                                <button type="button" class="btn btn-outline-warning" @click="changeCurrentState('all')"><i class="fa fa-heart"></i> All</button>
+			                                <button type="button" class="btn btn-outline-danger" @click="changeCurrentState('active')"><i class="far fa-heart"></i> Active</button>
+			                                <button type="button" class="btn btn-outline-success" @click="changeCurrentState('done')"><i class="fa fa-check"></i> Done</button>
+			                            </div>
+			                            <br>
+			                            
+			                            <div class="tab-content">
+			                                <template v-for="todo in activeTodoList">
+			                                    <div class="tab-pane show active">
+			                                        <div class="custom-control custom-checkbox">
+			                                            <div style="float: left;">
+			                                                <input type="checkbox" class="custom-control-input" :id="todo.content" :value="todo.content" 
+			                                                    @click="toggleTodoState(todo)" :checked="todo.state == 'done' ? true : false">
+			                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
+			                                            </div>
+			                                            <div style="float: right;">
+			                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp
+			                                                <a href="#"><i class="fas fa-trash-alt iconStyle"></i></a>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </template>
+			                            </div>
+			                        </div>
+			                    </div> <!-- end card-body-->
+			                </div> <!-- end card-->
+			            </div> <!-- end col -->
+			        `,
 		        data() {
 		            return {
 		                title: '',
@@ -434,17 +426,30 @@
 		            };
 		        },
 		        //클릭하면 값 들어오는거까지는 했는데...ㅠ 어렵다..
-		        created() {
-		        	axios.get('todoList2.do?teamNo=1')
+		         created() {
+		        	axios.get('getTodoTitle.do?teamNo=1')
 		            .then((response) => {
-		                for(var s in response.data) {
-			                console.log(response.data[s].content); // 객체 형태로 반환. 파싱작업 불필요
-			                this.todoList.push({
-			                    content: response.data[s].content,
-			                    state: 'active' //완료하지 않은 항목
-			                });
-		                }
+		            	console.log(response.data);
+		            	for(var index in response.data) {
+			            	this.title = response.data[index].title;
+		            	}
+		            	axios.get('todoList2.do?teamNo=1')
+			            .then((response2) => {
+			            	console.log(response2.data);
+			                for(var index2 in response2.data) {
+			                	if(response2.data[index2].title == response.data[index].title) {
+					                console.log(response2.data[index2].content); // 객체 형태로 반환. 파싱작업 불필요
+					                this.todoList.push({
+					                    content: response2.data[index2].content,
+					                    state: 'active' //완료하지 않은 항목
+					                });
+			                	}
+				                this.$root.todoLists.push(this.todoListComponent);
+			                }
+			                
+			            });
 		            });
+		        	
 		        },
 		        methods: {//상태값을 변경할 메소드
 		            changeCurrentState(state) {
@@ -499,15 +504,6 @@
 		                addListBtnisStatusOn: true
 		            };
 		        },
-		        /*
-		        mounted() {
-		        	axios.get('todoList2.do?teamNo=1')
-		            .then(function(response) {
-		                console.log(response.data); // 객체 형태로 반환. 파싱작업 불필요
-		                this.todoLists = response.data;
-		            });
-		        },
-		        */
 		        methods: {
 		            /*
 		        	list: function() {

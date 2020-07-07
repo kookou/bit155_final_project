@@ -21,6 +21,11 @@ public class TodoListServiceImpl implements TodoListService {
 	}
 	
 	@Override
+	public List<TodoList> selectTodoTitle(int teamNo) {
+		return dao.getTodoTitle(teamNo);
+	}
+	
+	@Override
 	public void insertTodoTitle(TodoList todoList) {
 		dao.insertTodoTitle(todoList);
 	}
