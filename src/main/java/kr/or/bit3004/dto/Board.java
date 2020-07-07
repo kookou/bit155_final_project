@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Board {
-	private int boardNo;
+	private int no;
 	private String title;
 	private String content;
 	private int views;
@@ -17,7 +17,7 @@ public class Board {
 	private int refer;
 	private int depth;
 	private int step;
-	private int no;
+	private int allBoardListNo;
 	private String id;
 	private String nickname;
 	private String name;
