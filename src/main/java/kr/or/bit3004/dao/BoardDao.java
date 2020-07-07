@@ -13,4 +13,8 @@ public interface BoardDao {
 	
 	//게시판 글쓰기
 	public int insertBoard(Board board);
+	
+	//게시판 삭제하기
+	public int deleteBoard(int boardNo);
+	
 }

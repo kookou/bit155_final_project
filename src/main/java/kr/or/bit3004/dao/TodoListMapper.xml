@@ -5,9 +5,14 @@
 	<select id="getTodoList" resultType="kr.or.bit3004.dto.TodoList">
 		select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
 		  from `todo_content` c
-		 inner join `todo_list` l
+		 right outer join `todo_list` l
 		    on c.no = l.no
 		 where l.TEAM_NO = #{l.TEAM_NO}
+	</select>
+	
+	<select id="getTodoTitle" resultType="kr.or.bit3004.dto.TodoList">
+		select title, team_no, id
+  		  from todo_list
 	</select>
 	
 	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.dto.TodoList">

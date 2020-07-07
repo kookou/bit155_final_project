@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit3004.service.TodoListService;
 
 @Controller
-public class TodoListController {
-	
+public class TeamMainController {
+
 	@Autowired
 	private TodoListService service;
 	
-	@RequestMapping("todoList.do")
-	public String todoList(int teamNo, Model model) {
+	@RequestMapping("teamMain.do")
+	public String selectTeamName(int teamNo, Model model) {
 		model.addAttribute("todoList", service.selectTodoList(teamNo));
-		return "todoList/todoList2";
+		return "teamMain/teamMain";
 	}
 	
 }
