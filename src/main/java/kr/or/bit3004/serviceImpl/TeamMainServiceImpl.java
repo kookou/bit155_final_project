@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.TeamMainDao;
+import kr.or.bit3004.dto.Group;
 import kr.or.bit3004.dto.GroupAndTeam;
 import kr.or.bit3004.service.TeamMainService;
 
@@ -23,6 +24,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	@Override
 	public List<GroupAndTeam> selectGroupAndTeam(String id) {
 		return dao.getGroupAndTeam(id);
+	}
+	
+	@Override
+	public void insertGroup(Group group) {
+		dao.insertGroup(group);
 	}
 	
 }
