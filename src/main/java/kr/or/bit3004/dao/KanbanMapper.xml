@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit3004.dao.KanbanDao">
+<insert id="insertListTite" parameterType="kr.or.bit3004.dto.Kanban">
+insert into `KANBAN_LIST`(`LIST_TITLE`, `ALL_BOARD_LIST_NO`, `id`) values(#{listTite},3,#{id});
+</insert>
+<select id="allKanbanList" resultType="map">
+SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content, c.write_date, c.file_count , c.comment_count , c.kanban_list_no, a.name , a.team_no , a.board_type_no
+FROM `KANBAN_LIST` l 
+	LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no
+	LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no = a.all_board_list_no where TEAM_NO = #{teamNo};
+</select>
+
+</mapper>
