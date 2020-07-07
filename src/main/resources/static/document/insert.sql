@@ -84,3 +84,6 @@ select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
  inner join team t
     on g.group_no = t.group_no 
  where id='hyerin';
+select GROUP_NO, GROUP_NAME, id
+  from `group`
+ where id='hyerin';

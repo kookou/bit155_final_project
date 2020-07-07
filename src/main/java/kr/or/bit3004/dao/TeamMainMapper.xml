@@ -7,6 +7,12 @@
 		  from `group` g
 		 inner join team t
 		    on g.group_no = t.group_no 
-		where id=#{id};
+		where id=#{id}
+	</select>
+	
+	<select id="getGroup" resultType="kr.or.bit3004.dto.GroupAndTeam">
+		select GROUP_NO, GROUP_NAME, id
+		  from `group`
+		 where id=#{id}
 	</select>
 </mapper>

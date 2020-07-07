@@ -16,6 +16,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	private TeamMainDao dao;
 	
 	@Override
+	public List<GroupAndTeam> selectGroupName(String id) {
+		return dao.getGroup(id);
+	}
+	
+	@Override
 	public List<GroupAndTeam> selectGroupAndTeam(String id) {
 		return dao.getGroupAndTeam(id);
 	}

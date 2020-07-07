@@ -5,5 +5,6 @@ import java.util.List;
 import kr.or.bit3004.dto.GroupAndTeam;
 
 public interface TeamMainDao {
+	public List<GroupAndTeam> getGroup(String id);
 	public List<GroupAndTeam> getGroupAndTeam(String id);
 }
