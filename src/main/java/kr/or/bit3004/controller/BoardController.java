@@ -45,10 +45,21 @@ public class BoardController {
 		return "redirect:boardList.do?no=5";
 	}
 	
+	//게시판 수정하기(폼)
+	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
+	public String updateBoard(int boardNo , HttpServletRequest request) {
+		return "board/updateForm";
+	}
+	//게시판 수정하기
+	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
+	public String updateBoard(Board board , HttpServletRequest request) {
+		service.updateBoard(board , request);
+		return null;
+	}
+	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
 	public String deleteBoard(int boardNo) {
-		System.out.println(boardNo);
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?no=5";
 	}
