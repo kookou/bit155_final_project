@@ -13,8 +13,8 @@
 <title>Bit 155 Final Project</title>
 <!-- Custom CSS -->
 <!-- Custom CSS -->
-<link href="../../dist/css/style.min.css" rel="stylesheet">
-<link href="../../dist/css/kanban.css" rel="stylesheet">
+<link href="css/style.min.css" rel="stylesheet">
+<link href="css/kanban.css" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -41,7 +41,7 @@
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-		
+
 		<!-- Info Alert Modal -->
 		<div id="info-alert-modal" class="modal fade" tabindex="1"
 			role="dialog" aria-hidden="true">
@@ -72,7 +72,6 @@
 		<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog"
 			aria-hidden="true">
 			<div class="modal-dialog">
-
 				<div class="card-modal-content">
 					<a class="card-modal-close far fa-trash-alt" data-dismiss="modal"
 						aria-hidden="true"> Delete Card </a>
@@ -98,7 +97,6 @@
 									style="overflow: hidden; overflow-wrap: break-word; resize: none;"></textarea>
 								<p class="card-modal-list-description"></p>
 							</div>
-
 						</div>
 
 						<div class="card-modal-file">
@@ -140,7 +138,6 @@
 									</div>
 								</div>
 							</form>
-
 						</div>
 
 						<div class="card-modal-reply-list">
@@ -167,11 +164,8 @@
 										class="btn waves-effect waves-light btn-sm btn-primary reply-done"
 										id="replydonebtn" style="display: none">Save</button>
 								</div>
-
 							</div>
-
 						</div>
-
 					</div>
 				</div>
 				<!-- /.modal-content -->
@@ -208,12 +202,9 @@
 			<div class="kanban-container" id="kanban-container">
 				<div class="kanban-canvas">
 					<div id="kanban">
-
 						<!-- ============================================================== -->
 						<!-- 칸반 add list 시작  -->
 						<!-- ============================================================== -->
-
-
 						<div class="kanban-list-add-wrapper" id="addlist">
 							<a class="kanban-list-add btn-primary">
 								<div class="kanban-list-add-header">
@@ -225,7 +216,6 @@
 						<!-- ============================================================== -->
 						<!-- 칸반 add list 끝  -->
 						<!-- ============================================================== -->
-
 					</div>
 				</div>
 			</div>
@@ -237,9 +227,11 @@
 
 
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-		
-	</div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-	<th:block th:replace="common/script :: script"></th:block>
+
+	</div>
+	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+
+	<div th:replace="common/script :: script"></div>
 
 
 </body>
