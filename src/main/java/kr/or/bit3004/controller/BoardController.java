@@ -20,48 +20,49 @@ public class BoardController {
 	
 	//게시판 목록
 	@RequestMapping("boardList.do")
-	public String selectBoardListService(Model model, int no) {
-		model.addAttribute("boardList", service.selectBoardList(no));
+	public String selectBoardListService(Model model, int allBoardListNo) {
+		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
 		return "board/boardList";
 	}
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo) {
-		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
+	public String selectBoardByBoardNoService(Model model, int no) {
+		model.addAttribute("selectBoard", service.selectBoardByBoardNo(no));
 		return "board/boardDetail";
 	}
 	
 	//게시판 글쓰기(폼)
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
-	public String insertBoard() {
+	public String insertBoardService() {
 		return "board/insertForm";
 	}
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoard(Board board , HttpServletRequest request){
+	public String insertBoardService(Board board , HttpServletRequest request){
 		service.insertBoard(board, request);
-		return "redirect:boardList.do?no=5";
+		return "redirect:boardList.do?allBoardListNo=1";
 	}
 	
 	//게시판 수정하기(폼)
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
-	public String updateBoard(int boardNo , HttpServletRequest request) {
+	public String updateBoard(int no , HttpServletRequest request , Model model) {
+		model.addAttribute("board" , service.selectBoardByBoardNo(no));
 		return "board/updateForm";
 	}
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
 	public String updateBoard(Board board , HttpServletRequest request) {
 		service.updateBoard(board , request);
-		return null;
+		return "redirect:boardList.do?allBoardListNo=1";
 	}
 	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoard(int boardNo) {
-		service.deleteBoard(boardNo);
-		return "redirect:boardList.do?no=5";
+	public String deleteBoard(int no) {
+		service.deleteBoard(no);
+		return "redirect:boardList.do?allBoardListNo=1";
 	}
 }
  

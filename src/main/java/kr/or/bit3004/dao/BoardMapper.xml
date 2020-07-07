@@ -4,34 +4,41 @@
 <mapper namespace="kr.or.bit3004.dao.BoardDao">
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.dto.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.no, b.id, u.NICKNAME
+		select b.no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.all_board_list_no, b.id, u.NICKNAME
 		  from board_list b
 		 inner join `user` u
 		    on b.id = u.id
-		 where no=#{no}
+		 where all_board_list_no=#{allBoardListNo}
 	</select> 
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.dto.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.no, b.id, a.name, u.nickname
+		select b.no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname
 		  from board_list b
 		 inner join `user` u
 			on b.id = u.id
 		 inner join all_board_list a
-	        on b.no = a.no 
-		 where board_no=#{boardNo}  
+	        on b.all_board_list_no = a.all_board_list_no 
+		 where no=#{no}  
 	</select>
 	
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.dto.Board">
-		insert into board_list(`title`, `content`, `write_date`, `no`, `id`) 
-		values(#{title}, #{content}, now(), 5, 'jinwon');
+		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`) 
+		values(#{title}, #{content}, now(), 1, 'jinwon');
 	</insert>
+	
+	<!-- 사원수정하기 -->
+	<update id="updateBoard" parameterType="kr.or.bit3004.dto.Board">
+		update board_list
+		   set title=#{title}, content=#{content}
+		 where no=#{no}
+	</update>
 	
 	<!-- 게시판 삭제하기 -->
 	<delete id="deleteBoard" parameterType="int">
 		delete
 		  from board_list
-		 where board_no=#{boardNo}
+		 where no=#{no}
 	</delete>
 </mapper>

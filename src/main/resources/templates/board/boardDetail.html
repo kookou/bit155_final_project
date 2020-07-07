@@ -511,7 +511,7 @@
                                                
                                                 <!-- 본문 내용 -->
                                                 <div id="content-outer" th:with="board=${selectBoard}">
-                                                    <h6><a th:href="@{boardList.do(no=2)}" th:text="${board.name}"></a></h6>
+                                                    <h6><a th:href="@{boardList.do(allBoardListNo=1)}" th:text="${board.name}"></a></h6>
                                                     <h2><a th:text="${board.title}"></a></h2>
                                                     <div style="float: left; margin-bottom: 15px;">
                                                         <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
@@ -593,11 +593,11 @@
                                         <div style="float: left;" th:with="board=${selectBoard}">
                                             <button type="button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> 글쓰기</button>
                                             <button type="button" class="btn btn-light btn-sm">답글</button>
-                                            <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${board.boardNo})}">수정</a>
-                                            <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${board.boardNo})}">삭제</a>
+                                            <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(no=${board.no})}">수정</a>
+                                            <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(no=${board.no})}">삭제</a>
                                         </div>
                                         <div style="float: right;">
-                                            <a type="button" class="btn btn-light btn-sm" href="boardList.do?no=5">목록</a>
+                                            <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1">목록</a>
                                             <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
                                         </div>
                                     </div>

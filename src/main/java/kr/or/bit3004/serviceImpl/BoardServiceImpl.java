@@ -19,14 +19,14 @@ public class BoardServiceImpl implements BoardService{
 
 	//게시판 목록보기 
 	@Override
-	public List<Board> selectBoardList(int no){
-		return dao.getBoardList(no);
+	public List<Board> selectBoardList(int allBoardListNo){
+		return dao.getBoardList(allBoardListNo);
 	}
 
 	//게시판 상세보기
 	@Override
-	public Board selectBoardByBoardNo(int boardNo) {
-		return dao.selectBoardByNo(boardNo);
+	public Board selectBoardByBoardNo(int no) {
+		return dao.selectBoardByNo(no);
 	}
 	
 	//게시판 글쓰기
@@ -43,8 +43,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 삭제하기
 	@Override
-	public void deleteBoard(int boardNo) {
-		dao.deleteBoard(boardNo);
+	public void deleteBoard(int no) {
+		dao.deleteBoard(no);
 	}
 	
 }
