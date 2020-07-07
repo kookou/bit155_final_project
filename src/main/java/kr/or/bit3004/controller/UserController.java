@@ -1,18 +1,17 @@
 package kr.or.bit3004.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit3004.dto.User;
-import kr.or.bit3004.serviceImpl.CustomOAuth2UserService;
 import kr.or.bit3004.serviceImpl.UserServiceImpl;
 
 @Controller
@@ -72,7 +71,11 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo() {
+	public String editUserInfo(Principal principal, Model model) {
+		
+		User currentUser = service.getUser(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		
 		return "user/editUser";
 	}
 	
@@ -82,7 +85,7 @@ public class UserController {
 		System.out.println("===controller===");
 		System.out.println(user);
 		
-		service.updateUser(user, request);
+		service.updateUser(user);
 		return "redirect:edituser";
 	}
 	

@@ -57,46 +57,65 @@ public class UserServiceImpl implements UserService{
 //	}
 
 	@Override
-	public void updateUser(User user, HttpServletRequest request) {
+	public void updateUser(User user) {
+		
 		String fileName = user.getFile().getOriginalFilename();
-		//선택한 파일이 없을 경우 default 값 넣어주기
-		if(fileName == null || fileName == "") {
-			fileName = "user.png"; //default image name
-		}
-		
-//		String path = request.getServletContext().getRealPath("/userImage");
-		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\userImage";
+		System.out.println("fileName : "+">"+ fileName+"<");
+		System.out.println(user.getFile().getSize());
 		
 		
-		System.out.println(path);
+		System.out.println(fileName == null);
 		
-		String fpath = path + "\\" + fileName;
-		System.out.println(fpath);
-		
-		FileOutputStream fs = null;
-		
-		try {
+		//사진 설정을 한 경우 
+		if(user.getFile().getSize() > 0) {
+
+			String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\userImage";
 			
-			fs = new FileOutputStream(fpath);
-			fs.write(user.getFile().getBytes());
-			fs.close();
+			String fpath = path + "\\" + fileName;
+			System.out.println(fpath);
 			
-		} catch (Exception e) {
-			System.out.println("글쓰기 파일올리기 실패 : " + e.getMessage());
+			FileOutputStream fs = null;
+			
+			try {
+				
+				fs = new FileOutputStream(fpath);
+				fs.write(user.getFile().getBytes());
+				fs.close();
+				
+			} catch (Exception e) {
+				System.out.println("글쓰기 파일올리기 실패 : " + e.getMessage());
+			}
+
+			//DB 파일명 저장
+			user.setImage(fileName);
+			
+			user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
+			
+			System.out.println("serviceImpl");
+			System.out.println(user);
+			
+			dao.updateUser(user);
+			
+		}else { // 사진 설정을 안한경우
+			
+			user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
+			
+			System.out.println("serviceImpl");
+			System.out.println(user);
+			
+			dao.updateUserExceptImage(user);
+			
 		}
 
-		//DB 파일명 저장
-		user.setImage(fileName);	
-		
-		System.out.println("serviceImpl");
-		System.out.println(user);
-		
-		dao.updateUser(user);
+
 		
 	}
 
 	@Override
 	public void updateUserPwd(String id, String pwd) {
+		
+		pwd = bCryptPasswordEncoder.encode(pwd);
+		
 		dao.updateUserPwd(id, pwd);	
 	}
 

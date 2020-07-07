@@ -35,6 +35,13 @@
 		WHERE ID = #{id}
 	</update>
 	
+	<update id="updateUserExceptImage" parameterType="kr.or.bit3004.dto.User">
+		UPDATE USER
+		SET PWD = #{pwd},
+			NICKNAME = #{nickname}
+		WHERE ID = #{id}
+	</update>
+	
 	<update id="updateUserPwd">
 		UPDATE USER
 		SET PWD = #{param2}

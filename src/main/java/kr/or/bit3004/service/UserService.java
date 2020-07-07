@@ -10,7 +10,7 @@ public interface UserService {
 	public void insertUser(User user);
 	public void idCheck(String id);
 //	public User loginCheck(String id, String pwd);
-	public void updateUser(User user, HttpServletRequest request);
+	public void updateUser(User user);
 	public void updateUserPwd(String id, String pwd);
 	
 	public User getUser(String id);

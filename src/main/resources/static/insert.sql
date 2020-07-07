@@ -24,7 +24,7 @@ insert into `USER`(`ID`, `PWD`, `NICKNAME`) values('seoyoung', '1004', '스폰�
 commit;
 
 -- 그룹
-insert into `GROUP`(`GROUP_NAME`) values('personal');
+insert into `GROUP`(`GROUP_NAME`, `id`) values('personal', 'hyerin');
 commit;
 
 -- 팀

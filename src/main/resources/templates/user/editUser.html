@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://wwww.thymeleaf.org">
+<html xmlns:th="http://wwww.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -57,9 +57,14 @@
                         <div class="form-group">
                         <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
                            	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                            	<span>
+                            	<span th:if="${currentUser.image == null}">
                                 	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
                             	</span>
+                            	<span th:unless="${currentUser.image == null}">
+                                	<img th:src="@{assets/images/userImage/}+${currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	</span>
+                            	 
+
                            	</div>
                         </div>
 						</div>
@@ -67,19 +72,19 @@
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;"></label>
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${currentUser.image}"></label>
                             </div>
                         </div> 
 
                         <div class="form-group">
-                            <input class="form-control" type="text" id="nickName" name="nickname" placeholder="Nickname">
+                        	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${currentUser.nickname}" placeholder="Nickname">
                             <div class="invalid-feedback">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control" type="email" id="id" name="id" placeholder="john@deo.com">
-                            <div class="invalid-feedback">
+                            <input class="form-control" type="email" id="id" name="id" th:value="${currentUser.id}" readonly>
+							<div class="invalid-feedback">
                             </div>                            
                         </div>
 
@@ -200,17 +205,17 @@
                     }
                 });
             }
-            inputCheck($('#id'), emailRegExp, "이메일");
+            //inputCheck($('#id'), emailRegExp, "이메일");
             inputCheck($('#nickName'), nickRegExp, "별명");
             inputCheck($('#pwd'), pwdRegExp, "비밀번호"); 
             inputCheck($('#passwordCheck'), pwdRegExp, "비밀번호확인");
             //submit 버튼 활성화
             $('input').on('change keyup', function() {
                let nickOk = $('#nickName').hasClass('is-valid');
-               let idOk = $('#id').hasClass('is-valid');
+               //let idOk = $('#id').hasClass('is-valid');
                let pwdOk = $('#pwd').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
-               if(nickOk && idOk && pwdOk && pwdChckOk){
+               if(nickOk && pwdOk && pwdChckOk){
                    console.log("if");
                    $('#submit').removeAttr('disabled');
                }else{

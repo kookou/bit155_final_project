@@ -11,7 +11,9 @@ public interface UserDao {
 	public int idCheck(String id);
 	public int loginCheck(String id, String pwd);
 	public int updateUser(User user);
+	public int updateUserExceptImage(User user);
 	public int updateUserPwd(String id, String pwd);
+	
 	
 	public User getUser(String id);
 	public List<User> getUserList();
