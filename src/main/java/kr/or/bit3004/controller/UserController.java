@@ -59,9 +59,9 @@ public class UserController {
 	}
 	
 	// 비번 수정 요청 폼
-	@RequestMapping(value="/resetpassword", method=RequestMethod.GET)
+	@RequestMapping(value="/forgotpwd", method=RequestMethod.GET)
 	public String resetPassword() {
-		return "user/resetPassword";
+		return "user/forgotPwd";
 
 	}
 	
@@ -71,16 +71,19 @@ public class UserController {
 	//		>	해당 페이지에서 새 비밀번호를 입력하면 DB에 반영 
 	
 	//회원 수정 폼
-	@RequestMapping(value="/edituserinfo", method=RequestMethod.GET)
+	@RequestMapping(value="/edituser", method=RequestMethod.GET)
 	public String editUserInfo() {
-		return "user/editUserInfo";
+		return "user/editUser";
 	}
 	
 	//회원 수정 처리
-	@RequestMapping(value="/edituserinfo", method=RequestMethod.POST)
+	@RequestMapping(value="/edituser", method=RequestMethod.POST)
 	public String editUserInfo(User user, HttpServletRequest request) {
+		System.out.println("===controller===");
+		System.out.println(user);
+		
 		service.updateUser(user, request);
-		return "redirect:edituserinfo";
+		return "redirect:edituser";
 	}
 	
 	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다

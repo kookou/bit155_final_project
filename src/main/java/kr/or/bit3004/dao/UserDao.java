@@ -10,7 +10,7 @@ public interface UserDao {
 	public int insertUser(User user);
 	public int idCheck(String id);
 	public int loginCheck(String id, String pwd);
-	public int updateUser(User user, HttpServletRequest request);
+	public int updateUser(User user);
 	public int updateUserPwd(String id, String pwd);
 	
 	public User getUser(String id);

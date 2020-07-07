@@ -63,7 +63,13 @@ public class UserServiceImpl implements UserService{
 		if(fileName == null || fileName == "") {
 			fileName = "user.png"; //default image name
 		}
-		String path = request.getServletContext().getRealPath("/userImage");
+		
+//		String path = request.getServletContext().getRealPath("/userImage");
+		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\userImage";
+		
+		
+		System.out.println(path);
+		
 		String fpath = path + "\\" + fileName;
 		System.out.println(fpath);
 		
@@ -80,9 +86,12 @@ public class UserServiceImpl implements UserService{
 		}
 
 		//DB 파일명 저장
-		user.setImage(fileName);		
+		user.setImage(fileName);	
 		
-		dao.updateUser(user, request);
+		System.out.println("serviceImpl");
+		System.out.println(user);
+		
+		dao.updateUser(user);
 		
 	}
 
