@@ -79,8 +79,11 @@ select title, team_no, id
   
 select * from team;
 select * from `group`;
-select * 
-  from team_member tm
-  inner join team t
-    on tm.team_no = t.team_no 
+select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
+  from `group` g
+ inner join team t
+    on g.group_no = t.group_no 
+ where id='hyerin';
+select GROUP_NO, GROUP_NAME, id
+  from `group`
  where id='hyerin';

@@ -13,10 +13,6 @@
     <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
-    <!-- Vue.js CDN -->
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<!-- 엑시오스 CDN (ajax같은 것) -->
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -327,24 +323,29 @@
         <!-- ============================================================== -->
         <!-- 본인 페이지 인클루드  -->
         <!-- ============================================================== -->
-        <div id="app">
-
-		</div>
-		
-		<script>
-		    var app = new Vue({
-		        el: '#app',
-		        data() {
-		            return {
-		            };
-		        },
-		        methods: {
-		        },
-		        components: {
-		        }
-		    });
-		</script>
-
+        <div class="page-wrapper">
+        	<div class="container-fluid">
+        	
+        		<div class="row" th:each="item: ${group}">
+        			<div class="col-xl-12"  style="height: 100%;">
+	        				<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;"></h2>&nbsp;
+	        				<h6 style="display: inline-block; vertical-align: middle;">
+			        			<a href='#'><i class='fas fa-pencil-alt iconStyle'></i></a>&nbsp;
+		                        <a href='#'><i class='fas fa-trash-alt iconStyle'></i></a>
+	        				</h6>
+        			</div>
+        			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupName == team.groupName}">
+        				<div class="card" >
+        					<div class="card-body collapse show">
+        						<h4 class="card-title" th:text="${team.teamName}"></h4>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        		
+        	</div>
+        </div>
+        
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -354,18 +355,22 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../../assets/libs/popper.js/dist/umd/popper.main.js"></script>
-    <script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.main.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
     <!-- apps -->
-    <script src="../../dist/js/app-style-switcher.js"></script>
-    <script src="../../dist/js/feather.min.js"></script>
-    <script src="../../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../dist/js/sidebarmenu.js"></script>
+    <script src="js/app-style-switcher.js"></script>
+    <script src="js/feather.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="s/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="../../dist/js/custom.min.js"></script>
+    <script src="js/custom.min.js"></script>
     <!--This page JavaScript -->
+    
+    <script>
+		console.log()
+	</script>
 </body>
 
 </html>
