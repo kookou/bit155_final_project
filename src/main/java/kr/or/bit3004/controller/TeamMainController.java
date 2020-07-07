@@ -17,7 +17,7 @@ public class TeamMainController {
 	public String selectTeamName(String id, Model model) {
 		model.addAttribute("groupAndTeam", service.selectGroupAndTeam(id));
 		model.addAttribute("group", service.selectGroupName(id));
-		return "teamMain/teamMain";
+		return "teamMain/groupAndTeamMain.html";
 	}
 	
 }

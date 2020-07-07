@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Bit 155 Final Project</title>
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/kanban.css" rel="stylesheet">
+    <style>
+    	.teamBtn {
+    		cursor:pointer;
+    	}
+    	.teamBtn:hover {
+    		background-color: rgba(0, 0, 0, 0.1);
+    		border-radius: 4px;
+    	}
+    	.iconStyle {
+            color: silver;
+        }
+        .iconStyle:hover {
+            color: #5f76e8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+    
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	<div class="page-wrapper">
+       	<div class="container-fluid" id="outer">
+       	
+       		<div class="row" th:each="item: ${group}">
+       			<div class="col-xl-12"  style="height: 100%;">
+        				<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;"></h2>&nbsp;
+        				<h6 style="display: inline-block; vertical-align: middle;" th:if="${!item.groupName.equals('Personal')}">
+		        			<a href='#'><i class='fas fa-pencil-alt iconStyle iconStyle' ></i></a>&nbsp;
+	                        <a href='#'><i class='fas fa-trash-alt iconStyle iconStyle' ></i></a>
+        				</h6>
+       			</div>
+       			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupName == team.groupName}">
+       				<div class="card" >
+       					<div class="card-body collapse show teamBtn">
+       						<h4 class="card-title" th:text="${team.teamName}"></h4>
+       					</div>
+       				</div>
+       			</div>
+       			<div class="col-xl-3">
+       				<div class="card" >
+       					<div class="card-body collapse show teamBtn" style="text-align: center;">
+       						+ Create New Team
+       					</div>
+       				</div>
+       			</div>
+       		</div>
+       		<div class="row" id="addGroupDiv">
+        		<div class="col-xl-3">
+                    <div class="btn waves-effect waves-light btn-outline-primary" id="addGroupBtn" >+ Add Group</div>
+                </div>
+       		</div>
+       		
+       	</div>
+       </div>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+    <div th:replace="common/script :: script"></div>
+    <script>
+    	//addGroupBtn 눌렀을 때
+		$('#addGroupBtn').click(function() {
+			var inputGroupNameHtml =
+				'<div class="row" id="inputGroupNameDiv">' + 
+					'<div class="col-xl-3">' +
+						'<input type="text" placeholder="그룹명을 입력하세요" class="form-control" id="inputGroupName">' +
+					'</div>' +
+					'<div class="col-xl-3">' +
+						'<button class="btn btn-info btn-circle" id="addGroupName"><i class="fa fa-check"></i></button>' +
+					'</div>' +
+				'</div>';
+			$('#outer').append(inputGroupNameHtml);
+			$('#addGroupBtn').hide();	
+		});
+		
+    	//그룹명 입력받고 체크버튼 눌렀을 때
+		$(document).on('click', '#addGroupName', function() {
+			$.ajax({
+				url: "insertGroup.do",
+				data: {
+					groupName: $('#inputGroupName').val(),
+					id: "hyerin"
+				},
+				success: function(resData) {
+					console.log(resData);
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+			
+			var html = 
+				'<div class="row">' + 
+        			'<div class="col-xl-12"  style="height: 100%;">' + 
+        				'<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;">' + $('#inputGroupName').val() + '</h2>&nbsp;' +
+        				'<h6 style="display: inline-block; vertical-align: middle;" >' +
+		        			'<a href="#"><i class="fas fa-pencil-alt iconStyle iconStyle"></i></a>&nbsp;' + 
+	                        '<a href="#"><i class="fas fa-trash-alt iconStyle iconStyle"></i></a>' + 
+        				'</h6>' + 
+        			'</div>' + 
+        			'<div class="col-xl-3">' +
+        				'<div class="card" style="text-align: center;">' +
+        					'<div class="card-body collapse show teamBtn">' +
+        						'+ Create New Team' +
+        					'</div>' +
+        				'</div>' +
+        			'</div>' +
+        		'</div>';
+			$('#addGroupDiv').before(html);
+			$('#inputGroupNameDiv').remove();
+			$('#addGroupBtn').show();
+		});
+	</script>
+    
+
+</body>
+</html>
