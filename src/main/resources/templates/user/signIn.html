@@ -83,6 +83,21 @@
                                 <div class="form-group text-center mt-4">
                                     <input type="submit" class="btn btn-block btn-info" value="Sign In" />
                                 </div>
+                                
+                                <p>다음 계정으로 로그인</p>
+                                <a href="javascript:;" class="btn_social" data-social="kakao">
+                                	<img height="50" src="assets/images/socialLoginImages/kakao_login_large_narrow.png" />
+                                </a>
+                                <a href="javascript:;" class="btn_social" data-social="google">
+                                	<img height="58" src="assets/images/socialLoginImages/google.png" />
+                                </a>
+                                <a href="javascript:;" class="btn_social" data-social="naver">
+                                	<img height="50" src="assets/images/socialLoginImages/naver_green.png" />
+                                </a>
+                                <a href="javascript:;" class="btn_social" data-social="facebook">
+                                	<img height="50" src="assets/images/socialLoginImages/facebook_basic.png" />
+                                </a>
+                                
 
                                 <div class="col-lg-12 text-center mt-5">
                                     Don't have an account? <a href="signup" class="text-danger">Sign Up</a>
@@ -134,6 +149,18 @@
             return true;
         }
         //로그인 유지 기능 구현해야함
+        
+        
+        let socials = document.getElementsByClassName("btn_social");
+		for(let social of socials) {
+		social.addEventListener('click', function(){
+			let socialType = this.getAttribute('data-social');
+			location.href="/oauth2/authorization/" + socialType;
+	
+			})
+		}
+        
+        
         $(function() {
             // console.log("jquery start");
         });
