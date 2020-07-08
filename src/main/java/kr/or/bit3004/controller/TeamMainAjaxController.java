@@ -48,4 +48,9 @@ public class TeamMainAjaxController {
 		service.moveAndDelGroup(groupNo);
 	}
 	
+	@RequestMapping("searchUser.do")
+	public List<String> searchUser(String id) {
+		return service.searchUser(id);
+	}
+	
 }

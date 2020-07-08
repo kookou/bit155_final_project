@@ -60,7 +60,7 @@
        			</div>
        			<div class="col-xl-3">
        				<div class="card" >
-       					<div class="card-body collapse show teamBtn" style="text-align: center;">
+       					<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">
        						+ Create New Team
        					</div>
        				</div>
@@ -74,6 +74,24 @@
        		
        	</div>
        </div>
+       
+       <!-- Create New Team Modal -->
+        <div id="createNewTeamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <i class="dripicons-warning h1 text-warning"></i>
+                            <input type="text" class="form-control" placeholder="Team Name">
+                            <br>
+                            <input type="text" class="form-control" placeholder="Team에 초대할 Member 검색" id="searchUser">
+					    	<ul id="searchResult" class="list-style-none"></ul>
+                            <button type="button" class="btn btn-warning my-2" data-dismiss="modal">Continue</button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
@@ -81,8 +99,8 @@
     <script th:inline="javascript">
 	    /*<![CDATA[*/
 	    	var currUser = [[${session.currentUser.id}]];
-	    	console.log(currUser);
 	    /*]]>*/
+	    
 		var inputGroupNameHtml =
 			'<div class="row" id="inputGroupNameDiv">' + 
 				'<div class="col-xl-3">' +
@@ -286,7 +304,7 @@
     			});
     			html += 	'<div class="col-xl-3">' +
 									'<div class="card" >' +
-										'<div class="card-body collapse show teamBtn" style="text-align: center;">' +
+										'<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
 											'+ Create New Team' +
 										'</div>' +
 									'</div>' +
@@ -300,6 +318,39 @@
 							'</div>';
     			$('#outer').append(html);
     	}
+    	
+    	/////////////////////////////////////////////////////////////////////////////////////// Team 만들기
+    	$('.teamBtn').click(function() {
+    		$("#searchResult").html("");
+    		$('#searchUser').val("");
+    	});
+    	
+    	$('#searchUser').keyup(function(key) {
+    		if(key.keyCode < 90 && key.keyCode > 47 || key.keyCode == 8) {
+    			if($(this).val() == "") {
+    				$("#searchResult").html("");
+    				return;
+    			}
+	    		$.ajax({
+					url: "searchUser.do",
+					data: {
+						id: $(this).val()
+					},
+					success: function(resData) {
+						let html = "";
+						$.each(resData, function(index, obj) {
+							html += '<li class="text-left">';
+							html += '	<a href="javascript:void(0)"><i class="fa fa-check text-info"></i>' + obj + '</a>';
+							html += '</li>';
+						});
+						$("#searchResult").html(html);
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+    		}
+    	});
 	</script>
     
 

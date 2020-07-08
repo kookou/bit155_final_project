@@ -41,4 +41,9 @@ public class TeamMainServiceImpl implements TeamMainService {
 		dao.delGroup(groupNo);
 	}
 	
+	@Override
+	public List<String> searchUser(String id) {
+		return dao.searchUser(id);
+	}
+	
 }

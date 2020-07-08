@@ -11,4 +11,5 @@ public interface TeamMainDao {
 	public void insertGroup(GroupAndTeam group);
 	public void moveGroup(int groupNo);
 	public void delGroup(int groupNo);
+	public List<String> searchUser(String id);
 }

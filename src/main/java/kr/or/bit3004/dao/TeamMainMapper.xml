@@ -36,4 +36,8 @@
 		delete from `group` where `group_no` = #{groupNo}
 	</delete>
 	
+	<select id="searchUser" parameterType="String" resultType="String">
+		select id from `user` where id like '%${id}%'
+	</select>
+	
 </mapper>

@@ -10,4 +10,5 @@ public interface TeamMainService {
 	public int getCurrGroupNo();
 	public void insertGroup(GroupAndTeam group);
 	public void moveAndDelGroup(int groupNo);
+	public List<String> searchUser(String id);
 }
