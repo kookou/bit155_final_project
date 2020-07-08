@@ -74,8 +74,8 @@
                         </div> 
 
                         <div class="form-group">
-                        	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${currentUser.nickname}" placeholder="Nickname">
-                            <div class="invalid-feedback">
+                        	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${session.currentUser.nickname}" placeholder="Nickname">
+                            <div class="invalid-feedback"> <!-- 이렇게 세션값에 접근가능 -->
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your password">                            
+                            <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your new password">                            
                             <div class="invalid-feedback">
                             </div>
                             <input class="form-control mt-2" type="password" id="passwordCheck" placeholder="Password check">                            
