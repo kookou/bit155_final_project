@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.bit3004.dto.Mail;
 import kr.or.bit3004.dto.User;
+import kr.or.bit3004.serviceImpl.MailServiceImpl;
 import kr.or.bit3004.serviceImpl.UserServiceImpl;
 
 @Controller
@@ -20,6 +22,9 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceImpl service;
+	
+	@Autowired
+	private MailServiceImpl mailService;
 	
 	//로그인 폼
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
@@ -57,6 +62,24 @@ public class UserController {
 		service.insertUser(user);
 		return "redirect:signin";
 	}
+	
+	// 메일 인증 요청 폼
+	@RequestMapping(value="/mail", method=RequestMethod.GET)
+	public String mailForm() {
+		return "user/mail";
+
+	}
+	
+	// 메일 인증 처리
+	@RequestMapping(value="/mail", method=RequestMethod.POST)
+	public String mailSender(Mail mail) {
+		System.out.println("mailSender");
+		mailService.mailSend(mail);
+		
+		return "/";
+	}
+	
+	
 	
 	// 비번 수정 요청 폼
 	@RequestMapping(value="/forgotpwd", method=RequestMethod.GET)
