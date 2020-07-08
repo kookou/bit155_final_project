@@ -8,9 +8,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class Mail {
-	private String address;
-	private String title;
+	
+	private String sender;
+	private String receiver;
+	private String subject;
 	private String message;
+
 }

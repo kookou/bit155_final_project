@@ -12,6 +12,7 @@
     <title>sign up</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet">
 
 
 </head>
@@ -54,6 +55,26 @@
 
                     <form class="pl-3 pr-3 mt-4" action="" method="post">
 
+						                        
+                        <div class="form-group">
+                            <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="email" id="email" name="id"
+                                required="" placeholder="john@deo.com">
+                            <button class="btn btn-info col-3">인증 요청</button>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="text" id="authNum" name="authNum"
+                                required="" placeholder="인증번호를 입력하세요">
+                            <button class="btn btn-info">인증 확인</button>                                
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+
                         <div class="form-group">
                             <input class="form-control" type="text" id="nickName" name="nickname"
                                 required="" placeholder="Nick Name">
@@ -61,24 +82,16 @@
                             </div>
                         </div>
 
-                        <div class="form-group" style="background-color: ">
-                            <input class="form-control" type="email" id="email" name="id"
-                                required="" placeholder="john@deo.com">
-                            <div class="invalid-feedback">
-                            </div>
-                        </div>
-
-
 
                         <div class="form-group">
                             <input class="form-control" type="password" required=""
                                 id="password" name="pwd" placeholder="Enter your password">
                             <div class="invalid-feedback">
                             </div>
+                        </div>
 
 
-
-
+                        <div class="form-group">
                             <input class="form-control mt-2" type="password" required=""
                             id="passwordCheck" placeholder="password check">
                             <div class="invalid-feedback">
@@ -132,7 +145,7 @@
                             let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
                             input.removeClass("is-valid");
                             input.addClass("is-invalid");
-                            input.next().append(invalidMessage);
+                            input.siblings('div').append(invalidMessage);
                         }else{
                             input.removeClass("is-invalid");
                             input.addClass("is-valid");
@@ -141,7 +154,7 @@
                     input.removeClass("is-valid");
                     input.addClass("is-invalid");
                     let invalidMessage = '형식에 맞는 비밀번호를 먼저 입력하세요 <br>';
-                    input.next().append(invalidMessage);
+                    input.siblings('div').append(invalidMessage);
                    }
                             
                 }else{
@@ -157,7 +170,7 @@
                         	invalidMessage += '영문 소문자, 대문자 , 숫자를 1자 이상 포함하여 8자 이상 입력해주세요 <br>';
                         }
                         
-                        input.next().append(invalidMessage);
+                        input.siblings('div').append(invalidMessage);
                     }else{
                         input.removeClass("is-invalid");
                         input.addClass("is-valid");
@@ -168,6 +181,17 @@
             
             
             //이메일 중복체크 기능 들어가야함(Ajax)
+            $.ajax({
+            		 type: "post",
+            		 url: "",
+            		 data: {
+            			 "id" : $('#').val()
+            		 }
+            		 success: function(data){
+            			 console.log(data);
+            		 }
+            });
+            
            
             
             
@@ -176,17 +200,20 @@
             function inputCheck(input, regExp, name) {
                 input.on({
                     blur : function() {
-                        input.next().empty();
+                    	input.siblings('div').empty();
                         if (input.val() == "") {
                             input.addClass("is-invalid");
                             let invalidMessage = name + '을 입력하세요 <br>';
-                            input.next().append(invalidMessage);
+                            //input.next().append(invalidMessage);
+                            input.siblings('div').append(invalidMessage);
+                            
                         }else{
                             regCheck($(this), regExp, name);
                         }
                     },
                     keyup : function() {
-                        input.next().empty();
+                        //input.next().empty();
+                        input.siblings('div').empty();
                         regCheck(input, regExp, name);
                     }
                 });

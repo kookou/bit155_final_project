@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -216,6 +217,8 @@
 	<a href="paint.do">그림판 테스트</a> <br>
 	<a href="todoList.do?teamNo=1">todoList 테스트</a> <br>
 	<a href="teamMain.do?id=hyerin">teamMain 테스트</a> <br>
+	<input class="form-control" type="email" id="id" name="id" th:value="${session.currentUser.id}" readonly>
+	<span th:text="${session.currentUser.id}"></span>	
 
 </body>
 </html>
