@@ -2,10 +2,9 @@ package kr.or.bit3004.serviceImpl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
 import kr.or.bit3004.dto.Board;
@@ -31,7 +30,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 글쓰기
 	@Override
-	public int insertBoard(Board board) {
+	public int insertBoard(Board board , MultipartHttpServletRequest mtfRequest) {
+		
 		return dao.insertBoard(board);
 	}
 	
