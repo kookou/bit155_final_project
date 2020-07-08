@@ -66,6 +66,7 @@ public class UserController {
 	// 메일 인증 요청 폼
 	@RequestMapping(value="/mail", method=RequestMethod.GET)
 	public String mailForm() {
+		System.out.println("mailForm");
 		return "user/mail";
 
 	}
@@ -74,9 +75,11 @@ public class UserController {
 	@RequestMapping(value="/mail", method=RequestMethod.POST)
 	public String mailSender(Mail mail) {
 		System.out.println("mailSender");
+		System.out.println(mail);
+		
 		mailService.mailSend(mail);
 		
-		return "/";
+		return "redirect:";
 	}
 	
 	

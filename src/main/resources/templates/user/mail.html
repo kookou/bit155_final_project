@@ -54,11 +54,11 @@
                                 to send you instructions to reset your password.
                             </div>
 
-                            <form action="" class="pl-3 pr-3 mt-4">
+                            <form action="" method="post" class="pl-3 pr-3 mt-4">
 
                                 <div class="form-group" id="mailSenderGroup">
                                     <!-- keyup 처리하기 -->
-                                    <input class="form-control" type="email" id="email" name="address"
+                                    <input class="form-control" type="email" id="address" name="address"
                                         required="" placeholder="john@deo.com">
                                     
                                     <input class="form-control" type="text" id="title" name="title"
@@ -108,7 +108,7 @@
                     $('#submit').removeAttr('disabled', 'disabled');
                 }
             }
-            $('#email').on('blur', function() {
+            $('#address').on('blur', function() {
             //  console.log("blur event");
              
              $('.invalid-feedback').empty();
@@ -121,7 +121,7 @@
                 emailRegCheck($(this));
              }
             });
-            $('#email').on('keyup', function() {
+            $('#address').on('keyup', function() {
             //  console.log("keyup event");
              $('.invalid-feedback').empty();
              emailRegCheck($(this));
