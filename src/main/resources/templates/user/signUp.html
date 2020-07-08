@@ -149,7 +149,14 @@
                     if ( regExp.test(input.val()) == false) {
                         input.removeClass("is-valid");
                         input.addClass("is-invalid");
+                        
+                        
                         let invalidMessage = name + ' 형식에 맞게 입력하세요 <br>';
+                        
+                        if(name == "비밀번호"){
+                        	invalidMessage += '영문 소문자, 대문자 , 숫자를 1자 이상 포함하여 8자 이상 입력해주세요 <br>';
+                        }
+                        
                         input.next().append(invalidMessage);
                     }else{
                         input.removeClass("is-invalid");
@@ -158,7 +165,12 @@
                   
                 }
             }
-            //이메일 중복체크 기능 들어가야함
+            
+            
+            //이메일 중복체크 기능 들어가야함(Ajax)
+           
+            
+            
             //input 검증 @@ keyup일 때는 제대로 나오는데 blur 일 때는 css가 이상하다........................왜지 
             // chrome 브라우저의 user agent stylesheet 설정 때문이었다............빡침
             function inputCheck(input, regExp, name) {
