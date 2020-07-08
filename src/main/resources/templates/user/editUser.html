@@ -54,11 +54,11 @@
                         <div class="form-group">
                         <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
                            	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                            	<span th:if="${currentUser.image == null}">
+                            	<span th:if="${session.currentUser.image == null}">
                                 	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
                             	</span>
-                            	<span th:unless="${currentUser.image == null}">
-                                	<img th:src="@{assets/images/userImage/}+${currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	<span th:unless="${session.currentUser.image == null}">
+                                	<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
                             	</span>
                             	 
 
@@ -69,18 +69,19 @@
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${currentUser.image}"></label>
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${session.currentUser.image}"></label>
                             </div>
                         </div> 
 
                         <div class="form-group">
                         	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${session.currentUser.nickname}" placeholder="Nickname">
-                            <div class="invalid-feedback"> <!-- 이렇게 세션값에 접근가능 -->
+                            <div class="invalid-feedback">
                             </div>
                         </div>
+                        
 
                         <div class="form-group">
-                            <input class="form-control" type="email" id="id" name="id" th:value="${currentUser.id}" readonly>
+                            <input class="form-control" type="email" id="id" name="id" th:value="${session.currentUser.id}" readonly>
 							<div class="invalid-feedback">
                             </div>                            
                         </div>

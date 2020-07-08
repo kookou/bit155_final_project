@@ -21,9 +21,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import kr.or.bit3004.handler.LoginFailureHandler;
+import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
 import kr.or.bit3004.serviceImpl.CustomOAuth2UserService;
 
@@ -44,6 +48,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private AuthenticationSuccessHandler loginSuccessHandler; 
+	
+	@Autowired
+	private AuthenticationFailureHandler loginFailureHandler;
+
+	
+	
 	
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
@@ -86,10 +99,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			http.formLogin()
 							.loginPage("/signin")
-							.defaultSuccessUrl("/loginSuccess")
+							.defaultSuccessUrl("/")
 							.failureUrl("/signin?error")
 							.usernameParameter("id")
-							.passwordParameter("pwd");
+							.passwordParameter("pwd")
+							
+							.successHandler(loginSuccessHandler)
+							.failureHandler(loginFailureHandler);
 			
 			http.logout()
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -110,7 +126,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			e.getMessage();
 		}
 	}
-	
+
 	
 	
 	@Bean 

@@ -72,15 +72,7 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(Principal principal, Model model, HttpSession session) {
-		
-		User currentUser = service.getUser(principal.getName());
-		model.addAttribute("currentUser", currentUser);
-		
-		session.setAttribute("currentUser", currentUser);
-		
-		
-		
+	public String editUserInfo() {	
 		return "user/editUser";
 	}
 	
