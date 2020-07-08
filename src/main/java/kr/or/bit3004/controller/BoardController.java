@@ -29,13 +29,13 @@ public class BoardController {
 	@RequestMapping("selectBoard.do")
 	public String selectBoardByBoardNoService(Model model, int no) {
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(no));
-		return "board/boardDetail";
+		return "board/detail";
 	}
 	
 	//게시판 글쓰기(폼)
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
 	public String insertBoardService() {
-		return "board/insertForm";
+		return "board/insert";
 	}
 	
 	//게시판 글쓰기
@@ -49,7 +49,7 @@ public class BoardController {
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
 	public String updateBoard(int no , HttpServletRequest request , Model model) {
 		model.addAttribute("board" , service.selectBoardByBoardNo(no));
-		return "board/updateForm";
+		return "board/update";
 	}
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
