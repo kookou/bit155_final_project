@@ -31,7 +31,7 @@
 	<!-- 사원수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.dto.Board">
 		update board_list
-		   set title=#{title}, content=#{content}
+		   set no=#{no}, title=#{title}, content=#{content}
 		 where no=#{no}
 	</update>
 	

@@ -31,13 +31,14 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 글쓰기
 	@Override
-	public int insertBoard(Board board , HttpServletRequest request) {
+	public int insertBoard(Board board) {
 		return dao.insertBoard(board);
 	}
 	
 	//게시판 수정하기
 	@Override
-	public void updateBoard(Board board , HttpServletRequest request) {
+	public void updateBoard(Board board) {
+		System.out.println(board);
 		dao.updateBoard(board);
 	}
 	
