@@ -17,7 +17,7 @@ public class BoardController {
 	private BoardService service;
 	
 	//게시판 목록
-	@RequestMapping("boardList.do")
+	@RequestMapping("boardList.free")
 	public String selectBoardListService(Model model, int allBoardListNo) {
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
 		return "board/list";
