@@ -26,9 +26,10 @@ public class TeamMainAjaxController {
 	}
 	
 	@RequestMapping("insertGroup.do")
-	public void insertGroup(GroupAndTeam group) {
+	public int insertGroup(GroupAndTeam group) {
 		System.out.println(group);
 		service.insertGroup(group);
+		return service.getCurrGroupNo();
 	}
 	
 }
