@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Bit 155 Final Project</title>
+    <!-- Custom CSS -->
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/kanban.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+ 	<!-- <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div> -->
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	<div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
+                    </div>
+                   
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                	
+                                    <table class="table">
+                                        <thead class="bg-primary text-white">
+                                        	<tr>
+	                                            <th style="width:15%; text-align: center;">작성자</th>
+	                                            <th style="width:55%; text-align: center;">제목</th>
+	                                            <th style="width:20%; text-align: center;">작성일시</th>
+	                                            <th style="width:10%; text-align: center;">조회수</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+	                                            <tr th:each="board:${boardList}">
+	                                                <td style="width:15%; text-align: center;"><a th:text="${board.nickname}"></a></td>
+	                                                <td style="width:55%;">
+	                                                	<a th:href="@{selectBoard.do(no=${board.no})}" th:text="${board.title}"></a>
+	                                                </td>
+	                                                <td style="width:20%; text-align: center;"><a th:text="${board.writeDate}"></a></td>
+	                                                <td style="width:10%; text-align: center;"><a th:text="${board.views}"></a></td>
+	                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-actions text-right">
+                                	<a href="insertBoard.do" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+                                </div>
+                                <div class="col-12">
+                                 	<ul class="pagination pagination-sm">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="javascript:void(0)"
+                                                tabindex="-1">Previous</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+        </div> 
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+    <div th:replace="common/script :: script"></div>
+    
+    
+
+</body>
+</html>
