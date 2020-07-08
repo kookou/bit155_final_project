@@ -3,6 +3,7 @@ package kr.or.bit3004.controller;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -71,11 +72,7 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(Principal principal, Model model) {
-		
-		User currentUser = service.getUser(principal.getName());
-		model.addAttribute("currentUser", currentUser);
-		
+	public String editUserInfo() {	
 		return "user/editUser";
 	}
 	

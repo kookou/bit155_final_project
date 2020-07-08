@@ -26,8 +26,19 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
+	public int getCurrGroupNo() {
+		return dao.getCurrGroupNo();
+	}
+	
+	@Override
 	public void insertGroup(GroupAndTeam group) {
 		dao.insertGroup(group);
+	}
+	
+	@Override
+	public void moveAndDelGroup(int groupNo) {
+		dao.moveGroup(groupNo);
+		dao.delGroup(groupNo);
 	}
 	
 }
