@@ -29,7 +29,7 @@ import kr.or.bit3004.serviceImpl.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	
 	
