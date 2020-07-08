@@ -30,7 +30,7 @@ import java.util.LinkedHashSet;
 import java.util.Map; 
 import java.util.Set; 
 
-//@Component
+
 public class CustomOAuth2UserService extends DefaultOAuth2UserService { 
 	private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri"; 
 	private static final String MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE = "missing_user_name_attribute"; 
@@ -41,9 +41,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter = new OAuth2UserRequestEntityConverter(); 
 	private RestOperations restOperations; 
 	
-//	
-//	@Getter
-//	public OAuth2AccessToken accessToken;
 	
 	public CustomOAuth2UserService() { 
 		RestTemplate restTemplate = new RestTemplate(); 
@@ -104,7 +101,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		authorities.add(new OAuth2UserAuthority(userAttributes)); 
 		OAuth2AccessToken token = userRequest.getAccessToken(); 
 		System.out.println(token.getScopes());
-//		accessToken = token;
 		
 		
 		for (String authority : token.getScopes()) { 

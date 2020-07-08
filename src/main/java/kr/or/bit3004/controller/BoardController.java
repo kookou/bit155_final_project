@@ -22,7 +22,7 @@ public class BoardController {
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo) {
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
-		return "board/boardList";
+		return "board/list";
 	}
 	
 	//게시판 상세보기
