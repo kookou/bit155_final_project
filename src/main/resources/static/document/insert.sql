@@ -34,7 +34,7 @@ select * from `GROUP`;
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit final project', 4);
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit 2nd project', 5);
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit 1st project', 5);
-insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('simple project', 6);
+insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('simple project', 4);
 commit;
 select * from `TEAM`;
 
@@ -90,6 +90,14 @@ select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
  inner join team t
     on g.group_no = t.group_no 
  where id='hyerin';
+ 
 select GROUP_NO, GROUP_NAME, id
   from `group`
  where id='hyerin';
+ 
+ select max(`GROUP_NO`) from `group`;
+ 
+update `team` 
+   set `GROUP_NO` = 1
+ where `GROUP_NO` = 3;
+delete from `group` where `GROUP_NO` = 3;
