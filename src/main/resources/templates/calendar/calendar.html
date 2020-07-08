@@ -9,9 +9,11 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-   <title>Bit 155 Final Project</title>
-    <link href="assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+    <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
+    <!-- Custom CSS -->
+     <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet" />
+    <link href="assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,11 +21,12 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <![endif]-->
+
 </head>
 
 <body>
-   <!--  <div class="preloader">
+ 	<!-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
@@ -32,11 +35,14 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-	<th:block th:replace="common/header :: header"></th:block>
-    <th:block th:replace="common/aside :: aside"></th:block>
-       <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-        <div class="page-wrapper">
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+        
+       <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -47,7 +53,7 @@
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="fas fa-paint-brush" aria-current="page" style="margin-right: 8px;"></li>
+                                    <li class="breadcrumb-item text-muted active" aria-current="page">Apps</li>
                                     <li class="breadcrumb-item text-muted" aria-current="page">Calendar</li>
                                 </ol>
                             </nav>
@@ -64,6 +70,9 @@
                     </div>
                 </div>
             </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -115,53 +124,48 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by Adminmart. Designed and Developed by <a
+                    href="https://wrappixel.com">WrapPixel</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>   
+        
+        
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-    </div>
-    <div th:replace="common/script :: script"></div>
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+    <!-- <div th:replace="common/script :: script"></div> -->
+    <!-- 저는 개인 script를 이용하겠습니다..-서폰지밥- -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
-    <script src="dist/js/app-style-switcher.js"></script>
-    <script src="dist/js/feather.min.js"></script>
+      <script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/c3.min.js"></script>
+    <script src="js/app-style-switcher.js"></script>
+    <script src="js/feather.min.js"></script>
     <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="dist/js/sidebarmenu.js"></script>
+    <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="dist/js/custom.min.js"></script>
+    <script src="js/custom.min.js"></script>
     <!--This page JavaScript -->
     <script src="assets/libs/moment/min/moment.min.js"></script>
     <script src="assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="dist/js/pages/calendar/cal-init.js"></script>
+    <script src="js/pages/calendar/cal-init.js"></script>
     
-    <!-- 내가 만드는 스크립트 -->
-    <script type="text/javascript">
-/*     
-    var calendarEl = document.getElementById("calendar");
     
-	    var calendar = new FullCalendar.Calendar(calendarEl, {  
-	    	  initialView: 'dayGridMonth',
-	    	  selectable: true
-	    	 
-	    	});
-	    calendar.render();
-	    console.log('dgdg하하');
-  */
-   
-    </script>
+    
+    
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-

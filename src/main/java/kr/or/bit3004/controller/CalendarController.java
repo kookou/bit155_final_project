@@ -8,7 +8,7 @@ public class CalendarController {
 
 	@RequestMapping("/calendar.do")
 	public String signIn() {
-		return "calendar/app-calendar";
+		return "calendar/calendar";
 	}
 	
 	
