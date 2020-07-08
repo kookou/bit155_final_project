@@ -35,4 +35,10 @@ public class TeamMainServiceImpl implements TeamMainService {
 		dao.insertGroup(group);
 	}
 	
+	@Override
+	public void moveAndDelGroup(int groupNo) {
+		dao.moveGroup(groupNo);
+		dao.delGroup(groupNo);
+	}
+	
 }

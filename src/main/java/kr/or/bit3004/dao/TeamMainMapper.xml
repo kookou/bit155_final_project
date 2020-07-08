@@ -28,4 +28,12 @@
 		update `group` set `group_name` = #{groupName} where `group_no` = #{groupNo}
 	</update>
 	
+	<update id="moveGroup" parameterType="int">
+		update `team` set `group_no` = 1 where `group_no` = #{groupNo}
+	</update>
+	
+	<delete id="delGroup" parameterType="int">
+		delete from `group` where `group_no` = #{groupNo}
+	</delete>
+	
 </mapper>

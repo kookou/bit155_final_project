@@ -28,6 +28,7 @@
             color: #5f76e8;
         }
     </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -159,6 +160,8 @@
     			$('#inputGroupNameDiv').remove();
     			$('#addGroupBtn').show();
     		});
+    		//그룹 번호
+    		let groupNo = $(this).parent().parent().parent().data('groupno');
     		//원래 그룹명
     		let oriGroupName = $(this).parent().prev().text();
     		//groupNameArea 영역, 숨겨지는 부분
@@ -174,7 +177,7 @@
 				url: "updateGroupName.do",
 				data: {
 					groupName: $('#inputGroupName').val(),
-					groupNo: "hyerin"
+					groupNo: groupNo
 				},
 				error: function(e) {
 					console.log(e);
@@ -196,6 +199,103 @@
    				$(this).parent().parent().remove();
    			}
     	});
+    	
+    	//그룹 삭제버튼 눌렀을 때
+    	$('#outer').on('click', '.delGroupName', function() {
+    		//그룹 번호
+    		let groupNo = $(this).parent().parent().parent().data('groupno');
+    		swal({
+    			title: "Group을 삭제하시겠습니까?",
+    			text: "Group을 삭제하면 그 Group에 속한 Tema List는 Personal Group으로 이동됩니다.",
+    			icon: "warning",
+    			buttons: true,
+    			dangerMode: true,
+    		})
+    		.then((willDelete) => {
+    		    if(willDelete) {
+    		    	var promise = 
+    		    		$.ajax({
+    						url: "delGroup.do",
+    						data: {
+    							groupNo: groupNo
+    						},
+    						error: function(e) {
+    							console.log(e);
+    						}
+    					});
+    		    	promise.done(delGroupPromise);
+    		    	promise.fail(promiseError);
+    			}
+    		});
+    	});
+    	
+    	function delGroupPromise() {
+			return new Promise(function(resolve, reject) {
+				$.ajax({
+					url: "teamList.do",
+					data: {
+						id: 'hyerin'
+					},
+					success: function(resData) {
+						console.log(resData.group);
+						$('#outer').empty();
+						makeListHtml(resData);
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			});
+    	}
+    	function promiseError(e) {
+    		console.log("프로미스 에러..");
+    		console.log(e);
+    		return false;
+    	}
+    	
+    	//목록 그리는 함수
+    	function makeListHtml(resData) {
+    		let html = '';
+    		$.each(resData.group, function(index, obj) {
+    			html += '<div class="row">';
+    			html += 	'<div class="col-xl-12"  style="height: 100%;" data-groupNo= '+ obj.groupNo +'>';
+    			html += 		'<div class="groupNameArea">';
+    			html += 			'<h2 style="display: inline-block; vertical-align: middle;">'+ obj.groupName +'</h2>&nbsp;';
+    			if(obj.groupName != 'Personal') {
+	    			html += 		'<h6 style="display: inline-block; vertical-align: middle;">';
+    				html += 			'<a href="javascript:void(0);" class="editGroupName"><i class="fas fa-pencil-alt iconStyle iconStyle"></i></a>&nbsp;';
+    				html += 			'<a href="javascript:void(0);" class="delGroupName"><i class="fas fa-trash-alt iconStyle iconStyle"></i></a>';
+    				html += 		'</h6>';
+    			}
+    			html += 		'</div>';
+    			html += 	'</div>';
+    			$.each(resData.groupAndTeam, function(index2, obj2) {
+    				if(obj.groupName == obj2.groupName) {
+    				html += '<div class="col-xl-3">';
+    				html += 	'<div class="card" >';
+    				html += 		'<div class="card-body collapse show teamBtn">';
+    				html += 			'<h4 class="card-title">'+ obj2.teamName +'</h4>';
+    				html += 		'</div>';
+    				html += 	'</div>';
+    				html += '</div>';
+    				}
+    			});
+    			html += 	'<div class="col-xl-3">' +
+									'<div class="card" >' +
+										'<div class="card-body collapse show teamBtn" style="text-align: center;">' +
+											'+ Create New Team' +
+										'</div>' +
+									'</div>' +
+								'</div>' +
+							'</div>';
+    		});
+    			html +=	'<div class="row" id="addGroupDiv">' +
+								'<div class="col-xl-3">' +
+						            '<div class="btn waves-effect waves-light btn-outline-primary" id="addGroupBtn" >+ Add Group</div>' +
+						        '</div>' +
+							'</div>';
+    			$('#outer').append(html);
+    	}
 	</script>
     
 
