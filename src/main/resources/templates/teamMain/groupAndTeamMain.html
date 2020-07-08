@@ -78,7 +78,11 @@
     
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
-    <script>
+    <script th:inline="javascript">
+	    /*<![CDATA[*/
+	    	var currUser = [[${session.currentUser.id}]];
+	    	console.log(currUser);
+	    /*]]>*/
 		var inputGroupNameHtml =
 			'<div class="row" id="inputGroupNameDiv">' + 
 				'<div class="col-xl-3">' +
@@ -119,7 +123,7 @@
 				url: "insertGroup.do",
 				data: {
 					groupName: $('#inputGroupName').val(),
-					id: "hyerin"
+					id: currUser
 				},
 				success: function(resData) {
 					html = 
@@ -234,7 +238,7 @@
 				$.ajax({
 					url: "teamList.do",
 					data: {
-						id: 'hyerin'
+						id: currUser
 					},
 					success: function(resData) {
 						console.log(resData.group);
