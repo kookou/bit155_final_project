@@ -20,4 +20,10 @@ public interface BoardDao {
 	//게시판 삭제하기
 	public int deleteBoard(int no);
 	
+	//게시판 파일 업로드
+	public List<Board> getFileBoardList();
+	
+	//파일 업로드 메소드 추가
+	public int fileUpload(Board board);
+	
 }
