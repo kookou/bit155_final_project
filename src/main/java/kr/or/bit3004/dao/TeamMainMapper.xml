@@ -16,7 +16,7 @@
 		 where id=#{id}
 	</select>
 	
-	<insert id="insertGroup" parameterType="kr.or.bit3004.dto.Group">
+	<insert id="insertGroup" parameterType="kr.or.bit3004.dto.GroupAndTeam">
 		insert into `group`(`id`, `group_name`) values(#{id}, #{group_name});
 	</insert>
 </mapper>

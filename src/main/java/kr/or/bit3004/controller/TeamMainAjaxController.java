@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.bit3004.dto.Group;
 import kr.or.bit3004.dto.GroupAndTeam;
 import kr.or.bit3004.service.TeamMainService;
 
@@ -27,7 +26,7 @@ public class TeamMainAjaxController {
 	}
 	
 	@RequestMapping("insertGroup.do")
-	public void insertGroup(Group group) {
+	public void insertGroup(GroupAndTeam group) {
 		System.out.println(group);
 		service.insertGroup(group);
 	}
