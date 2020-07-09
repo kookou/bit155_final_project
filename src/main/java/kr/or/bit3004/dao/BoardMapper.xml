@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.BoardDao">
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.dto.Board">
-		select b.no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.all_board_list_no, b.id, u.NICKNAME
+		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.all_board_list_no, b.id, u.NICKNAME
 		  from board_list b
 		 inner join `user` u
 		    on b.id = u.id

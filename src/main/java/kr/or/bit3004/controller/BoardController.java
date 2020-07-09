@@ -27,9 +27,8 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int no) {
-		System.out.println(no);
-		model.addAttribute("selectBoard", service.selectBoardByBoardNo(no));
+	public String selectBoardByBoardNoService(Model model, int boardNo) {
+		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		return "board/detail";
 	}
 	

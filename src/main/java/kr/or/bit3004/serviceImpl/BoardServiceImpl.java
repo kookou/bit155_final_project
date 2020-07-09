@@ -30,8 +30,8 @@ public class BoardServiceImpl implements BoardService{
 
 	//게시판 상세보기
 	@Override
-	public Board selectBoardByBoardNo(int no) {
-		return dao.selectBoardByNo(no);
+	public Board selectBoardByBoardNo(int boardNo) {
+		return dao.selectBoardByNo(boardNo);
 	}
 	
 	//게시판 글쓰기
@@ -84,8 +84,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 삭제하기
 	@Override
-	public void deleteBoard(int no) {
-		dao.deleteBoard(no);
+	public void deleteBoard(int boardNo) {
+		dao.deleteBoard(boardNo);
 	}
 
 }
