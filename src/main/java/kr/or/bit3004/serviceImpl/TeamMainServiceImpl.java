@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.TeamMainDao;
-import kr.or.bit3004.dto.Group;
 import kr.or.bit3004.dto.GroupAndTeam;
 import kr.or.bit3004.service.TeamMainService;
 
@@ -27,8 +26,34 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
-	public void insertGroup(Group group) {
+	public int getCurrGroupNo() {
+		return dao.getCurrGroupNo();
+	}
+	
+	@Override
+	public void updateGroupName(GroupAndTeam group) {
+		dao.updateGroupName(group);
+	}
+	
+	@Override
+	public void insertGroup(GroupAndTeam group) {
 		dao.insertGroup(group);
+	}
+	
+	@Override
+	public void moveAndDelGroup(int groupNo) {
+		dao.moveGroup(groupNo);
+		dao.delGroup(groupNo);
+	}
+	
+	@Override
+	public List<String> searchUser(String id) {
+		return dao.searchUser(id);
+	}
+	
+	@Override
+	public void insertTeam(GroupAndTeam team) {
+		dao.insertTeam(team);
 	}
 	
 }

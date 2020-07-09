@@ -13,6 +13,7 @@
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
     	.teamBtn {
     		cursor:pointer;
@@ -27,7 +28,16 @@
         .iconStyle:hover {
             color: #5f76e8;
         }
+        .backColorBox {
+        	width: 25px;
+        	height: 25px;
+        	border-radius: 3px;
+        }
+        input[type="radio"] {
+        	width: 25px;
+        }
     </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -35,22 +45,23 @@
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
      <th:block th:replace="common/header :: header"></th:block>
-     <th:block th:replace="common/aside :: aside"></th:block>
     
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 	<div class="page-wrapper">
        	<div class="container-fluid" id="outer">
        	
        		<div class="row" th:each="item: ${group}">
-       			<div class="col-xl-12"  style="height: 100%;">
+       			<div class="col-xl-12"  style="height: 100%;" th:attr="data-groupNo=${item.groupNo}">
+       				<div class="groupNameArea">
         				<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;"></h2>&nbsp;
         				<h6 style="display: inline-block; vertical-align: middle;" th:if="${!item.groupName.equals('Personal')}">
-		        			<a href='#'><i class='fas fa-pencil-alt iconStyle iconStyle' ></i></a>&nbsp;
-	                        <a href='#'><i class='fas fa-trash-alt iconStyle iconStyle' ></i></a>
+		        			<a href='javascript:void(0);' class="editGroupName"><i class='fas fa-pencil-alt iconStyle iconStyle' ></i></a>&nbsp;
+	                        <a href='javascript:void(0);' class="delGroupName"><i class='fas fa-trash-alt iconStyle iconStyle' ></i></a>
         				</h6>
+        			</div>
        			</div>
        			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupName == team.groupName}">
-       				<div class="card" >
+       				<div class="card" th:style="'background-color:#' + ${team.backgroundColor}">
        					<div class="card-body collapse show teamBtn">
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        					</div>
@@ -58,7 +69,7 @@
        			</div>
        			<div class="col-xl-3">
        				<div class="card" >
-       					<div class="card-body collapse show teamBtn" style="text-align: center;">
+       					<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">
        						+ Create New Team
        					</div>
        				</div>
@@ -72,65 +83,47 @@
        		
        	</div>
        </div>
+       
+       <!-- Create New Team Modal -->
+        <div id="createNewTeamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <i class="dripicons-warning h1 text-warning"></i>
+                            <input type="hidden" id="hiddenGroupNo">
+                            <input type="text" class="form-control" placeholder="Team Name" id="teamName">
+                            <br>
+                            <div class="custom-radio">
+                            	<input type="radio" id="ffffff" value="ffffff" name="backColor" class="backColor" checked>
+                            	<input type="radio" id="d0e1f5" value="d0e1f5" name="backColor" class="backColor">
+                            	<input type="radio" id="c0e4da" value="c0e4da" name="backColor" class="backColor">
+                            	<input type="radio" id="fee993" value="fee993" name="backColor" class="backColor">
+                            	<input type="radio" id="fac8bf" value="fac8bf" name="backColor" class="backColor">
+                            	<input type="radio" id="fedcc1" value="fedcc1" name="backColor" class="backColor"><br>
+                            	<label for="ffffff"><div class="backColorBox" style="background-color: #ffffff; border: 1px solid silver;"></div></label>
+                            	<label for="d0e1f5"><div class="backColorBox" style="background-color: #d0e1f5;"></div></label>
+                            	<label for="c0e4da"><div class="backColorBox" style="background-color: #c0e4da;"></div></label>
+                            	<label for="fee993"><div class="backColorBox" style="background-color: #fee993;"></div></label>
+                            	<label for="fac8bf"><div class="backColorBox" style="background-color: #fac8bf;"></div></label>
+                            	<label for="fedcc1"><div class="backColorBox" style="background-color: #fedcc1;"></div></label>
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="createTeamBtn">Create</button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
-    <script>
-    	//addGroupBtn 눌렀을 때
-		$('#addGroupBtn').click(function() {
-			var inputGroupNameHtml =
-				'<div class="row" id="inputGroupNameDiv">' + 
-					'<div class="col-xl-3">' +
-						'<input type="text" placeholder="그룹명을 입력하세요" class="form-control" id="inputGroupName">' +
-					'</div>' +
-					'<div class="col-xl-3">' +
-						'<button class="btn btn-info btn-circle" id="addGroupName"><i class="fa fa-check"></i></button>' +
-					'</div>' +
-				'</div>';
-			$('#outer').append(inputGroupNameHtml);
-			$('#addGroupBtn').hide();	
-		});
-		
-    	//그룹명 입력받고 체크버튼 눌렀을 때
-		$(document).on('click', '#addGroupName', function() {
-			$.ajax({
-				url: "insertGroup.do",
-				data: {
-					groupName: $('#inputGroupName').val(),
-					id: "hyerin"
-				},
-				success: function(resData) {
-					console.log(resData);
-				},
-				error: function(e) {
-					console.log(e);
-				}
-			});
-			
-			var html = 
-				'<div class="row">' + 
-        			'<div class="col-xl-12"  style="height: 100%;">' + 
-        				'<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;">' + $('#inputGroupName').val() + '</h2>&nbsp;' +
-        				'<h6 style="display: inline-block; vertical-align: middle;" >' +
-		        			'<a href="#"><i class="fas fa-pencil-alt iconStyle iconStyle"></i></a>&nbsp;' + 
-	                        '<a href="#"><i class="fas fa-trash-alt iconStyle iconStyle"></i></a>' + 
-        				'</h6>' + 
-        			'</div>' + 
-        			'<div class="col-xl-3">' +
-        				'<div class="card" style="text-align: center;">' +
-        					'<div class="card-body collapse show teamBtn">' +
-        						'+ Create New Team' +
-        					'</div>' +
-        				'</div>' +
-        			'</div>' +
-        		'</div>';
-			$('#addGroupDiv').before(html);
-			$('#inputGroupNameDiv').remove();
-			$('#addGroupBtn').show();
-		});
-	</script>
-    
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    	var currUser = [[${session.currentUser.id}]];
+    /*]]>*/
+    </script>
 
 </body>
 </html>
