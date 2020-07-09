@@ -22,7 +22,7 @@
 				ID
 				)
 		VALUES
-			(#{title},#{startDate},#{endDate},#{color},#{description},1,'a')
+			(#{title},#{startDate},#{endDate},#{color},#{description},2,'cho@naver.com')
 		
 	</insert>
 </mapper>
