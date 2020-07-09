@@ -1,6 +1,8 @@
 package kr.or.bit3004.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +43,13 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
-	public void moveAndDelGroup(int groupNo) {
-		dao.moveGroup(groupNo);
-		dao.delGroup(groupNo);
+	public void moveAndDelGroup(GroupAndTeam group) {
+		System.out.println(dao.searchPersonalNo(group.getId()));
+		Map<String, Integer> map = new HashMap<>();
+		map.put("1st", dao.searchPersonalNo(group.getId()));
+		map.put("2nd", group.getGroupNo());
+		dao.moveGroup(map);
+		dao.delGroup(group.getGroupNo());
 	}
 	
 	@Override

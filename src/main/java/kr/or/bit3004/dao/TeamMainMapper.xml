@@ -28,8 +28,12 @@
 		update `group` set `group_name` = #{groupName} where `group_no` = #{groupNo}
 	</update>
 	
-	<update id="moveGroup" parameterType="int">
-		update `team` set `group_no` = 1 where `group_no` = #{groupNo}
+	<select id="searchPersonalNo" resultType="int">
+		select group_no from `group` where group_name = 'Personal' and id = #{id}
+	</select>
+	
+	<update id="moveGroup" parameterType="hashMap">
+		update `team` set `group_no` = #{1st} where `group_no` = #{2nd}
 	</update>
 	
 	<delete id="delGroup" parameterType="int">

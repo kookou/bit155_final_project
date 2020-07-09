@@ -49,8 +49,8 @@ public class TeamMainAjaxController {
 	}
 	
 	@RequestMapping("delGroup.do")
-	public void delGroup(int groupNo) {
-		service.moveAndDelGroup(groupNo);
+	public void delGroup(GroupAndTeam group) {
+		service.moveAndDelGroup(group);
 	}
 	
 	@RequestMapping("searchUser.do")

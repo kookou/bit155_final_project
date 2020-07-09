@@ -140,7 +140,8 @@
 		    		$.ajax({
 						url: "delGroup.do",
 						data: {
-							groupNo: groupNo
+							groupNo: groupNo,
+							id: currUser
 						},
 						error: function(e) {
 							console.log(e);
@@ -195,7 +196,7 @@
 			$.each(resData.groupAndTeam, function(index2, obj2) {
 				if(obj.groupName == obj2.groupName) {
 				html += '<div class="col-xl-3">';
-				html += 	'<div class="card" >';
+				html += 	'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">';
 				html += 		'<div class="card-body collapse show teamBtn">';
 				html += 			'<h4 class="card-title">'+ obj2.teamName +'</h4>';
 				html += 		'</div>';
@@ -204,7 +205,7 @@
 				}
 			});
 			html += 	'<div class="col-xl-3">' +
-								'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">' +
+								'<div class="card">' +
 									'<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
 										'+ Create New Team' +
 									'</div>' +
