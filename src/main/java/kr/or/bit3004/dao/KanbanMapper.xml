@@ -5,11 +5,25 @@
 <insert id="insertListTite" parameterType="kr.or.bit3004.dto.Kanban">
 insert into `KANBAN_LIST`(`LIST_TITLE`, `ALL_BOARD_LIST_NO`, `id`) values(#{listTite},3,#{id});
 </insert>
-<select id="allKanbanList" resultType="map">
+<select id="allKanbanList" resultMap="selectMapList">
 SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content, c.write_date, c.file_count , c.comment_count , c.kanban_list_no, a.name , a.team_no , a.board_type_no
 FROM `KANBAN_LIST` l 
 	LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no
-	LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no = a.all_board_list_no where TEAM_NO = #{teamNo};
+	LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no = a.all_board_list_no;
 </select>
 
+<resultMap type="java.util.HashMap" id="selectMapList">
+	<result column="list_title" property="listTitle"/>
+	<result column="all_board_list_no" property="allBoardListNo"/>
+	<result column="id" property="id"/>
+	<result column="title" property="cardTitle"/>
+	<result column="content" property="cardContent"/>
+	<result column="write_date" property="writeDate"/>
+	<result column="file_count" property="fileCount"/>
+	<result column="comment_count" property="commentcount"/>
+	<result column="kanban_list_no" property="kanbanListNo"/>
+	<result column="name" property="boardName"/>
+	<result column="team_no" property="teamNo"/>
+	<result column="board_type_no" property="boardTypeNo"/>	
+</resultMap>
 </mapper>
