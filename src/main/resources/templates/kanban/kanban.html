@@ -171,12 +171,13 @@
 		<!-- /.modal -->
 
 		<div class="page-wrapper" id="kanbanlistall">
+			<!-- 
+		<div th:text = "${kanban}"></div> -->
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
 						<h3
-							class="page-title text-truncate text-dark font-weight-medium mb-1">3004조
-							칸반보드</h3>
+							class="page-title text-truncate text-dark font-weight-medium mb-1"></h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
@@ -195,6 +196,38 @@
 			<div class="kanban-container" id="kanban-container">
 				<div class="kanban-canvas">
 					<div id="kanban">
+					<!-- ============================================================== -->
+					<!-- 칸반 list 시작 -->
+					<!-- ============================================================== -->
+					
+						<div class="kanban-list-wrapper">
+							<div class="kanban-list-content">
+								<div class="kanban-card" ondrop="drop(event, this)"
+									ondragover="allowDrop(event)">
+									<div class="kanban-list-header" id="listheader">
+										<h4 class="kanban-list-title"></h4>
+									</div>
+									<a class="kanban-list-menu far fa-trash-alt"
+										data-toggle="modal" data-target="#info-alert-modal"></a>
+									<div class="kanban-card-list">
+										<div class="kanban-card-element" data-toggle="modal"
+											data-target="#signup-modal" >
+											<span class="kanban-card-title" ></span>
+											<div class="kanban-card-badges"></div>
+										</div>
+									</div>
+									<div class="kanban-card-add-list" id="addcardel">
+										<a class="kanban-card-add-el btn-light-my" id="addcard"
+											onclick="newtask(this)"><span class="icon">+</span><span
+											class="kanban-card-add-text">Add Card</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ============================================================== -->
+						<!-- 칸반 list  -->
+						<!-- ============================================================== -->
+
 						<!-- ============================================================== -->
 						<!-- 칸반 add list 시작  -->
 						<!-- ============================================================== -->

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -217,6 +218,8 @@
 	<a href="calendar.do">Calendar 테스트</a> <br>
 	<a href="todoList.do?teamNo=1">todoList 테스트</a> <br>
 	<a href="teamMain.do?id=hyerin">teamMain 테스트</a> <br>
+	<div th:text="${session.currentUser}"></div>
+	
 
 </body>
 </html>

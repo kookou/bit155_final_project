@@ -13,7 +13,8 @@ import kr.or.bit3004.dto.Kanban;
 public interface KanbanService {
 	//List title insert
 	public void insertListTite(Kanban kanban);
-	public List<Map> allKanbanList();
-	
-
+	public List<Map> allKanbanList(int teamNo);
+	public Map<String,Object> getGroup(String id);
+	public List<Map> kanbanCardList();
+	public List<Map> kanbanList(int teamNo);
 }
