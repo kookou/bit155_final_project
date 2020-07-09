@@ -1,6 +1,7 @@
 package kr.or.bit3004.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.bit3004.dto.GroupAndTeam;
 
@@ -13,4 +14,6 @@ public interface TeamMainService {
 	public void moveAndDelGroup(GroupAndTeam group);
 	public List<String> searchUser(String id);
 	public void insertTeam(GroupAndTeam team);
+	public int getCurrTeamNo();
+	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group);
 }

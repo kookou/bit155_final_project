@@ -50,7 +50,7 @@
 	<div class="page-wrapper">
        	<div class="container-fluid" id="outer">
        	
-       		<div class="row" th:each="item: ${group}">
+       		<div class="row" th:each="item: ${group}" ondrop="drop(event)" ondragover="allowDrop(event)">
        			<div class="col-xl-12"  style="height: 100%;" th:attr="data-groupNo=${item.groupNo}">
        				<div class="groupNameArea">
         				<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;"></h2>&nbsp;
@@ -62,7 +62,7 @@
        			</div>
        			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupName == team.groupName}">
        				<div class="card" th:style="'background-color:#' + ${team.backgroundColor}">
-       					<div class="card-body collapse show teamBtn">
+       					<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" th:attr="data-teamNo=${team.teamNo}">
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        					</div>
        				</div>

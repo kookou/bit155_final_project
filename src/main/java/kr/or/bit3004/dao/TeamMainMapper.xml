@@ -48,4 +48,12 @@
 		insert into `TEAM`(`team_name`, `background_color`, `group_no`) values(#{teamName}, #{backgroundColor}, #{groupNo})
 	</insert>
 	
+	<select id="getCurrTeamNo" resultType="int">
+		select max(`TEAM_NO`) from `TEAM`
+	</select>
+	
+	<update id="moveTeamFromGroup" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+		update `team` set `group_no` = #{groupNo} where `team_no` = #{teamNo}
+	</update>
+	
 </mapper>
