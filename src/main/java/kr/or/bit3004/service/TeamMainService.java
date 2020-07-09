@@ -8,7 +8,9 @@ public interface TeamMainService {
 	public List<GroupAndTeam> selectGroupName(String id);
 	public List<GroupAndTeam> selectGroupAndTeam(String id);
 	public int getCurrGroupNo();
+	public void updateGroupName(GroupAndTeam group);
 	public void insertGroup(GroupAndTeam group);
 	public void moveAndDelGroup(int groupNo);
 	public List<String> searchUser(String id);
+	public void insertTeam(GroupAndTeam team);
 }

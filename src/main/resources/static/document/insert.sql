@@ -34,7 +34,7 @@ select * from `GROUP`;
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit final project', 4);
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit 2nd project', 5);
 insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('bit 1st project', 5);
-insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('simple project', 4);
+insert into `TEAM`(`TEAM_NAME`, `GROUP_NO`) values('simple project', 18);
 commit;
 select * from `TEAM`;
 
@@ -44,13 +44,13 @@ insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(1, 'hyerin');
 insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(2, 'hyerin');
 insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(3, 'hyerin');
 insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(4, 'hyerin');
-insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(1, 'hyejung');
+insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(13, 'hrin@3004.com');
 commit;
 select * from `TEAM_MEMBER`;
 
 -- 게시판 목록
 insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'jinwon', 1);
-insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 1, 'hyejung', 2);
+insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 13, 'hrin@3004.com', 2);
 commit;
 select * from `ALL_BOARD_LIST`;
 
@@ -88,8 +88,8 @@ select * from `group`;
 select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
   from `group` g
  inner join team t
-    on g.group_no = t.group_no 
- where id='hyerin';
+    on g.group_no = t.group_no
+ where id='hrin@3004.com';
  
 select GROUP_NO, GROUP_NAME, id
   from `group`
@@ -101,3 +101,5 @@ update `team`
    set `GROUP_NO` = 1
  where `GROUP_NO` = 3;
 delete from `group` where `GROUP_NO` = 3;
+
+select * from `user` where id like '%a%';

@@ -31,6 +31,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
+	public void updateGroupName(GroupAndTeam group) {
+		dao.updateGroupName(group);
+	}
+	
+	@Override
 	public void insertGroup(GroupAndTeam group) {
 		dao.insertGroup(group);
 	}
@@ -44,6 +49,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	@Override
 	public List<String> searchUser(String id) {
 		return dao.searchUser(id);
+	}
+	
+	@Override
+	public void insertTeam(GroupAndTeam team) {
+		dao.insertTeam(team);
 	}
 	
 }

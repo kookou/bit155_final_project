@@ -36,6 +36,11 @@ public class TeamMainAjaxController {
 		return service.selectGroupAndTeam(id);
 	}
 	
+	@RequestMapping("updateGroupName.do")
+	public void updateGroupName(GroupAndTeam group) {
+		service.updateGroupName(group);
+	}
+	
 	@RequestMapping("insertGroup.do")
 	public int insertGroup(GroupAndTeam group) {
 		System.out.println(group);
@@ -51,6 +56,11 @@ public class TeamMainAjaxController {
 	@RequestMapping("searchUser.do")
 	public List<String> searchUser(String id) {
 		return service.searchUser(id);
+	}
+	
+	@RequestMapping("insertTeam.do")
+	public void insertTeam(GroupAndTeam team) {
+		service.insertTeam(team);
 	}
 	
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.bit3004.dao.TeamMainDao">
 	<select id="getGroupAndTeam" resultType="kr.or.bit3004.dto.GroupAndTeam">
-		select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`
+		select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`, `background_color`
 		  from `group` g
 		 inner join team t
 		    on g.group_no = t.group_no 
@@ -39,5 +39,9 @@
 	<select id="searchUser" parameterType="String" resultType="String">
 		select id from `user` where id like '%${id}%'
 	</select>
+	
+	<insert id="insertTeam" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+		insert into `TEAM`(`team_name`, `background_color`, `group_no`) values(#{teamName}, #{backgroundColor}, #{groupNo})
+	</insert>
 	
 </mapper>
