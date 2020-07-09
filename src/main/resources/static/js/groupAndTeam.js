@@ -44,7 +44,7 @@
 			},
 			success: function(resData) {
 				html = 
-					'<div class="row">' + 
+					'<div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">' + 
 	        			'<div class="col-xl-12"  style="height: 100%;"  data-groupNo="' + resData + '">' + 
 	        				'<div class="groupNameArea">' +
 		        				'<h2 th:utext="${item.groupName}" style="display: inline-block; vertical-align: middle;">' + $('#inputGroupName').val() + '</h2>&nbsp;' +
@@ -140,19 +140,20 @@
 		    		$.ajax({
 						url: "delGroup.do",
 						data: {
-							groupNo: groupNo
+							groupNo: groupNo,
+							id: currUser
 						},
 						error: function(e) {
 							console.log(e);
 						}
 					});
-		    	promise.done(delGroupPromise);
+		    	promise.done(reloadListPromise);
 		    	promise.fail(promiseError);
 			}
 		});
 	});
 	
-	function delGroupPromise() {
+	function reloadListPromise() {
 		return new Promise(function(resolve, reject) {
 			$.ajax({
 				url: "teamList.do",
@@ -180,7 +181,7 @@
 	function makeListHtml(resData) {
 		let html = '';
 		$.each(resData.group, function(index, obj) {
-			html += '<div class="row">';
+			html += '<div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">';
 			html += 	'<div class="col-xl-12"  style="height: 100%;" data-groupNo= '+ obj.groupNo +'>';
 			html += 		'<div class="groupNameArea">';
 			html += 			'<h2 style="display: inline-block; vertical-align: middle;">'+ obj.groupName +'</h2>&nbsp;';
@@ -194,8 +195,8 @@
 			html += 	'</div>';
 			$.each(resData.groupAndTeam, function(index2, obj2) {
 				if(obj.groupName == obj2.groupName) {
-				html += '<div class="col-xl-3">';
-				html += 	'<div class="card" >';
+				html += '<div class="col-xl-3" draggable="true" ondragstart="drag(event)" data-teamNo="'+ obj2.teamNo +'">';
+				html += 	'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">';
 				html += 		'<div class="card-body collapse show teamBtn">';
 				html += 			'<h4 class="card-title">'+ obj2.teamName +'</h4>';
 				html += 		'</div>';
@@ -204,7 +205,7 @@
 				}
 			});
 			html += 	'<div class="col-xl-3">' +
-								'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">' +
+								'<div class="card">' +
 									'<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
 										'+ Create New Team' +
 									'</div>' +
@@ -253,7 +254,7 @@
 			},
 			success: function(resData) {
 				let html = "";
-				html += '<div class="col-xl-3">';
+				html += '<div class="col-xl-3" draggable="true" ondragstart="drag(event)" data-teamNo="'+ resData +'">';
 				html += 	'<div class="card" style="background-color:#'+ $('input[name="backColor"]:checked').val() +'">';
 				html += 		'<div class="card-body collapse show teamBtn">';
 				html += 			'<h4 class="card-title">'+ $('#teamName').val() +'</h4>';
@@ -267,6 +268,52 @@
 			}
 		});
 	});
+	
+	////////////////////////////////////////////////////////////////////////////// drag & drop
+	//ondragover='allowDrop(event)'  dragover의 기본이벤트 막기
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	//drag & drop 이벤트를 위한 모든 event listener method는 DataTransfer 객체를 반환합니다.
+	//이렇게 반환된 DataTransfer 객체는 드래그 앤 드롭 동작에 관한 정보를 가지고 있게 됩니다.
+	function drag(ev) {
+		console.log($(ev.target).attr('data-teamNo'));
+		console.log($(ev.target).parent().parent().parent().children().attr('data-groupno'));
+	    ev.dataTransfer.setData("teamNo", $(ev.target).attr('data-teamNo'));
+	    ev.dataTransfer.setData("dragGroupNo", $(ev.target).parent().parent().parent().children().attr('data-groupno'));
+	}
+
+	function drop(ev) {
+	    ev.preventDefault();
+	    //드랍하는 요소의 className을 DataTransfer 객체에서 가져오기
+	    let dragTeamNo = ev.dataTransfer.getData("teamNo");
+	    let dragGroupNo = ev.dataTransfer.getData("dragGroupNo");
+	    let dropGroupNo = $(ev.target).parents('.row').children().attr('data-groupNo');
+//	    if(dropListCode == undefined) {
+//	    	dropListCode = $(ev.target).attr('data-code');
+//	    }
+	    console.log("dragTeamNo : " + dragTeamNo);
+	    console.log("dragGroupNo : " + dragGroupNo);
+	    console.log("dropGroupNo : " + dropGroupNo);
+	    
+	    if(dragGroupNo != dropGroupNo) {
+	    	var promise = 
+	    		$.ajax({
+					url: "moveTeamFromGroup.do",
+					data: {
+						teamNo: dragTeamNo,
+		    			groupNo: dropGroupNo,
+		    			id: currUser
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+	    	promise.done(reloadListPromise);
+	    	promise.fail(promiseError);
+	    }
+	}
 	
 	//autocomplete
 	/*$("#searchUser").autocomplete({
