@@ -109,15 +109,68 @@
                                                         <label class="custom-control-label" for="drop-remove">Remove
                                                             after drop</label>
                                                     </div>
+                                                     <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                  				      data-target="#centermodal">Add plan</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar">
-                                            <div id="calendar"></div>
+                                            <div id="calendar"> 
+                                           </div>
                                         </div>
                                     </div>
+                               <!-- 모달..? -->
+                                  <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                			<div class="modal-header modal-colored-header bg-primary">
+                                          <h4 class="modal-title" id="success-header-modalLabel">Add plan </h4>
+                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                 <form class="pl-3 pr-3" action="#calendarData">
+
+                                                    <div class="form-group">
+                                                        <label for="title">Title</label>
+                                                        <input class="form-control" type="text" id="title" name="title"
+                                                            required="" placeholder="Title">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="startDate">Start</label>
+                                                        <input class="form-control" type="date" id="startDate" name="startDate"
+                                                            required="" placeholder="Start date">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="endDate">End</label>
+                                                        <input class="form-control" type="date" required="" name="endDate"
+                                                            id="endDate" placeholder="End date">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="color">Color</label>
+                                                        <input class="form-control" type="color" required="" name="color"
+                                                            id="color" placeholder="Color">
+                       <select><option>보라색</option><option>초록색</option><option>빨간색</option><option>노란색</option></select>
+                                                    </div>
+            										<div class="form-group">
+                                                        <label for="description">Description</label>
+                                                        <input class="form-control" type="text" required="" name="description"
+                                                            id="description" placeholder="Description">
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                              <div class="modal-footer">
+                                              <div class="form-group text-center">
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                                <button type="button" id="plan-add" class="btn btn-primary">Add</button>
+                                                <p class="showCalendar" id="showCalendar" th:text=${showCalendar} hidden></p>
+                                              </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                                 </div>
                             </div>
                         </div>
@@ -127,13 +180,7 @@
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Adminmart. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
+
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -159,12 +206,61 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!--This page JavaScript -->
+    <script src="js/pages/calendar/arraylist.js"></script>
     <script src="assets/libs/moment/min/moment.min.js"></script>
     <script src="assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="js/pages/calendar/cal-init.js"></script>
+    <script src="js/pages/calendar/calendarByme.js"></script>
+    <script>
+    	/* var calendar = new FullCalendar.Calendar(calendarEl,{
+    		plugins:['interaction']
+    	}); */
+    </script>    
     
-    
-    
+	<script>
+/* <%
+	List<Calendar> list = (ArrayList<Calendar>)request.getAttribute("showCalendar");
+%>
+
+	
+	
+ 	var list = document.getElementById("showCalendar");
+	var calendarEl = document.getElementById("calendar");
+	var calendar = new FullCalendar.Calendar(calendarEl,{
+		plugins: ['interaction','dayGrid','timeGrid','list'],
+		locale : "ko",
+		editable : true,
+		evnets:[
+				for(int i=0;i<list.size();i++){
+					Calendar dto = (Calendar)list.get(i);
+					console.log("달력내용"+list.get(i));
+				{
+					title : '<%= dto.getTitle() %>',
+					start : '<%= dto.getStartDate() %>',
+					end	: '<%= dto.getEndDate() %>'
+				},
+					}
+				{
+					title: 'default',
+					start : "2020-07-07",
+					end : "2020-07-08"
+				}
+		]
+	
+	});
+	console.log()
+	calendar.render();
+ */
+ var calendarData = $("#calendarData").serialize();
+ $.ajax({
+	url:"addPlan.ajax",
+	data: calendarData,
+	dataType:"html",
+	success:function(e){
+		console.log(e);
+	}
+ })
+    </script>
     
 
 </body>
