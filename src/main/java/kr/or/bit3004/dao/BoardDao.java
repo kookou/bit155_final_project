@@ -1,7 +1,12 @@
-package kr.or.bit3004.board;
+package kr.or.bit3004.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import kr.or.bit3004.board.Board;
+
+@Repository
 public interface BoardDao {
 	//게시판 목록보기
 	public List<Board> getBoardList(int allBoardListNo);
