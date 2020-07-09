@@ -1,6 +1,8 @@
-package kr.or.bit3004.calendar;
+package kr.or.bit3004.dao;
 
 import java.util.List;
+
+import kr.or.bit3004.calendar.Calendar;
 
 public interface CalendarDao {
 	

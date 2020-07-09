@@ -1,7 +1,9 @@
-package kr.or.bit3004.groupAndTeam;
+package kr.or.bit3004.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import kr.or.bit3004.groupAndTeam.GroupAndTeam;
 
 public interface TeamMainDao {
 	public List<GroupAndTeam> getGroup(String id);

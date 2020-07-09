@@ -1,8 +1,10 @@
-package kr.or.bit3004.user;
+package kr.or.bit3004.dao;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import kr.or.bit3004.user.User;
 
 public interface UserDao {
 	public int insertUser(User user);
