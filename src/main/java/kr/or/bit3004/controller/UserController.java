@@ -1,18 +1,15 @@
 package kr.or.bit3004.controller;
 
-import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.bit3004.dto.User;
+import kr.or.bit3004.serviceImpl.MailServiceImpl;
 import kr.or.bit3004.serviceImpl.UserServiceImpl;
 
 @Controller
@@ -20,6 +17,9 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceImpl service;
+	
+	@Autowired
+	private MailServiceImpl mailService;
 	
 	//로그인 폼
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
@@ -48,7 +48,7 @@ public class UserController {
 	}
 	
 
-	//가입 처리
+	//가입 처리 
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signUp(User user) {
 		System.out.println("controller");
@@ -57,6 +57,8 @@ public class UserController {
 		service.insertUser(user);
 		return "redirect:signin";
 	}
+	
+	
 	
 	// 비번 수정 요청 폼
 	@RequestMapping(value="/forgotpwd", method=RequestMethod.GET)

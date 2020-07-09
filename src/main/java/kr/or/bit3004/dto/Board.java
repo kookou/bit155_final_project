@@ -1,5 +1,9 @@
 package kr.or.bit3004.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Board {
-	private int no;
+	private int boardNo;
 	private String title;
 	private String content;
 	private int views;
@@ -23,6 +27,7 @@ public class Board {
 	private String name;
 	
 	//BOARD_FILE 테이블 변수명
+	private List<CommonsMultipartFile> files;
 	private int fileNo;
 	private String fileName;
 	private int fileSize;
