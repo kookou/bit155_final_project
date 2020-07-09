@@ -38,7 +38,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		 clearAuthenticationAttributes(request);
 		 resultRedirectStrategy(request, response, authentication);
 		 
-			System.out.println("onAuthenticationSuccess");
+		System.out.println("onAuthenticationSuccess");
 		 
 	}
 	
