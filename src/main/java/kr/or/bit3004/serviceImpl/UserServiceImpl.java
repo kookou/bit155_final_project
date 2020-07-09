@@ -32,29 +32,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void idCheck(String id) {
-		dao.idCheck(id);
+	public int idCheck(String id) {
+		return dao.idCheck(id);
 		
 	}
 
-//	@Override
-//	public User loginCheck(String id, String pwd) {
-//		System.out.println("serviceImple");
-//		
-//		int result = dao.loginCheck(id, pwd);
-//		
-////		System.out.println(result);
-//		User user = null;
-//		
-//		if(result == 1) {
-//			user = dao.getUser(id);
-//		}else {
-//			System.out.println("로그인 실패");
-//		}
-//		
-////		System.out.println(user);
-//		return user;
-//	}
 
 	@Override
 	public void updateUser(User user) {

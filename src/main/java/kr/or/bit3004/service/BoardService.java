@@ -12,7 +12,9 @@ public interface BoardService {
 	//게시판 상세보기
 	public Board selectBoardByBoardNo(int no);
 	//게시판 글쓰기
-	public int insertBoard(Board board);
+	public void insertBoard(Board board);
+	//파일 업로드
+	public void fileUploadBoard(Board board , HttpServletRequest request);
 	//게시판 수정하기
 	public void updateBoard(Board board);
 	//게시판 삭제하기
