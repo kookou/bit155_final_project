@@ -21,9 +21,10 @@ public class Board {
 	private String id;
 	private String nickname;
 	private String name;
+	
+	//BOARD_FILE 테이블 변수명
 	private int fileNo;
 	private String fileName;
-	private String fileSize;
-	private String fileOriginName;
-	private String fileUrl;
+	private int fileSize;
+	
 }
