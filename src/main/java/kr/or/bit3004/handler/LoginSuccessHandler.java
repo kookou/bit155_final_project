@@ -18,8 +18,8 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
-import kr.or.bit3004.dto.User;
-import kr.or.bit3004.serviceImpl.UserServiceImpl;
+import kr.or.bit3004.user.User;
+import kr.or.bit3004.user.UserServiceImpl;
 
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
