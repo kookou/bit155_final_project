@@ -12,20 +12,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.bit3004.dto.KanbanList;
 import kr.or.bit3004.service.KanbanService;
 
 @Controller
-public class KanbanCoontroller {
+public class KanbanController {
 	
 	@Autowired
 	private KanbanService service;
 	
-	@RequestMapping("/kanban.do" )
-	public String kanbanList( Model model) {
+	@RequestMapping("/kanban.do")
+	public String kanbanList(int teamNo, Model model) {
 		List<Map> kanbanlist = new ArrayList<>();
 		List<Map> kanbancardlist = new ArrayList<>();
 		
-//		kanbanlist = service.kanbanList(teamNo);
+		kanbanlist = service.kanbanList(teamNo);
 		kanbancardlist = service.kanbanCardList();
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
@@ -33,24 +34,11 @@ public class KanbanCoontroller {
 		System.out.println(kanbancardlist);
 		return "kanban/kanban";
 	}
-//	
-//	@RequestMapping(value = "/kanban.do" , method = RequestMethod.GET )
-//	public String kanbanList() {
-//		return "kanban/kanban";
-//	}
-//	
-	
-//	@RequestMapping(value = "/kanban.do" , method = RequestMethod.POST )
-//	public String kanbanList(int teamNo, Model model) {
-//		List<Map> kanbanmapList = new ArrayList<>();
-////		Map<String,Object> boardname = new HashMap<String, Object>();
-////		boardname = service.getGroup(id);
-//		kanbanmapList = service.allKanbanList(teamNo);
-////		System.out.println(boardname);
-//		model.addAttribute("kanbanmapList" , kanbanmapList);
-////		model.addAttribute("group" ,boardname );
-//		return "kanban/kanban";
-//	}
-//	
-	
+	@RequestMapping("InsertKanbanList.ajax")
+	public String kanbanListInsert(KanbanList kanbanlist) {
+		System.out.println("너니???");
+		service.insertListTite(kanbanlist);
+		return "redirect:kanban.do?teamNo=13";
+	}
 }
+ 

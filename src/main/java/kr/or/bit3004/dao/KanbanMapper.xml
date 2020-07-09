@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
-	<insert id="insertListTite"
-		parameterType="kr.or.bit3004.dto.Kanban">
-		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO, i`)
-		values(#{listTite},3,#{id});
+	<insert id="insertListTite" parameterType="kr.or.bit3004.dto.KanbanList">
+		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
+		values(#{listTite}, 4,'hrin@3004.com');
 	</insert>
+	
+	
 	<select id="allKanbanList" resultMap="selectMapList">
 		SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content,
 		c.write_date, c.file_count , c.comment_count , c.kanban_list_no,

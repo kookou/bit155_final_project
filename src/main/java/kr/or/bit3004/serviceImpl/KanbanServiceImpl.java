@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.KanbanDao;
-import kr.or.bit3004.dto.Kanban;
+import kr.or.bit3004.dto.KanbanList;
 import kr.or.bit3004.service.KanbanService;
 
 @Service
@@ -17,8 +17,8 @@ public class KanbanServiceImpl implements KanbanService {
 	private KanbanDao dao;
 	
 	@Override
-	public void insertListTite(Kanban kanban) {
-		dao.insertListTite(kanban);
+	public int insertListTite(KanbanList kanbanlist) {
+		return dao.insertListTite(kanbanlist);
 	}
 	
 	@Override
