@@ -43,4 +43,8 @@ insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('�
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('안녕', '안녕하세요저는조진원입니다 판교에살고 90년생입니다 ㅎㅎ', now(), 2, 'jinwon');
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('반가워', '나는 효자동 불효자야~^^^', now(), 2, 'hyerin');
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('월요일좋아*^^*', '월요일좋아~~ 최고로좋아~~ ', now(), 2, 'seoyoung');
+
+-- 게시판 댓글
+insert into `BOARD_COMMENT`(`CONTENT` , `WRITE_DATE` `NO`) VALUES ('안녕하세요 조진원입니다' , now() , 1); 
+
 commit;
