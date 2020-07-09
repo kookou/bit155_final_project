@@ -36,6 +36,11 @@ public class TeamMainAjaxController {
 		return service.selectGroupAndTeam(id);
 	}
 	
+	@RequestMapping("updateGroupName.do")
+	public void updateGroupName(GroupAndTeam group) {
+		service.updateGroupName(group);
+	}
+	
 	@RequestMapping("insertGroup.do")
 	public int insertGroup(GroupAndTeam group) {
 		System.out.println(group);
@@ -44,8 +49,24 @@ public class TeamMainAjaxController {
 	}
 	
 	@RequestMapping("delGroup.do")
-	public void delGroup(int groupNo) {
-		service.moveAndDelGroup(groupNo);
+	public void delGroup(GroupAndTeam group) {
+		service.moveAndDelGroup(group);
+	}
+	
+	@RequestMapping("searchUser.do")
+	public List<String> searchUser(String id) {
+		return service.searchUser(id);
+	}
+	
+	@RequestMapping("insertTeam.do")
+	public int insertTeam(GroupAndTeam team) {
+		service.insertTeam(team);
+		return service.getCurrTeamNo();
+	}
+	
+	@RequestMapping("moveTeamFromGroup.do")
+	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group) {
+		return service.moveTeamFromGroup(group);
 	}
 	
 }
