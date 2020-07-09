@@ -57,9 +57,9 @@
 
 						                        
                         <div class="form-group">
-                            <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="email" id="email" name="id"
+                            <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="email" id="id" name="id"
                                 required="" placeholder="john@deo.com">
-                            <button class="btn btn-info col-3">인증 요청</button>
+                            <label class="btn btn-info col-3" id="checkEmail">인증 요청</label>
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -69,8 +69,8 @@
                         <div class="form-group">
                             <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="text" id="authNum" name="authNum"
                                 required="" placeholder="인증번호를 입력하세요">
-                            <button class="btn btn-info">인증 확인</button>                                
-                            <div class="invalid-feedback">
+                            <label class="btn btn-info col-3" id="authNumCheck">인증 확인</label>                                
+                            <div class="invalid-feedback"id="confirmEmail">
                             </div>
                         </div>
 
@@ -137,21 +137,22 @@
             var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
             var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
+            
             function regCheck(input, regExp, name) { // 정규표현식 검증
                 
                 if(name == "비밀번호확인"){
                    if( $('#password').hasClass('is-valid') === true ){
                         if($('#password').val() != input.val()){
                             let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
-                            input.removeClass("is-valid");
+                            input.removeClass("is-exist is-valid");
                             input.addClass("is-invalid");
                             input.siblings('div').append(invalidMessage);
                         }else{
-                            input.removeClass("is-invalid");
+                            input.removeClass("is-exist is-invalid");
                             input.addClass("is-valid");
                         }
                    }else{
-                    input.removeClass("is-valid");
+                    input.removeClass("is-exist is-valid");
                     input.addClass("is-invalid");
                     let invalidMessage = '형식에 맞는 비밀번호를 먼저 입력하세요 <br>';
                     input.siblings('div').append(invalidMessage);
@@ -160,7 +161,7 @@
                 }else{
                     
                     if ( regExp.test(input.val()) == false) {
-                        input.removeClass("is-valid");
+                        input.removeClass("is-exist is-valid");
                         input.addClass("is-invalid");
                         
                         
@@ -172,25 +173,93 @@
                         
                         input.siblings('div').append(invalidMessage);
                     }else{
-                        input.removeClass("is-invalid");
-                        input.addClass("is-valid");
-                    }
-                  
-                }
+                    	
+                    	if(!input.hasClass('is-exist')){
+                            input.removeClass("is-invalid");
+                            input.addClass("is-valid");
+                    	}                    	
+                    	//중복확인 후 key-up이 들어오면 class 삭제
+                    	input.removeClass('is-exist is-confirmed');                   	
+                    }                  
+                }                        
             }
             
             
+            function time(){
+				          	  asyncResult = "메일 인증 성공";
+				      	  }
+            
+            
             //이메일 중복체크 기능 들어가야함(Ajax)
-            $.ajax({
-            		 type: "post",
-            		 url: "",
-            		 data: {
-            			 "id" : $('#').val()
-            		 }
-            		 success: function(data){
-            			 console.log(data);
-            		 }
-            });
+          
+            $('#checkEmail').on('click', function(){
+              	
+              	console.log($('#id').val());
+              	
+              	let asyncResult = "";
+              	
+                  $.ajax({
+              		type: "post",
+              		url: "signup/duplicateCheck.ajax",
+              		//async: false,
+              		data: {
+              				id : $('#id').val()
+              			},
+              		success: function(data){
+              			console.log(data);
+              			
+                          if(data == 1) {
+                              alert("이미 가입한 이메일 입니다!");
+                              $('#id').removeClass('is-valid is-invalid');
+                              $('#id').addClass('is-exist is-invalid');
+                              $('#id').focus();
+                              return false;
+                          }else{
+                        	  confirm("입력하신 메일주소로 인증번호가 발송됩니다");
+                        	  
+                        	  
+							  $.ajax({
+								  		type: "post",
+								  		url: "signup/confirmEmail.ajax",
+								  		data: {
+				              					"receiver" : $('#id').val()									  				
+									  		},
+								  		success: function(data){
+								  			
+								  			console.log(data);
+								  			
+								  			alert("인증번호를 발송했습니다. \n메일을 확인해주세요");
+								  			
+								  			$('#authNumCheck').click(function(){
+								  				console.log(data);
+								  				
+								  				if($('#authNum').val() != data){
+								  					alert("인증번호가 일치하지 않습니다.");
+								  				}else{
+								  					alert("인증이 완료됐습니다.");
+								  					$('#authNum').addClass('is-valid').trigger('change');
+								  					$('#id').addClass('is-confirmed');
+								  					$('#authNum').attr('readonly', true);
+								  					$('#id').attr('readonly', true);
+								  				}
+								  			});
+								  			
+								  		}
+							  });
+                          }
+              			
+              			},
+             		    error:function(request,status,error){
+             			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+             			    }
+          	 		});
+                  
+                  
+                 
+                  
+                  
+              });
+            
             
            
             
@@ -218,19 +287,23 @@
                     }
                 });
             }
-            inputCheck($('#email'), emailRegExp, "이메일");
+            inputCheck($('#id'), emailRegExp, "이메일");
             inputCheck($('#nickName'), nickRegExp, "별명");
             inputCheck($('#password'), pwdRegExp, "비밀번호"); 
             inputCheck($('#passwordCheck'), pwdRegExp, "비밀번호확인");
+            
+            
+            
             //submit 버튼 활성화
             $('input').on('change keyup', function() {
                let nickOk = $('#nickName').hasClass('is-valid');
-               let emailOk = $('#email').hasClass('is-valid');
+               let idOk = $('#id').hasClass('is-valid');
+               let idConfirmOk = $('#authNum').hasClass('is-valid');
                let pwdOk = $('#password').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
                let agreeOk = $('#agreement').is(":checked");
                console.log(agreeOk);
-               if(nickOk && emailOk && pwdOk && pwdChckOk && agreeOk){
+               if(nickOk && idOk && pwdOk && pwdChckOk && agreeOk && idConfirmOk){
                    console.log("if");
                    $('#submit').removeAttr('disabled');
                }else{
@@ -241,6 +314,10 @@
             });
         
         });
+
+        
+
+        
     </script>
 </body>
 

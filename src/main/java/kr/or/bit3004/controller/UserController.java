@@ -60,27 +60,6 @@ public class UserController {
 	
 	
 	
-//	// 메일 인증 요청 폼
-//	@RequestMapping(value="/mail", method=RequestMethod.GET)
-//	public String mailForm() {
-//		System.out.println("mailForm");
-//		return "user/mail";
-//
-//	}
-//	
-//	// 메일 인증 처리
-//	@RequestMapping(value="/mail", method=RequestMethod.POST)
-//	public String mailSender(Mail mail) {
-//		System.out.println("mailSender");
-//		System.out.println(mail);
-//		
-//		mailService.mailSend(mail);
-//		
-//		return "redirect:";
-//	}
-	
-	
-	
 	// 비번 수정 요청 폼
 	@RequestMapping(value="/forgotpwd", method=RequestMethod.GET)
 	public String resetPassword() {
