@@ -17,7 +17,7 @@ ALTER TABLE `USER`
 
 -- 게시판
 CREATE TABLE `BOARD_LIST` (
-	`NO`      INT          NOT NULL, -- 글식별번호
+	`BOARD_NO`      INT          NOT NULL, -- 글식별번호
 	`TITLE`         VARCHAR(100) NOT NULL, -- 글제목
 	`CONTENT`       TEXT         NOT NULL, -- 글내용
 	`VIEWS`         INT          NULL default 0,     -- 조회수
@@ -34,11 +34,11 @@ CREATE TABLE `BOARD_LIST` (
 ALTER TABLE `BOARD_LIST`
 	ADD CONSTRAINT `PK_BOARD_LIST` -- 게시판 기본키
 		PRIMARY KEY (
-			`NO` -- 글식별번호
+			`BOARD_NO` -- 글식별번호
 		);
         
 -- 게시판 시퀀스
-ALTER TABLE `BOARD_LIST` modify `NO` INT auto_increment;
+ALTER TABLE `BOARD_LIST` modify `BOARD_NO` INT auto_increment;
 
 -- 게시판종류
 CREATE TABLE `BOARD_TYPE` (
@@ -58,11 +58,12 @@ ALTER TABLE `BOARD_TYPE` modify `BOARD_TYPE_NO` INT auto_increment;
 
 -- 클라우드
 CREATE TABLE `BOARD_FILE` (
-	`FILE_NO`   INT          NOT NULL, -- 파일식별번호
-	`FILE_NAME` VARCHAR(110) NULL,     -- 파일이름
-	`FILE_SIZE` INT          NULL,     -- 파일크기
-	`NO`  INT          NULL,     -- 글식별번호
-	`ALL_BOARD_LIST_NO`        INT          NULL      -- 게시판식별번호
+	`FILE_NO`           INT          NOT NULL, -- 파일식별번호
+	`FILE_NAME`         VARCHAR(110) NULL,     -- 파일이름
+	`FILE_SIZE`         INT          NULL,     -- 파일크기
+	`ALL_BOARD_LIST_NO` INT          NULL,     -- 게시판식별번호
+	`BOARD_NO`          INT          NULL,     -- 글식별번호
+	`CARD_NO`           INT          NULL      -- 카드식별번호
 );
 
 -- 클라우드
@@ -75,18 +76,19 @@ ALTER TABLE `BOARD_FILE`
 -- 클라우드 시퀀스
 ALTER TABLE `BOARD_FILE` modify `FILE_NO` INT auto_increment;
 
--- 자유게시판댓글
+-- 게시판댓글
 CREATE TABLE `BOARD_COMMENT` (
 	`COMMENT_NO` INT          NOT NULL, -- 댓글식별번호
 	`CONTENT`    VARCHAR(600) NOT NULL, -- 댓글내용
 	`WRITE_DATE` DATETIME     NOT NULL, -- 댓글작성일
-	`ID`         VARCHAR(50)  NULL,     -- 아이디
-	`NO`   INT          NULL      -- 글식별번호
+	`ID`         VARCHAR(50)  NOT NULL, -- 아이디
+	`BOARD_NO`   INT          NULL,     -- 글식별번호
+	`CARD_NO`    INT          NULL      -- 카드식별번호
 );
 
--- 자유게시판댓글
+-- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
-	ADD CONSTRAINT `PK_BOARD_COMMENT` -- 자유게시판댓글 기본키
+	ADD CONSTRAINT `PK_BOARD_COMMENT` -- 게시판댓글 기본키
 		PRIMARY KEY (
 			`COMMENT_NO` -- 댓글식별번호
 		);
@@ -96,31 +98,31 @@ ALTER TABLE `BOARD_COMMENT` modify `COMMENT_NO` INT auto_increment;
 
 -- 칸반보드카드
 CREATE TABLE `KANBAN_CARD` (
-	`NO`        INT           NOT NULL, -- 글식별번호
+	`CARD_NO`        INT           NOT NULL, -- 카드식별번호
 	`TITLE`          VARCHAR(100)  NOT NULL, -- 글제목
 	`CONTENT`        VARCHAR(2000) NULL,     -- 글내용
 	`WRITE_DATE`     DATETIME      NOT NULL, -- 작성일
-	`FILE_COUNT`     INT           NULL,     -- 파일개수
-	`COMMENT_COUNT`  INT           NULL,     -- 댓글개수
-	`KANBAN_LIST_NO` INT           NULL      -- 칸반리스트 식별번호
+	`FILE_COUNT`     INT           default 0,     -- 파일개수
+	`COMMENT_COUNT`  INT           default 0,     -- 댓글개수
+	`KANBAN_LIST_NO` INT           NOT NULL      -- 칸반리스트 식별번호
 );
 
 -- 칸반보드카드
 ALTER TABLE `KANBAN_CARD`
 	ADD CONSTRAINT `PK_KANBAN_CARD` -- 칸반보드카드 기본키
 		PRIMARY KEY (
-			`NO` -- 글식별번호
+			`CARD_NO` -- 카드식별번호
 		);
         
 -- 칸반보드카드 시퀀스
-ALTER TABLE `KANBAN_CARD` modify `NO` INT auto_increment;
+ALTER TABLE `KANBAN_CARD` modify `CARD_NO` INT auto_increment;
 
 -- 칸반보드리스트
 CREATE TABLE `KANBAN_LIST` (
-	`KANBAN_LIST_NO` INT          NOT NULL, -- 칸반리스트 식별번호
-	`LIST_TITLE`     VARCHAR(100) NOT NULL, -- 칸반리스트 이름
-	`ALL_BOARD_LIST_NO`             INT          NULL,     -- 게시판식별번호
-	`ID`             VARCHAR(50)  NULL      -- 아이디
+	`KANBAN_LIST_NO`    INT          NOT NULL, -- 칸반리스트 식별번호
+	`LIST_TITLE`        VARCHAR(100) NOT NULL, -- 칸반리스트 이름
+	`ALL_BOARD_LIST_NO` INT          NULL,     -- 게시판식별번호
+	`ID`                VARCHAR(50)  NULL      -- 아이디
 );
 
 -- 칸반보드리스트
@@ -135,9 +137,10 @@ ALTER TABLE `KANBAN_LIST` modify `KANBAN_LIST_NO` INT auto_increment;
 
 -- 팀
 CREATE TABLE `TEAM` (
-	`TEAM_NO`   INT         NOT NULL, -- 팀식별번호
-	`TEAM_NAME` VARCHAR(50) NOT NULL, -- 팀명
-	`GROUP_NO`  INT         NOT NULL  -- 그룹식별번호
+	`TEAM_NO`          INT         NOT NULL, -- 팀식별번호
+	`TEAM_NAME`        VARCHAR(50) NOT NULL, -- 팀명
+    `BACKGROUND_COLOR` VARCHAR(50) NULL, -- 배경색
+	`GROUP_NO`         INT         NOT NULL  -- 그룹식별번호
 );
 
 -- 팀
@@ -152,9 +155,10 @@ ALTER TABLE `TEAM` modify `TEAM_NO` INT auto_increment;
 
 -- 그룹
 CREATE TABLE `GROUP` (
-	`GROUP_NO`   INT         NOT NULL, -- 그룹식별번호
-	`GROUP_NAME` VARCHAR(50) NOT NULL, -- 그룹명
-	`ID`         VARCHAR(50) NOT NULL      -- 아이디
+	`GROUP_NO`         INT         NOT NULL, -- 그룹식별번호
+	`GROUP_NAME`       VARCHAR(50) NOT NULL, -- 그룹명
+	`BACKGROUND_COLOR` VARCHAR(50) default 'ffffff',     -- 배경색
+	`ID`               VARCHAR(50) NULL      -- 아이디
 );
 
 -- 그룹
@@ -201,7 +205,7 @@ ALTER TABLE `ROLE_MEMBER`
 
 -- 권한
 CREATE TABLE `ROLE` (
-	`AUTHORITY` VARCHAR(50) NOT NULL, -- 권한코드
+	`AUTHORITY`   VARCHAR(50) NOT NULL, -- 권한코드
 	`DESCRIPTION` VARCHAR(50) NOT NULL  -- 역할명
 );
 
@@ -215,10 +219,10 @@ ALTER TABLE `ROLE`
 -- 게시판목록
 CREATE TABLE `ALL_BOARD_LIST` (
 	`ALL_BOARD_LIST_NO`  INT          NOT NULL, -- 게시판식별번호
-	`NAME`          VARCHAR(100) NULL,     -- 게시판이름
-	`TEAM_NO`       INT          NULL,     -- 팀식별번호
-	`ID`            VARCHAR(50)  NULL,     -- 아이디
-	`BOARD_TYPE_NO` INT          NULL      -- 게시판종류식별번호
+	`NAME`               VARCHAR(100) NULL,     -- 게시판이름
+	`TEAM_NO`            INT          NULL,     -- 팀식별번호
+	`ID`                 VARCHAR(50)  NULL,     -- 아이디
+	`BOARD_TYPE_NO`      INT          NULL      -- 게시판종류식별번호
 );
 
 -- 게시판목록
@@ -271,12 +275,12 @@ ALTER TABLE `TODO_LIST` modify `NO` INT auto_increment;
 -- 일정관리
 CREATE TABLE `PLAN` (
 	`NO`          INT           NOT NULL, -- 일정관리식별번호
-	`NAME`        VARCHAR(100)  NOT NULL, -- 일정이름
-	`DESCRIPTION` VARCHAR(1000) NULL,     -- 설명
-	`START`       DATETIME      NOT NULL, -- 시작
-	`END`         DATETIME      NOT NULL, -- 끝
+	`NAME`        VARCHAR(100)  DEFAULT NULL, -- 일정이름
+	`DESCRIPTION` VARCHAR(1000) DEFAULT NULL,     -- 설명
+	`START`       timestamp      DEFAULT NULL, -- 시작
+	`END`         timestamp      DEFAULT NULL, -- 끝
 	`BGCOLOR`     VARCHAR(50)   NULL,     -- 배경색상
-	`COLOR`       VARCHAR(50)   NULL,     -- 글자색상
+	`COLOR`       VARCHAR(50)   DEFAULT NULL,     -- 글자색상
 	`ALLDAY`      VARCHAR(2)    NULL,     -- 종일여부
 	`TEAM_NO`     INT           NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)   NOT NULL  -- 아이디
@@ -350,26 +354,6 @@ ALTER TABLE `BOARD_LIST`
 
 -- 클라우드
 ALTER TABLE `BOARD_FILE`
-	ADD CONSTRAINT `FK_BOARD_LIST_TO_BOARD_FILE` -- 게시판 -> 클라우드
-		FOREIGN KEY (
-			`NO` -- 글식별번호
-		)
-		REFERENCES `BOARD_LIST` ( -- 게시판
-			`NO` -- 글식별번호
-		);
-
--- 클라우드
-ALTER TABLE `BOARD_FILE`
-	ADD CONSTRAINT `FK_KANBAN_CARD_TO_BOARD_FILE` -- 칸반보드카드 -> 클라우드
-		FOREIGN KEY (
-			`NO` -- 글식별번호
-		)
-		REFERENCES `KANBAN_CARD` ( -- 칸반보드카드
-			`NO` -- 글식별번호
-		);
-
--- 클라우드
-ALTER TABLE `BOARD_FILE`
 	ADD CONSTRAINT `FK_ALL_BOARD_LIST_TO_BOARD_FILE` -- 게시판목록 -> 클라우드2
 		FOREIGN KEY (
 			`ALL_BOARD_LIST_NO` -- 게시판식별번호
@@ -378,19 +362,29 @@ ALTER TABLE `BOARD_FILE`
 			`ALL_BOARD_LIST_NO` -- 게시판식별번호
 		);
 
--- 자유게시판댓글
-ALTER TABLE `BOARD_COMMENT`
-	ADD CONSTRAINT `FK_BOARD_LIST_TO_BOARD_COMMENT` -- 게시판 -> 자유게시판댓글
+-- 클라우드
+ALTER TABLE `BOARD_FILE`
+	ADD CONSTRAINT `FK_BOARD_LIST_TO_BOARD_FILE` -- 게시판 -> 클라우드
 		FOREIGN KEY (
-			`NO` -- 글식별번호
+			`BOARD_NO` -- 글식별번호
 		)
 		REFERENCES `BOARD_LIST` ( -- 게시판
-			`NO` -- 글식별번호
+			`BOARD_NO` -- 글식별번호
 		);
 
--- 자유게시판댓글
+-- 클라우드
+ALTER TABLE `BOARD_FILE`
+	ADD CONSTRAINT `FK_KANBAN_CARD_TO_BOARD_FILE` -- 칸반보드카드 -> 클라우드
+		FOREIGN KEY (
+			`CARD_NO` -- 카드식별번호
+		)
+		REFERENCES `KANBAN_CARD` ( -- 칸반보드카드
+			`CARD_NO` -- 카드식별번호
+		);
+
+-- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
-	ADD CONSTRAINT `FK_USER_TO_BOARD_COMMENT` -- 사용자 -> 자유게시판댓글
+	ADD CONSTRAINT `FK_USER_TO_BOARD_COMMENT` -- 사용자 -> 게시판댓글
 		FOREIGN KEY (
 			`ID` -- 아이디
 		)
@@ -398,14 +392,24 @@ ALTER TABLE `BOARD_COMMENT`
 			`ID` -- 아이디
 		);
 
--- 자유게시판댓글
+-- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
-	ADD CONSTRAINT `FK_KANBAN_CARD_TO_BOARD_COMMENT` -- 칸반보드카드 -> 자유게시판댓글
+	ADD CONSTRAINT `FK_BOARD_LIST_TO_BOARD_COMMENT` -- 게시판 -> 게시판댓글
 		FOREIGN KEY (
-			`NO` -- 글식별번호
+			`BOARD_NO` -- 글식별번호
+		)
+		REFERENCES `BOARD_LIST` ( -- 게시판
+			`BOARD_NO` -- 글식별번호
+		);
+
+-- 게시판댓글
+ALTER TABLE `BOARD_COMMENT`
+	ADD CONSTRAINT `FK_KANBAN_CARD_TO_BOARD_COMMENT` -- 칸반보드카드 -> 게시판댓글
+		FOREIGN KEY (
+			`CARD_NO` -- 카드식별번호
 		)
 		REFERENCES `KANBAN_CARD` ( -- 칸반보드카드
-			`NO` -- 글식별번호
+			`CARD_NO` -- 카드식별번호
 		);
 
 -- 칸반보드카드

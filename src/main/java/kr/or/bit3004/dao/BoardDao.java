@@ -12,7 +12,10 @@ public interface BoardDao {
 	public Board selectBoardByNo(int no);
 	
 	//게시판 글쓰기
-	public int insertBoard(Board board);
+	public void insertBoard(Board board);
+	
+	//파일 업로드
+	public int fileUpload(Board board);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);

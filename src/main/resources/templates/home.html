@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -208,8 +210,8 @@
 		</div>
 	</div>
 
-	
-	<a href="boardList.do?allBoardListNo=1">boardList Test</a> <br>
+	<!-- <a href="boardList.do?allBoardListNo=1">boardList Test</a> <br> -->
+	<a href="boardList.do">boardList Test</a> <br>
 	<a href="insertForm.do">insertForm Test</a> <br>
 	<a href="include.do">인클루드 테스트</a> <br>
 	<a href="file.do">클라우드 테스트(임시폐업)</a> <br>
@@ -217,6 +219,9 @@
 	<a href="calendar.do">Calendar 테스트</a> <br>
 	<a href="todoList.do?teamNo=1">todoList 테스트</a> <br>
 	<a href="teamMain.do?id=hyerin">teamMain 테스트</a> <br>
+	<input class="form-control" type="email" id="id" name="id" th:value="${session.currentUser.id}" readonly>
+	<span th:text="${session.currentUser}"></span>	
+
 
 </body>
 </html>

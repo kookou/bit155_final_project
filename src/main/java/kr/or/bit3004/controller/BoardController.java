@@ -18,7 +18,7 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	//게시판 목록
+	//게시판 목록보기
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo) {
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
@@ -27,40 +27,42 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int no) {
-		model.addAttribute("selectBoard", service.selectBoardByBoardNo(no));
-		return "board/boardDetail";
+	public String selectBoardByBoardNoService(Model model, int boardNo) {
+		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
+		return "board/detail";
 	}
 	
-	//게시판 글쓰기(폼)
+	//게시판 글쓰기(Form)
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
 	public String insertBoardService() {
-		return "board/insertForm";
+		return "board/insert";
 	}
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoardService(Board board , HttpServletRequest request){
-		service.insertBoard(board, request);
+		service.insertBoard(board);
+		service.fileUploadBoard(board, request);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}
 	
-	//게시판 수정하기(폼)
+	//게시판 수정하기(Form)
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
-	public String updateBoard(int no , HttpServletRequest request , Model model) {
+	public String updateBoardService(int no , Model model) {
 		model.addAttribute("board" , service.selectBoardByBoardNo(no));
-		return "board/updateForm";
+		return "board/update";
 	}
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
-	public String updateBoard(Board board , HttpServletRequest request) {
-		service.updateBoard(board , request);
+	public String updateBoardService(Board board) {
+		System.out.println(board);
+		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}
 	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoard(int no) {
+	public String deleteBoardService(int no) {
 		service.deleteBoard(no);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}

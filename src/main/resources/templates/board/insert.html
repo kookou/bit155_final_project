@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Bit 155 Final Project</title>
+    <!-- Custom CSS -->
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/kanban.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+ 	<!-- <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div> -->
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+     <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-5 align-self-center">
+                    <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" th:action="@{insertBoard.do}" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group">
+                                            	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요.">
+                                            </div>
+                                            <div class="custom-file col-md-12">
+                                                <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
+                                                <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4 class="card-title"></h4>
+                                            <div class="form-group">
+                                        	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" placeholder="내용을 입력하세요."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                                <div class="form-actions">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-info">등록</button>
+                                        <button type="reset" class="btn btn-dark">초기화</button>
+                                        <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1">목록으로</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+    <div th:replace="common/script :: script"></div>
+    
+    
+
+</body>
+</html>
