@@ -221,9 +221,6 @@
 /* <%
 	List<Calendar> list = (ArrayList<Calendar>)request.getAttribute("showCalendar");
 %>
-
-	
-	
  	var list = document.getElementById("showCalendar");
 	var calendarEl = document.getElementById("calendar");
 	var calendar = new FullCalendar.Calendar(calendarEl,{
@@ -246,28 +243,22 @@
 					end : "2020-07-08"
 				}
 		]
-	
 	});
 	console.log()
 	calendar.render();
  */
- /*var calendarData = $("#calendarData").serialize();
- $.ajax({
-	url:"addPlan.ajax",
-	type : "POST",
-	data: calendarData,
-	dataType:"json",
-	success:function(e){
-		console.log(e.calendarData);
-		console.log(calendarData);
-	},
-	error: function(request,status,error){
-		console.log("실패");
-		console.log(error);
-	}
- })*/
     </script>
     
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	var teamNo = /*[[ ${teamNo} ]]*/;
+	/*]]*/
+    $(document).ready(function(){
+		alert("팀 번호는: "+teamNo);
+    });
+	</script>
+
+
 
 </body>
 </html>
