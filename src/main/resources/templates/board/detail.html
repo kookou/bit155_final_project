@@ -31,6 +31,7 @@
        margin-left: 35px;
    }
    
+   
 </style>
 </head>
 
@@ -165,5 +166,48 @@
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
     
+    <!-- 여기서부터 script -->
+    <script th:inline="javascript">
+	    /*<![CDATA[*/
+	       var currUser = [[${session.currentUser.id}]];
+	       var boardNo = [[${board.boardNo}]];
+	    /*]]>*/
+	    console.log(boardNo);
+	    //댓글 목록보기
+		$.ajax({
+			url:"CommentList.ajax",
+			data:{
+				no:'${board.boardNo}'
+			},
+			dataType:"json",
+			success:function(resData){
+				makeCommnet(resData);
+			}
+		});
+	    console.log(getCommentList);
+	    //게시판 목록을 보여주는 함수 
+	    function makeCommnet(result){
+	    	var html = "";
+	    	$.each(result, function(index , obj){
+	    		html += "<div id='comment-list'>";
+                html += "<div class='comment' style='background-color:rgb(242, 242, 242)'>";
+                     html += "<img src='assets/images/users/profile-pic.jpg' alt='user' class='rounded-circle' width='30'>";
+                     html += "<b><a th:text=" + obj.commentNo + "></a></b>";
+                     html += "<span class='text-info'>작성자</span>";
+                     html += "<br>";
+                     html += "<div class='comment-content'>";
+                         html += "<h5>" + obj.content + "</h5>";
+                         html += "<h6 style='color: rgb(180, 180, 180);'>";
+                             html += obj.writeDate;
+                         html += "</h6>";
+                     html += "</div>";
+                 html += "</div>";
+                 html += "<hr class='my-1'>";
+	    	});
+	    	$('#comment-area').append(html);
+	    }
+	    
+	    
+    </script>
 </body>
 </html>

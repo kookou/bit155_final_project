@@ -50,7 +50,6 @@ public class BoardController {
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
 	public String updateBoardService(Board board) {
-		System.out.println(board);
 		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}

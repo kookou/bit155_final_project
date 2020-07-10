@@ -72,7 +72,6 @@ public class BoardServiceImpl implements BoardService{
 	//게시판 수정하기
 	@Override
 	public void updateBoard(Board board) {
-		System.out.println(board);
 		dao.updateBoard(board);
 	}
 	
