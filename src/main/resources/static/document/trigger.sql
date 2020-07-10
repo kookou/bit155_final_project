@@ -37,27 +37,5 @@ SET
 END $$
 DELIMITER ;
 
--- 팀멤버 추가시 팀리더 or 팀멤버 권한 넣어주기
-DELIMITER $$
-    CREATE TRIGGER `INSERT_ROLE_TEAM`
-    AFTER INSERT ON `TEAM_MEMBER`
-    FOR EACH ROW 
-    BEGIN
-      IF (NEW.`LEADER` = 'Y') THEN
-          INSERT INTO `ROLE_MEMBER`
-            SET 
-            `AUTHORITY` = 'ROLE_TEAM_LEADER',
-            `ID` = NEW.`ID`,
-            `TEAM_NO` = NEW.`TEAM_NO`;
-      ELSE
-          INSERT INTO `ROLE_MEMBER`
-            SET 
-            `AUTHORITY` = 'ROLE_TEAM_MEMBER',
-            `ID` = NEW.`ID`,
-            `TEAM_NO` = NEW.`TEAM_NO`;
-      END IF;
-    END$$
-DELIMITER ;
-
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

@@ -1,5 +1,6 @@
 //팀 클릭시 페이지 이동
 $('#outer').on('click', '.teamBtn', function() {
+	console.log($(this).attr('data-teamNo'));
 	location.href = 'timeLine.do?teamNo=' + $(this).attr('data-teamNo');
 });
     
