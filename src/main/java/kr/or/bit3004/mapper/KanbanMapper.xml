@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
 	<insert id="insertListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
 		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTitle}, 4 ,#{id});
+		values(#{listTitle}, 2 ,#{id});
 	</insert>
 	
 	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
@@ -15,7 +15,6 @@
 	 select * from kanban_list where kanban_list_no = #{kanbanListNo};
 	</select>
 	
-	
 	<select id="allKanbanList" resultMap="selectMapList">
 		SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content,
 		c.write_date, c.file_count , c.comment_count , c.kanban_list_no,
@@ -23,7 +22,7 @@
 		FROM `KANBAN_LIST` l
 		LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no
 		LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no =
-		a.all_board_list_no where all_board_list_no = ${allBoardListNo};
+		a.all_board_list_no where a.all_board_list_no = ${allBoardListNo};
 	</select>
 
 	<resultMap type="java.util.HashMap" id="selectMapList">
@@ -45,6 +44,7 @@
 	<select id="kanbanCardList" resultMap="selectCardList">
 		select * from kanban_card;
 	</select>
+	
 	<resultMap type="java.util.HashMap" id="selectCardList">
 		<result column="no" property="cardNO" />
 		<result column="title" property="cardTitle" />
@@ -57,7 +57,7 @@
 	<select id="kanbanList" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , a.name , a.team_no , a.board_type_no
 	FROM KANBAN_LIST l 
-	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where all_board_list_no = ${allBoardListNo};
+	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where l.all_board_list_no = ${allBoardListNo};
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectList">
@@ -69,11 +69,7 @@
 		<result column="team_no" property="teamNo" />
 		<result column="board_type_no" property="boardTypeNo" />
 	</resultMap>
-	
-	
-	
-	
-	
+
 	
 <!-- 		<select id="kanbanCardList" resultMap="selectCardList">
 		select * from kanban_card;

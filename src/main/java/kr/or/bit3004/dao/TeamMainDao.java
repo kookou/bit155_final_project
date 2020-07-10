@@ -23,4 +23,5 @@ public interface TeamMainDao {
 	public void insertTeamLeader(GroupAndTeam team);
 	public int getCurrTeamNo();
 	public void moveTeamFromGroup(GroupAndTeam groupAndTeam);
+	
 }

@@ -12,8 +12,7 @@ public interface KanbanService {
 	public int updateListTite(KanbanList kanbanlist);
 	
 	public List<Map> allKanbanList(int allBoardListNo);
-	public Map<String,Object> getGroup(String id);
-	
+
 	public List<Map> kanbanCardList();
 	public List<Map> kanbanList(int allBoardListNo);
 	

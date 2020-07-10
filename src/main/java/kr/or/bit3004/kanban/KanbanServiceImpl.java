@@ -27,11 +27,7 @@ public class KanbanServiceImpl implements KanbanService {
 	public List<Map> allKanbanList(int allBoardListNo){
 		return dao.allKanbanList(allBoardListNo);
 	}
-	
-	@Override
-	public Map<String,Object> getGroup(String id){
-		return dao.getGroup(id);
-	}
+
 	
 	@Override
 	public List<Map> kanbanCardList(){
