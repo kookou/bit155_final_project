@@ -14,11 +14,6 @@ select * from TIMELINE_TYPE;
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('common board');
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('kanban board');
 
--- 사용자
-insert into `USER`(`ID`, `PWD`, `NICKNAME`) values('jinwon', '1004', '판교90');
-insert into `USER`(`ID`, `PWD`, `NICKNAME`) values('hyerin', '1004', '효자동불효자');
-insert into `USER`(`ID`, `PWD`, `NICKNAME`) values('seoyoung', '1004', '스폰지밥');
-
 -- 그룹
 insert into `GROUP`(`GROUP_NAME`, `id`) values('Personal', 'hyerin');
 insert into `GROUP`(`GROUP_NAME`, `id`) values('Bit155', 'hyerin');

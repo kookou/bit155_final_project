@@ -47,12 +47,14 @@ DELIMITER $$
           INSERT INTO `ROLE_MEMBER`
             SET 
             `AUTHORITY` = 'ROLE_TEAM_LEADER',
-            `ID` = NEW.`ID`;
+            `ID` = NEW.`ID`,
+            `TEAM_NO` = NEW.`TEAM_NO`;
       ELSE
           INSERT INTO `ROLE_MEMBER`
             SET 
             `AUTHORITY` = 'ROLE_TEAM_MEMBER',
-            `ID` = NEW.`ID`;
+            `ID` = NEW.`ID`,
+            `TEAM_NO` = NEW.`TEAM_NO`;
       END IF;
     END$$
 DELIMITER ;
