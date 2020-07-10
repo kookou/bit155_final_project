@@ -13,5 +13,4 @@ public class BoardUpload {
 	private String fileOriginName;
 	private String fileUrl;
 	
-	
 }

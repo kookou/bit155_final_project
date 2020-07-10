@@ -139,7 +139,7 @@ ALTER TABLE `KANBAN_LIST` modify `KANBAN_LIST_NO` INT auto_increment;
 CREATE TABLE `TEAM` (
 	`TEAM_NO`          INT         NOT NULL, -- 팀식별번호
 	`TEAM_NAME`        VARCHAR(50) NOT NULL, -- 팀명
-    `BACKGROUND_COLOR` VARCHAR(50) NULL, -- 배경색
+    `BACKGROUND_COLOR` VARCHAR(50) default 'ffffff', -- 배경색
 	`GROUP_NO`         INT         NOT NULL  -- 그룹식별번호
 );
 
@@ -157,7 +157,6 @@ ALTER TABLE `TEAM` modify `TEAM_NO` INT auto_increment;
 CREATE TABLE `GROUP` (
 	`GROUP_NO`         INT         NOT NULL, -- 그룹식별번호
 	`GROUP_NAME`       VARCHAR(50) NOT NULL, -- 그룹명
-	`BACKGROUND_COLOR` VARCHAR(50) default 'ffffff',     -- 배경색
 	`ID`               VARCHAR(50) NULL      -- 아이디
 );
 

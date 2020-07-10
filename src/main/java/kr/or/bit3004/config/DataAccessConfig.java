@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -17,7 +18,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  */
 
 @Configuration
-@MapperScan(basePackages = "kr.or.bit3004.dao")
+@MapperScan(basePackages = "kr.or.bit3004")
 public class DataAccessConfig {
 
 	@Bean
@@ -25,7 +26,7 @@ public class DataAccessConfig {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		
 		sessionFactory.setDataSource(dataSource);
-		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:kr/or/bit3004/dao/*.xml"));
+		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:kr/or/bit3004/*.xml"));
 
 		//카멜케이스, 스네이크 맵핑
 		Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
