@@ -130,7 +130,7 @@
                                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
-                                                 <form class="pl-3 pr-3" action="#calendarData">
+                                                 <form class="pl-3 pr-3"  id="calendarData" name="calendarData">
 
                                                     <div class="form-group">
                                                         <label for="title">Title</label>
@@ -150,7 +150,7 @@
                                                     <div class="form-group">
                                                         <label for="color">Color</label>
                                                         <input class="form-control" type="color" required="" name="color"
-                                                            id="color" placeholder="Color">
+                                                            id="color" placeholder="Color" value="ddddzjffj">
                        <select><option>보라색</option><option>초록색</option><option>빨간색</option><option>노란색</option></select>
                                                     </div>
             										<div class="form-group">
@@ -221,9 +221,6 @@
 /* <%
 	List<Calendar> list = (ArrayList<Calendar>)request.getAttribute("showCalendar");
 %>
-
-	
-	
  	var list = document.getElementById("showCalendar");
 	var calendarEl = document.getElementById("calendar");
 	var calendar = new FullCalendar.Calendar(calendarEl,{
@@ -246,22 +243,22 @@
 					end : "2020-07-08"
 				}
 		]
-	
 	});
 	console.log()
 	calendar.render();
  */
- var calendarData = $("#calendarData").serialize();
- $.ajax({
-	url:"addPlan.ajax",
-	data: calendarData,
-	dataType:"html",
-	success:function(e){
-		console.log(e);
-	}
- })
     </script>
     
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	var teamNo = /*[[ ${teamNo} ]]*/;
+	/*]]*/
+    $(document).ready(function(){
+		alert("팀 번호는: "+teamNo);
+    });
+	</script>
+
+
 
 </body>
 </html>
