@@ -47,6 +47,7 @@ $('#plan-add').on('click', function(){
 			//opener.parent.location.reload();
 			console.log(result);
 			window.close();
+			//$('#centermodal').modal("hide");
 		},
 		error: function(request,status,error){
 			console.log("실패"+request.status+request.responseText);
