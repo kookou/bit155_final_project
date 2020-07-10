@@ -1,7 +1,5 @@
 package kr.or.bit3004.board;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,16 +35,16 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoardService(Board board , HttpServletRequest request){
+	public String insertBoardService(Board board){
 		service.insertBoard(board);
-		service.fileUploadBoard(board, request);
+		//service.fileUploadBoard(board, request);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}
 	
 	//게시판 수정하기(Form)
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
-	public String updateBoardService(int no , Model model) {
-		model.addAttribute("board" , service.selectBoardByBoardNo(no));
+	public String updateBoardService(int boardNo , Model model) {
+		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		return "board/update";
 	}
 	//게시판 수정하기
@@ -59,8 +57,8 @@ public class BoardController {
 	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoardService(int no) {
-		service.deleteBoard(no);
+	public String deleteBoardService(int boardNo) {
+		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo=1";
 	}
 }
