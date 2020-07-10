@@ -71,8 +71,6 @@ var addcardbtn =
  + "</a>"
 + "</div>"
 
-
-
 var addlistTag = 
   "<div class='kanban-list-wrapper'>"
     + "<div class='kanban-list-content'>"
@@ -88,7 +86,8 @@ var addlistTag =
     + "</div>"
 + "</div>";
 
-	//텍스트에어리어 사이즈 자동 조절
+
+//텍스트에어리어 사이즈 자동 조절
 function resize(obj) {
         obj.style.height = "1px";
         obj.style.height = (obj.scrollHeight)+"px";
@@ -96,11 +95,9 @@ function resize(obj) {
     $(document).on('keydown','.autosize',function() {
         resize(this);
     });
-
     $(document).on('focus','.autosize',function() {
         resize(this);
     });
-    
     $(document).on('keyup','.autosize',function() {
         resize(this);
 });
@@ -116,7 +113,7 @@ $(document).on('click', '#addlist', function() {
 	$(this).prev().children().children().children().children().focus();
 });
 
-
+//리스트 추가 완료
 $('#kanban').on('click', '.kanban-addlistdone', function() {
   
     let listName = $(this).parent().children().find('textarea').val();
@@ -143,14 +140,18 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     
     $(this).remove();
     addlist.show()
-    // trash.show();
-    
-    // $('#kanban-list-input').on('blur','.kanban-list-title-input',function(){
-    //     console.log("되니?")
-    //     $(this).parent().parent().children().children().hide();
-    //     $('#addlistbutton').show();
-    //     return;
-    // });
+
+    $.ajax({
+		url: "InsertKanbanList.ajax",
+		data: {listName: listName},
+        dataType: "html",
+        
+		success: function(resData) {
+			console.log("list insert 완료");
+			// deleteListBtnTag.attr('data-code', resData);
+			// ListDivTag.attr('data-code', resData);
+		}
+	});
 	
 });
 
@@ -180,19 +181,6 @@ $('#kanban').on('click', '.kanban-list-title', function() {
         cardTitle.text($(this).val());
         console.log($(this))
 		$(this).remove();
-		
-		// if(listName != $(this).val()) {
-		// 	$.ajax({
-		// 		url: "UpdateKanbanListName.ajax",
-		// 		data: {
-		// 			oriListName: listName,
-		// 			updateListName: $(this).val()
-		// 		},
-		// 		success: function() {
-		// 			$('#listNameInput').blur();
-		// 		}
-		// 	});
-        // }
         tr.show()
     });
     
@@ -203,7 +191,6 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 
 //리스트 삭제 하기
 $('#kanban').on('click', '.kanban-list-menu', function() {
-
     var listName = $(this).parent().children().eq(0).text()
     var canceltext = $('#list-modal-cancel').text()
     var deletetext = $('#list-modal-delete').text()
@@ -220,24 +207,36 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 
     //카드 추가
 $(document).on('click', "#addcard",function(){
-		
-		var addcardTag = "<div class='kanban-card-list'>"
-                       
+        var addcardTag = "<div class='kanban-card-list btn-card-hover' th:each='card : ${kanbancardlist}' th:if='${kanbanlist.kanbanListNo == card.kanbanListNo}'>"
+                         +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
                          +"<div class='kanban-card-element' data-toggle='modal' data-target='#signup-modal'>"
-                         +"<span class='kanban-card-title'>"
+                         +"<span class='kanban-card-title' th:text='${card.cardTitle}' >"
                          +"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none; '></textarea>"
                          +"</span>"
                          +"<div class='kanban-card-badges'>"
+                         +'<div class="kanban-card-badge" title="comments" th:if="${card.commentcount >0}">'
+                         +'<span class="icon-bubble badge-icon"></span>'
+                         +'<span class="badge-text" th:text="${card.commentcount}"></span>'
+                         +'</div>'
+                         +'<div class="kanban-card-badge" title="file" th:if="${card.fileCount >0}">'
+                         +'<span class="icon-paper-clip badge-icon"></span>'
+                         +'<span class="badge-text" th:text="${card.fileCount}></span>'
+                         +'</div>'
                          +"</div>"
                          +"</div>"
                          +"</div>"
-                         +"</div>"
-                         +"</div>"
-
-                 
+                   
+                    
         $(this).parent().before(addcardTag);
-        $(this).parent().prev().children().children().children().focus()
-        var input = $(this).parent().prev().children().children().children()
+        $(this).parent().mouseleave()
+        $(this).parent().prev().children().children().children().eq(0).focus()
+        var input = $(this).parent().prev().children().children().children().eq(0)
+        var comment= $(this).parent().prev().children().children().children().eq(1)
+        var file= $(this).parent().prev().children().children().children().eq(2)
+        $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
+        $('.kanban-card-element').removeAttr( 'data-target', '#signup-modal')
+        comment.hide()
+        file.hide()
 
         $(input).blur(function() {
             if($(input).val() == "") {
@@ -245,25 +244,81 @@ $(document).on('click', "#addcard",function(){
                 $(input).focus();
                 return;
             }
-            console.log($(this).parent())
-            
             $(this).parent().text($(input).val());
             $(input).remove();
+            $('.kanban-card-element').attr('data-toggle' ,'modal')
+            $('.kanban-card-element').attr( 'data-target', '#signup-modal')
             
         });
 });
 
+$('#kanban').on('mouseenter','.kanban-card-list',function(){
+    console.log($(this).children().eq(0))
+    var mouseeven = $(this).children().eq(0)
+    $(this).children().eq(0).show()
+    
+    $('#kanban').on('mouseleave','.kanban-card-list',function(){
+        console.log("안되나???")
+        $(mouseeven).hide()
+
+    })
+
+})
+
+
+
+
+
+
+$('#kanban').on('click','.active-card-icon',function(){
+    $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
+    $('.kanban-card-element').removeAttr( 'data-target', '#signup-modal')
+    
+    $(this).mouseleave()
+    console.log($(this).parent().children().eq(1).children().eq(0).text())
+    var cardelement = $(this).parent().children().eq(1).children().eq(0)
+    var cardtext =  $(cardelement).text()
+    
+    $(cardelement).hide()
+    $(cardelement).before("<span class='kanban-card-title'>"+"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+cardtext+"</textarea>"+"</span>")
+    console.log($(this).parent().children().eq(1).children().find('textarea'))
+    $(cardelement).remove();
+    var textarea = $(this).parent().children().eq(1).children().find('textarea')
+
+    $(textarea).focus()
+
+    $('textarea').on('focusin',function(){
+        console.log("외않되????????????????")
+        $('.active-card-icon').hide()
+    })
+   
+    
+    $(textarea).blur(function() {
+        if($(textarea).val() == "") {
+            alert('Card title을 입력하세요');
+            $(textarea).focus();
+            return;   
+        }
+        $(this).parent().text($(textarea).val());
+        $('.kanban-card-element').attr('data-toggle' ,'modal')
+        $('.kanban-card-element').attr( 'data-target', '#signup-modal')
+
+
+    })
+
+    
+})
 
 //모달 타이틀 수정
-$('#kanban').on('click', '.kanban-card-list', function() {
-    console.log($(this).parent().children().eq(0).find('h4').text())
-    var listtitle = $(this).parent().children().eq(0).find('h4').text()
-    var cardtitle = $(this).children().find('span').text()
-    $('#modaltitle').text(cardtitle)
-    $('.card-in-list').text("in list "+listtitle)
+// $('#kanban').on('click', '.kanban-card-element', function() {
+//     console.log($(this).parent().children().eq(0).find('h4').text())
+//     var listtitle = $(this).parent().children().eq(0).find('h4').text()
+//     var cardtitle = $(this).children().find('span').text()
+//     $('#modaltitle').text(cardtitle)
+//     $('.card-in-list').text("in list "+listtitle)
+
 $('#signup-modal').on('click','.card-modal-title',function() {
   
-    console.log(cardtitle)
     // let cardTitle = $('.kanban-card-title').text();
     // console.log($('.kanban-card-title').text())
 
@@ -292,7 +347,7 @@ $('#signup-modal').on('click','.card-modal-title',function() {
     });
     
 });
-});
+// });
 
 //모달 내용 수정
 $('#signup-modal').on('click', '.card-modal-list-description', function() {
@@ -318,6 +373,12 @@ $('#signup-modal').on('click', '.card-modal-list-description', function() {
     });
 
 });
+
+
+
+
+
+
 
 
 
