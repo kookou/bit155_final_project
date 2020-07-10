@@ -30,6 +30,7 @@
    .comment-content {
        margin-left: 35px;
    }
+   
 </style>
 </head>
 
@@ -63,7 +64,7 @@
 	                                        <div id="content-outer" th:with="board=${selectBoard}">
 	                                            <h6><a th:href="@{boardList.do(allBoardListNo=1)}" th:text="${board.name}"></a></h6>
 	                                            <h2><a th:text="${board.title}"></a></h2>
-	                                            <input type="hidden" th:value="${board.no}" id="boardNo">
+	                                            <input type="hidden" th:value="${board.boardNo}" id="boardNo">
 	                                            <div style="float: left; margin-bottom: 15px;">
 	                                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
 	                                                <a th:text ="${board.nickname}"></a><br>
@@ -84,7 +85,7 @@
 	                                                <div id="comment-area">
 	                                                    <h4>Comment</h4>
 	                                                    <div id="comment-list">
-	                                                       <!--  <div class="comment" style="background-color:rgb(242, 242, 242)">
+	                                                       <div class="comment" style="background-color:rgb(242, 242, 242)">
 	                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
 	                                                            <b><a th:text="${board.nickname}"></a></b>
 	                                                            <span class="text-info">작성자</span>
@@ -99,7 +100,7 @@
 	                                                                    2020.07.01. 12:56
 	                                                                </h6>
 	                                                            </div>
-	                                                        </div> -->
+	                                                        </div>
 	                                                        <hr class="my-1">
 	                                                        <div class="comment">
 	                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
@@ -145,8 +146,8 @@
 	                                <div style="float: left;" th:with="board=${selectBoard}">
 	                                    <button type="button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> 글쓰기</button>
 	                                    <button type="button" class="btn btn-light btn-sm">답글</button>
-	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(no=${board.no})}">수정</a>
-	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(no=${board.no})}">삭제</a>
+	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${board.boardNo})}">수정</a>
+	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${board.boardNo})}">삭제</a>
 	                                </div>
 	                                <div style="float: right;">
 	                                    <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1">목록</a>
@@ -164,43 +165,5 @@
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
     
-    <!-- script -->
-    <script>
-	 	console.log($('#boardNo').val());
-    	//게시판 목록보기
-    	$.ajax({
-    		url : "CommentList.ajax",
-    		data : {
-    			no: $('#boardNo').val()
-    		},
-    		dataType : "json",
-    		success : function(resData){
-    			console.log(resData);
-    			//makeCommnent(resData);
-    		}
-    	});
-    	
-    	//게시판 목록 그리는 함수
-    	function makeComment(result){
-    		var html = "";
-    		$.each(result , function(index , obj){
-    			html += "<div class='comment' style='background-color:rgb(242, 242, 242)'>";
-                html += "<img src='assets/images/users/profile-pic.jpg' alt='user' class='rounded-circle' width='30'>";
-                html += "<b><a th:text=" + obj.nickname + "></a></b>";
-                html += "<span class='text-info'>작성자</span>";
-                html += "<br>";
-	                html += "<div class='comment-content'>";
-	                    html += "<h5>" + obj.commentContent + "</h5>";
-	                    html += "<h6 style='color: rgb(180, 180, 180);'>";
-	                        html += obj.writeDate;
-	                    html += "</h6>";
-	                html += "</div>";
-            	html += "</div>";
-            	html += "<hr class='my-1'>";
-    		});
-    	}
-    </script>
-    
-
 </body>
 </html>
