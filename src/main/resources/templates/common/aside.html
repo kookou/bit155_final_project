@@ -25,10 +25,10 @@
 
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Board List</span></li>
-					<li class="sidebar-item">
+					<li class="sidebar-item" th:each="board: ${allBoardList}">
 						<a class="sidebar-link" href="#" aria-expanded="false"> 
-							<i class="fas fa-table"></i> 
-							<span class="hide-menu">Board Name </span>
+							<i class="fas fa-table"></i> <!-- 게시판타입에따라 로고바꿔줘야함 -->
+							<span class="hide-menu" th:text="${board.name}"></span>
 						</a>
 					</li>
 					<li class="sidebar-item">
