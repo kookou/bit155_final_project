@@ -2,6 +2,7 @@ package kr.or.bit3004.user;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,11 +77,11 @@ public class UserController {
 	
 	//회원 수정 처리
 	@RequestMapping(value="/edituser", method=RequestMethod.POST)
-	public String editUserInfo(User user, HttpServletRequest request) {
+	public String editUserInfo(User user, HttpServletRequest request, HttpSession session) {
 		System.out.println("===controller===");
 		System.out.println(user);
 		
-		service.updateUser(user);
+		service.updateUser(user, session);
 		return "redirect:edituser";
 	}
 	

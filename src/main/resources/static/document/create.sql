@@ -98,13 +98,14 @@ ALTER TABLE `BOARD_COMMENT` modify `COMMENT_NO` INT auto_increment;
 
 -- 칸반보드카드
 CREATE TABLE `KANBAN_CARD` (
-	`CARD_NO`        INT           NOT NULL, -- 카드식별번호
-	`TITLE`          VARCHAR(100)  NOT NULL, -- 글제목
-	`CONTENT`        VARCHAR(2000) NULL,     -- 글내용
-	`WRITE_DATE`     DATETIME      NOT NULL, -- 작성일
-	`FILE_COUNT`     INT           default 0,     -- 파일개수
-	`COMMENT_COUNT`  INT           default 0,     -- 댓글개수
-	`KANBAN_LIST_NO` INT           NOT NULL      -- 칸반리스트 식별번호
+	`CARD_NO`        INT           NOT NULL,   -- 카드식별번호
+	`TITLE`          VARCHAR(100)  NOT NULL,   -- 글제목
+	`CONTENT`        VARCHAR(2000) NULL,       -- 글내용
+	`WRITE_DATE`     DATETIME      NOT NULL,   -- 작성일
+	`FILE_COUNT`     INT           default 0,  -- 파일개수
+	`COMMENT_COUNT`  INT           default 0,  -- 댓글개수
+    `CARD_INDEX`     INT           NULL,   	   -- 카드순서
+	`KANBAN_LIST_NO` INT           NOT NULL    -- 칸반리스트 식별번호
 );
 
 -- 칸반보드카드
@@ -278,9 +279,7 @@ CREATE TABLE `PLAN` (
 	`DESCRIPTION` VARCHAR(1000) DEFAULT NULL,     -- 설명
 	`START`       timestamp      DEFAULT NULL, -- 시작
 	`END`         timestamp      DEFAULT NULL, -- 끝
-	`BGCOLOR`     VARCHAR(50)   NULL,     -- 배경색상
 	`COLOR`       VARCHAR(50)   DEFAULT NULL,     -- 글자색상
-	`ALLDAY`      VARCHAR(2)    NULL,     -- 종일여부
 	`TEAM_NO`     INT           NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)   NOT NULL  -- 아이디
 );

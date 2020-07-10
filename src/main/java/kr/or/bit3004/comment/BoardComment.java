@@ -12,5 +12,5 @@ public class BoardComment {
 	private String content;
 	private String writeDate;
 	private String id;
-	private int no;
+	private int boardNo;
 }

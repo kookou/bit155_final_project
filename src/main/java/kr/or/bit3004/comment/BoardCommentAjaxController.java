@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BoardCommentAjaxController {
+	
 	@Autowired
 	private BoardCommentService boardCommentService;
 	
 	//댓글목록 가져오기
 	@RequestMapping("CommentList.ajax")
-	public List<String> selectCommentList(int no){
-		System.out.println(no);
-		return boardCommentService.selectCommentList();
+	public List<String> getCommentList(int boardNo){
+		return boardCommentService.getCommentList(boardNo);
 	}
 }

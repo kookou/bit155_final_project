@@ -1,4 +1,8 @@
-
+//팀 클릭시 페이지 이동
+$('#outer').on('click', '.teamBtn', function() {
+	console.log($(this).attr('data-teamNo'));
+	location.href = 'timeLine.do?teamNo=' + $(this).attr('data-teamNo');
+});
     
 	var inputGroupNameHtml =
 		'<div class="row" id="inputGroupNameDiv">' + 
@@ -56,7 +60,7 @@
 	        			'</div>' + 
 	        			'<div class="col-xl-3">' +
 	        				'<div class="card" style="text-align: center;">' +
-	        					'<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
+	        					'<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
 	        						'+ Create New Team' +
 	        					'</div>' +
 	        				'</div>' +
@@ -206,7 +210,7 @@
 			});
 			html += 	'<div class="col-xl-3">' +
 								'<div class="card">' +
-									'<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
+									'<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
 										'+ Create New Team' +
 									'</div>' +
 								'</div>' +
@@ -223,7 +227,7 @@
 	
 	/////////////////////////////////////////////////////////////////////////////////////// Team 만들기
 	var appendTeam = "";
-	$('.teamBtn').click(function() {
+	$('.newTeamBtn').click(function() {
 		$('#ffffff').prop('checked', true);
 		$('#d0e1f5').prop('checked', false);
 		$('#c0e4da').prop('checked', false);
@@ -245,6 +249,7 @@
 			swal("Team Name을 입력하세요");
 			return;
 		}
+		
 		$.ajax({
 			url: "insertTeam.do",
 			data: {
@@ -262,12 +267,24 @@
 				html += 	'</div>';
 				html += '</div>';
 				appendTeam.before(html);
+				
+				$.ajax({
+					url: "insertTeamLeader.do",
+					data: {
+						teamNo: resData,
+						id: currUser
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
 			},
 			error: function(e) {
 				console.log(e);
 			}
 		});
 	});
+	
 	
 	////////////////////////////////////////////////////////////////////////////// drag & drop
 	//ondragover='allowDrop(event)'  dragover의 기본이벤트 막기
