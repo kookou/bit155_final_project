@@ -1,4 +1,4 @@
-package kr.or.bit3004.comment;
+package kr.or.bit3004.dao;
 
 import java.util.List;
 

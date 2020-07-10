@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.bit3004.dao.BoardCommentDao">
 	<!-- 댓글 목록출력 -->
-	<select id="getCommentList" resultType="kr.or.bit3004.dto.BoardComment">
+	<select id="getCommentList" resultType="kr.or.bit3004.comment.BoardComment">
 		select comment_no , content , write_date , id
 		  from board_comment
 		 where comment_no=#{commentNo} 

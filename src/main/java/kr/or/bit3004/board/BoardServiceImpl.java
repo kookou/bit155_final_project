@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import kr.or.bit3004.dao.BoardDao;
+
 @Service
 public class BoardServiceImpl implements BoardService{
 	

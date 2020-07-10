@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.TeamMainDao">
-	<select id="getGroupAndTeam" resultType="kr.or.bit3004.dto.GroupAndTeam">
+	<select id="getGroupAndTeam" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`, `background_color`
 		  from `group` g
 		 inner join team t
@@ -10,13 +10,13 @@
 		where id=#{id}
 	</select>
 	
-	<select id="getGroup" resultType="kr.or.bit3004.dto.GroupAndTeam">
+	<select id="getGroup" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		select GROUP_NO, GROUP_NAME, id
 		  from `group`
 		 where id=#{id}
 	</select>
 	
-	<insert id="insertGroup" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+	<insert id="insertGroup" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		insert into `group`(`id`, `group_name`) values(#{id}, #{groupName})
 	</insert>
 	
@@ -24,7 +24,7 @@
 		select max(`GROUP_NO`) from `group`
 	</select>
 	
-	<update id="updateGroupName" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+	<update id="updateGroupName" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		update `group` set `group_name` = #{groupName} where `group_no` = #{groupNo}
 	</update>
 	
@@ -44,7 +44,7 @@
 		select id from `user` where id like '%${id}%'
 	</select>
 	
-	<insert id="insertTeam" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+	<insert id="insertTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		insert into `TEAM`(`team_name`, `background_color`, `group_no`) values(#{teamName}, #{backgroundColor}, #{groupNo})
 	</insert>
 	
@@ -52,7 +52,7 @@
 		select max(`TEAM_NO`) from `TEAM`
 	</select>
 	
-	<update id="moveTeamFromGroup" parameterType="kr.or.bit3004.dto.GroupAndTeam">
+	<update id="moveTeamFromGroup" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		update `team` set `group_no` = #{groupNo} where `team_no` = #{teamNo}
 	</update>
 	

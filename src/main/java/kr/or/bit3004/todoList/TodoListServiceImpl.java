@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.bit3004.dao.TodoListDao;
+
 @Service
 public class TodoListServiceImpl implements TodoListService {
 	

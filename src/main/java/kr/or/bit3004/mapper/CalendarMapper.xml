@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.CalendarDao">
-	<select id="showCalendar" resultType="kr.or.bit3004.dto.Calendar">
+	<select id="showCalendar" resultType="kr.or.bit3004.calendar.Calendar">
 		SELECT
 			name,start,end,color,description
 		FROM
@@ -11,7 +11,7 @@
 			num
 		DESC -->
 	</select>
-	<insert id="addPlan" parameterType="kr.or.bit3004.dto.Calendar">
+	<insert id="addPlan" parameterType="kr.or.bit3004.calendar.Calendar">
 		INSERT INTO PLAN (
 				NAME,
 				START,
@@ -22,7 +22,7 @@
 				ID
 				)
 		VALUES
-			(#{title},sysdate,sysdate,#{color},#{description},2,'cho@naver.com')
+			(#{title},#{startDate},#{endDate},#{color},#{description},1,'a')
 		
 	</insert>
 </mapper>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.TodoListDao">
-	<select id="getTodoList" resultType="kr.or.bit3004.dto.TodoList">
+	<select id="getTodoList" resultType="kr.or.bit3004.todoList.TodoList">
 		select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
 		  from `todo_content` c
 		 right outer join `todo_list` l
@@ -10,12 +10,12 @@
 		 where l.TEAM_NO = #{l.TEAM_NO}
 	</select>
 	
-	<select id="getTodoTitle" resultType="kr.or.bit3004.dto.TodoList">
+	<select id="getTodoTitle" resultType="kr.or.bit3004.todoList.TodoList">
 		select title, team_no, id
   		  from todo_list
 	</select>
 	
-	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.dto.TodoList">
+	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.todoList.TodoList">
 		insert into `TODO_LIST`(`title`, `TEAM_NO`, `id`) values(#{title}, 1, #{id})
 	</insert>
 </mapper>

@@ -1,6 +1,8 @@
-package kr.or.bit3004.todoList;
+package kr.or.bit3004.dao;
 
 import java.util.List;
+
+import kr.or.bit3004.todoList.TodoList;
 
 public interface TodoListDao {
 	public List<TodoList> getTodoList(int teamNo);
