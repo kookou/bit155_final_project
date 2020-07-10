@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(User user, HttpSession session) {
 		
 		String fileName = user.getFile().getOriginalFilename();
 		System.out.println("fileName : "+">"+ fileName+"<");
@@ -87,7 +88,9 @@ public class UserServiceImpl implements UserService{
 			
 		}
 
-
+		User currentUser = dao.getUser(user.getId());
+		
+		session.setAttribute("currentUser", currentUser);
 		
 	}
 
