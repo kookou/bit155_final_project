@@ -48,6 +48,10 @@
 		insert into `TEAM`(`team_name`, `background_color`, `group_no`) values(#{teamName}, #{backgroundColor}, #{groupNo})
 	</insert>
 	
+	<insert id="insertTeamLeader" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		insert into `TEAM_MEMBER`(`team_no`, `id`, `leader`) values(#{teamNo}, #{id}, 'Y')
+	</insert>
+	
 	<select id="getCurrTeamNo" resultType="int">
 		select max(`TEAM_NO`) from `TEAM`
 	</select>

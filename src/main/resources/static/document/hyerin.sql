@@ -31,3 +31,6 @@ select * from `user` where id like '%a%';
 select group_no from `group` where group_name = 'Personal' and id = 'hrin@3004.com';
 update `team` set `group_no` = 1 where `group_no` = 20;
 update `team` set `group_no` = 23 where `team_no` = 21;
+
+select * from `team`;
+select * from `team_member`;

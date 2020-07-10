@@ -1,7 +1,7 @@
 -- TRIGGER START --------- INSERT END ----------
 
+-- 유저 가입시 유저권한주기
 DELIMITER $$
-
 CREATE TRIGGER `USER_INSERT_TRIGGER`
 AFTER INSERT ON `USER`
 FOR EACH ROW 
@@ -11,11 +11,9 @@ SET
 `AUTHORITY` = 'ROLE_USER',  
 `ID` = NEW.`ID`;
 END $$
-
 DELIMITER ;
 
 DELIMITER $$
-
 CREATE TRIGGER `USER_DELETE_TRIGGER`
 AFTER DELETE ON `ROLE_MEMBER`
 FOR EACH ROW 
@@ -24,10 +22,40 @@ DELETE
 FROM `USER` 
 WHERE `ID` = OLD.`ID`;
 END $$
-
 DELIMITER ;
 
+-- 유저 가입시 default group 추가하기
+DELIMITER $$
+CREATE TRIGGER `DEFAULT_GROUP_TRIGGER`
+AFTER INSERT ON `USER`
+FOR EACH ROW 
+BEGIN
+INSERT INTO `GROUP` 
+SET 
+`GROUP_NAME` = 'Personal',  
+`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
 
+-- 팀멤버 추가시 팀리더 or 팀멤버 권한 넣어주기
+DELIMITER $$
+    CREATE TRIGGER `INSERT_ROLE_TEAM`
+    AFTER INSERT ON `TEAM_MEMBER`
+    FOR EACH ROW 
+    BEGIN
+      IF (NEW.`LEADER` = 'Y') THEN
+          INSERT INTO `ROLE_MEMBER`
+            SET 
+            `AUTHORITY` = 'ROLE_TEAM_LEADER',
+            `ID` = NEW.`ID`;
+      ELSE
+          INSERT INTO `ROLE_MEMBER`
+            SET 
+            `AUTHORITY` = 'ROLE_TEAM_MEMBER',
+            `ID` = NEW.`ID`;
+      END IF;
+    END$$
+DELIMITER ;
 
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

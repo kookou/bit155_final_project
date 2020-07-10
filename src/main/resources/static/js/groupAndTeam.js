@@ -245,6 +245,7 @@
 			swal("Team Name을 입력하세요");
 			return;
 		}
+		
 		$.ajax({
 			url: "insertTeam.do",
 			data: {
@@ -262,12 +263,24 @@
 				html += 	'</div>';
 				html += '</div>';
 				appendTeam.before(html);
+				
+				$.ajax({
+					url: "insertTeamLeader.do",
+					data: {
+						teamNo: resData,
+						id: currUser
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
 			},
 			error: function(e) {
 				console.log(e);
 			}
 		});
 	});
+	
 	
 	////////////////////////////////////////////////////////////////////////////// drag & drop
 	//ondragover='allowDrop(event)'  dragover의 기본이벤트 막기
