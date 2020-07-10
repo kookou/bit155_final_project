@@ -12,6 +12,9 @@ select * from TIMELINE_TYPE;
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('common board');
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('kanban board');
 
+-- 여기까지는 필수로 넣어줘야하는 데이터입니다. 밑에는 홈페이지에서 직접 가입 후 필요에 따라서 넣으세요.. 
+-- 참고로 가입하면 그룹은 자동으로 하나 들어가게 되고 팀은 페이지에서 만들 수 있습니당. -------------
+
 -- 그룹
 insert into `GROUP`(`GROUP_NAME`, `id`) values('Personal', 'hyerin');
 insert into `GROUP`(`GROUP_NAME`, `id`) values('Bit155', 'hyerin');
@@ -35,12 +38,12 @@ insert into `TEAM_MEMBER`(`TEAM_NO`, `ID`) values(13, 'hrin@3004.com');
 select * from `TEAM_MEMBER`;
 
 -- 게시판 목록
-insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 2, 'cho@naver.com', 1);
-insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 13, 'hrin@3004.com', 2);
+insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'hrin@3004.com', 1);
+insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 1, 'hrin@3004.com', 2);
 select * from `ALL_BOARD_LIST`;
 
 -- 게시판
-insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('안녕', '안녕하세요저는조진원입니다 판교에살고 90년생입니다 ㅎㅎ', now(), 5, 'jinwon');
+insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, `ID`) values('안녕', '안녕하세요저는조진원입니다 판교에살고 90년생입니다 ㅎㅎ', now(), 1, 'hrin@3004.com');
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('반가워', '나는 효자동 불효자야~^^^', now(), 5, 'hyerin');
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('월요일좋아*^^*', '월요일좋아~~ 최고로좋아~~ ', now(), 5, 'seoyoung');
 
