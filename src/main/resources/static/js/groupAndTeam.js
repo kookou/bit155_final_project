@@ -199,9 +199,9 @@ $('#outer').on('click', '.teamBtn', function() {
 			html += 	'</div>';
 			$.each(resData.groupAndTeam, function(index2, obj2) {
 				if(obj.groupName == obj2.groupName) {
-				html += '<div class="col-xl-3" draggable="true" ondragstart="drag(event)" data-teamNo="'+ obj2.teamNo +'">';
+				html += '<div class="col-xl-3">';
 				html += 	'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">';
-				html += 		'<div class="card-body collapse show teamBtn">';
+				html += 		'<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" data-teamNo="'+ obj2.teamNo +'">';
 				html += 			'<h4 class="card-title">'+ obj2.teamName +'</h4>';
 				html += 		'</div>';
 				html += 	'</div>';
@@ -259,9 +259,9 @@ $('#outer').on('click', '.teamBtn', function() {
 			},
 			success: function(resData) {
 				let html = "";
-				html += '<div class="col-xl-3" draggable="true" ondragstart="drag(event)" data-teamNo="'+ resData +'">';
+				html += '<div class="col-xl-3">';
 				html += 	'<div class="card" style="background-color:#'+ $('input[name="backColor"]:checked').val() +'">';
-				html += 		'<div class="card-body collapse show teamBtn">';
+				html += 		'<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" data-teamNo="'+ resData +'">';
 				html += 			'<h4 class="card-title">'+ $('#teamName').val() +'</h4>';
 				html += 		'</div>';
 				html += 	'</div>';
