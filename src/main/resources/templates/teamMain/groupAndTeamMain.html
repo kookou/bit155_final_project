@@ -15,10 +15,10 @@
     <link href="css/kanban.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
-    	.teamBtn {
+    	.teamBtn, .newTeamBtn {
     		cursor:pointer;
     	}
-    	.teamBtn:hover {
+    	.teamBtn:hover, .newTeamBtn:hover {
     		background-color: rgba(0, 0, 0, 0.1);
     		border-radius: 4px;
     	}
@@ -69,7 +69,7 @@
        			</div>
        			<div class="col-xl-3">
        				<div class="card" >
-       					<div class="card-body collapse show teamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">
+       					<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">
        						+ Create New Team
        					</div>
        				</div>

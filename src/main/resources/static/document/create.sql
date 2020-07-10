@@ -98,13 +98,14 @@ ALTER TABLE `BOARD_COMMENT` modify `COMMENT_NO` INT auto_increment;
 
 -- 칸반보드카드
 CREATE TABLE `KANBAN_CARD` (
-	`CARD_NO`        INT           NOT NULL, -- 카드식별번호
-	`TITLE`          VARCHAR(100)  NOT NULL, -- 글제목
-	`CONTENT`        VARCHAR(2000) NULL,     -- 글내용
-	`WRITE_DATE`     DATETIME      NOT NULL, -- 작성일
-	`FILE_COUNT`     INT           default 0,     -- 파일개수
-	`COMMENT_COUNT`  INT           default 0,     -- 댓글개수
-	`KANBAN_LIST_NO` INT           NOT NULL      -- 칸반리스트 식별번호
+	`CARD_NO`        INT           NOT NULL,   -- 카드식별번호
+	`TITLE`          VARCHAR(100)  NOT NULL,   -- 글제목
+	`CONTENT`        VARCHAR(2000) NULL,       -- 글내용
+	`WRITE_DATE`     DATETIME      NOT NULL,   -- 작성일
+	`FILE_COUNT`     INT           default 0,  -- 파일개수
+	`COMMENT_COUNT`  INT           default 0,  -- 댓글개수
+    `CARD_INDEX`     INT           NULL,   	   -- 카드순서
+	`KANBAN_LIST_NO` INT           NOT NULL    -- 칸반리스트 식별번호
 );
 
 -- 칸반보드카드
@@ -191,7 +192,8 @@ ALTER TABLE `TEAM_MEMBER` modify `TEAM_NO` INT auto_increment;
 -- 사용자-권한 매핑
 CREATE TABLE `ROLE_MEMBER` (
 	`AUTHORITY` VARCHAR(50) NOT NULL, -- 권한코드
-	`ID`        VARCHAR(50) NOT NULL  -- 아이디
+	`ID`        VARCHAR(50) NOT NULL, -- 아이디
+	`TEAM_NO`   INT         NOT NULL  -- 팀식별번호
 );
 
 -- 사용자-권한 매핑
@@ -199,7 +201,8 @@ ALTER TABLE `ROLE_MEMBER`
 	ADD CONSTRAINT `PK_ROLE_MEMBER` -- 사용자-권한 매핑 기본키
 		PRIMARY KEY (
 			`AUTHORITY`, -- 권한코드
-			`ID`         -- 아이디
+			`ID`,        -- 아이디
+			`TEAM_NO`    -- 팀식별번호
 		);
 
 -- 권한
@@ -278,9 +281,7 @@ CREATE TABLE `PLAN` (
 	`DESCRIPTION` VARCHAR(1000) DEFAULT NULL,     -- 설명
 	`START`       timestamp      DEFAULT NULL, -- 시작
 	`END`         timestamp      DEFAULT NULL, -- 끝
-	`BGCOLOR`     VARCHAR(50)   NULL,     -- 배경색상
 	`COLOR`       VARCHAR(50)   DEFAULT NULL,     -- 글자색상
-	`ALLDAY`      VARCHAR(2)    NULL,     -- 종일여부
 	`TEAM_NO`     INT           NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)   NOT NULL  -- 아이디
 );
@@ -499,6 +500,16 @@ ALTER TABLE `ROLE_MEMBER`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
+		);
+
+-- 사용자-권한 매핑
+ALTER TABLE `ROLE_MEMBER`
+	ADD CONSTRAINT `FK_TEAM_TO_ROLE_MEMBER` -- 팀 -> 사용자-권한 매핑
+		FOREIGN KEY (
+			`TEAM_NO` -- 팀식별번호
+		)
+		REFERENCES `TEAM` ( -- 팀
+			`TEAM_NO` -- 팀식별번호
 		);
 
 -- 게시판목록
