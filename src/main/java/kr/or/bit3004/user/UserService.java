@@ -2,7 +2,7 @@ package kr.or.bit3004.user;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
 
 public interface UserService {
