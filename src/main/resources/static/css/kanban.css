@@ -96,8 +96,9 @@
     overflow: hidden;
     padding: 8px 8px 2px 8px;
     position: relative;
-    z-index: 10;
+    z-index: 3;
     white-space: normal;
+    
 }
 .kanban-card-title{
     clear: both;
@@ -108,6 +109,8 @@
     word-wrap: break-word;
     color: #3d4a60;
     font-size: 16px;
+    position: relative;
+    line-height: 1.4;
 }
 
 .kanban-card-badges{
@@ -501,10 +504,10 @@ textarea.list-card-composer-textarea, textarea.list-card-composer-textarea:focus
     min-height: 24px;
     width: 100%;
     overflow-y: auto;
-    padding: 2px 0 0 0;
-
+    padding: 1px 0 0 0;
+    line-height: 1.4;
+    
 }
-
 
 
 textarea {
@@ -648,3 +651,67 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 .modal-textarea-description{
     padding: 4px 0 0 10px;
 }
+
+
+
+.btn-card-hover.focus,
+.btn-card-hover:focus,
+.btn-card-hover:not(:disabled):not(.disabled).active:focus,
+.btn-card-hover:not(:disabled):not(.disabled):active:focus,
+.show > .btn-card-hover.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(202, 204, 207, 0.5);
+}
+.btn-card-hover {
+    color: #212529;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+.btn-card-hover:hover {
+    color: #212529;
+    background-color: #f7f7f7;
+    border-color: #edeef0;
+}
+.btn-card-hover.disabled,
+.btn-card-hover:disabled {
+    color: #212529;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+.btn-card-hover:not(:disabled):not(.disabled).active,
+.btn-card-hover:not(:disabled):not(.disabled):active,
+.show > .btn-card-hover.dropdown-toggle {
+    color: #212529;
+    background-color: #ccd1d5;
+    border-color: #c5cacf;
+}
+
+.active-card-icon{
+    padding: 6px;
+    position: relative;
+    text-decoration: none;
+    z-index: 1;
+   
+    color: #8c8e92;
+    z-index: 50;
+    float: right;
+    display: none;
+}
+/* .btn-card-hover:hover .active-card-icon{
+    top : 10%;
+    left: 90%;
+} */
+
+
+
+
+
+/* textarea.list-card-composer-textarea, textarea.list-card-composer-textarea:focus {
+    background: none;
+    border: none;
+    box-shadow: none;
+    min-height: 24px;
+    width: 100%;
+    overflow-y: auto;
+    padding: 1px 0 0 0;
+    line-height: 1.4;
+} */

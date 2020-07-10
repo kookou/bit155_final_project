@@ -42,6 +42,9 @@
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
+
+
+
 		<!-- Info Alert Modal -->
 		<div id="info-alert-modal" class="modal fade" tabindex="1"
 			role="dialog" aria-hidden="true">
@@ -77,8 +80,6 @@
 						aria-hidden="true"> Delete Card </a>
 					<div class="card-modal-detail">
 
-
-
 						<div class="card-modal-header">
 							<span class="fas fa-quote-left card-modal-title-icon"></span>
 							<h3 class="card-modal-title" id="modaltitle"></h3>
@@ -104,8 +105,6 @@
 							<span class="fas fa-cloud card-modal-title-icon"></span>
 							<h3 class="card-modal-cloud">Cloud</h3>
 
-
-
 							<div class="card-modal-list-cloudfile">
 								<div class="card-modal-list-cloud">
 									<a class=""> <span class="card-modal-filename">filenamsdawsdfasdfasdfasdfasfe.png</span>
@@ -123,7 +122,6 @@
 									</a> <span class="card-modal-file-delete far fa-trash-alt"></span>
 								</p>
 							</div>
-
 
 							<form class="mt-2 file-upload">
 								<div class="input-group">
@@ -174,16 +172,15 @@
 		</div>
 		<!-- /.modal -->
 
-
-
-
-		<div class="page-wrapper" id="kanbanlistall">
+		<div class="page-wrapper">
+			<!-- 	<div id="kanbanlistall" th:text="{kanbanlist.allBoardListNo}" style="display:none;"></div> -->
+			<!-- 
+		<div th:text = "${kanban}"></div> -->
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
 						<h3
-							class="page-title text-truncate text-dark font-weight-medium mb-1">3004조
-							칸반보드</h3>
+							class="page-title text-truncate text-dark font-weight-medium mb-1"></h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
@@ -202,6 +199,57 @@
 			<div class="kanban-container" id="kanban-container">
 				<div class="kanban-canvas">
 					<div id="kanban">
+						<!-- ============================================================== -->
+						<!-- 칸반 list 시작 -->
+						<!-- ============================================================== -->
+
+						<div class="kanban-list-wrapper"
+							th:each="kanbanlist: ${kanbanlist}">
+							<div class="kanban-list-content">
+								<div class="kanban-card" ondrop="drop(event, this)"
+									ondragover="allowDrop(event)">
+									<div class="kanban-list-header" id="listheader">
+										<h4 class="kanban-list-title"
+											th:text="${kanbanlist.listTitle}"></h4>
+									</div>
+									<a class="kanban-list-menu far fa-trash-alt"
+										data-toggle="modal" data-target="#info-alert-modal"></a>
+
+
+									<div class="kanban-card-list btn-card-hover"
+										th:each="card : ${kanbancardlist}"
+										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}">
+										<span class='icon-pencil active-card-icon'
+											style='position: relative;'></span>
+										<div class="kanban-card-element" data-toggle="modal"
+											data-target="#signup-modal">
+											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+											<div class="kanban-card-badges">
+												<div class="kanban-card-badge" title="comments"
+													th:if="${card.commentcount >0}">
+													<span class="icon-bubble badge-icon"></span> <span
+														class="badge-text" th:text="${card.commentcount}"></span>
+												</div>
+												<div class="kanban-card-badge" title="file"
+													th:if="${card.fileCount >0}">
+													<span class="icon-paper-clip badge-icon"></span> <span
+														class="badge-text" th:text="${card.fileCount}"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="kanban-card-add-list" id="addcardel">
+										<a class="kanban-card-add-el btn-light-my" id="addcard"
+											onclick="newtask(this)"><span class="icon">+</span><span
+											class="kanban-card-add-text">Add Card</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ============================================================== -->
+						<!-- 칸반 list  -->
+						<!-- ============================================================== -->
+
 						<!-- ============================================================== -->
 						<!-- 칸반 add list 시작  -->
 						<!-- ============================================================== -->
@@ -223,6 +271,8 @@
 			<!-- End Container fluid  -->
 			<!-- ============================================================== -->
 		</div>
+
+
 
 
 
