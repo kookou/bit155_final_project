@@ -18,8 +18,8 @@ public class CalendarAjaxController {
 	private CalendarService service;
 
 	@ResponseBody
-	@RequestMapping(value = "addPlan.do", method = RequestMethod.POST)
-	public Map<Object, Object> saddPlan(@RequestBody Calendar dto) throws Exception {
+	@RequestMapping(value = "addPlan.ajax", method = RequestMethod.POST)
+	public Map<Object, Object> addPlan(@RequestBody Calendar dto) throws Exception {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		service.addPlan(dto);
 		return map;
@@ -32,11 +32,10 @@ public class CalendarAjaxController {
 		  return "calendar.do";
 	  }
 	 
-	  @RequestMapping("addPlan.ajax")
-	  public String addPlan(Calendar dto)throws Exception {
-		  service.addPlan(dto);
-		  System.out.println(dto.getTitle());
-		  return "redirect:calendar.do";
-	  }
+		/*
+		 * @RequestMapping("addPlan.ajax") public String addPlan(Calendar dto)throws
+		 * Exception { service.addPlan(dto); System.out.println(dto.getTitle()); return
+		 * "calendar/calendar"; }
+		 */
 
 }
