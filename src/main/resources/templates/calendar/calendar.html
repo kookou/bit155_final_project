@@ -130,7 +130,7 @@
                                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
-                                                 <form class="pl-3 pr-3" action="#calendarData">
+                                                 <form class="pl-3 pr-3"  id="calendarData" name="calendarData">
 
                                                     <div class="form-group">
                                                         <label for="title">Title</label>
@@ -150,7 +150,7 @@
                                                     <div class="form-group">
                                                         <label for="color">Color</label>
                                                         <input class="form-control" type="color" required="" name="color"
-                                                            id="color" placeholder="Color">
+                                                            id="color" placeholder="Color" value="ddddzjffj">
                        <select><option>보라색</option><option>초록색</option><option>빨간색</option><option>노란색</option></select>
                                                     </div>
             										<div class="form-group">
@@ -251,15 +251,21 @@
 	console.log()
 	calendar.render();
  */
- var calendarData = $("#calendarData").serialize();
+ /*var calendarData = $("#calendarData").serialize();
  $.ajax({
 	url:"addPlan.ajax",
+	type : "POST",
 	data: calendarData,
-	dataType:"html",
+	dataType:"json",
 	success:function(e){
-		console.log(e);
+		console.log(e.calendarData);
+		console.log(calendarData);
+	},
+	error: function(request,status,error){
+		console.log("실패");
+		console.log(error);
 	}
- })
+ })*/
     </script>
     
 

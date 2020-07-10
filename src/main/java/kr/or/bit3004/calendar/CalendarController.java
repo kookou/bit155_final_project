@@ -8,8 +8,8 @@ public class CalendarController {
 
 	@RequestMapping("calendar.do")
 	public String signIn() {
-		//return "calendar/calendar";
-		return "../calendarTest/index";
+		return "calendar/calendar";
+		//return "../calendarTest/index";
 	}
 	//모델에 담더닞.. ajax를..
 	
