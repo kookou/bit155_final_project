@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit3004.dao.BoardCommentDao">
+	<!-- 댓글 목록출력 -->
+	<select id="getCommentList" resultType="kr.or.bit3004.comment.BoardComment">
+		select content , write_date , id
+		  from board_comment
+		 where board_no = #{boardNo}
+	</select>
+</mapper>
