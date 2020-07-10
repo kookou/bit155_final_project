@@ -14,7 +14,8 @@ public interface KanbanDao {
 
 	
 	public List<Map> kanbanCardList();
-	public List<Map> kanbanList(int allBoardListNo);
+	public List<Map> kanbanListJoinCard(int allBoardListNo);
+	public KanbanList kanbanList(KanbanList kanbamlist);
 	
 
 }

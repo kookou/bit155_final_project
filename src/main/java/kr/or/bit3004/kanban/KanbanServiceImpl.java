@@ -35,8 +35,12 @@ public class KanbanServiceImpl implements KanbanService {
 	}
 	
 	@Override
-	public List<Map> kanbanList(int allBoardListNo){
-		return dao.kanbanList(allBoardListNo);
+	public List<Map> kanbanListJoinCard(int allBoardListNo){
+		return dao.kanbanListJoinCard(allBoardListNo);
 		
+	}
+	@Override
+	public KanbanList kanbanList(KanbanList kanbamlist) {
+		return dao.kanbanList(kanbamlist);
 	}
 }

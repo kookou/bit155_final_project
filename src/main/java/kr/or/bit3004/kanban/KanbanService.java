@@ -14,6 +14,6 @@ public interface KanbanService {
 	public List<Map> allKanbanList(int allBoardListNo);
 
 	public List<Map> kanbanCardList();
-	public List<Map> kanbanList(int allBoardListNo);
-	
+	public List<Map> kanbanListJoinCard(int allBoardListNo);
+	public KanbanList kanbanList(KanbanList kanbamlist);
 }

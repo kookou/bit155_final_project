@@ -54,7 +54,7 @@
 		<result column="kanban_list_no" property="kanbanListNo" />
 	</resultMap>
 	
-	<select id="kanbanList" resultMap="selectList">
+	<select id="kanbanListJoinCard" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , a.name , a.team_no , a.board_type_no
 	FROM KANBAN_LIST l 
 	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where l.all_board_list_no = ${allBoardListNo};
@@ -70,16 +70,5 @@
 		<result column="board_type_no" property="boardTypeNo" />
 	</resultMap>
 
-	
-<!-- 		<select id="kanbanCardList" resultMap="selectCardList">
-		select * from kanban_card;
-	</select>
-	<resultMap type="java.util.HashMap" id="selectCardList">
-		<result column="no" property="cardNO" />
-		<result column="title" property="cardTitle" />
-		<result column="content" property="cardContent" />
-		<result column="file_count" property="fileCount" />
-		<result column="comment_count" property="commentcount" />
-		<result column="kanban_list_no" property="kanbanListNo" />
-	</resultMap> -->
+
 </mapper>

@@ -20,7 +20,7 @@ public class KanbanController {
 	private KanbanService service;
 	
 	@Autowired
-	private TeamMainService teammainservice;
+	private TeamMainService teammainService;
 
 	@RequestMapping("/kanban.do")
 	public String kanbanList(int teamNo ,int allBoardListNo, Model model) {
@@ -29,10 +29,12 @@ public class KanbanController {
 		
 		kanbanlist = service.allKanbanList(allBoardListNo);
 		kanbancardlist = service.kanbanCardList();
+		
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
-		model.addAttribute("team", teammainservice.getTeam(teamNo));
-		model.addAttribute("teamMember", teammainservice.getTeamMember(teamNo));
+		
+		model.addAttribute("team", teammainService.getTeam(teamNo));
+		model.addAttribute("teamMember", teammainService.getTeamMember(teamNo));
 
 		System.out.println(kanbanlist);
 		System.out.println(kanbancardlist);
@@ -61,7 +63,7 @@ public class KanbanController {
 		}
 		
 		service.updateListTite(kanbanlist);
-		return "redirect:kanban.do?teamNo=6";
+		return "redirect:kanban.do?allBoardListNo=2";
 	}
 }
  
