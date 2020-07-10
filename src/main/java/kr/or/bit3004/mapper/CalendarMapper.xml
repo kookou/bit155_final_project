@@ -22,7 +22,7 @@
 				ID
 				)
 		VALUES
-			(#{title},#{startDate},#{endDate},#{color},#{description},1,'a')
+			(#{title},'2020-07-21 10:53:00.0','2020-07-22 10:53:00.0',#{color},#{description},2,'z@z.com')
 		
 	</insert>
 </mapper>
