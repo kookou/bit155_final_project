@@ -44,7 +44,7 @@ $('#plan-add').on('click', function(){
 		contentType: "application/json; charset=UTF-8",
 		success: function(result){
 			//$('#centermodal').modal('show');
-			opener.location.reload();
+			//opener.parent.location.reload();
 			console.log(result);
 			window.close();
 		},
