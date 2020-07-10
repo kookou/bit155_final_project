@@ -216,26 +216,25 @@
 	<a href="include.do">인클루드 테스트</a> <br>
 	<a href="file.do">클라우드 테스트(임시폐업)</a> <br>
 	<a href="paint.do">그림판 테스트</a> <br>
-	<a href="calendar.do">Calendar 테스트</a> <br>
+	<a href="calendar.do?teamNo=2">Calendar 테스트</a> <br>
 	<a href="todoList.do?teamNo=1">todoList 테스트</a> <br>
 	<a th:href="@{teamMain.do(id=${session.currentUser.id})}">teamMain 테스트</a> <br>
 	<input class="form-control" type="email" id="id" name="id" th:value="${session.currentUser.id}" readonly>
 	<span th:text="${session.currentUser}"></span>	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<a href="kanban.do">칸반 테스트</a> <br>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
