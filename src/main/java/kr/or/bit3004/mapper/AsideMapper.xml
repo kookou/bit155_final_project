@@ -20,5 +20,18 @@
 		select `all_board_list_no`, `name`, `team_no`, `board_type_no`
 		  from `all_board_list`
 		 where `team_no` = #{teamNo}
+		 order by `all_board_list_no`
+	</select>
+	
+	<insert id="insertAllBoard" parameterType="kr.or.bit3004.aside.AllBoardList">
+		insert into `ALL_BOARD_LIST` (
+			`name`, `team_no`, `id`, `board_type_no`
+		) values (
+			#{name}, #{teamNo}, #{id}, #{boardTypeNo}
+		)
+	</insert>
+	
+	<select id="getCurrAllBoardListNo" resultType="int">
+		select max(`ALL_BOARD_LIST_NO`) from `ALL_BOARD_LIST`
 	</select>
 </mapper>
