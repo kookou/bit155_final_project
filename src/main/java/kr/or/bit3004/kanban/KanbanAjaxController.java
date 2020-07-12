@@ -33,13 +33,10 @@ public class KanbanAjaxController {
 	@RequestMapping("InsertKanbanList.ajax")
 	public String kanbanListInsert(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller kanbanListInsert");
-		
 		System.out.println(kanbanlist);
 		
 		int newKanbanListNo = service.insertListTitle(kanbanlist, principal);
 		String newKanbanListNoString = Integer.toString(newKanbanListNo);
-		
-		
 		return newKanbanListNoString;
 	}
 	
@@ -66,11 +63,17 @@ public class KanbanAjaxController {
 		return newcardNoString;
 	}
 	
-	
 	@RequestMapping("UpdateKanbanCard.ajax")
 	public String kanbanCardUpdate(String title , int cardNo) {
 		service.updateCardTitle(title, cardNo);
+		System.out.println("업데이트완료");
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
+	}
+	
+	@RequestMapping("CardContentSelect.ajax")
+	public KanbanCard kanbanCardContent(int cardNo) {
+		return service.kanbanCardContent(cardNo);
+		
 	}
 	
 }

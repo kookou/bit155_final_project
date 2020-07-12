@@ -95,4 +95,8 @@ public class KanbanServiceImpl implements KanbanService {
 	public void updateCardTitle(String title , int cardNo) {
 		dao.updateCardTitle(title, cardNo);
 	}
+	@Override
+	public KanbanCard kanbanCardContent(int cardNo) {
+		return dao.kanbanCardContent(cardNo);
+	}
 }

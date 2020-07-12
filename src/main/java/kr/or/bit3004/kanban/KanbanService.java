@@ -31,4 +31,5 @@ public interface KanbanService {
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void updateCardTitle(String title , int cardNo);
+	public KanbanCard kanbanCardContent(int cardNo);
 }
