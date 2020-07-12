@@ -27,11 +27,19 @@ public class KanbanServiceImpl implements KanbanService {
 		
 		return newKanbanListNo;
 	}
+	
+	
 	@Override
-	public int updateListTitle(KanbanList kanbanlist) {
-		return dao.updateListTitle(kanbanlist);
+	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal) {
+		kanbanlist.setId(principal.getName());
 		
+		dao.updateKanbanListTitle(kanbanlist);
+		KanbanList newKanbanList = dao.getAKanbanListByKanbanListNo(kanbanlist.getKanbanListNo());
+		System.out.println("newKanbanList:"+newKanbanList);
+		return newKanbanList;
 	}
+	
+	
 	@Override
 	public List<Map> allKanbanList(int allBoardListNo){
 		return dao.allKanbanList(allBoardListNo);

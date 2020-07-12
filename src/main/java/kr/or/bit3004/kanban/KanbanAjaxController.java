@@ -50,5 +50,14 @@ public class KanbanAjaxController {
 		service.deleteKanbanList(kanbanListNo);
 	}
 	
+	
+	@RequestMapping("updateKanbanList.ajax")
+	public KanbanList updateKanbanList(KanbanList kanbanlist, Principal principal) {
+		System.out.println("Controller updateKanbanList");
+		System.out.println(kanbanlist);
+		
+		return service.updateKanbanListTitle(kanbanlist, principal);
+	}
+	
 }
  

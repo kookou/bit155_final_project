@@ -7,8 +7,11 @@
 		values(#{listTitle}, #{allBoardListNo}, #{id});
 	</insert>
 	
-	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
-		update KANBAN_LIST set LIST_TITLE = #{listTitle} , id = #{id} where kanban_list_no = #{kanbanListNo};
+	<update id="updateKanbanListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
+		update KANBAN_LIST 
+		set LIST_TITLE = #{listTitle} , 
+			id = #{id} 
+		where kanban_list_no = #{kanbanListNo};
 	</update>
 	
    	<select id="kanbanList" parameterType="kr.or.bit3004.kanban.KanbanList">
@@ -82,6 +85,13 @@
 	<select id="getANewKanbanListNo" resultType="int">
 		SELECT MAX(KANBAN_LIST_NO)
 		FROM KANBAN_LIST
+	</select>
+	
+	<!--getAKanbanListByKanbanListNo  -->
+	<select id="getAKanbanListByKanbanListNo" resultType="kr.or.bit3004.kanban.KanbanList">
+		SELECT KANBAN_LIST_NO, LIST_TITLE, ALL_BOARD_LIST_NO, ID
+		FROM KANBAN_LIST
+		WHERE KANBAN_LIST_NO = #{kanbanListNo}
 	</select>
 	
 	

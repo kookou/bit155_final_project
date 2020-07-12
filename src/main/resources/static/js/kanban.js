@@ -152,8 +152,8 @@ console.log(listName)
     $.ajax({
 		url: "InsertKanbanList.ajax",
 		data: {
-				"listTitle": listName,
-				"allBoardListNo": allBoardListNo
+				"listTitle": $.trim(listName),
+				"allBoardListNo": $.trim(allBoardListNo)
 				},
         dataType: "text",
 		success: function(resData) {
@@ -169,14 +169,21 @@ console.log(listName)
 
 //리스트 타이틀 수정
 $('#kanban').on('click', '.kanban-list-title', function() {
-	let cardTitle = $(this);
+
+    let allBoardListNo = Number($('#allBoardListNo').val());
+	let kanbanList = $(this);
+	let deleteIcon = $(this).parent().next();
 	let listName = $(this).text();
-	$(this).next().hide();
+	let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
+
+
+//	$(this).next().hide();
 	$(this).before("<textarea rows='1' class='autosize list-composer-textarea-edit' id='listNameInput' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+listName+"</textarea>");
     $('#listNameInput').focus();
     
-    $(this).parent().next().hide()
-	$(this).hide();
+
+    deleteIcon.hide(); // 휴지통 아이콘 숨기기
+	kanbanList.hide();//여기가 찐 보여지는 제목
 	
 	$('#listNameInput').blur(function() {
 		if($(this).val() == "") {
@@ -184,25 +191,30 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 			$(this).focus();
 			return;
 		}
-        var tr = $(this).parent().next()
+		
+		let newKanbanListName = $(this).val(); //변경된 title
         
 		$('.deleteListDiv').show();
-		cardTitle.show();
-        cardTitle.text($(this).val());
-        console.log($(this))
+		
 		$(this).remove();
-        tr.show()
+		deleteIcon.show();
         
         $.ajax({
-			url: "UpdateKanbanList.ajax",
-			data: {listTitle: listName,
-					id: currUser},
-	        dataType: "html",
+			url: "updateKanbanList.ajax",
+			data: {
+					"listTitle": $.trim(newKanbanListName),
+					"kanbanListNo": $.trim(kanbanListNo)
+					},
+	        dataType: "json",
 	        
 			success: function(resData) {
 				console.log("list update 완료");
-				// deleteListBtnTag.attr('data-code', resData);
-				// ListDivTag.attr('data-code', resData);
+				console.log(resData);
+				kanbanList.empty();
+				
+				kanbanList.text(resData.listTitle);
+				kanbanList.show();
+
 			}
 		});
     });
