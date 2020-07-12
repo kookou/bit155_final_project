@@ -24,6 +24,12 @@
 
 </head>
 <body>
+
+	
+		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
+		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
+
+
 	<div class="preloader">
 		<div class="lds-ripple">
 			<div class="lds-pos"></div>
@@ -41,9 +47,6 @@
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-
-
-
 
 		<!-- Info Alert Modal -->
 		<div id="info-alert-modal" class="modal fade" tabindex="1"

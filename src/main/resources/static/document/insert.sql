@@ -43,7 +43,7 @@ select * from `TEAM_MEMBER`;
 
 -- 게시판 목록
 insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'jinwon', 1);
-insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 13, 'hrin@3004.com', 2);
+insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 1, 'hrin@3004.com', 2);
 select * from `ALL_BOARD_LIST`;
 
 -- 게시판

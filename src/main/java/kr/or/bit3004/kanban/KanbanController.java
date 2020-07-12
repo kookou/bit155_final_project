@@ -28,11 +28,11 @@ public class KanbanController {
 		System.out.println(kanbancardlist);
 		return "kanban/kanban";
 	}
-	@RequestMapping("InsertKanbanList.ajax")
-	public String kanbanListInsert(KanbanList kanbanlist) {
-		System.out.println("너니???");
-		service.insertListTite(kanbanlist);
-		return "redirect:kanban.do?teamNo=13";
-	}
+//	@RequestMapping("InsertKanbanList.ajax")
+//	public String kanbanListInsert(KanbanList kanbanlist) {
+//		System.out.println("너니???");
+//		service.insertListTite(kanbanlist);
+//		return "redirect:kanban.do?teamNo=1";
+//	}
 }
  
