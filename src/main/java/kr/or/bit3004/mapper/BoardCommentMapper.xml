@@ -10,4 +10,10 @@
 		    on b.id = u.id
 		 where board_no = #{boardNo}
 	</select>
+	
+	<!-- 댓글 등록하기 -->
+	<insert id="insertComment" parameterType="kr.or.bit3004.comment.BoardComment">
+		insert into board_comment (`content`, `write_date`, `id`, `board_no`) 
+		values(#{content}, now(), #{id}, #{boardNo})
+	</insert>
 </mapper>
