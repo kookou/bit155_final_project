@@ -87,6 +87,7 @@
 		SELECT MAX(KANBAN_LIST_NO)
 		FROM KANBAN_LIST
 	</select>
+	
 	<select id="getANewCardNo" resultType="int">
 		SELECT MAX(card_no)
 		FROM KANBAN_Card
@@ -100,4 +101,10 @@
 	<update id="updateCardTitle">
 	update KANBAN_CARD set title = #{title} , write_date = now() where card_no = #{cardNo};
 	</update>
+	
+	<select id="kanbanCardContent" resultType="kr.or.bit3004.kanban.KanbanCard">
+		select * from kanban_card where card_no = #{cardNo};
+	</select>
+	
+	
 </mapper>
