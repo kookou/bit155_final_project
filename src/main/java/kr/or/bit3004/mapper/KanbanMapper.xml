@@ -49,7 +49,7 @@
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectCardList">
-		<result column="no" property="cardNO" />
+		<result column="card_no" property="cardNo" />
 		<result column="title" property="cardTitle" />
 		<result column="content" property="cardContent" />
 		<result column="file_count" property="fileCount" />
@@ -73,6 +73,10 @@
 		<result column="board_type_no" property="boardTypeNo" />
 	</resultMap>
 	
+	<select id="kanbanListFromAllBoardListNo" resultType="kr.or.bit3004.kanban.KanbanList">
+	 select * from kanban_list where all_board_list_no = #{allBoardListNo};
+	</select>
+	
 	
 	<!-- delete kanban list -->
 	<delete id="deleteKanbanList">
@@ -86,6 +90,10 @@
 		SELECT MAX(KANBAN_LIST_NO)
 		FROM KANBAN_LIST
 	</select>
+	<select id="getANewCardNo" resultType="int">
+		SELECT MAX(card_no)
+		FROM KANBAN_Card
+	</select>
 	
 	<!--getAKanbanListByKanbanListNo  -->
 	<select id="getAKanbanListByKanbanListNo" resultType="kr.or.bit3004.kanban.KanbanList">
@@ -95,4 +103,12 @@
 	</select>
 	
 	
+	<insert id="insertCardTitle">
+	insert into `kanban_card`
+	(`title`, `write_date`,`kanban_list_no`)  <!-- `card_index` -->
+	values(#{title}, now(),#{kanbanListNo});
+	</insert>
+	<update id="updateCardTitle">
+	update KANBAN_CARD set title = #{title} , write_date = now() where card_no = #{cardNo};
+	</update>
 </mapper>

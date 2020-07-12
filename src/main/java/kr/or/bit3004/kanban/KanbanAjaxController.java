@@ -58,6 +58,20 @@ public class KanbanAjaxController {
 		
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
+		
+	@RequestMapping("InsertKanbanCard.ajax")
+	public String kanbanCardInsert(String title, int kanbanListNo) {
+		int newcardNo = service.insertCardTitle(title, kanbanListNo);
+		String newcardNoString = Integer.toString(newcardNo);
+		return newcardNoString;
+	}
+	
+	
+	@RequestMapping("UpdateKanbanCard.ajax")
+	public String kanbanCardUpdate(String title , int cardNo) {
+		service.updateCardTitle(title, cardNo);
+		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
+	}
 	
 }
  

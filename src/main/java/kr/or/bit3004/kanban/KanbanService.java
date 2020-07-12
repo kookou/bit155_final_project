@@ -26,4 +26,9 @@ public interface KanbanService {
 	
 	//update Kanban List
 	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal);
+	
+	public int insertCardTitle(String title , int kanbanListNo);
+	
+	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
+	public void updateCardTitle(String title , int cardNo);
 }
