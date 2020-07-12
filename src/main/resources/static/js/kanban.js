@@ -118,7 +118,7 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
 	console.log()
     let listName = $(this).parent().children().find('textarea').val();
-
+	var lsitno = $(this).parent().parent()
 	if(listName == "") {
         console.log("오니?")
         alert('list title을 입력하세요.');
@@ -134,7 +134,7 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
     + "</a>");
     
-    $(this).parent().parent().attr('data-title', listName);
+    lsitno.attr('data-title', listName);
     
     new1.append(addcardbtn);
     var trash = $(this).prev();
