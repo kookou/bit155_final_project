@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
 	<insert id="insertListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
 		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTitle}, 1 ,#{id});
+		values(#{listTite}, #{allBoardListNo}, #{id});
 	</insert>
 	
 	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
@@ -69,6 +69,20 @@
 		<result column="team_no" property="teamNo" />
 		<result column="board_type_no" property="boardTypeNo" />
 	</resultMap>
-
-
+	
+	
+	<!-- delete kanban list -->
+	<delete id="deleteKanbanList">
+		DELETE
+		FROM KANBAN_LIST
+		WHERE LIST_TITLE = #{listTitle}
+	</delete>
+	
+	<!-- getANewKanbanListNo -->
+	<select id="getANewKanbanListNo" resultType="int">
+		SELECT MAX(KANBAN_LIST_NO)
+		FROM KANBAN_LIST
+	</select>
+	
+	
 </mapper>

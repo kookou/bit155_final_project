@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import kr.or.bit3004.groupAndTeam.TeamMainService;
+import kr.or.bit3004.aside.AsideService;
 
 @Controller
 public class KanbanController {
@@ -20,8 +20,9 @@ public class KanbanController {
 	private KanbanService service;
 	
 	@Autowired
-	private TeamMainService teammainService;
 
+	private AsideService asideService;
+	
 	@RequestMapping("/kanban.do")
 	public String kanbanList(int teamNo ,int allBoardListNo, Model model) {
 		List<Map> kanbanlist = new ArrayList<>();
@@ -32,38 +33,15 @@ public class KanbanController {
 		
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
-		
-		model.addAttribute("team", teammainService.getTeam(teamNo));
-		model.addAttribute("teamMember", teammainService.getTeamMember(teamNo));
+
+	   model.addAttribute("team", asideService.getTeam(teamNo));
+	   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 
 		System.out.println(kanbanlist);
 		System.out.println(kanbancardlist);
 		return "kanban/kanban";
 	}
-	
-	
-	
-	@RequestMapping("InsertKanbanList.ajax")
-	public String kanbanListInsert(KanbanList kanbanlist) {
-		System.out.println("listinsert");
-		service.insertListTite(kanbanlist);
-		return "redirect:kanban.do?allBoardListNo=1";
-	}
-	
-	
-	@RequestMapping("UpdateKanbanList.ajax")
-	public String kanbanListUpdate(int allBoardListNo, KanbanList kanbanlist) {
-		System.out.println("listupdate???");
-		List<Map> alllist = new ArrayList<>();
-		List<String> kanbanlistno = new ArrayList<String>();
-		
-		alllist = service.allKanbanList(allBoardListNo);
-		for(int i = 0; i < alllist.size(); i++) {
-			kanbanlistno.add(alllist.get(i).get("kanbanListNo").toString());
-		}
-		
-		service.updateListTite(kanbanlist);
-		return "redirect:kanban.do?allBoardListNo=1";
-	}
+
+
 }
  

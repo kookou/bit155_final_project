@@ -1,5 +1,6 @@
 package kr.or.bit3004.kanban;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,16 @@ public class KanbanServiceImpl implements KanbanService {
 	private KanbanDao dao;
 	
 	@Override
-	public int insertListTite(KanbanList kanbanlist) {
-		return dao.insertListTite(kanbanlist);
+	public int insertListTite(KanbanList kanbanlist, Principal principal) {
+		int newKanbanListNo = 0;
+		kanbanlist.setId(principal.getName());
+		
+		//여기 트랜젝션 처리해야함
+		dao.insertListTite(kanbanlist);
+		newKanbanListNo = dao.getANewKanbanListNo();
+		System.out.println(newKanbanListNo);
+		
+		return newKanbanListNo;
 	}
 	@Override
 	public int updateListTite(KanbanList kanbanlist) {
@@ -39,8 +48,29 @@ public class KanbanServiceImpl implements KanbanService {
 		return dao.kanbanListJoinCard(allBoardListNo);
 		
 	}
+
+	
+	
+	//delete kanban list
 	@Override
-	public KanbanList kanbanList(KanbanList kanbamlist) {
-		return dao.kanbanList(kanbamlist);
+	public void deleteKanbanList(String listTitle) {
+		System.out.println("deleteKanbanList");
+		System.out.println("listTitle : " + listTitle);
+		dao.deleteKanbanList(listTitle);
+		
+	}
+	
+	
+	
+	/////////////뭔지모름 /////////////////
+	@Override
+	public Map<String, Object> getGroup(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Map> kanbanList(int teamNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

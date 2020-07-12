@@ -86,6 +86,8 @@ var addlistTag =
     + "</div>"
 + "</div>";
 
+	
+
 
 //텍스트에어리어 사이즈 자동 조절
 function resize(obj) {
@@ -118,9 +120,12 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
 	console.log()
     let listName = $(this).parent().children().find('textarea').val();
-	var lsitno = $(this).parent().parent()
+
+    let allBoardListNo = Number($('#allBoardListNo').val());
+    let kanbanListContent = $(this).parent().parent();
+    
+
 	if(listName == "") {
-        console.log("오니?")
         alert('list title을 입력하세요.');
 		$(this).parent().children().find('input').focus();
 		return;
@@ -134,7 +139,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
     + "</a>");
     
-    lsitno.attr('data-title', listName);
+
+    kanbanListContent.attr('data-title', listName);    
     
     new1.append(addcardbtn);
     var trash = $(this).prev();
@@ -142,16 +148,17 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     $(this).remove();
     addlist.show()
 
+
     $.ajax({
 		url: "InsertKanbanList.ajax",
-		data: {listTitle: listName,
-				id: currUser },
-        dataType: "html",
-        
+		data: {
+				"listTite": listName,
+				"allBoardListNo": allBoardListNo
+				},
+        dataType: "text",
 		success: function(resData) {
 			console.log("list insert 완료");
-			// deleteListBtnTag.attr('data-code', resData);
-			// ListDivTag.attr('data-code', resData);
+			kanbanListContent.attr('data-listno', resData);
 		}
 	});
 	
@@ -209,12 +216,30 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 //리스트 삭제 하기
 $('#kanban').on('click', '.kanban-list-menu', function() {
     var listName = $(this).parent().children().eq(0).text()
+    let allBoardListNo = Number($('#allBoardListNo').val());
     var canceltext = $('#list-modal-cancel').text()
     var deletetext = $('#list-modal-delete').text()
     var deleteel = $(this).parent().parent().parent()
 
-    $('#list-modal-delete').on("click", function(){  
-        console.log("헤헤헤헤헤ㅔ헤헤헤")
+    $('#list-modal-delete').on("click", function(){ 
+    	
+    	console.log(listName);
+    	
+        $.ajax({
+    		url: "deleteKanbanList.ajax",
+    		data: {
+    				"listTite": $.trim(listName)
+    				//일단 이렇게 해뒀는데 나중에  listNo로 지우는걸로 바꿔야겠다.
+    				//왜 return타입이 html이지 ?
+    				},
+            dataType: "html",
+            
+    		success: function(resData) {
+    			console.log("delete kanbanList");
+    		}
+    	});
+    	
+        console.log("delete kanbanList");
         deleteel.remove()
         
         $.ajax({
@@ -525,7 +550,6 @@ $('#modalreply').focusout(function() {
 //     }
 
 // })
-
 
 
 
