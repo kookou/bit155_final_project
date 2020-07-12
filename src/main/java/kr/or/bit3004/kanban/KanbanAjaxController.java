@@ -44,11 +44,10 @@ public class KanbanAjaxController {
 	}
 	
 	@RequestMapping("deleteKanbanList.ajax")
-	public String deleteKanbanList(KanbanList kanbanlist) {
+	public void deleteKanbanList(int kanbanListNo) {
 		System.out.println("Controller deleteKanbanList");
 		
-		service.deleteKanbanList(kanbanlist.getListTitle());
-		return "redirect:kanban.do?teamNo=1&allBoardListNo=2";
+		service.deleteKanbanList(kanbanListNo);
 	}
 	
 }

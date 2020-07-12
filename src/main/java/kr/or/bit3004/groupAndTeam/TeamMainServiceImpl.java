@@ -15,6 +15,10 @@ public class TeamMainServiceImpl implements TeamMainService {
 	@Autowired
 	private TeamMainDao dao;
 	
+	@Autowired
+	private TeamMainDao teamMainDao;
+
+	
 	@Override
 	public List<GroupAndTeam> selectGroupName(String id) {
 		return dao.getGroup(id);
@@ -77,5 +81,15 @@ public class TeamMainServiceImpl implements TeamMainService {
 		groupAndTeam.put("group", dao.getGroup(group.getId()));
 		return groupAndTeam;
 	}
+	@Override
+	public Team getTeam(int teamNo) {
+	   return teamMainDao.getTeam(teamNo);
+	}
+	   
+	@Override
+	public List<TeamMember> getTeamMember(int teamNo) {
+	   return teamMainDao.getTeamMember(teamNo);
+	}
+
 	
 }

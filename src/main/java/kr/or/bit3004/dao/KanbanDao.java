@@ -7,15 +7,25 @@ import kr.or.bit3004.kanban.KanbanList;
 
 public interface KanbanDao {
 	
+
+
 	public int insertListTitle(KanbanList kanbanlist);
-	public int getANewKanbanListNo();
+
+	public int updateListTitle(KanbanList kanbanlist);
 	
-	public List<Map> allKanbanList(int teamNo);
-	public Map<String,Object> getGroup(String id);
+	public List<Map> allKanbanList(int allBoardListNo);
+
+	public int getANewKanbanListNo();
+
+	
 	public List<Map> kanbanCardList();
+
+	public List<Map> kanbanListJoinCard(int allBoardListNo);
+
 	public List<Map> kanbanList(int teamNo);
 	
 	//delete kanban list
-	public void deleteKanbanList(String listTitle);
+	public void deleteKanbanList(int kanbanListNo);
+
 
 }

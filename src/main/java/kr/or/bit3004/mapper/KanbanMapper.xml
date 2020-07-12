@@ -7,18 +7,26 @@
 		values(#{listTitle}, #{allBoardListNo}, #{id});
 	</insert>
 	
+	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
+		update KANBAN_LIST set LIST_TITLE = #{listTitle} , id = #{id} where kanban_list_no = #{kanbanListNo};
+	</update>
+	
+   	<select id="kanbanList" parameterType="kr.or.bit3004.kanban.KanbanList">
+	 select * from kanban_list where kanban_list_no = #{kanbanListNo};
+	</select>
 	
 	<select id="allKanbanList" resultMap="selectMapList">
 		SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content,
-		c.write_date, c.file_count , c.comment_count , c.kanban_list_no,
+		c.write_date, c.file_count , c.comment_count , l.kanban_list_no,
 		a.name , a.team_no , a.board_type_no
 		FROM `KANBAN_LIST` l
 		LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no
 		LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no =
-		a.all_board_list_no where team_no = ${teamNo};
+		a.all_board_list_no where a.all_board_list_no = ${allBoardListNo};
 	</select>
 
 	<resultMap type="java.util.HashMap" id="selectMapList">
+		<result column="kanban_list_no" property="kanbanListNo" />
 		<result column="list_title" property="listTitle" />
 		<result column="all_board_list_no" property="allBoardListNo" />
 		<result column="id" property="id" />
@@ -36,6 +44,7 @@
 	<select id="kanbanCardList" resultMap="selectCardList">
 		select * from kanban_card;
 	</select>
+	
 	<resultMap type="java.util.HashMap" id="selectCardList">
 		<result column="no" property="cardNO" />
 		<result column="title" property="cardTitle" />
@@ -45,10 +54,10 @@
 		<result column="kanban_list_no" property="kanbanListNo" />
 	</resultMap>
 	
-	<select id="kanbanList" resultMap="selectList" parameterType="int">
+	<select id="kanbanListJoinCard" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , a.name , a.team_no , a.board_type_no
 	FROM KANBAN_LIST l 
-	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where team_no = ${teamNo};
+	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where l.all_board_list_no = ${allBoardListNo};
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectList">
@@ -62,12 +71,11 @@
 	</resultMap>
 	
 	
-	
 	<!-- delete kanban list -->
 	<delete id="deleteKanbanList">
 		DELETE
 		FROM KANBAN_LIST
-		WHERE LIST_TITLE = #{listTitle}
+		WHERE KANBAN_LIST_NO = #{kanbanListNo}
 	</delete>
 	
 	<!-- getANewKanbanListNo -->
@@ -75,7 +83,6 @@
 		SELECT MAX(KANBAN_LIST_NO)
 		FROM KANBAN_LIST
 	</select>
-	
 	
 	
 </mapper>

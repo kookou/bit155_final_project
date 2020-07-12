@@ -62,7 +62,7 @@
 //     });
   
 // });
-
+//var id = currUser;
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard' onclick='newtask(this)'>"
@@ -107,7 +107,7 @@ function resize(obj) {
 
 //리스트 추가
 $(document).on('click', '#addlist', function() {
-
+	console.log("리스트 추가 click");
     $(this).before(addlistTag);
     $(this).prev().children().children().children().eq(1).hide();
     $(this).hide()
@@ -117,12 +117,14 @@ $(document).on('click', '#addlist', function() {
 
 //리스트 추가 완료
 $('#kanban').on('click', '.kanban-addlistdone', function() {
-  
+	
+
     let listName = $(this).parent().children().find('textarea').val();
+	console.log(listName)
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
     
-    
+
 	if(listName == "") {
         alert('list title을 입력하세요.');
 		$(this).parent().children().find('input').focus();
@@ -137,6 +139,7 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
     + "</a>");
     
+
     kanbanListContent.attr('data-title', listName);    
     
     new1.append(addcardbtn);
@@ -145,7 +148,7 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     $(this).remove();
     addlist.show()
 
-
+console.log(listName)
     $.ajax({
 		url: "InsertKanbanList.ajax",
 		data: {
@@ -153,10 +156,10 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 				"allBoardListNo": allBoardListNo
 				},
         dataType: "text",
-        
 		success: function(resData) {
 			console.log("list insert 완료");
 			kanbanListContent.attr('data-listno', resData);
+			console.log(resData)
 		}
 	});
 	
@@ -189,7 +192,22 @@ $('#kanban').on('click', '.kanban-list-title', function() {
         console.log($(this))
 		$(this).remove();
         tr.show()
+        
+        $.ajax({
+			url: "UpdateKanbanList.ajax",
+			data: {listTitle: listName,
+					id: currUser},
+	        dataType: "html",
+	        
+			success: function(resData) {
+				console.log("list update 완료");
+				// deleteListBtnTag.attr('data-code', resData);
+				// ListDivTag.attr('data-code', resData);
+			}
+		});
     });
+	
+	 
     
 });
 
@@ -198,8 +216,16 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 
 //리스트 삭제 하기
 $('#kanban').on('click', '.kanban-list-menu', function() {
+	console.log("=====");
+	
     var listName = $(this).parent().children().eq(0).text()
     let allBoardListNo = Number($('#allBoardListNo').val());
+	let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
+
+	console.log("시작");
+	console.log($(this));
+    
+    
     var canceltext = $('#list-modal-cancel').text()
     var deletetext = $('#list-modal-delete').text()
     var deleteel = $(this).parent().parent().parent()
@@ -211,19 +237,32 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
         $.ajax({
     		url: "deleteKanbanList.ajax",
     		data: {
-    				"listTitle": $.trim(listName)
+    				"kanbanListNo": $.trim(kanbanListNo)
     				//일단 이렇게 해뒀는데 나중에  listNo로 지우는걸로 바꿔야겠다.
     				//왜 return타입이 html이지 ?
     				},
-            dataType: "html",
             
-    		success: function(resData) {
+    		success: function() {
     			console.log("delete kanbanList");
     		}
     	});
     	
         console.log("delete kanbanList");
         deleteel.remove()
+        
+//        $.ajax({
+//			url: "DeleteKanbanList.ajax",
+//			data: {listTitle : listName,
+//					id : currUser},
+//	        dataType: "html",
+//	        
+//			success: function(resData) {
+//				console.log("list update 완료");
+//				// deleteListBtnTag.attr('data-code', resData);
+//				// ListDivTag.attr('data-code', resData);
+//			}
+//		});
+        
      });  
 	
 });
@@ -232,6 +271,12 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 
     //카드 추가
 $(document).on('click', "#addcard",function(){
+	
+	let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
+//	console.log("시작");
+//	console.log($(this).parents('.kanban-list-content').attr('data-listno'));
+//	
+	
         var addcardTag = "<div class='kanban-card-list btn-card-hover' th:each='card : ${kanbancardlist}' th:if='${kanbanlist.kanbanListNo == card.kanbanListNo}'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
                          +"<div class='kanban-card-element' data-toggle='modal' data-target='#signup-modal'>"

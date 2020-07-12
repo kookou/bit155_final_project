@@ -27,32 +27,44 @@ public class KanbanServiceImpl implements KanbanService {
 		
 		return newKanbanListNo;
 	}
-	
 	@Override
-	public List<Map> allKanbanList(int teamNo){
-		return dao.allKanbanList(teamNo);
+	public int updateListTitle(KanbanList kanbanlist) {
+		return dao.updateListTitle(kanbanlist);
+		
 	}
-	
 	@Override
-	public Map<String,Object> getGroup(String id){
-		return dao.getGroup(id);
+	public List<Map> allKanbanList(int allBoardListNo){
+		return dao.allKanbanList(allBoardListNo);
 	}
+
+	
 	@Override
 	public List<Map> kanbanCardList(){
 		return dao.kanbanCardList();
 	}
+	
 	@Override
-	public List<Map> kanbanList(int teamNo){
-		return dao.kanbanList(teamNo);
+	public List<Map> kanbanListJoinCard(int allBoardListNo){
+		return dao.kanbanListJoinCard(allBoardListNo);
+		
+	}
+	
+	//delete kanban list
+	@Override
+	public void deleteKanbanList(int kanbanListNo) {
+		System.out.println("deleteKanbanList");
+		System.out.println("kanbanListNo : " + kanbanListNo);
+		dao.deleteKanbanList(kanbanListNo);
 		
 	}
 	
 	
-	//delete kanban list
+	
+	/////////////뭔지모름 /////////////////
+
 	@Override
-	public void deleteKanbanList(String listTitle) {
-		System.out.println("deleteKanbanList");
-		System.out.println("listTitle : " + listTitle);
-		dao.deleteKanbanList(listTitle);
+	public List<Map> kanbanList(int teamNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
