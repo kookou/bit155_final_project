@@ -9,4 +9,6 @@ public interface AsideService {
 	public Team getTeam(int teamNo);
 	public List<TeamMember> getTeamMember(int teamNo);
 	public List<AllBoardList> getAllBoardList(int teamNo);
+	public void insertAllBoard(AllBoardList allBoard);
+	public int getCurrAllBoardListNo();
 }

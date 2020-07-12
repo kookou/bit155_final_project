@@ -11,5 +11,6 @@ public class AllBoardList {
 	private int allBoardListNo;
 	private String name;
 	private int teamNo;
+	private String id;
 	private int boardTypeNo;
 }

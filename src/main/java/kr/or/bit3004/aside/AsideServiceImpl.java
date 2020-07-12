@@ -30,4 +30,14 @@ public class AsideServiceImpl implements AsideService {
 		return dao.getAllBoardList(teamNo);
 	}
 	
+	@Override
+	public void insertAllBoard(AllBoardList allBoard) {
+		dao.insertAllBoard(allBoard);
+	}
+	
+	@Override
+	public int getCurrAllBoardListNo() {
+		return dao.getCurrAllBoardListNo();
+	}
+	
 }
