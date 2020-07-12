@@ -38,6 +38,7 @@
         
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
+     <th:block th:replace="common/addAllBoardModal"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
      <div class="page-wrapper">
         <div class="page-breadcrumb">
@@ -52,7 +53,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" th:action="@{insertBoard.do}">
+                            <form method="post" th:action="@{insertBoard.do(id=${session.currentUser.id})}">
+                            <!-- @{selectBoard.do(boardNo=${board.boardNo},teamNo=1)} -->
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
@@ -76,7 +78,7 @@
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-info">등록</button>
                                         <button type="reset" class="btn btn-dark">초기화</button>
-                                        <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1">목록으로</a>
+                                        <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1&teamNo=1">목록으로</a>
                                     </div>
                                 </div>
                             </form>
@@ -89,7 +91,13 @@
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+       var currUser = [[${session.currentUser.id}]];
+    /*]]>*/
     
+    //summerNote
+    </script>
     
 
 </body>

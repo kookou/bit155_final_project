@@ -12,4 +12,5 @@ public class AllBoardList {
 	private String name;
 	private int teamNo;
 	private int boardTypeNo;
+	private String image;
 }
