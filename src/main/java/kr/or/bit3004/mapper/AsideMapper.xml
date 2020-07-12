@@ -34,4 +34,16 @@
 	<select id="getCurrAllBoardListNo" resultType="int">
 		select max(`ALL_BOARD_LIST_NO`) from `ALL_BOARD_LIST`
 	</select>
+		
+	<select id="searchUser" parameterType="String" resultType="String">
+		select id from `user` where id like '%${id}%'
+	</select>
+	
+	<insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.TeamMember">
+		insert into `TEAM_MEMBER`(`team_no`, `id`) values(#{teamNo}, #{id})
+	</insert>
+	
+	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
+		select image, nickname from `user` where id=#{id}
+	</select>
 </mapper>
