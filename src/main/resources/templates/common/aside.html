@@ -25,20 +25,14 @@
 
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Board List</span></li>
-					<li class="sidebar-item">
+					<li class="sidebar-item" th:each="board: ${allBoardList}">
 						<a class="sidebar-link" href="#" aria-expanded="false"> 
-							<i class="fas fa-table"></i> 
-							<span class="hide-menu">Board Name </span>
+							<i class="fas fa-table"></i> <!-- 게시판타입에따라 로고바꿔줘야함 -->
+							<span class="hide-menu" th:text="${board.name}"></span>
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#" aria-expanded="false"> 
-							<i class="fab fa-trello"></i> 
-							<span class="hide-menu">Board Name</span>
-						</a>
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="#" aria-expanded="false"> 
+						<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" data-toggle="modal" data-target="#createNewAllBoard" > 
 							<i data-feather="plus-circle" class="feather-icon"></i> 
 							<span class="hide-menu">Add Board</span>
 						</a>
@@ -72,5 +66,3 @@
 		</div>
 		<!-- End Sidebar scroll-->
 	</aside>
-
-	
