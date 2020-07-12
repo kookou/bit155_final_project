@@ -2,26 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.TeamMainDao">
-	<select id="getTeam" resultType="kr.or.bit3004.groupAndTeam.Team">
-		select team_no, team_name, background_color, group_no
-		  from `team`
-		 where `team_no` = #{teamNo}
-	</select>
-	
-	<select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
-		select m.team_no, m.id, leader, nickname, image
-		  from `team_member` m
-		  join `user` u
-		    on m.id = u.id
-		 where m.`team_no` = #{teamNo}
-	</select>
-
 	<select id="getGroupAndTeam" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`, `background_color`
-		  from `group` g
-		 inner join team t
-		    on g.group_no = t.group_no 
-		where id=#{id}
+		select t.team_no, t.team_name, background_color, g.group_no, m.id, leader, group_name
+		  from team t
+		  join team_member m
+		    on t.team_no = m.team_no
+		  join `group` g
+		    on t.group_no = g.group_no
+		 where m.id=#{id}
 	</select>
 	
 	<select id="getGroup" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">

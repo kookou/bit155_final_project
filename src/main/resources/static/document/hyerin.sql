@@ -11,9 +11,26 @@ select * from team;
 select * from `group`;
 select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`, `BACKGROUND_COLOR`
   from `group` g
- inner join team t
+left outer join team t
+    on g.group_no = t.group_no
+ where id='h@hh.hh';
+select g.`GROUP_NO`, `GROUP_NAME`, `ID`, `TEAM_NO`, `TEAM_NAME`, `BACKGROUND_COLOR`
+  from `group` g
+left outer join team t
     on g.group_no = t.group_no
  where id='hrin@3004.com';
+ 
+select t.team_no, t.team_name, background_color, g.group_no, m.id, leader, group_name
+  from team t
+  join team_member m
+    on t.team_no = m.team_no
+  join `group` g
+    on t.group_no = g.group_no
+ where m.id = 'h@hh.hh';
+    
+ 
+select group_no from `group` where id='h@hh.hh' and `GROUP_NAME` = 'Personal';
+insert into `group`(group_no) values(2);
  
 select GROUP_NO, GROUP_NAME, id
   from `group`
@@ -69,3 +86,4 @@ select COMMENT_NO, content, WRITE_DATE, b.id, NICKNAME, image
  where board_no = 1;
  
 insert into board_comment (`content`, `write_date`, `id`, `board_no`) values('gㅎㅇㅎㅇㅎㅇㅎㅇ', now(), 'hrin@3004.com', 1);
+select image from `user` where id='hrin@3004.com';

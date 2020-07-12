@@ -18,8 +18,8 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 	}
 	
 	//댓글 등록하기
-	public int insertComment(BoardComment boardComment) {
-		return boardCommentDao.insertComment(boardComment);
+	public void insertComment(BoardComment boardComment) {
+		boardCommentDao.insertComment(boardComment);
 	}
 	
 	/////////////////////여기까지 공통게시판이였습니다///////////////////////////////

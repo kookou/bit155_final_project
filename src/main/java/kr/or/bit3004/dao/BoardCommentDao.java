@@ -10,6 +10,6 @@ public interface BoardCommentDao {
 	public List<BoardComment> getCommentList(int boardNo);
 	
 	//댓글 등록하기
-	public int insertComment(BoardComment boardComment);
+	public void insertComment(BoardComment boardComment);
 	///////////////////////////보드//////////////////////////////
 }
