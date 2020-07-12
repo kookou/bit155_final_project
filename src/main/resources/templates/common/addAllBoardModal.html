@@ -1,0 +1,25 @@
+<!-- Create New All Board Modal -->
+<div id="createNewAllBoard" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <input type="hidden" id="hiddenTeamNo">
+                    <div class="custom-radio custom-control custom-radio">
+                    	<input type="radio" id="commonBoard" value="1" name="boardType" class="custom-control-input boardType" checked>
+                    	<label for="commonBoard" class="custom-control-label"> <i class="fas fa-table"></i> 일반게시판</label><br>
+                   </div>
+                    <div class="custom-radio custom-control custom-radio">
+                    	<input type="radio" id="kanbanBoard" value="2" name="boardType" class="custom-control-input boardType">
+                   		<label for="kanbanBoard" class="custom-control-label"> <i class="fab fa-trello"></i> 칸반게시판</label>
+                   </div>
+                   <br>
+                    <input type="text" class="form-control" placeholder="Board Name" id="boardName">
+                   <br>
+                   <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="createBoardBtn">Create</button>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

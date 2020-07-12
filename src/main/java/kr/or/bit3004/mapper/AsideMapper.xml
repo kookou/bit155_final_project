@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit3004.dao.AsideDao">
+	<select id="getTeam" resultType="kr.or.bit3004.groupAndTeam.Team">
+		select team_no, team_name, background_color, group_no
+		  from `team`
+		 where `team_no` = #{teamNo}
+	</select>
+	
+	<select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
+		select m.team_no, m.id, leader, nickname, image
+		  from `team_member` m
+		  join `user` u
+		    on m.id = u.id
+		 where m.`team_no` = #{teamNo}
+	</select>
+	
+	<select id="getAllBoardList" resultType="kr.or.bit3004.aside.AllBoardList">
+		select `all_board_list_no`, `name`, `team_no`, `board_type_no`
+		  from `all_board_list`
+		 where `team_no` = #{teamNo}
+	</select>
+</mapper>

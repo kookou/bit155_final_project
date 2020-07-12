@@ -110,7 +110,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.logout()
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 							.logoutSuccessUrl("/")
-							.invalidateHttpSession(true);
+							.invalidateHttpSession(true)
+							.deleteCookies("SESSION");
 			
 			http.oauth2Login().userInfoEndpoint()
 				.userService(new CustomOAuth2UserService()) // 네이버 USER INFO의 응답을 처리하기 위한 설정 

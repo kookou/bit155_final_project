@@ -1,16 +1,9 @@
 package kr.or.bit3004.board;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bit3004.dao.BoardDao;
 
@@ -39,8 +32,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//파일업로드
+	/*
 	@Override
 	public void fileUploadBoard(Board board , HttpServletRequest request) {
+		
 		List<CommonsMultipartFile> files = board.getFiles();
 		List<String> fileNames = new ArrayList<String>();
 		
@@ -70,13 +65,13 @@ public class BoardServiceImpl implements BoardService{
 		board.setFileName(fileNames.get(0));
 		board.setFileName(fileNames.get(1));
 		
-		dao.fileUpload(board);
+		dao.insertBoard(board);
 	}
+	*/
 	
 	//게시판 수정하기
 	@Override
 	public void updateBoard(Board board) {
-		System.out.println(board);
 		dao.updateBoard(board);
 	}
 	

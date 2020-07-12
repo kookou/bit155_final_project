@@ -20,7 +20,7 @@ CREATE TABLE `BOARD_LIST` (
 	`TITLE`         VARCHAR(100) NOT NULL, -- 글제목
 	`CONTENT`       TEXT         NOT NULL, -- 글내용
 	`VIEWS`         INT          NULL default 0,     -- 조회수
-	`WRITE_DATE`    DATE         NOT NULL, -- 작성일
+	`WRITE_DATE`    DATETIME     NOT NULL, -- 작성일
 	`COMMENT_COUNT` INT          NULL default 0,     -- 댓글개수
 	`REFER`         INT          NULL default 0,     -- 그룹번호
 	`DEPTH`         INT          NULL default 0,     -- 들여쓰기
@@ -78,7 +78,7 @@ ALTER TABLE `BOARD_FILE` modify `FILE_NO` INT auto_increment;
 CREATE TABLE `BOARD_COMMENT` (
 	`COMMENT_NO` INT          NOT NULL, -- 댓글식별번호
 	`CONTENT`    VARCHAR(600) NOT NULL, -- 댓글내용
-	`WRITE_DATE` DATE         NOT NULL, -- 댓글작성일
+	`WRITE_DATE` DATETIME     NOT NULL, -- 댓글작성일
 	`ID`         VARCHAR(50)  NULL,     -- 아이디
 	`BOARD_NO`   INT          NULL      -- 글식별번호
 );
@@ -98,7 +98,7 @@ CREATE TABLE `KANBAN_CARD` (
 	`CARD_NO`        INT           NOT NULL, -- 글식별번호
 	`TITLE`          VARCHAR(100)  NOT NULL, -- 글제목
 	`CONTENT`        VARCHAR(2000) NULL,     -- 글내용
-	`WRITE_DATE`     DATE          NOT NULL, -- 작성일
+	`WRITE_DATE`     DATETIME      NOT NULL, -- 작성일
 	`FILE_COUNT`     INT           NULL,     -- 파일개수
 	`COMMENT_COUNT`  INT           NULL,     -- 댓글개수
 	`KANBAN_LIST_NO` INT           NULL      -- 칸반리스트 식별번호
@@ -151,8 +151,8 @@ ALTER TABLE `TEAM` modify `TEAM_NO` INT auto_increment;
 
 -- 그룹
 CREATE TABLE `GROUP` (
-	`GROUP_NO`   INT NOT NULL, -- 그룹식별번호
-	`GROUP_NAME` INT NOT NULL  -- 그룹명
+	`GROUP_NO`   INT         NOT NULL, -- 그룹식별번호
+	`GROUP_NAME` VARCHAR(50) NOT NULL  -- 그룹명
 );
 
 -- 그룹
@@ -271,8 +271,8 @@ CREATE TABLE `PLAN` (
 	`NO`          INT           NOT NULL, -- 일정관리식별번호
 	`NAME`        VARCHAR(100)  NOT NULL, -- 일정이름
 	`DESCRIPTION` VARCHAR(1000) NULL,     -- 설명
-	`START`       DATE          NOT NULL, -- 시작
-	`END`         DATE          NOT NULL, -- 끝
+	`START`       DATETIME      NOT NULL, -- 시작
+	`END`         DATETIME      NOT NULL, -- 끝
 	`BGCOLOR`     VARCHAR(50)   NULL,     -- 배경색상
 	`COLOR`       VARCHAR(50)   NULL,     -- 글자색상
 	`ALLDAY`      VARCHAR(2)    NULL,     -- 종일여부
