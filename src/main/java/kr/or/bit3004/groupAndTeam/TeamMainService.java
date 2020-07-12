@@ -17,4 +17,5 @@ public interface TeamMainService {
 	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group);
 	public Team getTeam(int teamNo);
 	public List<TeamMember> getTeamMember(int teamNo);
+
 }
