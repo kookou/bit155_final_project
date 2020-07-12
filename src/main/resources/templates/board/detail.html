@@ -50,6 +50,7 @@
         
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
+     <th:block th:replace="common/addAllBoardModal"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     <div class="page-wrapper">
 	    <div class="container-fluid">
@@ -145,13 +146,13 @@
 	                      		</div>
 	                            <div class="form-actions">
 	                                <div style="float: left;" th:with="board=${selectBoard}">
-	                                    <button type="button" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> 글쓰기</button>
+	                                    <a href="insertBoard.do?teamNo=1" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
 	                                    <button type="button" class="btn btn-light btn-sm">답글</button>
-	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${board.boardNo})}">수정</a>
+	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${board.boardNo}, teamNo=1)}">수정</a>
 	                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${board.boardNo})}">삭제</a>
 	                                </div>
 	                                <div style="float: right;">
-	                                    <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1">목록</a>
+	                                    <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1&teamNo=1">목록</a>
 	                                    <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
 	                                </div>
 	                            </div>
