@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.bit3004.groupAndTeam.GroupAndTeam;
-import kr.or.bit3004.groupAndTeam.Team;
-import kr.or.bit3004.groupAndTeam.TeamMember;
 
 public interface TeamMainDao {
 	public List<GroupAndTeam> getGroup(String id);
@@ -21,7 +19,5 @@ public interface TeamMainDao {
 	public void insertTeamLeader(GroupAndTeam team);
 	public int getCurrTeamNo();
 	public void moveTeamFromGroup(GroupAndTeam groupAndTeam);
-	public Team getTeam(int teamNo);
-	public List<TeamMember> getTeamMember(int teamNo);
 	
 }

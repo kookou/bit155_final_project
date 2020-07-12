@@ -199,6 +199,8 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 		});
     });
 	
+	 
+    
 });
 
 
@@ -254,6 +256,7 @@ $(document).on('click', "#addcard",function(){
                          +"</div>"
                          +"</div>"
                          +"</div>"
+                   
                     
         $(this).parent().before(addcardTag);
         $(this).parent().mouseleave()
@@ -319,7 +322,8 @@ $('#kanban').on('click','.active-card-icon',function(){
         console.log("외않되????????????????")
         $('.active-card-icon').hide()
     })
-     
+   
+    
     $(textarea).blur(function() {
         if($(textarea).val() == "") {
             alert('Card title을 입력하세요');

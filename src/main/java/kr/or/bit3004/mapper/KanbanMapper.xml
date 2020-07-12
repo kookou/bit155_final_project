@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
 	<insert id="insertListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
 		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTitle}, 1 ,#{id});
+		values(#{listTitle}, 2 ,#{id});
 	</insert>
 	
 	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
