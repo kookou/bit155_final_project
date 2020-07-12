@@ -18,7 +18,7 @@ public interface KanbanService {
 	public List<Map> kanbanListJoinCard(int allBoardListNo);
 
 	public int insertListTite(KanbanList kanbanlist, Principal principal);
-	public Map<String,Object> getGroup(String id);
+
 
 	public List<Map> kanbanList(int teamNo);
 	

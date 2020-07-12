@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
 	<insert id="insertListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
 		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTite}, #{allBoardListNo}, #{id});
+		values(#{listTitle}, #{allBoardListNo}, #{id});
 	</insert>
 	
 	<update id="updateListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
@@ -17,7 +17,7 @@
 	
 	<select id="allKanbanList" resultMap="selectMapList">
 		SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content,
-		c.write_date, c.file_count , c.comment_count , c.kanban_list_no,
+		c.write_date, c.file_count , c.comment_count , l.kanban_list_no,
 		a.name , a.team_no , a.board_type_no
 		FROM `KANBAN_LIST` l
 		LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no

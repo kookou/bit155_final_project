@@ -209,7 +209,7 @@
 						
 						<div class="kanban-list-wrapper"
 							th:each="kanbanlist: ${kanbanlist}">
-							<div class="kanban-list-content">
+							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
 								<div class="kanban-card" ondrop="drop(event, this)"
 									ondragover="allowDrop(event)">
 									<div class="kanban-list-header" id="listheader">

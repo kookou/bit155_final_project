@@ -118,9 +118,9 @@ $(document).on('click', '#addlist', function() {
 //리스트 추가 완료
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
-	console.log()
-    let listName = $(this).parent().children().find('textarea').val();
 
+    let listName = $(this).parent().children().find('textarea').val();
+	console.log(listName)
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
     
@@ -148,17 +148,18 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     $(this).remove();
     addlist.show()
 
-
+console.log(listName)
     $.ajax({
 		url: "InsertKanbanList.ajax",
 		data: {
-				"listTite": listName,
+				"listTitle": listName,
 				"allBoardListNo": allBoardListNo
 				},
         dataType: "text",
 		success: function(resData) {
 			console.log("list insert 완료");
 			kanbanListContent.attr('data-listno', resData);
+			console.log(resData)
 		}
 	});
 	

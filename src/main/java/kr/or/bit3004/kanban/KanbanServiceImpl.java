@@ -48,8 +48,6 @@ public class KanbanServiceImpl implements KanbanService {
 		return dao.kanbanListJoinCard(allBoardListNo);
 		
 	}
-
-	
 	
 	//delete kanban list
 	@Override
@@ -63,11 +61,7 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	
 	/////////////뭔지모름 /////////////////
-	@Override
-	public Map<String, Object> getGroup(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public List<Map> kanbanList(int teamNo) {
 		// TODO Auto-generated method stub
