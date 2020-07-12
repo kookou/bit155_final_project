@@ -14,25 +14,29 @@
 								style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">
 								<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 									<img th:src="'assets/images/userImage/' + ${member.image}" alt="user" href="javascript:void(0)"
-										style="width: auto; height: 70px; transform: translate(-50%, -50%);">
+										style="width: auto; height: 70px; transform: translate(-50%, -50%);"
+										data-toggle="tooltip" data-placement="top" title data-original-title="Tooltip on top">
 								</div>
 							</div>
 						</div>
 						<div class="invite-button">
-							<button type="button" class="btn waves-effect waves-light btn-rounded btn-primary">Invite</button>
+							<button type="button" class="btn waves-effect waves-light btn-rounded btn-primary" data-toggle="modal" data-target="#InviteMember" >Invite</button>
 						</div>
 					</li>
 
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Board List</span></li>
-					<li class="sidebar-item" th:each="board: ${allBoardList}">
-						<a class="sidebar-link" href="#" aria-expanded="false"> 
-							<i class="fas fa-table"></i> <!-- 게시판타입에따라 로고바꿔줘야함 -->
-							<span class="hide-menu" th:text="${board.name}"></span>
-						</a>
-					</li>
+					<div id="allBoardList">
+						<li class="sidebar-item" th:each="board: ${allBoardList}">
+							<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false">
+								<input type="hidden" th:value="${board.allBoardListNo}" class="hiddenAllBoardListNo">
+								<i th:class="${board.boardTypeNo == 1} ? 'fas fa-table' : 'fab fa-trello'"></i>
+								<span class="hide-menu" th:text="${board.name}"></span>
+							</a>
+						</li>
+					</div>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" data-toggle="modal" data-target="#createNewAllBoard" > 
+						<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" data-toggle="modal" data-target="#createNewAllBoard"  id="addBaordBtn"> 
 							<i data-feather="plus-circle" class="feather-icon"></i> 
 							<span class="hide-menu">Add Board</span>
 						</a>
@@ -65,4 +69,11 @@
 			<!-- End Sidebar navigation -->
 		</div>
 		<!-- End Sidebar scroll-->
+		
+		<script th:inline="javascript">
+	    /*<![CDATA[*/
+	    	var currUser = [[${session.currentUser.id}]];
+	    	var teamNo = [[${team.teamNo}]];
+	    /*]]>*/
+	    </script>
 	</aside>

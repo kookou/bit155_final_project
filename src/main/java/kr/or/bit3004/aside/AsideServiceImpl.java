@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.or.bit3004.dao.AsideDao;
 import kr.or.bit3004.groupAndTeam.Team;
 import kr.or.bit3004.groupAndTeam.TeamMember;
+import kr.or.bit3004.user.User;
 
 @Service
 public class AsideServiceImpl implements AsideService {
@@ -30,4 +31,28 @@ public class AsideServiceImpl implements AsideService {
 		return dao.getAllBoardList(teamNo);
 	}
 	
+	@Override
+	public void insertAllBoard(AllBoardList allBoard) {
+		dao.insertAllBoard(allBoard);
+	}
+	
+	@Override
+	public int getCurrAllBoardListNo() {
+		return dao.getCurrAllBoardListNo();
+	}
+	
+	@Override
+	public List<String> searchUser(String id) {
+		return dao.searchUser(id);
+	}
+	
+	@Override
+	public void inviteMember(TeamMember teamMember) {
+		dao.inviteMember(teamMember);
+	}
+	
+	@Override
+	public User selectInvitedMemberInfo(String id) {
+		return dao.selectInvitedMemberInfo(id);
+	}
 }

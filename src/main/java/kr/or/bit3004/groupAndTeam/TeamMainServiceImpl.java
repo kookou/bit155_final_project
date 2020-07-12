@@ -48,12 +48,7 @@ public class TeamMainServiceImpl implements TeamMainService {
 		dao.moveGroup(map);
 		dao.delGroup(group.getGroupNo());
 	}
-	
-	@Override
-	public List<String> searchUser(String id) {
-		return dao.searchUser(id);
-	}
-	
+
 	@Override
 	public void insertTeam(GroupAndTeam team) {
 		dao.insertTeam(team);

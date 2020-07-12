@@ -57,4 +57,15 @@ delete from `user` where id = 'hrin@3004.com';
 
 select `all_board_list_no`, `name`, `team_no`, `board_type_no`
   from `all_board_list`
- where `team_no` = 1;
+ where `team_no` = 1
+ order by `all_board_list_no`;
+ 
+select * from board_comment;
+
+select COMMENT_NO, content, WRITE_DATE, b.id, NICKNAME, image
+  from board_comment b
+ inner join `user` u
+    on b.id = u.id
+ where board_no = 1;
+ 
+insert into board_comment (`content`, `write_date`, `id`, `board_no`) values('gㅎㅇㅎㅇㅎㅇㅎㅇ', now(), 'hrin@3004.com', 1);
