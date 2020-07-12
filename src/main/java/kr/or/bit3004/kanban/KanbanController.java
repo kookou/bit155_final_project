@@ -47,7 +47,7 @@ public class KanbanController {
 	public String kanbanListInsert(KanbanList kanbanlist) {
 		System.out.println("listinsert");
 		service.insertListTite(kanbanlist);
-		return "redirect:kanban.do?allBoardListNo=2";
+		return "redirect:kanban.do?allBoardListNo=1";
 	}
 	
 	
@@ -63,7 +63,7 @@ public class KanbanController {
 		}
 		
 		service.updateListTite(kanbanlist);
-		return "redirect:kanban.do?allBoardListNo=2";
+		return "redirect:kanban.do?allBoardListNo=1";
 	}
 }
  
