@@ -23,7 +23,7 @@ public class BoardController {
 	public String selectBoardListService(Model model, int allBoardListNo, int teamNo) {
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
-		model.addAttribute("teamMember", asideService.getAllBoardList(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/list";
 	}
@@ -33,7 +33,7 @@ public class BoardController {
 	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo) {
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
-		model.addAttribute("teamMember", asideService.getAllBoardList(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/detail";
 	}
@@ -42,7 +42,7 @@ public class BoardController {
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
 	public String insertBoardService(Model model, int teamNo) {
 		model.addAttribute("team", asideService.getTeam(teamNo));
-		model.addAttribute("teamMember", asideService.getAllBoardList(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/insert";
 	}
@@ -60,7 +60,7 @@ public class BoardController {
 	public String updateBoardService(Model model, int boardNo, int teamNo) {
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
-		model.addAttribute("teamMember", asideService.getAllBoardList(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/update";
 	}

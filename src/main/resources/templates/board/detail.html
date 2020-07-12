@@ -30,8 +30,6 @@
    .comment-content {
        margin-left: 35px;
    }
-   
-   
 </style>
 </head>
 
@@ -69,17 +67,17 @@
 	                                            <input type="hidden" th:value="${board.boardNo}" id="boardNo">
 	                                            <div style="float: left; margin-bottom: 15px;">
 	                                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-	                                                <a th:text ="${board.nickname}"></a><br>
+	                                                <span th:text ="${board.nickname}" id="writer"></span><br>
 	                                            </div>
 	                                            <div style="float: right;">
-	                                                <a th:text="${board.writeDate}"></a>
-	                                               	조회수 : <a th:text="${board.views}"></a>
+	                                                <span th:text="${board.writeDate}"></span>
+	                                               	조회수 <span th:text="${board.views}"></span>
 	                                            </div>
 	                                            <div style="clear: both;">
 	                                                <hr>
 	                                                <div id="main-content" style="min-height: 250px;">
 	                                                    <p class="lead">
-	                                                        <a th:text="${board.content}"></a>
+	                                                        <span th:text="${board.content}"></span>
 	                                                    </p>
 	                                                </div>
 	                                                <hr class="my-4">
@@ -87,7 +85,7 @@
 	                                                <div id="comment-area">
 	                                                    <h4>Comment</h4>
 	                                                    <div id="comment-list">
-	                                                       <div class="comment" style="background-color:rgb(242, 242, 242)">
+	                                                       <!-- <div class="comment" style="background-color:rgb(242, 242, 242)">
 	                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
 	                                                            <b><a th:text="${board.nickname}"></a></b>
 	                                                            <span class="text-info">작성자</span>
@@ -109,10 +107,13 @@
 	                                                            <b><a th:text="${board.nickname}"></a></b>
 	                                                            <br>
 	                                                            <div class="comment-content">
-	                                                                <h6>
+	                                                                <h5>
 	                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
 	                                                                    sdfsdfsd<br>
 	                                                                    sdfsdf
+	                                                                </h5>
+	                                                                <h6 style="color: rgb(180, 180, 180);">
+	                                                                    2020.07.01. 12:56
 	                                                                </h6>
 	                                                            </div>
 	                                                        </div>
@@ -122,13 +123,16 @@
 	                                                            <b>Hyerin</b>
 	                                                            <br>
 	                                                            <div class="comment-content">
-	                                                                <h6>
+	                                                                <h5>
 	                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
 	                                                                    sdfsdfsd<br>
 	                                                                    sdfsdf
+	                                                                </h5>
+	                                                                <h6 style="color: rgb(180, 180, 180);">
+	                                                                    2020.07.01. 12:56
 	                                                                </h6>
 	                                                            </div>
-	                                                        </div>
+	                                                        </div> -->
 	                                                    </div>
 	                                                    <div id="comment-writeForm" style="border: 1px solid silver;">
 	                                                        <div style="padding: 10px 10px 0px 15px;"></div>
@@ -168,44 +172,48 @@
     <div th:replace="common/script :: script"></div>
     
     <!-- 여기서부터 script -->
-    <script th:inline="javascript">
-	    /*<![CDATA[*/
-	       var currUser = [[${session.currentUser.id}]];
-	       var boardNo = [[${board.boardNo}]];
-	    /*]]>*/
-	    console.log(boardNo);
+    <script>
+    /*<![CDATA[*/
+		var currUser = '[[${session.currentUser.id}]]';
+	/*]]*/
+
 	    //댓글 목록보기
 		$.ajax({
-			url:"CommentList.ajax",
-			data:{
-				no:'${board.boardNo}'
+			url: "CommentList.ajax",
+			data: {
+				boardNo: $('#boardNo').val()
 			},
-			dataType:"json",
 			success:function(resData){
 				makeCommnet(resData);
+			},
+			error: function(e) {
+				console.log(e);
 			}
 		});
-	    console.log(getCommentList);
-	    //게시판 목록을 보여주는 함수 
-	    function makeCommnet(result){
+
+    	//댓글 목록 그리는 함수 
+	    function makeCommnet(result) {
 	    	var html = "";
 	    	$.each(result, function(index , obj){
-	    		html += "<div id='comment-list'>";
-                html += "<div class='comment' style='background-color:rgb(242, 242, 242)'>";
-                     html += "<img src='assets/images/users/profile-pic.jpg' alt='user' class='rounded-circle' width='30'>";
-                     html += "<b><a th:text=" + obj.commentNo + "></a></b>";
-                     html += "<span class='text-info'>작성자</span>";
-                     html += "<br>";
-                     html += "<div class='comment-content'>";
-                         html += "<h5>" + obj.content + "</h5>";
-                         html += "<h6 style='color: rgb(180, 180, 180);'>";
-                             html += obj.writeDate;
-                         html += "</h6>";
-                     html += "</div>";
-                 html += "</div>";
-                 html += "<hr class='my-1'>";
+	    		if(currUser == obj.id) {
+	    			html += '<div class="comment" style="background-color:rgb(242, 242, 242)">';
+	    		} else {
+	    			html += '<div class="comment">';
+	    		}
+    			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
+   				html += 		'<b><span> '+ obj.nickname +'</span></b>';
+   				if($('#writer').text() == obj.nickname) {
+					html += 	'<span class="text-info"> 작성자</span>';
+   				}
+				html += 		'<br>';
+				html += 		'<div class="comment-content">';
+				html += 			'<h5>'+ obj.content +'</h5>';
+				html += 			'<h6 style="color: rgb(180, 180, 180);">'+ obj.writeDate +'</h6>';
+				html += 		'</div>';
+				html += 	'</div>';
+				html += 	'<hr class="my-1">';
 	    	});
-	    	$('#comment-area').append(html);
+	    	$('#comment-list').append(html);
 	    }
 	    
 	    

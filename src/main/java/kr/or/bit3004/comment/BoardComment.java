@@ -13,4 +13,6 @@ public class BoardComment {
 	private String writeDate;
 	private String id;
 	private int boardNo;
+	private String nickname;
+	private String image;
 }
