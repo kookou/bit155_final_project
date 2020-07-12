@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
-	<insert id="insertListTite" parameterType="kr.or.bit3004.kanban.KanbanList">
+	<insert id="insertListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
 		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTite}, #{allBoardListNo}, #{id});
+		values(#{listTitle}, #{allBoardListNo}, #{id});
 	</insert>
 	
 	

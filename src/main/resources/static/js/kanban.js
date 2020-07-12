@@ -149,7 +149,7 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     $.ajax({
 		url: "InsertKanbanList.ajax",
 		data: {
-				"listTite": listName,
+				"listTitle": listName,
 				"allBoardListNo": allBoardListNo
 				},
         dataType: "text",
@@ -211,7 +211,7 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
         $.ajax({
     		url: "deleteKanbanList.ajax",
     		data: {
-    				"listTite": $.trim(listName)
+    				"listTitle": $.trim(listName)
     				//일단 이렇게 해뒀는데 나중에  listNo로 지우는걸로 바꿔야겠다.
     				//왜 return타입이 html이지 ?
     				},

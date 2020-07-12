@@ -36,7 +36,7 @@ public class KanbanAjaxController {
 		
 		System.out.println(kanbanlist);
 		
-		int newKanbanListNo = service.insertListTite(kanbanlist, principal);
+		int newKanbanListNo = service.insertListTitle(kanbanlist, principal);
 		String newKanbanListNoString = Integer.toString(newKanbanListNo);
 		
 		
@@ -47,7 +47,7 @@ public class KanbanAjaxController {
 	public String deleteKanbanList(KanbanList kanbanlist) {
 		System.out.println("Controller deleteKanbanList");
 		
-		service.deleteKanbanList(kanbanlist.getListTite());
+		service.deleteKanbanList(kanbanlist.getListTitle());
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=2";
 	}
 	

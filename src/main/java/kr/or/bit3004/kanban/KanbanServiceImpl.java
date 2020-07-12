@@ -16,12 +16,12 @@ public class KanbanServiceImpl implements KanbanService {
 	private KanbanDao dao;
 	
 	@Override
-	public int insertListTite(KanbanList kanbanlist, Principal principal) {
+	public int insertListTitle(KanbanList kanbanlist, Principal principal) {
 		int newKanbanListNo = 0;
 		kanbanlist.setId(principal.getName());
 		
 		//여기 트랜젝션 처리해야함
-		dao.insertListTite(kanbanlist);
+		dao.insertListTitle(kanbanlist);
 		newKanbanListNo = dao.getANewKanbanListNo();
 		System.out.println(newKanbanListNo);
 		

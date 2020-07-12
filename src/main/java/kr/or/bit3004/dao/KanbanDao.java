@@ -7,7 +7,7 @@ import kr.or.bit3004.kanban.KanbanList;
 
 public interface KanbanDao {
 	
-	public int insertListTite(KanbanList kanbanlist);
+	public int insertListTitle(KanbanList kanbanlist);
 	public int getANewKanbanListNo();
 	
 	public List<Map> allKanbanList(int teamNo);
