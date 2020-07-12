@@ -25,17 +25,19 @@ public class KanbanController {
 	
 	@RequestMapping("/kanban.do")
 	public String kanbanList(int teamNo ,int allBoardListNo, Model model) {
-		List<Map> kanbanlist = new ArrayList<>();
+//		List<Map> kanbanlist = new ArrayList<>();
 		List<Map> kanbancardlist = new ArrayList<>();
+		List<KanbanList> kanbanlist = new ArrayList<>();
 		
-		kanbanlist = service.allKanbanList(allBoardListNo);
+//		kanbanlist = service.allKanbanList(allBoardListNo);
+		kanbanlist = service.kanbanListFromAllBoardListNo(allBoardListNo);
 		kanbancardlist = service.kanbanCardList();
 		
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
 
-	   model.addAttribute("team", asideService.getTeam(teamNo));
-	   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+		model.addAttribute("team", asideService.getTeam(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 
 		System.out.println(kanbanlist);
 		System.out.println(kanbancardlist);

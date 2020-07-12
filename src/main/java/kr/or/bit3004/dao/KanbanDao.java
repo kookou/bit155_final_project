@@ -15,7 +15,7 @@ public interface KanbanDao {
 
 
 	public int getANewKanbanListNo();
-
+	public int getANewCardNo();
 	
 	public List<Map> kanbanCardList();
 
@@ -27,6 +27,8 @@ public interface KanbanDao {
 	
 	//delete kanban list
 	public void deleteKanbanList(String listTitle);
-
+	public int insertCardTitle(String title , int kanbanListNo);
+	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
+	public void updateCardTitle(String title , int cardNo);
 
 }

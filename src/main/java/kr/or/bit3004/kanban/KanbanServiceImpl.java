@@ -67,4 +67,24 @@ public class KanbanServiceImpl implements KanbanService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	@Override
+	public int insertCardTitle(String title , int kanbanListNo) {
+		int newcardNo;
+		dao.insertCardTitle(title, kanbanListNo);
+		newcardNo = dao.getANewCardNo();
+		System.out.println(newcardNo);
+		
+		return newcardNo;
+	}
+	@Override
+	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo) {
+		return dao.kanbanListFromAllBoardListNo(allBoardListNo);
+	}
+	
+	@Override
+	public void updateCardTitle(String title , int cardNo) {
+		dao.updateCardTitle(title, cardNo);
+	}
 }

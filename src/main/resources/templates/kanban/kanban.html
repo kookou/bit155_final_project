@@ -28,7 +28,7 @@
 	
 		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
 		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
-
+		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
 
 	<div class="preloader">
 		<div class="lds-ripple">
@@ -76,7 +76,7 @@
 
 
 		<!-- content modal -->
-		<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog"
+		<div id="card-content" class="modal fade" tabindex="-1" role="dialog"
 			aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="card-modal-content">
@@ -222,11 +222,11 @@
 
 									<div class="kanban-card-list btn-card-hover"
 										th:each="card : ${kanbancardlist}"
-										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}">
+										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
 										<span class='icon-pencil active-card-icon'
 											style='position: relative;'></span>
 										<div class="kanban-card-element" data-toggle="modal"
-											data-target="#signup-modal">
+											data-target="#card-content" >
 											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
 											<div class="kanban-card-badges">
 												<div class="kanban-card-badge" title="comments"
