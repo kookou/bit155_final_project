@@ -9,11 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.bit3004.aside.AsideService;
+
 @Controller
 public class KanbanController {
 	
 	@Autowired
 	private KanbanService service;
+	
+	@Autowired
+	private AsideService asideService;
 	
 	@RequestMapping("/kanban.do")
 	public String kanbanList(int teamNo, Model model) {
@@ -24,6 +29,9 @@ public class KanbanController {
 		kanbancardlist = service.kanbanCardList();
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
+	   model.addAttribute("team", asideService.getTeam(teamNo));
+	   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+
 		System.out.println(kanbanlist);
 		System.out.println(kanbancardlist);
 		return "kanban/kanban";

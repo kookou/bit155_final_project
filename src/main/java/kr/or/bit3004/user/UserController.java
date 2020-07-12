@@ -6,17 +6,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.or.bit3004.aside.AsideService;
 
 @Controller
 public class UserController {
 	
 	@Autowired
-	private UserServiceImpl service;
+	private UserService service;
 	
 	@Autowired
-	private MailServiceImpl mailService;
+	private MailService mailService;
+	
+	
+	private AsideService asideService;
 	
 	//로그인 폼
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
@@ -71,7 +77,10 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo() {	
+	public String editUserInfo(Model model, int teamNo) {	
+		   model.addAttribute("team", asideService.getTeam(teamNo));
+		   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+		
 		return "user/editUser";
 	}
 	
@@ -82,7 +91,9 @@ public class UserController {
 		System.out.println(user);
 		
 		service.updateUser(user, session);
-		return "redirect:edituser";
+
+		
+		return "redirect:edituser?teamNo=";
 	}
 	
 	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다
