@@ -17,4 +17,10 @@ public class BoardCommentAjaxController {
 	public List<BoardComment> getCommentList(int boardNo){
 		return boardCommentService.getCommentList(boardNo);
 	}
+	
+	//댓글등록
+	@RequestMapping("InsertComment.ajax")
+	public int insertComment(BoardComment boardComment) {
+		return boardCommentService.insertComment(boardComment);
+	}
 }
