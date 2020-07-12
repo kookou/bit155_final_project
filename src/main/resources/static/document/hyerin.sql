@@ -37,6 +37,7 @@ select * from `team_member`;
 select * from `role_member`;
 select * from `timeline`;
 select * from `kanban_list`;
+select * from `all_board_list`;
 
 select `timeline_no`, `action`, `field`, `team_no`, `id`, `dml_no` 
   from `timeline`
@@ -53,3 +54,7 @@ select * from `ROLE_MEMBER`;
 
 select * from `user`;
 delete from `user` where id = 'hrin@3004.com';
+
+select `all_board_list_no`, `name`, `team_no`, `board_type_no`
+  from `all_board_list`
+ where `team_no` = 1;
