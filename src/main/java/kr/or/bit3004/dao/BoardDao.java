@@ -12,18 +12,18 @@ public interface BoardDao {
 	public List<Board> getBoardList(int allBoardListNo);
 	
 	//게시판 상세보기
-	public Board selectBoardByNo(int no);
+	public Board selectBoardByNo(int boardNo);
 	
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
 	//파일 업로드
-	public int fileUpload(Board board);
+	//public int fileUpload(Board board);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
 	
 	//게시판 삭제하기
-	public int deleteBoard(int no);
+	public int deleteBoard(int boardNo);
 	
 }

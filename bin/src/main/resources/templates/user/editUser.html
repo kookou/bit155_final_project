@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Edit User Info</title>
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative">
+            <div class="auth-box row text-center"></div>
+
+                
+
+
+            <div class="col-lg-4 col-md-6 col-sm-7 bg-white">
+                <div class="p-2"></div>
+
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span>
+                                <img class="mr-2" src="assets/images/logo-icon.png" alt="" height="18">
+                                <img src="assets/images/logo-text.png" alt="" height="18">
+                            </span>
+                        </a>
+                    </div>
+
+                    <form class="pl-3 pr-3 mt-4" action="" method="POST" enctype="multipart/form-data">
+
+                        
+                        <div class="form-group">
+                        <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
+                           	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+                            	<span th:if="${session.currentUser.image == null}">
+                                	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	</span>
+                            	<span th:unless="${session.currentUser.image == null}">
+                                	<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
+                            	</span>
+                            	 
+
+                           	</div>
+                        </div>
+						</div>
+
+                        <div class="form-group col-lg-9" style="margin: 16px auto;">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${session.currentUser.image}"></label>
+                            </div>
+                        </div> 
+
+                        <div class="form-group">
+                        	<input class="form-control" type="text" id="nickName" name="nickname" th:value="${session.currentUser.nickname}" placeholder="Nickname">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <input class="form-control" type="email" id="id" name="id" th:value="${session.currentUser.id}" readonly>
+							<div class="invalid-feedback">
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your new password">                            
+                            <div class="invalid-feedback">
+                            </div>
+                            <input class="form-control mt-2" type="password" id="passwordCheck" placeholder="Password check">                            
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 text-center mt-4">
+                            <button type="submit" id="submit" class="btn btn-info mr-2" disabled><i class="fas fa-check"></i>
+                                &nbsp;Save&nbsp;</button>
+                            <input type="reset" id="reset" class="btn btn-secondary ml-2" value=" reset ">
+
+                        </div>
+                        <div class="col-lg-12 text-center mt-5 mb-2">
+                            Don't want our service anymore? <a href="#" id="delAccount" class="text-muted">Delete account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+    
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+    <div th:replace="common/script :: script"></div>
+    
+    
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js "></script>
+    <!--파일 선택시 파일 경로 표시하기 아래 3개 모두 필요-->
+    <!--Custom JavaScript -->
+    <script src="dist/js/feather.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js "></script>
+    <script src="dist/js/custom.js "></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $(".preloader ").fadeOut();
+        //파일 미리보기
+        var file = document.querySelector('#userImage');
+        file.onchange = function() {
+            var fileList = file.files;
+            // 읽기
+            var reader = new FileReader();
+            reader.readAsDataURL(fileList[0]);
+            //로드 후 미리보기 적용
+            reader.onload = function() {
+                document.querySelector('#userImagePreview').src = reader.result;
+            };
+        };
+        
+        $(function() {
+            // console.log("jquery start");
+            var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+            var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+            var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
+            function regCheck(input, regExp, name) { // 정규표현식 검증
+                
+                if(name == "비밀번호확인"){
+                   if( $('#pwd').hasClass('is-valid') === true ){
+                        if($('#pwd').val() != input.val()){
+                            let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
+                            input.removeClass("is-valid");
+                            input.addClass("is-invalid");
+                            input.next().append(invalidMessage);
+                        }else{
+                            input.removeClass("is-invalid");
+                            input.addClass("is-valid");
+                        }
+                   }else{
+                    input.removeClass("is-valid");
+                    input.addClass("is-invalid");
+                    let invalidMessage = '형식에 맞는 비밀번호를 먼저 입력하세요 <br>';
+                    input.next().append(invalidMessage);
+                   }
+                            
+                }else{
+                    
+                    if ( regExp.test(input.val()) == false) {
+                        input.removeClass("is-valid");
+                        input.addClass("is-invalid");
+                        
+                        let invalidMessage = name + ' 형식에 맞게 입력하세요 <br>';
+                        
+                        if(name == "비밀번호"){
+                        	invalidMessage += '영문 소문자, 대문자 , 숫자를 1자 이상 포함하여 8자 이상 입력해주세요 <br>';
+                        }
+                        
+                        input.next().append(invalidMessage);
+                    }else{
+                        input.removeClass("is-invalid");
+                        input.addClass("is-valid");
+                    }
+                  
+                }
+            }
+ 
+            
+            //input 검증 @@ keyup일 때는 제대로 나오는데 blur 일 때는 css가 이상하다........................왜지 
+            // chrome 브라우저의 user agent stylesheet 설정 때문이었다............빡침
+            function inputCheck(input, regExp, name) {
+                input.on({
+                    blur : function() {
+                        input.next().empty();
+                        if (input.val() == "") {
+                            input.addClass("is-invalid");
+                            let invalidMessage = name + '을 입력하세요 <br>';
+                            input.next().append(invalidMessage);
+                        }else{
+                            regCheck($(this), regExp, name);
+                        }
+                    },
+                    keyup : function() {
+                        input.next().empty();
+                        regCheck(input, regExp, name);
+                    }
+                });
+            }
+            //inputCheck($('#id'), emailRegExp, "이메일");
+            inputCheck($('#nickName'), nickRegExp, "별명");
+            inputCheck($('#pwd'), pwdRegExp, "비밀번호"); 
+            inputCheck($('#passwordCheck'), pwdRegExp, "비밀번호확인");
+            //submit 버튼 활성화
+            $('input').on('change keyup', function() {
+               let nickOk = $('#nickName').hasClass('is-valid');
+               //let idOk = $('#id').hasClass('is-valid');
+               let pwdOk = $('#pwd').hasClass('is-valid');
+               let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
+               if(nickOk && pwdOk && pwdChckOk){
+                   console.log("if");
+                   $('#submit').removeAttr('disabled');
+               }else{
+                   if(!($('#submit').is(['disabled']))){
+                        $('#submit').attr('disabled', 'disabled');
+                   }
+               }
+            });
+            // 리셋
+            $('#reset').on('click', function() {
+                $('input').removeClass('is-invalid');
+                $('input').removeClass('is-valid');
+            });
+            console.log($('delAccount'));
+            $('#delAccount').on('click', function() {
+                console.log("여기");
+               let result = confirm("정말 탈퇴하시겠습니까?"); 
+               if(result){
+                   console.log("탈퇴진행");                 
+               }
+            });
+        });
+        
+    </script>
+</body>
+
+
+</html>
