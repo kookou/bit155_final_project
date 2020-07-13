@@ -48,8 +48,8 @@ select * from `ALL_BOARD_LIST`;
 
 -- 게시판
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, `ID`) values('안녕', '안녕하세요저는조진원입니다 판교에살고 90년생입니다 ㅎㅎ', now(), 1, 'hrin@3004.com');
-insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('반가워', '나는 효자동 불효자야~^^^', now(), 5, 'hyerin');
-insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `NO`, `ID`) values('월요일좋아*^^*', '월요일좋아~~ 최고로좋아~~ ', now(), 5, 'seoyoung');
+insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, `ID`) values('반가워', '나는 효자동 불효자야~^^^', now(), 5, 'hyerin');
+insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, `ID`) values('월요일좋아*^^*', '월요일좋아~~ 최고로좋아~~ ', now(), 5, 'seoyoung');
 
 -- 투두리스트 목록
 insert into `TODO_LIST`(`title`, `team_no`, `id`) values('팀원 혜린의 투두리스트', 1, 'hyerin');

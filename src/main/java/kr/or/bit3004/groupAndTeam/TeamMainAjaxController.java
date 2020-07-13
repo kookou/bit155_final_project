@@ -50,11 +50,6 @@ public class TeamMainAjaxController {
 		service.moveAndDelGroup(group);
 	}
 	
-	@RequestMapping("searchUser.do")
-	public List<String> searchUser(String id) {
-		return service.searchUser(id);
-	}
-	
 	@RequestMapping("insertTeam.do")
 	public int insertTeam(GroupAndTeam team) {
 		service.insertTeam(team);

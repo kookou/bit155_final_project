@@ -13,8 +13,13 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 	BoardCommentDao boardCommentDao;
 	
 	//댓글 목록보기
-	public List<String> getCommentList(int boardNo){
+	public List<BoardComment> getCommentList(int boardNo){
 		return boardCommentDao.getCommentList(boardNo);
+	}
+	
+	//댓글 등록하기
+	public void insertComment(BoardComment boardComment) {
+		boardCommentDao.insertComment(boardComment);
 	}
 	
 	/////////////////////여기까지 공통게시판이였습니다///////////////////////////////

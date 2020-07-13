@@ -35,7 +35,7 @@ $('#outer').on('click', '.teamBtn', function() {
 	//그룹명 입력받고 체크버튼 눌렀을 때
 	$(document).on('click', '#addGroupName', function() {
 		if($('#inputGroupName').val() == "") {
-			alert('그룹명을 입력하세요.');
+			swal('그룹명을 입력하세요.');
 			$(this).parent().prev().children('input').focus();
 			return;
 		}
@@ -105,7 +105,7 @@ $('#outer').on('click', '.teamBtn', function() {
 		let groupNo = $(this).parent().parent().parent().data('groupno');
 		if (key.keyCode == 13) {
 			if($(this).val() == "") {
-				alert('그룹명을 입력하세요.');
+				swal('그룹명을 입력하세요.');
 				$(this).focus();
 				return;
 			}
@@ -331,56 +331,3 @@ $('#outer').on('click', '.teamBtn', function() {
 	    	promise.fail(promiseError);
 	    }
 	}
-	
-	//autocomplete
-	/*$("#searchUser").autocomplete({
-        source : function(request, response) {
-             $.ajax({
-                    type: 'get',
-                    url: "searchUser.do",
-                    data: {
-    					id: $("#searchUser").val()
-    				},
-    				dataType: "json",
-                    success: function(data) {
-                        //서버에서 json 데이터 response 후 목록에 추가
-                        response(
-                            $.map(data, function(item) {    //json[i] 번째 에 있는게 item 임.
-                                return {
-                                    label: item,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-                                    value: item,    //선택 시 input창에 표시되는 값
-                                }
-                            })
-                        );
-                    }
-               });
-            },    // source 는 자동 완성 대상
-        select : function(event, ui) {    //아이템 선택시
-            console.log(ui);//사용자가 오토컴플릿이 만들어준 목록에서 선택을 하면 반환되는 객체
-            console.log(ui.item.label);    //김치 볶음밥label
-            console.log(ui.item.value);    //김치 볶음밥
-        },
-        focus : function(event, ui) {    //포커스 가면
-            return false; //한글 에러 잡기용도로 사용됨
-        },
-        minLength: 1, // 최소 글자수
-        autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
-        classes: {    //잘 모르겠음
-            "ui-autocomplete": "highlight"
-        },
-        delay: 500,    //검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
-//        disabled: true, //자동완성 기능 끄기
-        position: { my : "right top", at: "right bottom" },    //잘 모르겠음
-        close : function(event){    //자동완성창 닫아질때 호출
-            console.log(event);
-        }
-    }).autocomplete("instance")._renderItem = function(ul, item) {    //요 부분이 UI를 마음대로 변경하는 부분
-        return $( "<li>" )    //기본 tag가 li로 되어 있음 
-	        .append( "<a href='javascript:void(0)'>" + item.value +  "</a>" )    //여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
-	        .appendTo(ul);
-	};
-	
-	//autocomplete을 모달위로 띄어주는 방법
-	$("#createNewTeamModal").on("shown.bs.modal", function() { 
-		$("#searchUser").autocomplete("option", "appendTo", "#createNewTeamModal") 
-	});*/

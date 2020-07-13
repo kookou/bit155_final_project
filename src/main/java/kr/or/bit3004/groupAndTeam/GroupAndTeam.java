@@ -8,10 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class GroupAndTeam {
-	private int groupNo;
-	private String groupName;
-	private String id;
 	private int teamNo;
 	private String teamName;
 	private String backgroundColor;
+	private int groupNo;
+	private String groupName;
+	private String id;
+	private String leader;
+	private String group_name;
 }
