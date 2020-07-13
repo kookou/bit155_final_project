@@ -21,11 +21,11 @@
 	<delete id="deleteComment" parameterType="kr.or.bit3004.comment.BoardComment">
 		delete 
 		  from board_comment
-   		 where board_no=#{boardNo}
+   		 where board_no=#{boardNo} and comment_no=#{commentNo}
 	</delete>
 	
 	<!-- 댓글 수정하기 -->
-	<update id="updateBoard" parameterType="kr.or.bit3004.comment.BoardComment">
+	<update id="updateComment" parameterType="kr.or.bit3004.comment.BoardComment">
 		update board_comment
 		   set content=#{content}
 		 where board_no=#{boardNo} and comment_no=#{commentNo}

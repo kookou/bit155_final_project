@@ -16,6 +16,6 @@ public interface BoardCommentDao {
 	public void deleteComment(BoardComment boardComment);
 	
 	//댓글 수정하기
-	public List<BoardComment> updateComment(BoardComment boardComment);
+	public void updateComment(BoardComment boardComment);
 	///////////////////////////보드//////////////////////////////
 }
