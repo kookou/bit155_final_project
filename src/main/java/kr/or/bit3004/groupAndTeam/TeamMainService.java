@@ -14,4 +14,6 @@ public interface TeamMainService {
 	public void insertTeamLeader(GroupAndTeam team);
 	public int getCurrTeamNo();
 	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group);
+	public Team getTeam(int teamNo);
+	public List<TeamMember> getTeamMember(int teamNo);
 }

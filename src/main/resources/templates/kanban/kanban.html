@@ -15,6 +15,7 @@
 <!-- Custom CSS -->
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -24,6 +25,11 @@
 
 </head>
 <body>
+
+	
+		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
+		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
+
 	<div class="preloader">
 		<div class="lds-ripple">
 			<div class="lds-pos"></div>
@@ -40,10 +46,8 @@
 
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
+		<th:block th:replace="common/addAllBoardModal"></th:block>
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-
-
-
 
 		<!-- Info Alert Modal -->
 		<div id="info-alert-modal" class="modal fade" tabindex="1"
@@ -72,7 +76,7 @@
 
 
 		<!-- content modal -->
-		<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog"
+		<div id="card-content" class="modal fade" tabindex="-1" role="dialog"
 			aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="card-modal-content">
@@ -90,14 +94,13 @@
 
 						<div class="card-modal-body">
 							<span class="fas fa-align-left card-modal-title-icon"></span>
-							<h3 class="card-modal-description" id="myModalLabel">Description</h3>
+							<h3 class="card-modal-description" id="modalDescriptionLabel">Description</h3>
 							<div class="modal-textarea-description">
-								<textarea rows="1"
+								<textarea rows="1" id="modallDescrioptiontextarea"
 									class="autosize modal-textarea-description-edit"
-									id="modalldescrioption"
 									style="overflow: hidden; overflow-wrap: break-word; resize: none;"></textarea>
-								<p class="card-modal-list-description"></p>
 							</div>
+							<p class="card-modal-list-description" id="modallDescrioption"></p>
 						</div>
 
 						<div class="card-modal-file">
@@ -205,7 +208,7 @@
 						
 						<div class="kanban-list-wrapper"
 							th:each="kanbanlist: ${kanbanlist}">
-							<div class="kanban-list-content">
+							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
 								<div class="kanban-card" ondrop="drop(event, this)"
 									ondragover="allowDrop(event)">
 									<div class="kanban-list-header" id="listheader">
@@ -218,11 +221,11 @@
 
 									<div class="kanban-card-list btn-card-hover"
 										th:each="card : ${kanbancardlist}"
-										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}">
+										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
 										<span class='icon-pencil active-card-icon'
 											style='position: relative;'></span>
 										<div class="kanban-card-element" data-toggle="modal"
-											data-target="#signup-modal">
+											data-target="#card-content" >
 											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
 											<div class="kanban-card-badges">
 												<div class="kanban-card-badge" title="comments"
