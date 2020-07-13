@@ -469,8 +469,13 @@ var listtitle=""
 var cardtitle=""
 var cardElements = "";
 var newCardTitleList =""
-	
-	
+
+//reply
+var replycommentNo=""
+var replycontent=""
+var replywriteDate=""
+var replyid=""
+var replycardNo=""
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
 	cardElements = $(this).parent();
@@ -507,12 +512,12 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 			success: function(resData) {
 				console.log("card select 완료");
 				console.log(resData)
-				title = resData.title 
-				content = resData.content
-				writeDate = resData.writeDate
-				fileCount = resData.fileCount
-				commentCount = resData.commentCount
-				cardIndex = resData.cardIndex
+				title = resData.title, 
+				content = resData.content,
+				writeDate = resData.writeDate,
+				fileCount = resData.fileCount,
+				commentCount = resData.commentCount,
+				cardIndex = resData.cardIndex,
 				kanbanListNo = resData.kanbanListNo
 				
 				 if(content == "" || content == null){
@@ -527,6 +532,34 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				 }
 			} 
 		});
+	 
+	 $.ajax({ 
+			url: "CardReplySelect.ajax",
+			data: {
+					cardNo: cardNo
+					},
+	        dataType: "json",
+	        
+			success: function(resData) {
+				$.each(resData, function(index , obj){
+					
+				console.log("reply select 완료");
+				console.log(obj)
+				var replycommentNo2 = obj.commentNo
+				replycommentNo = replycommentNo2
+				
+				console.log(obj.commentNo)
+				replycontent = obj.content
+				console.log(replycontent)
+				replywriteDate = obj.writeDate
+				replyid = obj.id
+				replycardNo = obj.cardNo
+				replynickname = obj.nickname
+				replyimage = obj.image
+				});
+			} 
+		});
+	
 });
 
 
@@ -674,6 +707,9 @@ $('.card-modal-list-description').on('click',function(){
 //})
 
 $('#card-content').on('click', '.reply-done', function(){
+	console.log("안되겠지?")
+	console.log(replycommentNo)
+	 
     if($('#modalreply').val() == "") {
         alert('내용을 입력해 주세요');
         $('#modalreply').focus();
@@ -703,7 +739,7 @@ $('#card-content').on('click', '.reply-done', function(){
     + "</div>"
     + "<div class='modal-reply-btn'>"
             + "<a class='card-modal-reply-delete'"
-            + "data-container='body' title='왜안되냐ㅑㅑ' data-toggle='popover' data-placement='bottom'"
+            + "data-container='body' data-toggle='popover' data-placement='bottom'"
             + "data-content='아아'>"
             + "<i class='far fa-trash-alt'></i>Delete</a>"
             + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
@@ -715,12 +751,13 @@ $('#card-content').on('click', '.reply-done', function(){
 		url: "CardReplyInsert.ajax",
 		data: {
 				cardNo: cardNo,
-				content :cardDescription
+				content :replycontent,
+				id : currUser
 				},
         dataType: "html",
         
 		success: function(resData) {
-			console.log("card 내용 업데이트 완료");
+			console.log("리플 인서트 완료");
 			
 		}
 	});

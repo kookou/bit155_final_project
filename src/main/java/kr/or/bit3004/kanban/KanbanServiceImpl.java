@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.dao.KanbanDao;
 
 @Service
@@ -105,12 +106,18 @@ public class KanbanServiceImpl implements KanbanService {
 	public void kanbanCardDescrioptionUpdate(String content, int cardNo) {
 		dao.updateCardDescrioption(content,cardNo);
 	}
-
+	@Override
+	public int insertCardReply(String content, int cardNo, String id) {
+		return dao.insertCardReply(content, cardNo, id);
+	}
 
 	@Override
 	public void deleteKanbanCard(int cardNo) {
 		dao.deleteKanbanCard(cardNo);
-		
+	}
+	@Override
+	public List<KanbanComment> getKanbanCommentList(int cardNo){
+		return dao.getKanbanCommentList(cardNo);
 	}
 
 }
