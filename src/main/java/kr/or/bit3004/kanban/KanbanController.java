@@ -38,7 +38,8 @@ public class KanbanController {
 
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
-
+		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		
 		System.out.println(kanbanlist);
 		System.out.println(kanbancardlist);
 		return "kanban/kanban";

@@ -30,6 +30,8 @@ public interface KanbanService {
 	public int insertCardTitle(String title , int kanbanListNo);
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
-	public void updateCardTitle(String title , int cardNo);
-	public KanbanCard kanbanCardContent(int cardNo);
+	public void kanbanCardTitleUpdate(String title , int cardNo);
+	public KanbanCard kanbanCardContentSelect(int cardNo);
+	public void kanbanCardDescrioptionUpdate(String content,int cardNo);
+
 }
