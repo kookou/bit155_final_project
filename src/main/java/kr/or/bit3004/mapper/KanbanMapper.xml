@@ -109,6 +109,7 @@
 	(`title`, `write_date`,`kanban_list_no`)  <!-- `card_index` -->
 	values(#{title}, now(),#{kanbanListNo});
 	</insert>
+	
 	<update id="updateCardTitle">
 	update KANBAN_CARD set title = #{title} , write_date = now() where card_no = #{cardNo};
 	</update>
@@ -117,5 +118,9 @@
 		select * from kanban_card where card_no = #{cardNo};
 	</select>
 	
+	<update id="UpdateCardDescrioption">
+	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo};
+	</update>
+
 	
 </mapper>

@@ -64,16 +64,25 @@ public class KanbanAjaxController {
 	}
 	
 	@RequestMapping("UpdateKanbanCard.ajax")
-	public String kanbanCardUpdate(String title , int cardNo) {
-		service.updateCardTitle(title, cardNo);
+	public String kanbanCardTitleUpdate(String title , int cardNo) {
+		service.kanbanCardTitleUpdate(title, cardNo);
 		System.out.println("업데이트완료");
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
 	
 	@RequestMapping("CardContentSelect.ajax")
-	public KanbanCard kanbanCardContent(int cardNo) {
-		return service.kanbanCardContent(cardNo);
+	public KanbanCard kanbanCardContentSelect(int cardNo) {
+		System.out.println("cardselect");
+		System.out.println(service.kanbanCardContentSelect(cardNo));
+		return service.kanbanCardContentSelect(cardNo);
 		
+	}
+	
+	@RequestMapping("CardDescrioptionInsert.ajax")
+	public String kanbanCardDescrioptionUpdate(String content, int cardNo) {
+		System.out.println("카드 내용 업데이트");
+		service.kanbanCardDescrioptionUpdate(content, cardNo);
+		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
 	
 }

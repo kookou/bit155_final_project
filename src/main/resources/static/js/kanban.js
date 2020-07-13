@@ -378,7 +378,7 @@ $('#kanban').on('click','.active-card-icon',function(){
     
     $(this).mouseleave()
     console.log("카드수정")
-    var cardNo = $(this).parent().children().eq(1).children().eq(0).parent().parent().attr("data-cardno")
+    let cardNo = $(this).parent().children().eq(1).children().eq(0).parent().parent().attr("data-cardno")
     var cardelement = $(this).parent().children().eq(1).children().eq(0)
     var cardtext =  $(cardelement).text()
     
@@ -423,24 +423,79 @@ $('#kanban').on('click','.active-card-icon',function(){
     
 })
 
-$(".card-modal-content").on('click','.card-modal-close',function(){
-	
-})
-
-//모달 타이틀 수정
+let cardNo =""
+var cardtitletext=""
+var listtitle=""
+var cardtitle=""
+//모달
 $('#kanban').on('click', '.kanban-card-element', function() {
+	
+//	 $('#modallDescrioptiontextarea').hide();
+//	 $('#modallDescrioption').hide();
+	 
 	 console.log("아냐아아아 ")
-     console.log($(this).parent().attr("data-cardno"))
-     var listtitle = $(this).parent().parent().children().eq(0).children().text()
-     var cardtitletext = $(this).children().eq(0).text()
-     var cardtitle = $(this).children().eq(0)
-     var cardNo = $(this).parent().attr("data-cardno")
+
+     listtitle = $(this).parent().parent().children().eq(0).children().text()
+     cardtitletext = $(this).children().eq(0).text()
+     cardtitle = $(this).children().eq(0)
+     cardNo = $(this).parent().attr("data-cardno")
      var newCardTitleList =""
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
+     console.log(cardNo)
+     //카드내용
+     var title =""
+     var content =""
+     var writeDate = ""
+     var fileCount=""
+     var commentCount=""
+     var cardIndex=""
+     var kanbanListNo=""
+     
+     $.ajax({ 
+			url: "CardContentSelect.ajax",
+			data: {
+					cardNo: cardNo
+					},
+	        dataType: "json",
+	        
+			success: function(resData) {
+				console.log("card select 완료");
+				console.log(resData)
+				title = resData.title 
+				content = resData.content
+				writeDate = resData.writeDate
+				fileCount = resData.fileCount
+				commentCount = resData.commentCount
+				cardIndex = resData.cardIndex
+				kanbanListNo = resData.kanbanListNo
+				
+				 if(content == "" || content == null){
+					 console.log("없다")
+					 $('#modallDescrioption').hide();
+					 $('#modallDescrioptiontextarea').show();
+				 }else{
+					 console.log("있다")
+					 $('#modallDescrioptiontextarea').hide();
+					 $('#modallDescrioption').text(content)
+					 $('#modallDescrioption').show();
+				 }
+				
+			} 
+		});
+	
+	
+	 
 
+	
+     
+
+});
+
+//모달 타이틀 수정  
 $('#card-content').on('click','.card-modal-title',function() {
-  
+	console.log("타이틀 클릭 ")
+	console.log(cardNo)
     // let cardTitle = $('.kanban-card-title').text();
     // console.log($('.kanban-card-title').text())
 	
@@ -484,42 +539,88 @@ $('#card-content').on('click','.card-modal-title',function() {
 		
     });
     
-
+  //모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
     $('#card-content').on('hide.bs.modal', function () {
     	console.log(cardtitle)
     	console.log(newCardTitleList)
     	cardtitle.text(newCardTitleList)
     	console.log("될거니?")
+    	
     })
     
 });
+//모달 카드 내용 인서트 
+$('.modal-textarea-description-edit').on('focus',function(){
+	 
+	 console.log(cardNo)
+	 $('#modallDescrioptiontextarea').val("");
+	 $('.modal-textarea-description-edit').on('blur',function(){
+			 if($('#modallDescrioptiontextarea').val() ==""){
+				 console.log("히")
+				 return
+			 }else{
+				 console.log($('#modallDescrioptiontextarea').val())
+				 var cardDescription = $('#modallDescrioptiontextarea').val()
+				 $('#modallDescrioptiontextarea').hide();
+				 $('#modallDescrioption').text(cardDescription)
+				 $('#modallDescrioption').show();
+				 $('#modallDescrioptiontextarea').val("");
+				 
+				 $.ajax({
+						url: "CardDescrioptionInsert.ajax",
+						data: {
+								cardNo: cardNo,
+								content :cardDescription
+								},
+				        dataType: "html",
+				        
+						success: function(resData) {
+							console.log("card 내용 업데이트 완료");
+							
+						}
+					});
+			 }
+	 })
 });
+//모달 카드 내용 수정 
+$('.card-modal-list-description').on('click',function(){
+	 console.log($('#modallDescrioption').text())
+	 console.log(cardNo)
+	  
+	 var cardDescription = $('#modallDescrioption').text()
+	 		 console.log(cardDescription)
+	 $('#modallDescrioptiontextarea').focus()
+	 $('#modallDescrioptiontextarea').show();
+	 $('#modallDescrioptiontextarea').val(cardDescription)
+	 $('#modallDescrioption').hide();
+	 
+})
 
-//모달 내용 수정
-$('#signup-modal').on('click', '.card-modal-list-description', function() {
-    
-    $('.card-modal-list-description').hide();
-    var carddescription = $(this).text();
-    console.log(carddescription)
-    $('.card-modal-description').after("<textarea rows='1' class='autosize modal-textarea-edit' id='modaldescription' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+carddescription+"</textarea>");
-    $('#modaldescription').focus();
-
-    $('#modaldescription').blur(function() {
-		
-        console.log($(this).parent().next())
-        var tr = $(this).parent().next()
-        
-		$('.card-modal-list-description').show();
-		
-        $('.card-modal-list-description').text($('#modaldescription').val());
-       
-        console.log($(this))
-		$('#modaldescription').remove();
-		
-    });
-
-});
-
+////모달 내용 수정
+//$('#signup-modal').on('click', '.card-modal-list-description', function() {
+//    
+//    $('.card-modal-list-description').hide();
+//    var carddescription = $(this).text();
+//    console.log(carddescription)
+//    $('.card-modal-description').after("<textarea rows='1' class='autosize modal-textarea-edit' id='modaldescription' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+carddescription+"</textarea>");
+//    $('#modaldescription').focus();
+//
+//    $('#modaldescription').blur(function() {
+//		
+//        console.log($(this).parent().next())
+//        var tr = $(this).parent().next()
+//        
+//		$('.card-modal-list-description').show();
+//		
+//        $('.card-modal-list-description').text($('#modaldescription').val());
+//       
+//        console.log($(this))
+//		$('#modaldescription').remove();
+//		
+//    });
+//
+//});
+//
 
 
 
