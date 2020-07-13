@@ -51,7 +51,6 @@ public class KanbanAjaxController {
 	public KanbanList updateKanbanList(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller updateKanbanList");
 		System.out.println(kanbanlist);
-		
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
 		
@@ -90,5 +89,6 @@ public class KanbanAjaxController {
 		service.deleteKanbanCard(cardNo);
 	}
 	
+
 }
  

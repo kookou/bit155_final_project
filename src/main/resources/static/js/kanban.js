@@ -90,7 +90,7 @@ var addlistTag =
 + "</div>";
 
 	
-
+var boardName =""
 
 //텍스트에어리어 사이즈 자동 조절
 function resize(obj) {
@@ -107,7 +107,18 @@ function resize(obj) {
         resize(this);
 });
 
+$('.redirectBoard').on('click',function(){
+	var boardname = $(this).find('.board-name').text()
+	boardName = boardname
+	console.log($(this).find('.board-name').text())
+    
+})
 
+$(document).ready(function(){
+	console.log("될거니???????")
+	console.log(boardName)
+	$('#board-name').text(boardName)
+})
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
@@ -658,11 +669,11 @@ $('.card-modal-list-description').on('click',function(){
 
 
 //댓글 영역
-$('#signup-modal').on('click', '.modal-textarea-reply', function(){
-    $('.reply-done').show()
-})
+//$('#card-content').on('click', '.modal-textarea-reply', function(){
+//    $('.reply-done').show()
+//})
 
-$('#signup-modal').on('click', '.reply-done', function(){
+$('#card-content').on('click', '.reply-done', function(){
     if($('#modalreply').val() == "") {
         alert('내용을 입력해 주세요');
         $('#modalreply').focus();
@@ -670,16 +681,18 @@ $('#signup-modal').on('click', '.reply-done', function(){
     }
     var replycontent = $('#modalreply').val()
     console.log(replycontent)
-    $('.card-modal-reply-top').after("<div class='card-modal-reply'>" 
+    console.log(cardNo)
+    console.log(currUser)
+    $('.replymargin').after("<div class='card-modal-reply'>" 
     + "<div class='rounded-circle card-modal-profile'"
     + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
     + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
         + "<img src='assets/images/users/ssss.jpg' alt='user' href='javascript:void(0)'"
                 + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
         + "</div>"
-    + "</div>"
+    + "</div>"		
     + "<div class='card-modal-reply-userinfo'>"
-    + "<span class='card-modal-reply-username'>sun kim</span>"
+    + "<span class='card-modal-reply-username'>"+currUSerNick+"</span>"
         + "<span class='card-modal-reply-date'>2020.06.27 PM 8:38</span>"
     + "</div>"
     + "<div class='card-modal-reply-document display'>"
@@ -697,17 +710,28 @@ $('#signup-modal').on('click', '.reply-done', function(){
         + "</div>"
     + "</div>")
     $('#modalreply').val("")
-
-
+    
+    $.ajax({
+		url: "CardReplyInsert.ajax",
+		data: {
+				cardNo: cardNo,
+				content :cardDescription
+				},
+        dataType: "html",
+        
+		success: function(resData) {
+			console.log("card 내용 업데이트 완료");
+			
+		}
+	});
 })
 
-$('#signup-modal').on('click', '.card-modal-reply-delete',function(){
+$('#card-content').on('click', '.card-modal-reply-delete',function(){
     console.log("올거니?")
 })
 
 //모달 리플 수정
-$('#signup-modal').on('click', '.card-modal-reply-edit',function(){
-    
+$('#card-content').on('click', '.card-modal-reply-edit',function(){
     
     $(this).parent().prev().children().children().eq(0).hide()
     $(this).parent().prev().children().children().eq(1).show()
@@ -751,11 +775,11 @@ $('#signup-modal').on('click', '.card-modal-reply-edit',function(){
     // });
 })
 
-$('#modalreply').focusout(function() {
-    if($('#modalreply').val() == ""){
-        $('.reply-done').hide()
-    }
-});
+//$('#modalreply').focusout(function() {
+//    if($('#modalreply').val() == ""){
+//        $('.reply-done').hide()
+//    }
+//});
 
 
 

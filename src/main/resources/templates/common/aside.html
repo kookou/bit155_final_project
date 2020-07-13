@@ -33,7 +33,7 @@
 							<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false">
 								<input type="hidden" th:value="${board.allBoardListNo}" class="hiddenAllBoardListNo">
 								<i th:class="${board.boardTypeNo == 1} ? 'fas fa-table' : 'fab fa-trello'"></i>
-								<span class="hide-menu" th:text="${board.name}"></span>
+								<span class="hide-menu board-name"  th:text="${board.name}"></span>
 							</a>
 						</li>
 					</div>
@@ -75,6 +75,7 @@
 		<script th:inline="javascript">
 	    /*<![CDATA[*/
 	    	var currUser = [[${session.currentUser.id}]];
+	    	var currUSerNick = [[${session.currentUser.nickname}]];
 	    	var teamNo = [[${team.teamNo}]];
 	    /*]]>*/
 	    </script>
