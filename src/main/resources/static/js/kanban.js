@@ -126,10 +126,11 @@ $(document).on('click', '#addlist', function() {
 
 
 //리스트 추가 취소
-
 $(document).on('click', '.kanban-addlistCancle', function(){
-	$(this).parent().find('textarea').val();
+	let listWrapper = $(this).parents('.kanban-list-wrapper');
 	
+	listWrapper.remove(); // 인풋 div 제거
+	$('#addlist').show(); // +Add List 살리기
 	
 });
 
