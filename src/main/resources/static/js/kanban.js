@@ -444,6 +444,7 @@ var cardtitletext=""
 var listtitle=""
 var cardtitle=""
 var cardElements = "";
+var newCardTitleList =""
 	
 	
 //모달
@@ -459,7 +460,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
      cardtitle = $(this).children().eq(0)
      cardNo = $(this).parent().attr("data-cardno")
      
-     var newCardTitleList =""
+
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
      console.log(cardNo)
@@ -521,7 +522,6 @@ $('.card-modal-close').on('click',function(){
 		 		console.log("card delete 성공");		 		
 		 		}	
 	 	});
-
 	 cardElements.remove();
 });
 
@@ -529,15 +529,16 @@ $('.card-modal-close').on('click',function(){
 
 //모달 타이틀 수정  
 $('#card-content').on('click','.card-modal-title',function() {
+	
 	console.log("타이틀 클릭 ")
 	console.log(cardNo)
     // let cardTitle = $('.kanban-card-title').text();
     // console.log($('.kanban-card-title').text())
+	var newCardTitle="";
 	
-	$('#modallisttitle').remove();
-    $('.card-modal-title').hide();
-    
-	$('.card-modal-list-name').before("<textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+cardtitletext+"</textarea>");
+	$('.card-modal-title').hide();
+	$('#modallisttitle').show();
+	$('#modallisttitle').val(cardtitletext);
     $('#modallisttitle').focus();
     
     $('#modallisttitle').blur(function() {
@@ -546,20 +547,21 @@ $('#card-content').on('click','.card-modal-title',function() {
 			$('#modallisttitle').focus();
 			return;
         }
-        
-        var tr = $(this).parent().next()                                     
+                              
         
 		$('.card-modal-title').show();
 		
         $('.card-modal-title').text($('#modallisttitle').val());
         console.log($('#modallisttitle').val())
-        var newCardTitle = $('#modallisttitle').val()
+        newCardTitle = $('#modallisttitle').val()
         
-        newCardTitleList = newCardTitle
+        newCardTitleList = newCardTitle //모달 밖 카드 타이틀 바꾸기 
+        cardtitletext = newCardTitle  //현재 모달창 카드 타이틀 바꾸기 
         
-		$('#modallisttitle').remove();
+		$('#modallisttitle').hide();
+        cardtitle.text(newCardTitleList);
 		
-		$.ajax({
+        $.ajax({
 			url: "UpdateKanbanCard.ajax",
 			data: { title: newCardTitle,
 					cardNo: cardNo,
@@ -574,16 +576,17 @@ $('#card-content').on('click','.card-modal-title',function() {
 		
     });
     
-  //모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
-    $('#card-content').on('hide.bs.modal', function () {
-    	console.log(cardtitle)
-    	console.log(newCardTitleList)
-    	cardtitle.text(newCardTitleList)
-    	console.log("될거니?")
-    	
-    })
-    
 });
+
+////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
+//$('#card-content').on('hide.bs.modal', function () {
+//	console.log(cardtitle)
+//	console.log(newCardTitleList)
+//	cardtitle.text(newCardTitleList)
+//	console.log("될거니?")
+//	
+//})
+
 //모달 카드 내용 인서트 
 $('.modal-textarea-description-edit').on('focus',function(){
 	 
@@ -625,43 +628,14 @@ $('.card-modal-list-description').on('click',function(){
 	 console.log(cardNo)
 	  
 	 var cardDescription = $('#modallDescrioption').text()
-	 		 console.log(cardDescription)
-	 $('#modallDescrioptiontextarea').focus()
+	 console.log(cardDescription)
+	
 	 $('#modallDescrioptiontextarea').show();
-	 $('#modallDescrioptiontextarea').val(cardDescription)
+	 $('#modallDescrioptiontextarea').focus();
+	 $('#modallDescrioptiontextarea').val(cardDescription);
 	 $('#modallDescrioption').hide();
 	 
 })
-
-
-
-
-
-////모달 내용 수정
-//$('#signup-modal').on('click', '.card-modal-list-description', function() {
-//    
-//    $('.card-modal-list-description').hide();
-//    var carddescription = $(this).text();
-//    console.log(carddescription)
-//    $('.card-modal-description').after("<textarea rows='1' class='autosize modal-textarea-edit' id='modaldescription' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+carddescription+"</textarea>");
-//    $('#modaldescription').focus();
-//
-//    $('#modaldescription').blur(function() {
-//		
-//        console.log($(this).parent().next())
-//        var tr = $(this).parent().next()
-//        
-//		$('.card-modal-list-description').show();
-//		
-//        $('.card-modal-list-description').text($('#modaldescription').val());
-//       
-//        console.log($(this))
-//		$('#modaldescription').remove();
-//		
-//    });
-//
-//});
-//
 
 
 
