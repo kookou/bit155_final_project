@@ -206,6 +206,7 @@ svg {
 
 table {
   border-collapse: collapse;
+  max-width:100%;
 }
 
 caption {
@@ -1505,6 +1506,8 @@ pre code {
   width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
+  /*서영추가*/
+  max-width:100%;
 }
 
 .table th,
