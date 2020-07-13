@@ -11,5 +11,11 @@ public interface BoardCommentDao {
 	
 	//댓글 등록하기
 	public void insertComment(BoardComment boardComment);
+	
+	//댓글 삭제하기
+	public void deleteComment(BoardComment boardComment);
+	
+	//댓글 수정하기
+	public List<BoardComment> updateComment(BoardComment boardComment);
 	///////////////////////////보드//////////////////////////////
 }
