@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.bit3004.comment.KanbanComment;
+
 @Service
 public interface KanbanService {
 	//List title insert
@@ -17,9 +19,6 @@ public interface KanbanService {
 
 
 	public List<Map> kanbanList(int teamNo);
-	
-	
-	
 	
 	//delete kanban list
 	public void deleteKanbanList(int kanbanListNo);
@@ -33,5 +32,10 @@ public interface KanbanService {
 	public void kanbanCardTitleUpdate(String title , int cardNo);
 	public KanbanCard kanbanCardContentSelect(int cardNo);
 	public void kanbanCardDescrioptionUpdate(String content,int cardNo);
+	public int insertCardReply(String content, int cardNo, String id);
+	
+	//delete Kanban Card
+	public void deleteKanbanCard(int cardNo);
+	public List<KanbanComment> getKanbanCommentList(int cardNo);
 
 }

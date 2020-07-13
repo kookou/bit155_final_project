@@ -118,9 +118,27 @@
 		select * from kanban_card where card_no = #{cardNo};
 	</select>
 	
-	<update id="UpdateCardDescrioption">
+	<update id="updateCardDescrioption">
 	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo};
 	</update>
+	
+
+	<insert id="insertCardReply">
+	insert into board_comment(content,write_date,id,card_no) values(#{content},now(),#{id},#{cardNo});
+	</insert>
+	
+	<delete id="deleteKanbanCard">
+		DELETE
+		FROM KANBAN_CARD
+		WHERE CARD_NO = #{cardNo}
+	</delete>
+	
+	<select id="getKanbanCommentList" resultType="kr.or.bit3004.comment.KanbanComment">
+		select b.comment_no, b.content, b.write_date, b.id, b.card_no , u.nickname, u.image
+		 from board_comment b
+		 inner join `user` u on b.id = u.id
+		 where card_no = #{cardNo};
+	</select>
 
 	
 </mapper>
