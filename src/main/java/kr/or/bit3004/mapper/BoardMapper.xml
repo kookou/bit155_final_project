@@ -11,6 +11,7 @@
 		 inner join all_board_list a
 		    on b.all_board_list_no = a.all_board_list_no
 		 where a.all_board_list_no=#{allBoardListNo} and a.team_no=#{teamNo}
+	     order by b.board_no desc
 	</select> 
 	
 	<!-- 게시판 상세보기 -->
@@ -36,7 +37,7 @@
 		values(#{fileNo}, #{fileName}, #{file_size}, 1)
 	</insert> -->
 	
-	<!-- 사원수정하기 -->
+	<!-- 게시판 수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">
 		update board_list
 		   set board_no=#{boardNo}, title=#{title}, content=#{content}
