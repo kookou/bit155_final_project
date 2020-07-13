@@ -44,6 +44,6 @@
 	</insert>
 	
 	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
-		select image, nickname from `user` where id=#{id}
+		select image, nickname, id from `user` where id=#{id}
 	</select>
 </mapper>
