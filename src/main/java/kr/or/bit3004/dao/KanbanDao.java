@@ -36,6 +36,7 @@ public interface KanbanDao {
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void updateCardTitle(String title , int cardNo);
 	public KanbanCard kanbanCardContent(int cardNo);
-	public void UpdateCardDescrioption(String content,int cardNo);
+	public void updateCardDescrioption(String content,int cardNo);
+	public int insertCardReply(String content, int cardNo, String id);
 
 }

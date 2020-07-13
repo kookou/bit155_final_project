@@ -121,6 +121,9 @@
 	<update id="UpdateCardDescrioption">
 	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo};
 	</update>
-
+	
+	<insert id="insertCardReply">
+	insert into board_comment(content,write_date,id,card_no) values(#{content},now(),#{id},#{cardNo});
+	</insert>
 	
 </mapper>

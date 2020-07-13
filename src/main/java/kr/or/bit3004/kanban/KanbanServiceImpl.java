@@ -103,7 +103,7 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	@Override
 	public void kanbanCardDescrioptionUpdate(String content, int cardNo) {
-		dao.UpdateCardDescrioption(content,cardNo);
+		dao.updateCardDescrioption(content,cardNo);
 	}
 
 }

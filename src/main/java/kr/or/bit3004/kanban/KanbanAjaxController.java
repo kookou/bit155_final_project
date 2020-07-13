@@ -74,7 +74,6 @@ public class KanbanAjaxController {
 		System.out.println("cardselect");
 		System.out.println(service.kanbanCardContentSelect(cardNo));
 		return service.kanbanCardContentSelect(cardNo);
-		
 	}
 	
 	@RequestMapping("CardDescrioptionInsert.ajax")
@@ -83,7 +82,9 @@ public class KanbanAjaxController {
 		service.kanbanCardDescrioptionUpdate(content, cardNo);
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
-//	@RequestMapping("CardReplyInsert.ajax")
-//	public String 
+	@RequestMapping("CardReplyInsert.ajax")
+	public String kanbanCardReplyInsert(String content , int cardNo, String id) {
+		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
+	}
 }
  
