@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 public interface KanbanService {
 	//List title insert
 	public int insertListTite(KanbanList kanbanlist);
-	public List<Map> allKanbanList(int teamNo);
+	public int updateListTite(KanbanList kanbanlist);
+	
+	public List<Map> allKanbanList(int allBoardListNo);
 	public Map<String,Object> getGroup(String id);
+	
 	public List<Map> kanbanCardList();
-	public List<Map> kanbanList(int teamNo);
+	public List<Map> kanbanList(int allBoardListNo);
+	
 }

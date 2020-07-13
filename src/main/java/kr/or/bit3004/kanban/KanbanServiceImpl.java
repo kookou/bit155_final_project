@@ -18,23 +18,29 @@ public class KanbanServiceImpl implements KanbanService {
 	public int insertListTite(KanbanList kanbanlist) {
 		return dao.insertListTite(kanbanlist);
 	}
-	
 	@Override
-	public List<Map> allKanbanList(int teamNo){
-		return dao.allKanbanList(teamNo);
+	public int updateListTite(KanbanList kanbanlist) {
+		return dao.updateListTite(kanbanlist);
+		
+	}
+	@Override
+	public List<Map> allKanbanList(int allBoardListNo){
+		return dao.allKanbanList(allBoardListNo);
 	}
 	
 	@Override
 	public Map<String,Object> getGroup(String id){
 		return dao.getGroup(id);
 	}
+	
 	@Override
 	public List<Map> kanbanCardList(){
 		return dao.kanbanCardList();
 	}
+	
 	@Override
-	public List<Map> kanbanList(int teamNo){
-		return dao.kanbanList(teamNo);
+	public List<Map> kanbanList(int allBoardListNo){
+		return dao.kanbanList(allBoardListNo);
 		
 	}
 }

@@ -62,7 +62,7 @@
 //     });
   
 // });
-
+//var id = currUser;
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard' onclick='newtask(this)'>"
@@ -115,7 +115,8 @@ $(document).on('click', '#addlist', function() {
 
 //리스트 추가 완료
 $('#kanban').on('click', '.kanban-addlistdone', function() {
-  
+	
+	console.log()
     let listName = $(this).parent().children().find('textarea').val();
 
 	if(listName == "") {
@@ -143,7 +144,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 
     $.ajax({
 		url: "InsertKanbanList.ajax",
-		data: {listName: listName},
+		data: {listTitle: listName,
+				id: currUser },
         dataType: "html",
         
 		success: function(resData) {
@@ -182,7 +184,22 @@ $('#kanban').on('click', '.kanban-list-title', function() {
         console.log($(this))
 		$(this).remove();
         tr.show()
+        
+        $.ajax({
+			url: "UpdateKanbanList.ajax",
+			data: {listTitle: listName,
+					id: currUser},
+	        dataType: "html",
+	        
+			success: function(resData) {
+				console.log("list update 완료");
+				// deleteListBtnTag.attr('data-code', resData);
+				// ListDivTag.attr('data-code', resData);
+			}
+		});
     });
+	
+	 
     
 });
 
@@ -199,6 +216,20 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
     $('#list-modal-delete').on("click", function(){  
         console.log("헤헤헤헤헤ㅔ헤헤헤")
         deleteel.remove()
+        
+        $.ajax({
+			url: "DeleteKanbanList.ajax",
+			data: {listTitle : listName,
+					id : currUser},
+	        dataType: "html",
+	        
+			success: function(resData) {
+				console.log("list update 완료");
+				// deleteListBtnTag.attr('data-code', resData);
+				// ListDivTag.attr('data-code', resData);
+			}
+		});
+        
      });  
 	
 });
