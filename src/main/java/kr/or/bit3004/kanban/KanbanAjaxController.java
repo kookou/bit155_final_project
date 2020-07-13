@@ -52,7 +52,6 @@ public class KanbanAjaxController {
 	public KanbanList updateKanbanList(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller updateKanbanList");
 		System.out.println(kanbanlist);
-		
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
 		
@@ -84,6 +83,7 @@ public class KanbanAjaxController {
 		service.kanbanCardDescrioptionUpdate(content, cardNo);
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
-	
+//	@RequestMapping("CardReplyInsert.ajax")
+//	public String 
 }
  
