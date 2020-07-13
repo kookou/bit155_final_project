@@ -85,5 +85,11 @@ public class KanbanAjaxController {
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
 	
+	@RequestMapping("deleteKanbanCard.ajax")
+	public void deleteKanbanCard(int cardNo) {
+		System.out.println("카드 내용 업데이트");
+		service.deleteKanbanCard(cardNo);
+	}
+	
 }
  

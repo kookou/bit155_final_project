@@ -63,6 +63,8 @@
   
 // });
 //var id = currUser;
+
+
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard' onclick='newtask(this)'>"
@@ -276,8 +278,6 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
     		url: "deleteKanbanList.ajax",
     		data: {
     				"kanbanListNo": $.trim(kanbanListNo)
-    				//일단 이렇게 해뒀는데 나중에  listNo로 지우는걸로 바꿔야겠다.
-    				//왜 return타입이 html이지 ?
     				},
             
     		success: function() {
@@ -286,21 +286,7 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
     	});
     	
         console.log("delete kanbanList");
-        deleteel.remove()
-        
-//        $.ajax({
-//			url: "DeleteKanbanList.ajax",
-//			data: {listTitle : listName,
-//					id : currUser},
-//	        dataType: "html",
-//	        
-//			success: function(resData) {
-//				console.log("list update 완료");
-//				// deleteListBtnTag.attr('data-code', resData);
-//				// ListDivTag.attr('data-code', resData);
-//			}
-//		});
-        
+        deleteel.remove()        
      });  
 	
 });
@@ -374,6 +360,8 @@ $(document).on('click', "#addcard",function(){
     				 console.log(resData);
     			}
     		});
+            
+            
             
         });
         
@@ -449,13 +437,18 @@ $('#kanban').on('click','.active-card-icon',function(){
     
 })
 
-let cardNo =""
+
+
+var cardNo =""
 var cardtitletext=""
 var listtitle=""
 var cardtitle=""
+var cardElements = "";
+	
+	
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
-	
+	cardElements = $(this).parent();
 //	 $('#modallDescrioptiontextarea').hide();
 //	 $('#modallDescrioption').hide();
 	 
@@ -465,6 +458,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
      cardtitletext = $(this).children().eq(0).text()
      cardtitle = $(this).children().eq(0)
      cardNo = $(this).parent().attr("data-cardno")
+     
      var newCardTitleList =""
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
@@ -506,17 +500,32 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 					 $('#modallDescrioption').text(content)
 					 $('#modallDescrioption').show();
 				 }
-				
 			} 
 		});
-	
-	
-	 
-
-	
-     
-
 });
+
+
+
+//모달 카드 삭제
+$('.card-modal-close').on('click',function(){
+	 console.log("card delete click");
+	 console.log(cardNo);
+	 console.log(cardElements);
+	 
+	 $.ajax({
+		 	url: "deleteKanbanCard.ajax",
+		 	data:{
+		 			"cardNo": cardNo
+		 			},
+		 	success: function(){
+		 		console.log("card delete 성공");		 		
+		 		}	
+	 	});
+
+	 cardElements.remove();
+});
+
+
 
 //모달 타이틀 수정  
 $('#card-content').on('click','.card-modal-title',function() {
@@ -608,6 +617,8 @@ $('.modal-textarea-description-edit').on('focus',function(){
 			 }
 	 })
 });
+
+
 //모달 카드 내용 수정 
 $('.card-modal-list-description').on('click',function(){
 	 console.log($('#modallDescrioption').text())
@@ -621,6 +632,10 @@ $('.card-modal-list-description').on('click',function(){
 	 $('#modallDescrioption').hide();
 	 
 })
+
+
+
+
 
 ////모달 내용 수정
 //$('#signup-modal').on('click', '.card-modal-list-description', function() {

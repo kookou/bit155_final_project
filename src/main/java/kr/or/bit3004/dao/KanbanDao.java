@@ -37,5 +37,8 @@ public interface KanbanDao {
 	public void updateCardTitle(String title , int cardNo);
 	public KanbanCard kanbanCardContent(int cardNo);
 	public void UpdateCardDescrioption(String content,int cardNo);
+	
+	//delete Kanban Card
+	public void deleteKanbanCard(int cardNo);
 
 }

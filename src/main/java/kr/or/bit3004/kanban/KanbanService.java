@@ -18,9 +18,6 @@ public interface KanbanService {
 
 	public List<Map> kanbanList(int teamNo);
 	
-	
-	
-	
 	//delete kanban list
 	public void deleteKanbanList(int kanbanListNo);
 	
@@ -33,5 +30,8 @@ public interface KanbanService {
 	public void kanbanCardTitleUpdate(String title , int cardNo);
 	public KanbanCard kanbanCardContentSelect(int cardNo);
 	public void kanbanCardDescrioptionUpdate(String content,int cardNo);
+	
+	//delete Kanban Card
+	public void deleteKanbanCard(int cardNo);
 
 }

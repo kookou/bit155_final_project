@@ -121,6 +121,12 @@
 	<update id="UpdateCardDescrioption">
 	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo};
 	</update>
+	
+	<delete id="deleteKanbanCard">
+		DELETE
+		FROM KANBAN_CARD
+		WHERE CARD_NO = #{cardNo}
+	</delete>
 
 	
 </mapper>

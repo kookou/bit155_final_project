@@ -106,4 +106,11 @@ public class KanbanServiceImpl implements KanbanService {
 		dao.UpdateCardDescrioption(content,cardNo);
 	}
 
+
+	@Override
+	public void deleteKanbanCard(int cardNo) {
+		dao.deleteKanbanCard(cardNo);
+		
+	}
+
 }
