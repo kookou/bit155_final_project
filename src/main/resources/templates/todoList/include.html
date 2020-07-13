@@ -17,6 +17,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<!-- 엑시오스 CDN (ajax같은 것) -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<style>
         #addTodoListBtn {
             cursor: pointer;
@@ -39,6 +40,7 @@
         
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
+     <th:block th:replace="common/addAllBoardModal"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 	<div id="app">
 		    <div class="page-wrapper">

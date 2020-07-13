@@ -14,14 +14,14 @@
 								style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">
 								<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 									<img th:src="'assets/images/userImage/' + ${member.image}" alt="user" 
-										style="width: auto; height: 70px; transform: translate(-50%, -50%);">
-<!-- 										data-toggle="tooltip" data-placement="top" title data-original-title="Tooltip on top"> -->
+										style="width: auto; height: 70px; transform: translate(-50%, -50%);"
+ 										data-toggle="tooltip" data-placement="top" th:title="${member.id}">
 									<input type="hidden" class="hiddenMemberId" th:value="${member.id}">
 								</div>
 							</div>
 						</div>
 						<div class="invite-button">
-							<button type="button" class="btn waves-effect waves-light btn-rounded btn-primary" data-toggle="modal" data-target="#InviteMember" >Invite</button>
+							<button type="button" id="InviteBtn" class="btn waves-effect waves-light btn-rounded btn-primary" data-toggle="modal" data-target="#InviteMember" >Invite</button>
 						</div>
 					</li>
 
