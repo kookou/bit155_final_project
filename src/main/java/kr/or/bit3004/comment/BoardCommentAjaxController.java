@@ -24,4 +24,19 @@ public class BoardCommentAjaxController {
 		boardCommentService.insertComment(boardComment);
 		return boardCommentService.getCommentList(boardComment.getBoardNo());
 	}
+	
+	//댓글삭제
+	@RequestMapping("DeleteComment.ajax")
+	public List<BoardComment> deleteComment(BoardComment boardComment) {
+		boardCommentService.deleteComment(boardComment);
+		return boardCommentService.getCommentList(boardComment.getBoardNo());
+	}
+	
+	//댓글수정
+	@RequestMapping("UpdateComment.ajax")
+	public List<BoardComment> updateComment(BoardComment boardComment){
+		System.out.println(boardComment);
+		boardCommentService.updateComment(boardComment);
+		return boardCommentService.getCommentList(boardComment.getBoardNo());
+	}
 }

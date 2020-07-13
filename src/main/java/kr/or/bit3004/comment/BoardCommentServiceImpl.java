@@ -22,6 +22,15 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 		boardCommentDao.insertComment(boardComment);
 	}
 	
+	//댓글 삭제하기
+	public void deleteComment(BoardComment boardComment) {
+		boardCommentDao.deleteComment(boardComment);
+	}
+	
+	//댓글 수정하기
+	public void updateComment(BoardComment boardComment){
+		boardCommentDao.updateComment(boardComment);
+	}
 	/////////////////////여기까지 공통게시판이였습니다///////////////////////////////
 }
 
