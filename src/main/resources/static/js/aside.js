@@ -1,3 +1,8 @@
+$('#InviteBtn').click(function() {
+	$('#searchUser').val("");
+	$('#searchUser').focus();
+});
+
 ////////////////////////////////////////////////////////////// All Board 추가하는 모달 부분 
 $('#addBaordBtn').click(function() {
 	$('#commonBoard').prop('checked', true);
@@ -101,7 +106,8 @@ $("#searchUser").autocomplete({
 //		if($(this).val() == item.value) {
 //			console.log($(this).val());
 //			html += item.value;
-//		} else {
+//		} 
+//		if($(this).val() != item.value) {
 //			html += "<a href='javascript:void(0)'>" + item.value +  "</a>";
 //		}
 //	});
