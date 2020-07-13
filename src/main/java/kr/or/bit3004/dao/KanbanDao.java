@@ -3,6 +3,7 @@ package kr.or.bit3004.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.kanban.KanbanCard;
 import kr.or.bit3004.kanban.KanbanList;
 
@@ -43,5 +44,6 @@ public interface KanbanDao {
 	
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
+	public List<KanbanComment> getKanbanCommentList(int cardNo);
 
 }

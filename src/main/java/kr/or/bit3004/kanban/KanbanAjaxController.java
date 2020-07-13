@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.bit3004.comment.KanbanComment;
+
 @RestController
 public class KanbanAjaxController {
 	
@@ -84,6 +86,7 @@ public class KanbanAjaxController {
 
 	@RequestMapping("CardReplyInsert.ajax")
 	public String kanbanCardReplyInsert(String content , int cardNo, String id) {
+		service.insertCardReply(content, cardNo, id);
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
 
@@ -94,6 +97,11 @@ public class KanbanAjaxController {
 		service.deleteKanbanCard(cardNo);
 	}
 	
+	@RequestMapping("CardReplySelect.ajax")
+	public List<KanbanComment> getKanbanCommentList(int cardNo){
+		return service.getKanbanCommentList(cardNo);
+		
+	}
 
 }
  

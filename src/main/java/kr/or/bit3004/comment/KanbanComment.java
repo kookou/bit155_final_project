@@ -13,5 +13,7 @@ public class KanbanComment {
 	private String writeDate;
 	private String id;
 	private int cardNo;
+	private String nickname;
+	private String image;
 	
 }
