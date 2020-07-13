@@ -645,7 +645,7 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     width: 100%;
     overflow-y: auto;
     min-height: 40px;
-    padding: 10px;
+    padding: 7px 6px;
     vertical-align: middle;
     min-height: 100px;
 }
