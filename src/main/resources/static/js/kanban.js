@@ -82,6 +82,7 @@ var addlistTag =
                 + "<span class=''></span>"
             + "</a>"
             + "<a class='btn btn-primary kanban-addlistdone'>Add List</a>"
+            + "<a class='btn btn-secondary kanban-addlistCancle'>cancle</a>"
         + "</div>"
     + "</div>"
 + "</div>";
@@ -107,33 +108,59 @@ function resize(obj) {
 
 //리스트 추가
 $(document).on('click', '#addlist', function() {
+
 	console.log("리스트 추가 click");
     $(this).before(addlistTag);
-    $(this).prev().children().children().children().eq(1).hide();
+    
+	let trashIcon = $(this).prev().find('a.fa-trash-alt');
+	let titleInputBox = $(this).prev().find('.list-composer-textarea');
+      
+//    $(this).prev().children().children().children().eq(1).hide(); // 휴지통 아이콘 숨기기    
+    trashIcon.hide();  
     $(this).hide()
-    console.log($(this).prev().children().children().children().children())
-	$(this).prev().children().children().children().children().focus();
+    
+//	$(this).prev().children().children().children().children().focus(); // input on focus
+    titleInputBox.focus();
+    
 });
+
+
+//리스트 추가 취소
+$(document).on('click', '.kanban-addlistCancle', function(){
+	let listWrapper = $(this).parents('.kanban-list-wrapper');
+	
+	listWrapper.remove(); // 인풋 div 제거
+	$('#addlist').show(); // +Add List 살리기
+	
+});
+
+
+
 
 //리스트 추가 완료
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
-
-    let listName = $(this).parent().children().find('textarea').val();
-	console.log(listName)
+    let listName = $(this).parent().find('textarea').val();
+//	console.log(listName);
+		
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
-    
+    let titleInputBox = $(this).siblings('div').find('textarea');
+    let new1 = $(this).parent();
+    //    var new1 = $(this).parent().parent().children();
+    let addlist = $(this).parents('.kanban-list-wrapper').next();
+    //    var addlist = $(this).parent().parent().parent().next()
+    let txtIpTrIconAddBtn = $(this).parent().children();
 
 	if(listName == "") {
-        alert('list title을 입력하세요.');
-		$(this).parent().children().find('input').focus();
+        alert('list title을 입력하세요.');        
+        titleInputBox.focus(); //input on focus
+//		$(this).parent().children().find('input').focus();        
 		return;
     }
-    var new1 = $(this).parent().parent().children();
-    var addlist = $(this).parent().parent().parent().next()
 
-    $(this).parent().parent().children().children().remove()
+	txtIpTrIconAddBtn.remove();
+//  $(this).parent().parent().children().children().remove()
     
     new1.append("<div class='kanban-list-header'id='listheader'>"+ 
     "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
@@ -228,7 +255,6 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 
 //리스트 삭제 하기
 $('#kanban').on('click', '.kanban-list-menu', function() {
-	console.log("=====");
 	
     var listName = $(this).parent().children().eq(0).text()
     let allBoardListNo = Number($('#allBoardListNo').val());

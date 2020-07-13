@@ -16,7 +16,6 @@ public interface TeamMainDao {
 	public int searchPersonalNo(String id);
 	public void moveGroup(Map<String, Integer> groupNo);
 	public void delGroup(int groupNo);
-	public List<String> searchUser(String id);
 	public void insertTeam(GroupAndTeam team);
 	public void insertTeamLeader(GroupAndTeam team);
 	public int getCurrTeamNo();

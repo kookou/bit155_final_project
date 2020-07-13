@@ -10,7 +10,6 @@ public interface TeamMainService {
 	public void updateGroupName(GroupAndTeam group);
 	public void insertGroup(GroupAndTeam group);
 	public void moveAndDelGroup(GroupAndTeam group);
-	public List<String> searchUser(String id);
 	public void insertTeam(GroupAndTeam team);
 	public void insertTeamLeader(GroupAndTeam team);
 	public int getCurrTeamNo();

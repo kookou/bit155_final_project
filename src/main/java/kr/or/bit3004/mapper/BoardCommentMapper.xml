@@ -4,8 +4,16 @@
 <mapper namespace="kr.or.bit3004.dao.BoardCommentDao">
 	<!-- 댓글 목록출력 -->
 	<select id="getCommentList" resultType="kr.or.bit3004.comment.BoardComment">
-		select content , write_date , id
-		  from board_comment
+		select comment_no, content, write_date, b.id, nickname, image
+		  from board_comment b
+		 inner join `user` u
+		    on b.id = u.id
 		 where board_no = #{boardNo}
 	</select>
+	
+	<!-- 댓글 등록하기 -->
+	<insert id="insertComment" parameterType="kr.or.bit3004.comment.BoardComment">
+		insert into board_comment (`content`, `write_date`, `id`, `board_no`) 
+		values(#{content}, now(), #{id}, #{boardNo})
+	</insert>
 </mapper>
