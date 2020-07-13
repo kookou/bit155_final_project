@@ -219,29 +219,34 @@
 									<a class="kanban-list-menu far fa-trash-alt"
 										data-toggle="modal" data-target="#info-alert-modal"></a>
 
+									<div class="divForDragNDrop">
 
-									<div class="kanban-card-list btn-card-hover"
-										th:each="card : ${kanbancardlist}"
-										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
-										<span class='icon-pencil active-card-icon'
-											style='position: relative;'></span>
-										<div class="kanban-card-element" data-toggle="modal"
-											data-target="#card-content" >
-											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
-											<div class="kanban-card-badges">
-												<div class="kanban-card-badge" title="comments"
-													th:if="${card.commentcount >0}">
-													<span class="icon-bubble badge-icon"></span> <span
-														class="badge-text" th:text="${card.commentcount}"></span>
-												</div>
-												<div class="kanban-card-badge" title="file"
-													th:if="${card.fileCount >0}">
-													<span class="icon-paper-clip badge-icon"></span> <span
-														class="badge-text" th:text="${card.fileCount}"></span>
+										<div class="kanban-card-list btn-card-hover"
+											th:each="card : ${kanbancardlist}"
+											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
+											<span class='icon-pencil active-card-icon'
+												style='position: relative;'></span>
+											<div class="kanban-card-element" data-toggle="modal"
+												data-target="#card-content" >
+												<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+												<div class="kanban-card-badges">
+													<div class="kanban-card-badge" title="comments"
+														th:if="${card.commentcount >0}">
+														<span class="icon-bubble badge-icon"></span> <span
+															class="badge-text" th:text="${card.commentcount}"></span>
+													</div>
+													<div class="kanban-card-badge" title="file"
+														th:if="${card.fileCount >0}">
+														<span class="icon-paper-clip badge-icon"></span> <span
+															class="badge-text" th:text="${card.fileCount}"></span>
+													</div>
 												</div>
 											</div>
 										</div>
+									
 									</div>
+									
+									
 									<div class="kanban-card-add-list" id="addcardel">
 										<a class="kanban-card-add-el btn-light-my" id="addcard"
 											onclick="newtask(this)"><span class="icon">+</span><span

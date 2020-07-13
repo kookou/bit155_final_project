@@ -33,7 +33,6 @@ public class KanbanAjaxController {
 	@RequestMapping("InsertKanbanList.ajax")
 	public String kanbanListInsert(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller kanbanListInsert");
-		System.out.println(kanbanlist);
 		
 		int newKanbanListNo = service.insertListTitle(kanbanlist, principal);
 		String newKanbanListNoString = Integer.toString(newKanbanListNo);

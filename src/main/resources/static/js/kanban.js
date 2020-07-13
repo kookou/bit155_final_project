@@ -164,9 +164,12 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	txtIpTrIconAddBtn.remove();
 //  $(this).parent().parent().children().children().remove()
     
-    new1.append("<div class='kanban-list-header'id='listheader'>"+ 
-    "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
-    + "</a>");
+    new1.append("<div class='kanban-list-header'id='listheader'>"
+	    		+"<h4 class='kanban-list-title'>"+listName+"</h4>"
+	    		+"</div>"
+	    		+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
+	    		+ "</a>"
+	    		+ "<div class='divForDragNDrop'></div>");
     
 
     kanbanListContent.attr('data-title', listName);    
@@ -297,6 +300,8 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 $(document).on('click', "#addcard",function(){
 
 	   let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
+	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
+
 	   
         var addcardTag = "<div class='kanban-card-list btn-card-hover' th:each='card : ${kanbancardlist}' th:if='${kanbanlist.kanbanListNo == card.kanbanListNo}'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
@@ -318,18 +323,30 @@ $(document).on('click', "#addcard",function(){
                          +"</div>"
                    
        
-        $(this).parent().before(addcardTag);
-        $(this).parent().mouseleave()
-        $(this).parent().prev().children().children().children().eq(0).focus()
-        var input = $(this).parent().prev().children().children().children().eq(0)
-        var comment= $(this).parent().prev().children().children().children().eq(1)
-        var file= $(this).parent().prev().children().children().children().eq(2)
+	    DnDdiv.append(addcardTag);                         
+//        $(this).parent().before(addcardTag);
+        
+ 	   let input = $(this).parent().prev().find('textarea');// 여기는 더해지고 나서 설정돼야함
+//     var input = $(this).parent().prev().children().children().children().eq(0)
+ 	   let comment = $(this).parent().prev().find('[title="comments"]');
+//     var comment= $(this).parent().prev().children().children().children().eq(1)
+ 	   let file = $(this).parent().prev().find('[title="file"]');
+//       var file= $(this).parent().prev().children().children().children().eq(2)
+ 	   let kanbanCardNo = $(this).parent().siblings('.divForDragNDrop').children().last();
+// 	   var kanbanCardNo = $(this).parents().prev()
+
+	   
+        $(this).parent().mouseleave() // a#addcardel
+//        $(this).parent().prev().children().children().children().eq(0).focus() // addCardInput
+        
+        input.focus();
+
         $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
         $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
         comment.hide()
         file.hide()
         
-        var kanbanCardNo = $(this).parents().prev()
+        console.log($(this).parent().siblings('.divForDragNDrop').children().last());
         console.log("시작");
 	    console.log(kanbanCardNo);
 	    
@@ -359,14 +376,10 @@ $(document).on('click', "#addcard",function(){
     				 kanbanCardNo.attr('data-cardno', resData);
     				 console.log(resData);
     			}
-    		});
-            
-            
-            
-        });
-        
-        
+    		}); 
+        });   
 });
+
 
 $('#kanban').on('mouseenter','.kanban-card-list',function(){
    
