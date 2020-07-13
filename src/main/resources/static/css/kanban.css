@@ -46,7 +46,7 @@
     font-size: 14px;
     text-align: center;
     padding: 4px;
-    margin: 0 0 10px 90px;
+    margin: 0 0 10px 93px;
     color: #ffffff !important ;
 }
 
@@ -649,6 +649,7 @@ textarea.reply-textarea-edit, textarea.reply-textarea-edit:focus {
 }
 
 textarea.modal-textarea-description-edit, textarea.modal-textarea-description-editt:focus {
+    
     font-size: 16px;
     line-height: 20px;
     border-radius: 3px;
@@ -657,6 +658,7 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     min-height: 40px;
     padding: 10px;
     vertical-align: middle;
+    min-height: 100px;
 }
 
 .modal-textarea-description{
