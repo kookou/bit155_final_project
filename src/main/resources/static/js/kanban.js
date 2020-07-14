@@ -781,7 +781,6 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 				console.log("업로드된 파일이 없습니다");
 		 			}
 		 			
-		 			
 		 			console.log(resData);
 		 		}, 
 		 		error: function (e) { 
@@ -803,7 +802,35 @@ $('#kanbanFileInputBtn').on('click',function(){
 
 
 $('#card-content').on('click', '.card-modal-reply-delete',function(){
-    console.log("올거니?")
+    var commentNo = $(this).parent().prev().children().attr('data-cardreplyno')
+    console.log(commentNo)
+    $.ajax({
+		url: "CardReplyDelete.ajax",
+		data: {
+				commentNo : commentNo
+				},
+        dataType: "html",
+        
+		success: function() {
+			console.log("reply delete 완료");
+			
+			$.ajax({ 
+				url: "CardReplySelect.ajax",
+				data: {
+						cardNo: cardNo
+						},
+		        dataType: "json",
+		        
+				success: function(resData) {
+				
+					console.log("reply select 완료2");
+					console.log(resData);
+					$('.reply-list').empty();
+					makereply(resData);
+				} 
+			});
+		}
+	});
 })
 
 //모달 리플 수정

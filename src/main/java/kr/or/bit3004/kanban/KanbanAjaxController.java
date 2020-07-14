@@ -117,6 +117,10 @@ public class KanbanAjaxController {
 		return service.kanbanFilesUpload(request);
 	}
 	
+	@RequestMapping("CardReplyDelete.ajax")
+	public void kanbanCardReplyDelete(int commentNo) {
+		service.deleteCardReply(commentNo);
+	}
 	
 }
  
