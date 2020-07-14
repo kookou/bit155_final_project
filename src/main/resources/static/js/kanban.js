@@ -694,6 +694,31 @@ $('.card-modal-list-description').on('click',function(){
 	 
 })
 
+//모달 카드 파일 업로드
+$('#kanbanFileInputBtn').on('click',function(){
+	 console.log("kanbanFileInputBtn 클릭");
+	 
+	 let formData = new FormData($('#kanbanFileInput')[0]); 
+	 
+	 $.ajax({ 
+		 		type: "POST", 
+		 		enctype: 'multipart/form-data', // 필수 
+		 		url: 'kanbanFilesUpload.ajax', 
+		 		data: formData, // 필수
+		 		processData: false, // 필수 
+		 		contentType: false, // 필수 
+		 		cache: false, 
+		 		success: function(resData) {
+		 			console.log("파일 업로드 성공");
+		 			console.log(resData);
+		 		}, 
+		 		error: function (e) { 
+		 			console.log(에러발생)
+		 		} 
+		 	});
+
+	 
+})
 
 
 

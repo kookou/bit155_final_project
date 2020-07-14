@@ -1,11 +1,16 @@
 package kr.or.bit3004.kanban;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.dao.KanbanDao;
@@ -67,9 +72,6 @@ public class KanbanServiceImpl implements KanbanService {
 		
 	}
 	
-	
-	
-	/////////////뭔지모름 /////////////////
 
 	@Override
 	public List<Map> kanbanList(int teamNo) {
@@ -118,6 +120,51 @@ public class KanbanServiceImpl implements KanbanService {
 	@Override
 	public List<KanbanComment> getKanbanCommentList(int cardNo){
 		return dao.getKanbanCommentList(cardNo);
+	}
+
+
+	@Override
+	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request) {
+		System.out.println("= kanbanFilesUpload Impl =");
+		List<MultipartFile> fileList = request.getFiles("kanbanFiles");
+		List<String> fileNames = new ArrayList<String>(); //		ajax return용 업로드파일목록
+		
+		System.out.println("fileListSize : "+fileList.size());
+		
+		if(fileList != null && fileList.size() >0) {
+			for(MultipartFile multiFile : fileList) {
+				String fileName = multiFile.getOriginalFilename();
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud"; 
+				String filePath = path + "\\" + fileName;
+				
+				if((!fileName.equals("")) || (multiFile.getSize() > 0)) { // 파일 업로드					
+					FileOutputStream fs = null;
+					
+					try {
+						
+						fs = new FileOutputStream(filePath);
+						fs.write(multiFile.getBytes());
+						
+					} catch (Exception e) {
+						System.out.println("file write error");
+						e.getMessage();
+					}finally {
+						try {
+							fs.close();
+						} catch (IOException e) {
+							System.out.println("fs close error");
+							e.getMessage();
+						}
+					} // finally end					
+				} // if end
+				
+//				여기에 dao 불러서 file을 DB에 추가하는 내용 들어가야함
+				
+				fileNames.add(fileName); //파일명 별도관리 (ajax return)
+			
+			} // for end
+		} // if end		
+		return fileNames;
 	}
 
 }
