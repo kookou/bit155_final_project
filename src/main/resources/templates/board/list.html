@@ -21,7 +21,56 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- datatablecss -->
+<link href="assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+ <script type="text/javascript">
+    var lang_kor = {
+           "decimal" : "",
+           "emptyTable" : "데이터가 없습니다.",
+           "info" : "_START_ - _END_ (전체 _TOTAL_ )",
+           "infoEmpty" : "0",
+           "infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
+           "infoPostFix" : "",
+           "thousands" : ",",
+           "lengthMenu" : "_MENU_개씩 보기",
+           "loadingRecords" : "로딩중...",
+           "processing" : "처리중...",
+           "search" : "검색 : ",
+           "zeroRecords" : "검색된 데이터가 없습니다.",
+           "paginate" : {
+               "first" : "첫 페이지",
+               "last" : "마지막 페이지",
+               "next" : "다음",
+               "previous" : "이전"
+           },
+           "aria" : {
+               "sortAscending" : " :  오름차순 정렬",
+               "sortDescending" : " :  내림차순 정렬"
+           }
+       }; 
 
+
+   	$(document).ready(function(){
+      $("#table").DataTable({
+        /*   "paging" : true,
+          "pagingType"   : "full_numbers",
+          "ordering" : true,
+          "info" : true,
+          "filter" : true,
+          scroll:false,
+         "lengthChange" : true,
+         // "scrollX":true 
+          "lengthMenu": [ 10, 20, 30, 40, 50 ],
+          "displayLength": 10,
+          "stateSave": true,*/
+           language: lang_kor 
+           
+      }); 
+      }); 
+      
+   </script> 
 </head>
 
 <body>
@@ -51,14 +100,15 @@
                
             </div>
         </div>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                            	
-                                <table class="table">
+                               <!--  <table class="table" id="table"> -->
+                                <table class="table table-bordered" id="table">
                                     <thead class="bg-primary text-white">
                                     	<tr>
                                          <th style="width:15%; text-align: center;">작성자</th>
@@ -69,12 +119,18 @@
                                     </thead>
                                     <tbody>
                                          <tr th:each="board:${boardList}">
-                                             <td style="width:15%; text-align: center;"><a th:text="${board.nickname}"></a></td>
-                                             <td style="width:55%;">
-                                             	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=1)}" th:text="${board.title}"></a>
-                                             </td>
-                                             <td style="width:20%; text-align: center;"><a th:text="${board.writeDate}"></a></td>
-                                             <td style="width:10%; text-align: center;"><a th:text="${board.views}"></a></td>
+	                                         <td style="width:15%; text-align: center;" th:text="${board.nickname}"></td>
+	                                         <td style="width:55%;">
+                                   		<!-- 	 <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
+	                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
+	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=1)}" th:text="${board.title}"></a>
+	                                         	<!-- boardFile이 존재하는 경우에는 이미지를 붙여준다 -->
+	                                         	<!-- <i class="fas fa-paperclip" th:if="${!empty board.boardFile}"></i> -->
+	                                         	<!-- comment cnt가 존재하는 경우 -->
+	                                         	 <a th:if="${board.commentCount }" th:text="|[${board.commentCount}]|"></a> 
+	                                         </td>
+	                                         <td style="width:20%; text-align: center;" th:text="${board.writeDate}"></td>
+	                                         <td style="width:10%; text-align: center;" th:text="${board.views}"></td>
                                          </tr>
                                     </tbody>
                                 </table>
@@ -82,26 +138,7 @@
                             <div class="form-actions text-right">
                             	<a href="insertBoard.do?teamNo=1" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
                             </div>
-                            <div class="col-12">
-                             	<ul class="pagination pagination-sm">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="javascript:void(0)"
-                                            tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">Next</a>
-                                    </li>
-                                </ul>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -110,7 +147,35 @@
     </div> 
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <div th:replace="common/script :: script"></div>
     
+    <!-- <div th:replace="common/script :: script"></div> -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+		<!-- datatable -->
+	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+	
+	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- apps -->
+	<!-- apps -->
+	<script src="js/app-style-switcher.js"></script>
+	<script src="js/feather.min.js"></script>
+	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script src="js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="js/custom.min.js"></script>
+	<script src="js/kanban.js"></script>
+	<script src="js/groupAndTeam.js"></script>
+	<script src="js/aside.js"></script>
+	<!--This page JavaScript -->
+	<script src="js/pages/dashboards/dashboard1.min.js"></script>
+    	<!-- datatable -->
+	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script> 
+	<script src="assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	  <script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/c3.min.js"></script>
+     <script src="assets/libs/chartist/dist/chartist.min.js"></script>
+	
 </body>
 </html>

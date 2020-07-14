@@ -52,6 +52,24 @@ public class BoardController {
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoardService(Board board){
 		service.insertBoard(board);
+		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
+	}
+
+	
+	//게시판 답글쓰기(Form)
+	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
+	public String insertReboardService(Model model,int boardNo, int teamNo) {
+		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
+		model.addAttribute("team", asideService.getTeam(teamNo));
+		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		return "board/reinsert";
+	}
+	
+	//게시판 답글쓰기
+	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.POST)
+	public String insertReboardService(Board board){
+		service.insertReboard(board);
 		//service.fileUploadBoard(board, request);
 		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
 	}

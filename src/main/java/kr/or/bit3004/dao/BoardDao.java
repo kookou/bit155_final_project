@@ -30,4 +30,21 @@ public interface BoardDao {
 	//게시판 삭제하기
 	public int deleteBoard(int boardNo);
 	
+	//게시판 답글쓰기
+	public void insertReboard(Board board);
+	
+	public void updateRefer(Board board);
+	
+	public void updateReboardAddstep(Board board);
+	
+	public int getMaxRefer();
+	
+	public Board getReferDepthStep(int boardNo);
+	
+	public int getStep (Board board);
+	
+	public int getMaxStep (Board board);
+	
+	public void updateStep(Board board);
+	
 }
