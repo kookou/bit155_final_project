@@ -470,12 +470,38 @@ var cardtitle=""
 var cardElements = "";
 var newCardTitleList =""
 
-//reply
-var replycommentNo=""
-var replycontent=""
-var replywriteDate=""
-var replyid=""
-var replycardNo=""
+
+	
+//var replyel = "<div class='card-modal-reply'>" 
+//    + "<div class='rounded-circle card-modal-profile'"
+//    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
+//    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
+//        + "<img src='assets/images/users/"+obj.replyimage+"' alt='user' href='javascript:void(0)'"
+//                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
+//        + "</div>"
+//    + "</div>"		
+//    + "<div class='card-modal-reply-userinfo'>"
+//    + "<span class='card-modal-reply-username'>"+obj.replynickname+"</span>"
+//        + "<span class='card-modal-reply-date'>"+obj.replywriteDate+"</span>"
+//    + "</div>"
+//    + "<div class='card-modal-reply-document display'>"
+//        + "<div class='card-modal-reply-comment'>"
+//        + "<p class='card-modal-reply-el'>"+obj.replycontent+"</p>"
+//        + "<textarea rows='1' class='autosize reply-textarea-edit' id='replyedit' style='overflow: hidden; overflow-wrap: break-word; resize:none; display : none;'>"+replycontent+"</textarea>"
+//        + "</div>"
+//    + "</div>"
+//    + "<div class='modal-reply-btn'>"
+//            + "<a class='card-modal-reply-delete'"
+//            + "data-container='body' data-toggle='popover' data-placement='bottom'"
+//            + "data-content='아아'>"
+//            + "<i class='far fa-trash-alt'></i>Delete</a>"
+//            + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
+//        + "</div>"
+//    + "</div>"
+	
+	
+	
+	
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
 	cardElements = $(this).parent();
@@ -533,6 +559,16 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 			} 
 		});
 	 
+	 
+	//reply
+//	 var replycommentNo="";
+//	 var replycontent="";
+//	 var replywriteDate="";
+//	 var replyid="";
+//	 var replycardNo="";
+//	 var replynickname="";
+//	 var replyimage="";
+		 
 	 $.ajax({ 
 			url: "CardReplySelect.ajax",
 			data: {
@@ -545,22 +581,64 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 					
 				console.log("reply select 완료");
 				console.log(obj)
-				var replycommentNo2 = obj.commentNo
-				replycommentNo = replycommentNo2
+//				var replycommentNo2 = obj.commentNo
+//				replycommentNo = replycommentNo2
 				
-				console.log(obj.commentNo)
-				replycontent = obj.content
-				console.log(replycontent)
-				replywriteDate = obj.writeDate
-				replyid = obj.id
-				replycardNo = obj.cardNo
-				replynickname = obj.nickname
-				replyimage = obj.image
+//				console.log(obj.commentNo)
+//				replycontent = obj.content
+//				console.log(replycontent)
+//				replywriteDate = obj.writeDate
+//				replyid = obj.id
+//				replycardNo = obj.cardNo
+//				replynickname = obj.nickname
+//				replyimage = obj.image
+				
+				makereply(resData);
 				});
 			} 
 		});
+	 
+	 function makereply(resData) {
+		 console.log("오니????")
+			var replyhtml ="";
+			$.each(resData, function(index, obj){
+				if(cardNo == obj.cardNo){
+					console.log(obj)
+					replyhtml += "<div class='card-modal-reply'>" 
+					    + "<div class='rounded-circle card-modal-profile'"
+					    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
+					    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
+					        + "<img src='assets/images/users/"+obj.image+"' alt='user' href='javascript:void(0)'"
+					                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
+					        + "</div>"
+					    + "</div>"		
+					    + "<div class='card-modal-reply-userinfo'>"
+					    + "<span class='card-modal-reply-username'>"+obj.nickname+"</span>"
+					        + "<span class='card-modal-reply-date'>"+obj.writeDate+"</span>"
+					    + "</div>"
+					    + "<div class='card-modal-reply-document display'>"
+					        + "<div class='card-modal-reply-comment'>"
+					        + "<p class='card-modal-reply-el'>"+obj.content+"</p>"
+					        + "<textarea rows='1' class='autosize reply-textarea-edit' id='replyedit' style='overflow: hidden; overflow-wrap: break-word; resize:none; display : none;'>"+obj.content+"</textarea>"
+					        + "</div>"
+					    + "</div>"
+					    + "<div class='modal-reply-btn'>"
+					            + "<a class='card-modal-reply-delete'"
+					            + "data-container='body' data-toggle='popover' data-placement='bottom'"
+					            + "data-content='아아'>"
+					            + "<i class='far fa-trash-alt'></i>Delete</a>"
+					            + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
+					        + "</div>"
+					    + "</div>"
+				}
+				
+			});
+			 $('.replymargin').after(replyhtml);
+			
+		}
 	
 });
+
 
 
 
@@ -705,63 +783,63 @@ $('.card-modal-list-description').on('click',function(){
 //$('#card-content').on('click', '.modal-textarea-reply', function(){
 //    $('.reply-done').show()
 //})
-
-$('#card-content').on('click', '.reply-done', function(){
-	console.log("안되겠지?")
-	console.log(replycommentNo)
-	 
-    if($('#modalreply').val() == "") {
-        alert('내용을 입력해 주세요');
-        $('#modalreply').focus();
-        return;
-    }
-    var replycontent = $('#modalreply').val()
-    console.log(replycontent)
-    console.log(cardNo)
-    console.log(currUser)
-    $('.replymargin').after("<div class='card-modal-reply'>" 
-    + "<div class='rounded-circle card-modal-profile'"
-    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
-    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-        + "<img src='assets/images/users/ssss.jpg' alt='user' href='javascript:void(0)'"
-                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
-        + "</div>"
-    + "</div>"		
-    + "<div class='card-modal-reply-userinfo'>"
-    + "<span class='card-modal-reply-username'>"+currUSerNick+"</span>"
-        + "<span class='card-modal-reply-date'>2020.06.27 PM 8:38</span>"
-    + "</div>"
-    + "<div class='card-modal-reply-document display'>"
-        + "<div class='card-modal-reply-comment'>"
-        + "<p class='card-modal-reply-el'>"+replycontent+"</p>"
-        + "<textarea rows='1' class='autosize reply-textarea-edit' id='replyedit' style='overflow: hidden; overflow-wrap: break-word; resize:none; display : none;'>"+replycontent+"</textarea>"
-        + "</div>"
-    + "</div>"
-    + "<div class='modal-reply-btn'>"
-            + "<a class='card-modal-reply-delete'"
-            + "data-container='body' data-toggle='popover' data-placement='bottom'"
-            + "data-content='아아'>"
-            + "<i class='far fa-trash-alt'></i>Delete</a>"
-            + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
-        + "</div>"
-    + "</div>")
-    $('#modalreply').val("")
-    
-    $.ajax({
-		url: "CardReplyInsert.ajax",
-		data: {
-				cardNo: cardNo,
-				content :replycontent,
-				id : currUser
-				},
-        dataType: "html",
-        
-		success: function(resData) {
-			console.log("리플 인서트 완료");
-			
-		}
-	});
-})
+//
+//$('#card-content').on('click', '.reply-done', function(){
+//	console.log("안되겠지?")
+//	console.log(replycommentNo)
+//	 
+//    if($('#modalreply').val() == "") {
+//        alert('내용을 입력해 주세요');
+//        $('#modalreply').focus();
+//        return;
+//    }
+//    var replycontent = $('#modalreply').val()
+//    console.log(replycontent)
+//    console.log(cardNo)
+//    console.log(currUser)
+//    $('.replymargin').after("<div class='card-modal-reply'>" 
+//    + "<div class='rounded-circle card-modal-profile'"
+//    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
+//    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
+//        + "<img src='assets/images/users/ssss.jpg' alt='user' href='javascript:void(0)'"
+//                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
+//        + "</div>"
+//    + "</div>"		
+//    + "<div class='card-modal-reply-userinfo'>"
+//    + "<span class='card-modal-reply-username'>"+currUSerNick+"</span>"
+//        + "<span class='card-modal-reply-date'>2020.06.27 PM 8:38</span>"
+//    + "</div>"
+//    + "<div class='card-modal-reply-document display'>"
+//        + "<div class='card-modal-reply-comment'>"
+//        + "<p class='card-modal-reply-el'>"+replycontent+"</p>"
+//        + "<textarea rows='1' class='autosize reply-textarea-edit' id='replyedit' style='overflow: hidden; overflow-wrap: break-word; resize:none; display : none;'>"+replycontent+"</textarea>"
+//        + "</div>"
+//    + "</div>"
+//    + "<div class='modal-reply-btn'>"
+//            + "<a class='card-modal-reply-delete'"
+//            + "data-container='body' data-toggle='popover' data-placement='bottom'"
+//            + "data-content='아아'>"
+//            + "<i class='far fa-trash-alt'></i>Delete</a>"
+//            + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
+//        + "</div>"
+//    + "</div>")
+//    $('#modalreply').val("")
+//    
+//    $.ajax({
+//		url: "CardReplyInsert.ajax",
+//		data: {
+//				cardNo: cardNo,
+//				content :replycontent,
+//				id : currUser
+//				},
+//        dataType: "html",
+//        
+//		success: function(resData) {
+//			console.log("리플 인서트 완료");
+//			
+//		}
+//	});
+//})
 
 $('#card-content').on('click', '.card-modal-reply-delete',function(){
     console.log("올거니?")
