@@ -77,62 +77,13 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead " th:text="${selectBoard.content}"></p>
+                                                    <p class="lead" id="summernote"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
                                                 <div id="comment-area">
                                                     <h4>Comment</h4>
-                                                    <div id="comment-list">
-                                                       <!-- <div class="comment" style="background-color:rgb(242, 242, 242)">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b><a th:text="${board.nickname}"></a></b>
-                                                            <span class="text-info">작성자</span>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="my-1">
-                                                        <div class="comment">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b><a th:text="${board.nickname}"></a></b>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="my-1">
-                                                        <div class="comment">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b>Hyerin</b>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div> -->
-                                                    </div>
+                                                    <div id="comment-list"></div>
                                                     <div id="comment-writeForm" style="border: 1px solid silver;">
                                                         <div style="padding: 10px 10px 0px 15px;"></div>
                                                         <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
@@ -174,7 +125,13 @@
 	    /*<![CDATA[*/
 			var currUser = '[[${session.currentUser.id}]]';
 	    	var id = '[[${selectBoard.id}]]';
+	    	var boardContent = '[[${selectBoard.content}]]';
 		/*]]*/
+		
+		boardContent = boardContent.replace(/&lt;/gi, "<");
+		boardContent = boardContent.replace(/&gt;/gi, ">");
+		console.log(boardContent);
+		$('#summernote').html(boardContent);
 		
 	    //댓글 목록보기
 		$.ajax({
