@@ -31,7 +31,7 @@
 
 </head>
 <body>
-
+	
 	
 		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
 		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
@@ -53,6 +53,8 @@
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<th:block th:replace="common/addAllBoardModal"></th:block>
+		<th:block th:replace="common/chat :: chat"></th:block>
+		 
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
 		<!-- Info Alert Modal -->
@@ -151,7 +153,7 @@
 									style="float: left; background-color: white; overflow: hidden; height: 35px; width: 35px;">
 									<div
 										style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-										<img src="assets/images/users/ssss.jpg" alt="user"
+										<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
 											href="javascript:void(0)"
 											style="width: auto; height: 50px; transform: translate(-50%, -50%);">
 									</div>
@@ -293,6 +295,7 @@
 	<script th:inline="javascript">
     /*<![CDATA[*/
        var currUser = [[${session.currentUser.id}]];
+       var currUserimage = [[${session.currentUser.image}]];
     /*]]>*/
     </script>
 

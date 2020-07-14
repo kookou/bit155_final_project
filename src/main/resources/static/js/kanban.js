@@ -582,7 +582,7 @@ function makereply(resData) {
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/users/"+obj.image+"' alt='user' href='javascript:void(0)'"
+				        + "<img src='assets/images/userimage/"+obj.image+"' alt='user' href='javascript:void(0)'"
 				                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		

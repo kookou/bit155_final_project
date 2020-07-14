@@ -1,8 +1,8 @@
 <!-- <div id="fixedBtn" data-container="body" title="Popover title" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
 	<i class="fas fa-comments fa-3x" style="cursor: pointer;"></i>
 </div> -->
-
-<a href="#" id="fixedBtn" class="btn"><i class="fas fa-comments fa-3x" style="cursor: pointer;"></i></a>
+<div th:fragment="chat">
+<a href="#" id="fixedBtn" class="btn btn-circle btn-lg btn-cyan float-right text-white" data-placement="bottom"  data-container="body" data-toggle="popover" ><i class="fas fa-comments fa-3x" style="cursor: pointer;"></i></a>
 
 <div style="display:none;" class="alert_list">
 	<div class="container-fluid">
@@ -108,7 +108,7 @@
                                  <div class="row">
                                      <div class="col-9">
                                          <div class="input-field mt-0 mb-0">
-                                             <input id="textarea1" placeholder="Type and enter" class="form-control border-0" type="text">
+                                             <input id="textarea1" placeholder="Type and enter" class="form-control border-0 link-text" type="text">
                                          </div>
                                      </div>
                                      <div class="col-3">
@@ -124,4 +124,5 @@
              </div>
          </div>
      </div>
+</div>
 </div>
