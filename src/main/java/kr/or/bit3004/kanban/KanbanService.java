@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.comment.KanbanComment;
 
@@ -36,6 +37,11 @@ public interface KanbanService {
 	
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
+	
+	//upload file to Kanban Card
+	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request);
+	
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
+	public void updateCardReply(String content, int commentNo);
 
 }

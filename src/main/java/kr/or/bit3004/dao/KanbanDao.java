@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.kanban.KanbanCard;
 import kr.or.bit3004.kanban.KanbanList;
+import kr.or.bit3004.kanban.KanbanUpload;
 
 public interface KanbanDao {
 	
@@ -44,6 +45,12 @@ public interface KanbanDao {
 	
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
+	
+	//insert Kanban Card Upload File into DB
+	public int insertKanbanUploadFile(KanbanUpload kanbanUpload);
+	
+	
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
+	public void updateCardReply(String content, int commentNo);
 
 }

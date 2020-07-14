@@ -1,5 +1,4 @@
 <script>
-
 package kr.or.bit.dao;
 
 import java.sql.Connection;
@@ -38,6 +37,15 @@ public class BoardDao {
       List<Board> list = null;
       
       try {
+
+
+sql=
+	 "	select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.all_board_list_no, b.id, u.NICKNAME, a.team_no from board_list b"
+     "  inner join `user` u on b.id = u.id"
+     "  inner join all_board_list a on b.all_board_list_no = a.all_board_list_no"
+     "  where a.all_board_list_no=#{allBoardListNo} and a.team_no=#{teamNo}"
+     "  order by b.board_no desc"
+          
          conn = ds.getConnection();
          String sql = "select * " +
                    "from ( " + 
