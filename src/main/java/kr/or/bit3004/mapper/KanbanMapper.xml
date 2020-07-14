@@ -162,4 +162,10 @@
 					
 	</insert>
 	
+	<delete id="deleteCardReply">
+		DELETE
+		FROM board_comment
+		WHERE comment_no = #{commentNo};
+	</delete>
+	
 </mapper>
