@@ -15,7 +15,6 @@
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,7 +40,6 @@
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
      <th:block th:replace="common/addAllBoardModal"></th:block>
-     <th:block th:replace="common/chat"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
      <div class="page-wrapper">
         <div class="page-breadcrumb">
@@ -56,12 +54,14 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" th:action="@{insertBoard.do(id=${session.currentUser.id})}">
+                            <form method="post" th:action="@{insertReboard.do(id=${session.currentUser.id})}">
+                            <!-- @{selectBoard.do(boardNo=${board.boardNo},teamNo=1)} -->
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group">
-                                            	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요.">
+                                            	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요." value="Re: ">
+                                            	 <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
                                             </div>
                                             <div class="custom-file col-md-12">
                                                 <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
@@ -71,7 +71,7 @@
                                         <div class="col-md-12">
                                             <h4 class="card-title"></h4>
                                             <div class="form-group">
-                                        	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content"></textarea>
+                                        	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" placeholder="내용을 입력하세요."></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -94,19 +94,23 @@
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
     <script th:inline="javascript">
-    	/*<![CDATA[*/
-    		var currUser = [[${session.currentUser.id}]];
- 		/*]]>*/
- 		
-        //summernote
-	  	$('#summernote').summernote({
-	       	height: 300,                 		// 에디터 높이
-	       	minHeight: null,             		// 최소 높이
-	       	maxHeight: null,             		// 최대 높이
-	       	focus: true,                  		// 에디터 로딩후 포커스를 맞출지 여부
-	       	lang: "ko-KR",               		// 한글 설정
-	       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
-	  	});
+	    /*<![CDATA[*/
+	       var currUser = [[${session.currentUser.id}]];
+	    /*]]>*/
+	    /*<![CDATA[*/
+		    $(document).ready(function() {
+		        //summernote
+			  	$('#summernote').summernote({
+			       	height: 300,                 // 에디터 높이
+			       	minHeight: null,             // 최소 높이
+			       	maxHeight: null,             // 최대 높이
+			       	focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			       	lang: "ko-KR",               // 한글 설정
+			       	placeholder: 'Enter your content'   //placeholder 설정
+			  	});
+			});	
+	    /*]]>*/
     </script>
+
 </body>
 </html>

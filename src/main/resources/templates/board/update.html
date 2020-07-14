@@ -14,6 +14,8 @@
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -92,7 +94,19 @@
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
-    
+    <script th:inline="javascript">
+	  	//summernote
+	    $(document).ready(function() {
+		  	$('#summernote').summernote({
+		       	height: 300,                 		// 에디터 높이
+		       	minHeight: null,             		// 최소 높이
+		       	maxHeight: null,             		// 최대 높이
+		       	focus: true,                  		// 에디터 로딩후 포커스를 맞출지 여부
+		       	lang: "ko-KR",               		// 한글 설정
+		       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
+		  	});
+		});	
+    </script>
     
 
 </body>

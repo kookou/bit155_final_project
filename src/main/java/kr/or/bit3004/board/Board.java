@@ -21,6 +21,8 @@ public class Board {
 	private String id;
 	private String nickname;
 	private String name;
+
+	
 	
 	//BOARD_FILE 테이블 변수명
 	/*
