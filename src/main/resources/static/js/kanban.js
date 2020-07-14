@@ -63,6 +63,8 @@
   
 // });
 //var id = currUser;
+
+
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard' onclick='newtask(this)'>"
@@ -88,7 +90,7 @@ var addlistTag =
 + "</div>";
 
 	
-
+var boardName =""
 
 //텍스트에어리어 사이즈 자동 조절
 function resize(obj) {
@@ -105,7 +107,18 @@ function resize(obj) {
         resize(this);
 });
 
+$('.redirectBoard').on('click',function(){
+	var boardname = $(this).find('.board-name').text()
+	boardName = boardname
+	console.log($(this).find('.board-name').text())
+    
+})
 
+$(document).ready(function(){
+	console.log("될거니???????")
+	console.log(boardName)
+	$('#board-name').text(boardName)
+})
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
@@ -162,9 +175,12 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	txtIpTrIconAddBtn.remove();
 //  $(this).parent().parent().children().children().remove()
     
-    new1.append("<div class='kanban-list-header'id='listheader'>"+ 
-    "<h4 class='kanban-list-title'>"+listName+"</h4>"+"</div>"+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
-    + "</a>");
+    new1.append("<div class='kanban-list-header'id='listheader'>"
+	    		+"<h4 class='kanban-list-title'>"+listName+"</h4>"
+	    		+"</div>"
+	    		+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
+	    		+ "</a>"
+	    		+ "<div class='divForDragNDrop'></div>");
     
 
     kanbanListContent.attr('data-title', listName);    
@@ -276,8 +292,6 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
     		url: "deleteKanbanList.ajax",
     		data: {
     				"kanbanListNo": $.trim(kanbanListNo)
-    				//일단 이렇게 해뒀는데 나중에  listNo로 지우는걸로 바꿔야겠다.
-    				//왜 return타입이 html이지 ?
     				},
             
     		success: function() {
@@ -286,21 +300,7 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
     	});
     	
         console.log("delete kanbanList");
-        deleteel.remove()
-        
-//        $.ajax({
-//			url: "DeleteKanbanList.ajax",
-//			data: {listTitle : listName,
-//					id : currUser},
-//	        dataType: "html",
-//	        
-//			success: function(resData) {
-//				console.log("list update 완료");
-//				// deleteListBtnTag.attr('data-code', resData);
-//				// ListDivTag.attr('data-code', resData);
-//			}
-//		});
-        
+        deleteel.remove()        
      });  
 	
 });
@@ -311,6 +311,8 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 $(document).on('click', "#addcard",function(){
 
 	   let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
+	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
+
 	   
         var addcardTag = "<div class='kanban-card-list btn-card-hover' th:each='card : ${kanbancardlist}' th:if='${kanbanlist.kanbanListNo == card.kanbanListNo}'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
@@ -332,18 +334,30 @@ $(document).on('click', "#addcard",function(){
                          +"</div>"
                    
        
-        $(this).parent().before(addcardTag);
-        $(this).parent().mouseleave()
-        $(this).parent().prev().children().children().children().eq(0).focus()
-        var input = $(this).parent().prev().children().children().children().eq(0)
-        var comment= $(this).parent().prev().children().children().children().eq(1)
-        var file= $(this).parent().prev().children().children().children().eq(2)
+	    DnDdiv.append(addcardTag);                         
+//        $(this).parent().before(addcardTag);
+        
+ 	   let input = $(this).parent().prev().find('textarea');// 여기는 더해지고 나서 설정돼야함
+//     var input = $(this).parent().prev().children().children().children().eq(0)
+ 	   let comment = $(this).parent().prev().find('[title="comments"]');
+//     var comment= $(this).parent().prev().children().children().children().eq(1)
+ 	   let file = $(this).parent().prev().find('[title="file"]');
+//       var file= $(this).parent().prev().children().children().children().eq(2)
+ 	   let kanbanCardNo = $(this).parent().siblings('.divForDragNDrop').children().last();
+// 	   var kanbanCardNo = $(this).parents().prev()
+
+	   
+        $(this).parent().mouseleave() // a#addcardel
+//        $(this).parent().prev().children().children().children().eq(0).focus() // addCardInput
+        
+        input.focus();
+
         $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
         $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
         comment.hide()
         file.hide()
         
-        var kanbanCardNo = $(this).parents().prev()
+        console.log($(this).parent().siblings('.divForDragNDrop').children().last());
         console.log("시작");
 	    console.log(kanbanCardNo);
 	    
@@ -373,12 +387,10 @@ $(document).on('click', "#addcard",function(){
     				 kanbanCardNo.attr('data-cardno', resData);
     				 console.log(resData);
     			}
-    		});
-            
-        });
-        
-        
+    		}); 
+        });   
 });
+
 
 $('#kanban').on('mouseenter','.kanban-card-list',function(){
    
@@ -449,13 +461,24 @@ $('#kanban').on('click','.active-card-icon',function(){
     
 })
 
-let cardNo =""
+
+
+var cardNo =""
 var cardtitletext=""
 var listtitle=""
 var cardtitle=""
+var cardElements = "";
+var newCardTitleList =""
+
+//reply
+var replycommentNo=""
+var replycontent=""
+var replywriteDate=""
+var replyid=""
+var replycardNo=""
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
-	
+	cardElements = $(this).parent();
 //	 $('#modallDescrioptiontextarea').hide();
 //	 $('#modallDescrioption').hide();
 	 
@@ -465,7 +488,8 @@ $('#kanban').on('click', '.kanban-card-element', function() {
      cardtitletext = $(this).children().eq(0).text()
      cardtitle = $(this).children().eq(0)
      cardNo = $(this).parent().attr("data-cardno")
-     var newCardTitleList =""
+     
+
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
      console.log(cardNo)
@@ -488,12 +512,12 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 			success: function(resData) {
 				console.log("card select 완료");
 				console.log(resData)
-				title = resData.title 
-				content = resData.content
-				writeDate = resData.writeDate
-				fileCount = resData.fileCount
-				commentCount = resData.commentCount
-				cardIndex = resData.cardIndex
+				title = resData.title, 
+				content = resData.content,
+				writeDate = resData.writeDate,
+				fileCount = resData.fileCount,
+				commentCount = resData.commentCount,
+				cardIndex = resData.cardIndex,
 				kanbanListNo = resData.kanbanListNo
 				
 				 if(content == "" || content == null){
@@ -506,29 +530,72 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 					 $('#modallDescrioption').text(content)
 					 $('#modallDescrioption').show();
 				 }
+			} 
+		});
+	 
+	 $.ajax({ 
+			url: "CardReplySelect.ajax",
+			data: {
+					cardNo: cardNo
+					},
+	        dataType: "json",
+	        
+			success: function(resData) {
+				$.each(resData, function(index , obj){
+					
+				console.log("reply select 완료");
+				console.log(obj)
+				var replycommentNo2 = obj.commentNo
+				replycommentNo = replycommentNo2
 				
+				console.log(obj.commentNo)
+				replycontent = obj.content
+				console.log(replycontent)
+				replywriteDate = obj.writeDate
+				replyid = obj.id
+				replycardNo = obj.cardNo
+				replynickname = obj.nickname
+				replyimage = obj.image
+				});
 			} 
 		});
 	
-	
-	 
-
-	
-     
-
 });
+
+
+
+//모달 카드 삭제
+$('.card-modal-close').on('click',function(){
+	 console.log("card delete click");
+	 console.log(cardNo);
+	 console.log(cardElements);
+	 
+	 $.ajax({
+		 	url: "deleteKanbanCard.ajax",
+		 	data:{
+		 			"cardNo": cardNo
+		 			},
+		 	success: function(){
+		 		console.log("card delete 성공");		 		
+		 		}	
+	 	});
+	 cardElements.remove();
+});
+
+
 
 //모달 타이틀 수정  
 $('#card-content').on('click','.card-modal-title',function() {
+	
 	console.log("타이틀 클릭 ")
 	console.log(cardNo)
     // let cardTitle = $('.kanban-card-title').text();
     // console.log($('.kanban-card-title').text())
+	var newCardTitle="";
 	
-	$('#modallisttitle').remove();
-    $('.card-modal-title').hide();
-    
-	$('.card-modal-list-name').before("<textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+cardtitletext+"</textarea>");
+	$('.card-modal-title').hide();
+	$('#modallisttitle').show();
+	$('#modallisttitle').val(cardtitletext);
     $('#modallisttitle').focus();
     
     $('#modallisttitle').blur(function() {
@@ -537,20 +604,21 @@ $('#card-content').on('click','.card-modal-title',function() {
 			$('#modallisttitle').focus();
 			return;
         }
-        
-        var tr = $(this).parent().next()                                     
+                              
         
 		$('.card-modal-title').show();
 		
         $('.card-modal-title').text($('#modallisttitle').val());
         console.log($('#modallisttitle').val())
-        var newCardTitle = $('#modallisttitle').val()
+        newCardTitle = $('#modallisttitle').val()
         
-        newCardTitleList = newCardTitle
+        newCardTitleList = newCardTitle //모달 밖 카드 타이틀 바꾸기 
+        cardtitletext = newCardTitle  //현재 모달창 카드 타이틀 바꾸기 
         
-		$('#modallisttitle').remove();
+		$('#modallisttitle').hide();
+        cardtitle.text(newCardTitleList);
 		
-		$.ajax({
+        $.ajax({
 			url: "UpdateKanbanCard.ajax",
 			data: { title: newCardTitle,
 					cardNo: cardNo,
@@ -565,16 +633,17 @@ $('#card-content').on('click','.card-modal-title',function() {
 		
     });
     
-  //모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
-    $('#card-content').on('hide.bs.modal', function () {
-    	console.log(cardtitle)
-    	console.log(newCardTitleList)
-    	cardtitle.text(newCardTitleList)
-    	console.log("될거니?")
-    	
-    })
-    
 });
+
+////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
+//$('#card-content').on('hide.bs.modal', function () {
+//	console.log(cardtitle)
+//	console.log(newCardTitleList)
+//	cardtitle.text(newCardTitleList)
+//	console.log("될거니?")
+//	
+//})
+
 //모달 카드 내용 인서트 
 $('.modal-textarea-description-edit').on('focus',function(){
 	 
@@ -608,45 +677,22 @@ $('.modal-textarea-description-edit').on('focus',function(){
 			 }
 	 })
 });
+
+
 //모달 카드 내용 수정 
 $('.card-modal-list-description').on('click',function(){
 	 console.log($('#modallDescrioption').text())
 	 console.log(cardNo)
 	  
 	 var cardDescription = $('#modallDescrioption').text()
-	 		 console.log(cardDescription)
-	 $('#modallDescrioptiontextarea').focus()
+	 console.log(cardDescription)
+	
 	 $('#modallDescrioptiontextarea').show();
-	 $('#modallDescrioptiontextarea').val(cardDescription)
+	 $('#modallDescrioptiontextarea').focus();
+	 $('#modallDescrioptiontextarea').val(cardDescription);
 	 $('#modallDescrioption').hide();
 	 
 })
-
-////모달 내용 수정
-//$('#signup-modal').on('click', '.card-modal-list-description', function() {
-//    
-//    $('.card-modal-list-description').hide();
-//    var carddescription = $(this).text();
-//    console.log(carddescription)
-//    $('.card-modal-description').after("<textarea rows='1' class='autosize modal-textarea-edit' id='modaldescription' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+carddescription+"</textarea>");
-//    $('#modaldescription').focus();
-//
-//    $('#modaldescription').blur(function() {
-//		
-//        console.log($(this).parent().next())
-//        var tr = $(this).parent().next()
-//        
-//		$('.card-modal-list-description').show();
-//		
-//        $('.card-modal-list-description').text($('#modaldescription').val());
-//       
-//        console.log($(this))
-//		$('#modaldescription').remove();
-//		
-//    });
-//
-//});
-//
 
 
 
@@ -656,11 +702,14 @@ $('.card-modal-list-description').on('click',function(){
 
 
 //댓글 영역
-$('#signup-modal').on('click', '.modal-textarea-reply', function(){
-    $('.reply-done').show()
-})
+//$('#card-content').on('click', '.modal-textarea-reply', function(){
+//    $('.reply-done').show()
+//})
 
-$('#signup-modal').on('click', '.reply-done', function(){
+$('#card-content').on('click', '.reply-done', function(){
+	console.log("안되겠지?")
+	console.log(replycommentNo)
+	 
     if($('#modalreply').val() == "") {
         alert('내용을 입력해 주세요');
         $('#modalreply').focus();
@@ -668,16 +717,18 @@ $('#signup-modal').on('click', '.reply-done', function(){
     }
     var replycontent = $('#modalreply').val()
     console.log(replycontent)
-    $('.card-modal-reply-top').after("<div class='card-modal-reply'>" 
+    console.log(cardNo)
+    console.log(currUser)
+    $('.replymargin').after("<div class='card-modal-reply'>" 
     + "<div class='rounded-circle card-modal-profile'"
     + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
     + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
         + "<img src='assets/images/users/ssss.jpg' alt='user' href='javascript:void(0)'"
                 + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
         + "</div>"
-    + "</div>"
+    + "</div>"		
     + "<div class='card-modal-reply-userinfo'>"
-    + "<span class='card-modal-reply-username'>sun kim</span>"
+    + "<span class='card-modal-reply-username'>"+currUSerNick+"</span>"
         + "<span class='card-modal-reply-date'>2020.06.27 PM 8:38</span>"
     + "</div>"
     + "<div class='card-modal-reply-document display'>"
@@ -688,24 +739,36 @@ $('#signup-modal').on('click', '.reply-done', function(){
     + "</div>"
     + "<div class='modal-reply-btn'>"
             + "<a class='card-modal-reply-delete'"
-            + "data-container='body' title='왜안되냐ㅑㅑ' data-toggle='popover' data-placement='bottom'"
+            + "data-container='body' data-toggle='popover' data-placement='bottom'"
             + "data-content='아아'>"
             + "<i class='far fa-trash-alt'></i>Delete</a>"
             + "<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
         + "</div>"
     + "</div>")
     $('#modalreply').val("")
-
-
+    
+    $.ajax({
+		url: "CardReplyInsert.ajax",
+		data: {
+				cardNo: cardNo,
+				content :replycontent,
+				id : currUser
+				},
+        dataType: "html",
+        
+		success: function(resData) {
+			console.log("리플 인서트 완료");
+			
+		}
+	});
 })
 
-$('#signup-modal').on('click', '.card-modal-reply-delete',function(){
+$('#card-content').on('click', '.card-modal-reply-delete',function(){
     console.log("올거니?")
 })
 
 //모달 리플 수정
-$('#signup-modal').on('click', '.card-modal-reply-edit',function(){
-    
+$('#card-content').on('click', '.card-modal-reply-edit',function(){
     
     $(this).parent().prev().children().children().eq(0).hide()
     $(this).parent().prev().children().children().eq(1).show()
@@ -749,11 +812,11 @@ $('#signup-modal').on('click', '.card-modal-reply-edit',function(){
     // });
 })
 
-$('#modalreply').focusout(function() {
-    if($('#modalreply').val() == ""){
-        $('.reply-done').hide()
-    }
-});
+//$('#modalreply').focusout(function() {
+//    if($('#modalreply').val() == ""){
+//        $('.reply-done').hide()
+//    }
+//});
 
 
 

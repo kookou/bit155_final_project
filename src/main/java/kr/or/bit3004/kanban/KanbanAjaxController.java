@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.bit3004.comment.KanbanComment;
+
 @RestController
 public class KanbanAjaxController {
 	
@@ -33,7 +35,6 @@ public class KanbanAjaxController {
 	@RequestMapping("InsertKanbanList.ajax")
 	public String kanbanListInsert(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller kanbanListInsert");
-		System.out.println(kanbanlist);
 		
 		int newKanbanListNo = service.insertListTitle(kanbanlist, principal);
 		String newKanbanListNoString = Integer.toString(newKanbanListNo);
@@ -52,7 +53,6 @@ public class KanbanAjaxController {
 	public KanbanList updateKanbanList(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller updateKanbanList");
 		System.out.println(kanbanlist);
-		
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
 		
@@ -75,7 +75,6 @@ public class KanbanAjaxController {
 		System.out.println("cardselect");
 		System.out.println(service.kanbanCardContentSelect(cardNo));
 		return service.kanbanCardContentSelect(cardNo);
-		
 	}
 	
 	@RequestMapping("CardDescrioptionInsert.ajax")
@@ -84,6 +83,25 @@ public class KanbanAjaxController {
 		service.kanbanCardDescrioptionUpdate(content, cardNo);
 		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
 	}
+
+	@RequestMapping("CardReplyInsert.ajax")
+	public String kanbanCardReplyInsert(String content , int cardNo, String id) {
+		service.insertCardReply(content, cardNo, id);
+		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
+	}
+
 	
+	@RequestMapping("deleteKanbanCard.ajax")
+	public void deleteKanbanCard(int cardNo) {
+		System.out.println("카드 내용 업데이트");
+		service.deleteKanbanCard(cardNo);
+	}
+	
+	@RequestMapping("CardReplySelect.ajax")
+	public List<KanbanComment> getKanbanCommentList(int cardNo){
+		return service.getKanbanCommentList(cardNo);
+		
+	}
+
 }
  

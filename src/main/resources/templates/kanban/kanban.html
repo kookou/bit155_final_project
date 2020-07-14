@@ -87,6 +87,7 @@
 						<div class="card-modal-header">
 							<span class="fas fa-quote-left card-modal-title-icon"></span>
 							<h3 class="card-modal-title" id="modaltitle"></h3>
+							<textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none; display:none;'></textarea>
 							<div class="card-modal-list-name">
 								<p class="card-in-list"></p>
 							</div>
@@ -162,10 +163,12 @@
 										style="overflow: hidden; overflow-wrap: break-word; resize: none;"
 										placeholder="댓글입력"></textarea>
 									<button type="button"
-										class="btn waves-effect waves-light btn-sm btn-primary reply-done"
-										id="replydonebtn" style="display: none">Save</button>
+										class="btn waves-effect waves-light btn-primary reply-done"
+										id="replydonebtn">Save</button>
 								</div>
 							</div>
+							<div class="replymargin"></div>
+							<div class="card-modal-reply"><div class="rounded-circle card-modal-profile" style="float:left; background-color: white; overflow: hidden; height:35px; width:35px;"><div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);"><img src="assets/images/users/ssss.jpg" alt="user" href="javascript:void(0)" style="width :auto; height: 50px; transform: translate(-50%, -50%);"></div></div><div class="card-modal-reply-userinfo"><span class="card-modal-reply-username">짱구</span><span class="card-modal-reply-date">2020.06.27 PM 8:38</span></div><div class="card-modal-reply-document display"><div class="card-modal-reply-comment"><p class="card-modal-reply-el">asf</p><textarea rows="1" class="autosize reply-textarea-edit" id="replyedit" style="overflow: hidden; overflow-wrap: break-word; resize:none; display : none;">asf</textarea></div></div><div class="modal-reply-btn"><a class="card-modal-reply-delete" data-container="body" data-toggle="popover" data-placement="bottom" data-content="아아"><i class="far fa-trash-alt"></i>Delete</a><a class="card-modal-reply-edit"><i class="far fa-edit"></i>Edit</a></div></div>
 						</div>
 					</div>
 				</div>
@@ -182,8 +185,7 @@
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
-						<h3
-							class="page-title text-truncate text-dark font-weight-medium mb-1"></h3>
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
@@ -218,29 +220,34 @@
 									<a class="kanban-list-menu far fa-trash-alt"
 										data-toggle="modal" data-target="#info-alert-modal"></a>
 
+									<div class="divForDragNDrop">
 
-									<div class="kanban-card-list btn-card-hover"
-										th:each="card : ${kanbancardlist}"
-										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
-										<span class='icon-pencil active-card-icon'
-											style='position: relative;'></span>
-										<div class="kanban-card-element" data-toggle="modal"
-											data-target="#card-content" >
-											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
-											<div class="kanban-card-badges">
-												<div class="kanban-card-badge" title="comments"
-													th:if="${card.commentcount >0}">
-													<span class="icon-bubble badge-icon"></span> <span
-														class="badge-text" th:text="${card.commentcount}"></span>
-												</div>
-												<div class="kanban-card-badge" title="file"
-													th:if="${card.fileCount >0}">
-													<span class="icon-paper-clip badge-icon"></span> <span
-														class="badge-text" th:text="${card.fileCount}"></span>
+										<div class="kanban-card-list btn-card-hover"
+											th:each="card : ${kanbancardlist}"
+											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
+											<span class='icon-pencil active-card-icon'
+												style='position: relative;'></span>
+											<div class="kanban-card-element" data-toggle="modal"
+												data-target="#card-content" >
+												<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+												<div class="kanban-card-badges">
+													<div class="kanban-card-badge" title="comments"
+														th:if="${card.commentcount >0}">
+														<span class="icon-bubble badge-icon"></span> <span
+															class="badge-text" th:text="${card.commentcount}"></span>
+													</div>
+													<div class="kanban-card-badge" title="file"
+														th:if="${card.fileCount >0}">
+														<span class="icon-paper-clip badge-icon"></span> <span
+															class="badge-text" th:text="${card.fileCount}"></span>
+													</div>
 												</div>
 											</div>
 										</div>
+									
 									</div>
+									
+									
 									<div class="kanban-card-add-list" id="addcardel">
 										<a class="kanban-card-add-el btn-light-my" id="addcard"
 											onclick="newtask(this)"><span class="icon">+</span><span

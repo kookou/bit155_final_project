@@ -3,6 +3,7 @@ package kr.or.bit3004.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.kanban.KanbanCard;
 import kr.or.bit3004.kanban.KanbanList;
 
@@ -36,6 +37,13 @@ public interface KanbanDao {
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void updateCardTitle(String title , int cardNo);
 	public KanbanCard kanbanCardContent(int cardNo);
-	public void UpdateCardDescrioption(String content,int cardNo);
+
+	public void updateCardDescrioption(String content,int cardNo);
+	public int insertCardReply(String content, int cardNo, String id);
+
+	
+	//delete Kanban Card
+	public void deleteKanbanCard(int cardNo);
+	public List<KanbanComment> getKanbanCommentList(int cardNo);
 
 }
