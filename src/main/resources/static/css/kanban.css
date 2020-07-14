@@ -371,7 +371,7 @@ div {
     font-size: 16px;
    
     color: rgb(42, 40, 67);
-    display: block;
+
     word-wrap: break-word;
     
 }
@@ -417,14 +417,21 @@ a {
     margin: 10px 0 0 0;
 }
 .card-modal-reply{
-    margin: 16px 0 0 0;
+    margin-top: 16px;
     z-index: -3;
-    clear: both;
+    
 }
 .card-modal-reply-document{
     padding: 0 0 0 10px;
     max-width: 100%;
     
+}
+.replymargin{
+	
+	clear: both;
+}
+.reply-list{
+	margin-top: 16px;
 }
 .card-modal-reply-username{
     font-size: 16px;
@@ -610,19 +617,23 @@ textarea.list-composer-textarea, textarea.list-composer-textarea:focus{
     font-size: 16px;
     line-height: 1.2;
     border-radius: 3px;
-    width: 100%;
+    width: 88%;
     overflow-y: auto;
     min-height: 40px;
     padding: 10px;
     vertical-align: middle;
+    float: left;
 }
 .reply-done{
-    margin: 6px 0 0 0;
+    /* margin: 6px 0 0 0; */
     float: right;
+    width: 70px;
+    height : 38px;
 }
 
 .card-modal-reply-top{
-    margin: 16px 0 0 0;
+    margin-top: 16px;
+    margin-bottom:20px;
     z-index: -3;
     clear: both;
 }
@@ -656,7 +667,7 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     width: 100%;
     overflow-y: auto;
     min-height: 40px;
-    padding: 10px;
+    padding: 7px 6px;
     vertical-align: middle;
     min-height: 100px;
 }

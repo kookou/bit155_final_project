@@ -14,6 +14,7 @@
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,6 +50,7 @@
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
      <th:block th:replace="common/addAllBoardModal"></th:block>
+     <th:block th:replace="common/chat"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     <div class="page-wrapper">
 	    <div class="container-fluid">
@@ -75,67 +77,16 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead">
-                                                        <span th:text="${selectBoard.content}"></span>
-                                                    </p>
+                                                    <p class="lead" id="summernote"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
                                                 <div id="comment-area">
                                                     <h4>Comment</h4>
-                                                    <div id="comment-list">
-                                                       <!-- <div class="comment" style="background-color:rgb(242, 242, 242)">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b><a th:text="${board.nickname}"></a></b>
-                                                            <span class="text-info">작성자</span>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="my-1">
-                                                        <div class="comment">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b><a th:text="${board.nickname}"></a></b>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="my-1">
-                                                        <div class="comment">
-                                                            <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                            <b>Hyerin</b>
-                                                            <br>
-                                                            <div class="comment-content">
-                                                                <h5>
-                                                                    sldkfjsldjdkdkdkdksusdj;lsdjlk<br>
-                                                                    sdfsdfsd<br>
-                                                                    sdfsdf
-                                                                </h5>
-                                                                <h6 style="color: rgb(180, 180, 180);">
-                                                                    2020.07.01. 12:56
-                                                                </h6>
-                                                            </div>
-                                                        </div> -->
-                                                    </div>
+                                                    <div id="comment-list"></div>
                                                     <div id="comment-writeForm" style="border: 1px solid silver;">
                                                         <div style="padding: 10px 10px 0px 15px;"></div>
-                                                        <textarea class="form-control autosize" name="comment" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
+                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
                                                         <div style="padding: 0px 10px 10px 10px;">
                                                             <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm" id="commWrite">등록</button>
                                                         </div>
@@ -149,10 +100,10 @@
                       		</div>
                             <div class="form-actions">
                                 <div style="float: left;">
-                                    <a href="insertBoard.do?teamNo=1" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
-                                    <button type="button" class="btn btn-light btn-sm">답글</button>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
+                                    <a href="insertBoard.do?teamNo=1 " class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+                                    <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
+                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
+                                    <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
                                 </div>
                                 <div style="float: right;">
                                     <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1&teamNo=1">목록</a>
@@ -171,10 +122,17 @@
     
     <!-- 여기서부터 script -->
     <script>
-    /*<![CDATA[*/
-		var currUser = '[[${session.currentUser.id}]]';
-	/*]]*/
-
+	    /*<![CDATA[*/
+			var currUser = '[[${session.currentUser.id}]]';
+	    	var id = '[[${selectBoard.id}]]';
+	    	var boardContent = '[[${selectBoard.content}]]';
+		/*]]*/
+		
+		boardContent = boardContent.replace(/&lt;/gi, "<");
+		boardContent = boardContent.replace(/&gt;/gi, ">");
+		console.log(boardContent);
+		$('#summernote').html(boardContent);
+		
 	    //댓글 목록보기
 		$.ajax({
 			url: "CommentList.ajax",
@@ -188,14 +146,14 @@
 				console.log(e);
 			}
 		});
-    
-    	//댓글 등록
-    	$('#commWrite').click(function(){
-    		if($('#commentTextarea').val() == ""){
-    			swal('내용을 입력하세요');
-    			return false;
-    		}
-    		var promise = 
+	   
+	   	//댓글 등록
+	   	$('#commWrite').click(function(){
+	   		if($('#commentTextarea').val() == ""){
+	   			swal('내용을 입력하세요');
+	   			return false;
+	   		}
+	   		var promise = 
 	    		$.ajax({
 	    			url: "InsertComment.ajax",
 	    			data: {
@@ -207,34 +165,120 @@
 	    				$('#commentTextarea').val("");
 	    			}
 	    		});
-    		promise.done(reloadListPromise);
+	   		promise.done(reloadListPromise);
 	    	promise.fail(promiseError);
-    	});
-    	
-    	function reloadListPromise() {
-    		return new Promise(function(resolve, reject) {
-    			$.ajax({
-    				url: "CommentList.ajax",
-    				data: {
-    					boardNo: $('#boardNo').val()
-    				},
-    				success:function(resData){
-    					$('#comment-list').empty();
-    					makeCommnet(resData);
-    				},
-    				error: function(e) {
-    					console.log(e);
-    				}
-    			});
-    		});
-    	}
-    	function promiseError(e) {
-    		console.log("프로미스 에러..");
-    		console.log(e);
-    		return false;
-    	}
-    	
-    	//댓글 목록 그리는 함수 
+	   	});
+	   	
+	   	//댓글삭제 
+	   	$('#comment-list').on('click', '.deleteComment', function(){
+	   		var promise = 
+	   			$.ajax({
+	       			url: "DeleteComment.ajax",
+	       			data: {
+	       				boardNo: $('#boardNo').val(),
+	       				commentNo: $(this).data("value")
+	       			}
+	       		});
+	   		promise.done(reloadListPromise);
+	    	promise.fail(promiseError);
+	    	console.log($(this).data("value"));
+	   	});
+	   	
+	   	//댓글수정
+	   	$('#comment-list').on('click', '.updateComment', function(){
+			
+				//클릭한 a태그의 class를 cancelUpdate로 바꾸고 아이콘바꾸기
+				$(this).attr('class', 'cancleUpdate');
+				$(this).html("<i class='fas fa-times-circle'></i>")
+				
+				//this(a태그)의 부모태그(div class="comment-content"태그)를 parentTag변수에 담기
+				var parentTag = $(this).parent();
+				//자식태그중 h5(댓글내용이 들어있는 태그)를 찾아서 변수에 담기
+				var h5 = parentTag.find('h5');
+				//댓글내용 변수에 담기
+				var h5Text = parentTag.find('h5').text();
+				//댓글내용이 있는 h5태그 hide하기
+				$(h5).hide();
+				var commentNo = $(this).data("value");
+				
+				//input태그 append하기(value에는 기존의 값 셋팅하고, 포커스주기)
+				var html = "";
+				html += '<div id="updateDiv">';
+				html += '<input type="text" value="' + h5Text + '" name="content" id="updateContent">';
+				html += '<button class="btn btn-light btn-sm" id="commentUpdateBtn">수정</button>';
+				html += '</div>'
+				parentTag.prepend(html);
+				parentTag.find('input').focus();
+				
+				
+				$('#commentUpdateBtn').click(function(){
+					if($('#updateContent').val() == ""){
+						swal('내용을 입력하세요');
+						return false;
+					}
+					var promise = 
+			    		$.ajax({
+			    			url: "UpdateComment.ajax",
+			    			data: {
+			    				boardNo: $('#boardNo').val(),
+			    				commentNo: commentNo,
+			    				content: $('#updateContent').val()
+			    			},
+			    			success:function() {
+			    				console.log("아무거나");
+			    			},
+			    			error: function(e) {
+			    				console.log(e);
+			    			}
+			    		});
+		    		promise.done(reloadListPromise);
+			    	promise.fail(promiseError);
+				});
+	   	});
+	   	
+	   	//수정취소 눌렀을경우 리스트 다시 불러오기
+	   	$('#comment-list').on('click', '.cancleUpdate', function(){
+	   		var promise = 
+	   			$.ajax({
+	       			url: "CommentList.ajax",
+	       			data: {
+	       				boardNo: $('#boardNo').val()
+	       			},
+	       			error: function(e) {
+	       				console.log(e);
+	       			}
+	       		});
+	   		promise.done(reloadListPromise);
+	    	promise.fail(promiseError);
+	   	});
+	   	
+	   	//promise 함수
+	   	function reloadListPromise() {
+	   		return new Promise(function(resolve, reject) {
+	   			$.ajax({
+	   				url: "CommentList.ajax",
+	   				data: {
+	   					boardNo: $('#boardNo').val()
+	   				},
+	   				success:function(resData){
+	   					$('#comment-list').empty();
+	   					makeCommnet(resData);
+	   				},
+	   				error: function(e) {
+	   					console.log(e);
+	   				}
+	   			});
+	   		});
+	   	}
+	   	
+	   	//promise 에러 함수
+	   	function promiseError(e) {
+	   		console.log("프로미스 에러..");
+	   		console.log(e);
+	   		return false;
+	   	}
+	   	
+	   	//댓글 목록 그리는 함수 
 	    function makeCommnet(result) {
 	    	var html = "";
 	    	$.each(result, function(index , obj){
@@ -243,15 +287,17 @@
 	    		} else {
 	    			html += '<div class="comment">';
 	    		}
-    			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
-   				html += 		'<b><span> '+ obj.nickname +'</span></b>';
-   				if($('#writer').text() == obj.nickname) {
+	   			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
+	  				html += 		'<b><span> '+ obj.nickname +'</span></b>';
+	  				if($('#writer').text() == obj.nickname) {
 					html += 	'<span class="text-info"> 작성자</span>';
-   				}
+	  				}
 				html += 		'<br>';
 				html += 		'<div class="comment-content">';
 				html += 			'<h5>'+ obj.content +'</h5>';
 				html += 			'<h6 style="color: rgb(180, 180, 180);">'+ obj.writeDate +'</h6>';
+				html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment" name="updateComment"><i class="fas fa-edit" ></i></a>';
+	               html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
 				html += 		'</div>';
 				html += 	'</div>';
 				html += 	'<hr class="my-1">';
@@ -259,7 +305,14 @@
 	    	$('#comment-list').append(html);
 	    }
 	    
-	    
+	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
+	   	if(currUser != id){
+	   		$('#editBtn').hide();
+	   		$('#deleteBtn').hide();
+	   	} else if(currUser == id){
+	   		$('#editBtn').show();
+	   		$('#deleteBtn').show();
+	   	}
     </script>
 </body>
 </html>

@@ -16,12 +16,18 @@
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- Murri -->
+<script src="https://cdn.jsdelivr.net/npm/muuri@0.9.0/dist/muuri.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
+<!-- Murri end -->
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif] -->
 
 </head>
 <body>
@@ -87,6 +93,7 @@
 						<div class="card-modal-header">
 							<span class="fas fa-quote-left card-modal-title-icon"></span>
 							<h3 class="card-modal-title" id="modaltitle"></h3>
+							<textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none; display:none;'></textarea>
 							<div class="card-modal-list-name">
 								<p class="card-in-list"></p>
 							</div>
@@ -105,40 +112,34 @@
 
 						<div class="card-modal-file">
 
-							<span class="fas fa-cloud card-modal-title-icon"></span>
-							<h3 class="card-modal-cloud">Cloud</h3>
+							<div id="cardModalFileList">
 
-							<div class="card-modal-list-cloudfile">
-								<div class="card-modal-list-cloud">
-									<a class=""> <span class="card-modal-filename">filenamsdawsdfasdfasdfasdfasfe.png</span>
-										<span class="card-modal-adddate">Added 2020.06.27 PM
-											8:38</span>
-									</a> <span class="card-modal-file-delete far fa-trash-alt"></span>
-								</div>
+								<span class="fas fa-cloud card-modal-title-icon"></span>
+								<h3 class="card-modal-cloud">Cloud</h3>
+	
+							
 							</div>
 
-							<div class="card-modal-list-cloudfile">
-								<p class="card-modal-list-cloud">
-									<a class=""> <span class="card-modal-filename">filename.zip</span>
-										<span class="card-modal-adddate">Added 2020.06.27 PM
-											8:38</span>
-									</a> <span class="card-modal-file-delete far fa-trash-alt"></span>
-								</p>
-							</div>
 
-							<form class="mt-2 file-upload">
+							<form id="kanbanFileInput" class="mt-2 file-upload" action="" method="POST" enctype="multipart/form-data">
 								<div class="input-group">
 									<div class="custom-file">
-										<input type="file" class="custom-file-input"
-											id="inputGroupFile04"> <label
-											class="custom-file-label" for="inputGroupFile04">Choose
-											file</label>
+										<input type="file" class="custom-file-input" id="kanbanFiles" name="kanbanFiles" multiple="multiple"> 
+											<label class="custom-file-label" for="inputGroupFile04">Choose file</label>
 									</div>
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button">Button</button>
+										<button id="kanbanFileInputBtn" class="btn btn-outline-secondary" type="button">Upload</button>
+									</div>
+									<!--  -->
+									<div class="input-group">
+										<input id="inputAllBoardListNo" name="allBoardListNo" value="" type="text" hidden/>
+										<input id="inputCardNo" name="cardNo" value="" type="text" hidden/>
+										<input id="inputTeamNo" name="teamNo" value="" type="text" hidden/>
 									</div>
 								</div>
 							</form>
+							
+							
 						</div>
 
 						<div class="card-modal-reply-list">
@@ -162,10 +163,12 @@
 										style="overflow: hidden; overflow-wrap: break-word; resize: none;"
 										placeholder="댓글입력"></textarea>
 									<button type="button"
-										class="btn waves-effect waves-light btn-sm btn-primary reply-done"
-										id="replydonebtn" style="display: none">Save</button>
+										class="btn waves-effect waves-light btn-primary reply-done"
+										id="replydonebtn">Save</button>
 								</div>
 							</div>
+							<div class="replymargin"></div>
+							<div class="reply-list"></div>
 						</div>
 					</div>
 				</div>
@@ -182,8 +185,7 @@
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
-						<h3
-							class="page-title text-truncate text-dark font-weight-medium mb-1"></h3>
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
@@ -218,32 +220,36 @@
 									<a class="kanban-list-menu far fa-trash-alt"
 										data-toggle="modal" data-target="#info-alert-modal"></a>
 
+									<div class="divForDragNDrop">
 
-									<div class="kanban-card-list btn-card-hover"
-										th:each="card : ${kanbancardlist}"
-										th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
-										<span class='icon-pencil active-card-icon'
-											style='position: relative;'></span>
-										<div class="kanban-card-element" data-toggle="modal"
-											data-target="#card-content" >
-											<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
-											<div class="kanban-card-badges">
-												<div class="kanban-card-badge" title="comments"
-													th:if="${card.commentcount >0}">
-													<span class="icon-bubble badge-icon"></span> <span
-														class="badge-text" th:text="${card.commentcount}"></span>
-												</div>
-												<div class="kanban-card-badge" title="file"
-													th:if="${card.fileCount >0}">
-													<span class="icon-paper-clip badge-icon"></span> <span
-														class="badge-text" th:text="${card.fileCount}"></span>
+										<div class="kanban-card-list btn-card-hover"
+											th:each="card : ${kanbancardlist}"
+											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
+											<span class='icon-pencil active-card-icon'
+												style='position: relative;'></span>
+											<div class="kanban-card-element" data-toggle="modal"
+												data-target="#card-content" >
+												<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+												<div class="kanban-card-badges">
+													<div class="kanban-card-badge" title="comments"
+														th:if="${card.commentcount >0}">
+														<span class="icon-bubble badge-icon"></span> <span
+															class="badge-text" th:text="${card.commentcount}"></span>
+													</div>
+													<div class="kanban-card-badge" title="file"
+														th:if="${card.fileCount >0}">
+														<span class="icon-paper-clip badge-icon"></span> <span
+															class="badge-text" th:text="${card.fileCount}"></span>
+													</div>
 												</div>
 											</div>
 										</div>
+									
 									</div>
+									
+									
 									<div class="kanban-card-add-list" id="addcardel">
-										<a class="kanban-card-add-el btn-light-my" id="addcard"
-											onclick="newtask(this)"><span class="icon">+</span><span
+										<a class="kanban-card-add-el btn-light-my" id="addcard"><span class="icon">+</span><span
 											class="kanban-card-add-text">Add Card</span></a>
 									</div>
 								</div>
