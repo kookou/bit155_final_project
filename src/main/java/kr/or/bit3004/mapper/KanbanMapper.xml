@@ -137,8 +137,12 @@
 		select b.comment_no, b.content, b.write_date, b.id, b.card_no , u.nickname, u.image
 		 from board_comment b
 		 inner join `user` u on b.id = u.id
-		 where card_no = #{cardNo};
+		 where card_no = #{cardNo} order by b.comment_no desc;
 	</select>
+
+	<update id="updateCardReply">
+	update board_comment set CONTENT = #{content} , write_date = now() where comment_no = #{commentNo};
+	</update>
 	
 	<insert id="insertKanbanUploadFile" parameterType="kr.or.bit3004.kanban.KanbanUpload">
 		INSERT INTO BOARD_FILE (
@@ -157,6 +161,5 @@
 						)
 					
 	</insert>
-
 	
 </mapper>

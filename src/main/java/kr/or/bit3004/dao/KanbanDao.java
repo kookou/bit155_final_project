@@ -51,5 +51,6 @@ public interface KanbanDao {
 	
 	
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
+	public void updateCardReply(String content, int commentNo);
 
 }

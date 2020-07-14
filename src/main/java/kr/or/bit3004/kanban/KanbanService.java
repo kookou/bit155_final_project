@@ -42,5 +42,6 @@ public interface KanbanService {
 	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request);
 	
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
+	public void updateCardReply(String content, int commentNo);
 
 }

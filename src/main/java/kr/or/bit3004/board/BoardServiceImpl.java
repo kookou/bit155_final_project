@@ -25,9 +25,18 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectBoardByNo(boardNo);
 	}
 	
+	//게시판 조회수 증가
+	public void updateReadCount(int boardNo) {
+		dao.updateReadCount(boardNo);
+	}
+	
 	//게시판 글쓰기
 	@Override
 	public void insertBoard(Board board) {
+//		dao.updateRefer(board);
+		int maxRefer = dao.getMaxRefer();
+		int refer = maxRefer + 1;
+		board.setRefer(refer);
 		dao.insertBoard(board);
 	}
 	
@@ -81,4 +90,40 @@ public class BoardServiceImpl implements BoardService{
 		dao.deleteBoard(boardNo);
 	}
 
+	//게시판 답글쓰기
+	@Override
+	public void insertReboard(Board board) {
+		System.out.println(board);
+		dao.updateReboardAddstep(board);
+		
+			//	System.out.println("리퍼"+dao.getMaxRefer());
+		//1.답글
+		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
+			//	System.out.println("getstep"+dao.getStep(currBoardInfo));
+		//2.위치
+		int step=dao.getStep(currBoardInfo);
+		//답글 insert
+		
+		if(step==0) {
+			System.out.println("step==0을탔따.");
+			int maxStep= dao.getMaxStep(currBoardInfo);
+			board.setStep(maxStep);
+		} else {
+			System.out.println("step=0이 아닌걸탔따.");
+			dao.updateStep(currBoardInfo);
+		}
+		
+		board.setDepth(currBoardInfo.getDepth()+1);
+		board.setRefer(currBoardInfo.getRefer());
+		dao.insertReboard(board);
+	}
+	
+	
 }
+
+
+
+
+
+
+

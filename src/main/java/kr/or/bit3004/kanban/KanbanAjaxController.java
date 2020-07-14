@@ -106,6 +106,10 @@ public class KanbanAjaxController {
 	public List<KanbanComment> getKanbanCommentList(int cardNo){
 		return service.getKanbanCommentList(cardNo);		
 	}
+	@RequestMapping("CardReplyUpdate.ajax")
+	public void kanbanCardReplyupdate(String content , int commentNo) {
+		service.updateCardReply(content, commentNo);
+	}
 
 	@RequestMapping(value="kanbanFilesUpload.ajax", method=RequestMethod.POST)
 	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request){
