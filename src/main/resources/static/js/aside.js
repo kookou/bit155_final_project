@@ -152,7 +152,6 @@ $('#sendInvitationBtn').click(function() {
 });
 
 //////////////////////////////////////////////////////////////////////////////////////// 페이지 이동
-
 $('#allBoardList').on('click', '.redirectBoard', function() {
 //	console.log($(this).find('.hiddenAllBoardListNo').val());
 	console.log($(this).find('i').attr('class'));

@@ -21,6 +21,8 @@ public class BoardController {
 	//게시판 목록보기
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo, int teamNo) {
+		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -41,7 +43,9 @@ public class BoardController {
 	
 	//게시판 글쓰기(Form)
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
-	public String insertBoardService(Model model, int teamNo) {
+	public String insertBoardService(Model model, int teamNo, int allBoardListNo) {
+		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
@@ -50,9 +54,10 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoardService(Board board){
+	public String insertBoardService(Board board, int teamNo){
+		System.out.println(board);
 		service.insertBoard(board);
-		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
+		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 
 	
