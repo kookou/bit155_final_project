@@ -4,27 +4,21 @@
 <mapper namespace="kr.or.bit3004.dao.BoardDao">
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.board.Board">
- 	 	select board_no, title, content, views, write_date, refer, depth, step, all_board_list_no, id,
-			(select count(*) from board_comment where board_no=b.board_no) as comment_count
-			  from ( 
-				SELECT * 
-				  FROM board_list
-				 ORDER BY refer DESC, step asc
-			) b 
-			
-			
- 
 
-        
-<!--         
-       select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.refer, b.depth, b.step, b.all_board_list_no, b.id, u.NICKNAME, a.team_no
-        from board_list b
-       inner join `user` u
-         on b.id = u.id
-       inner join all_board_list a
-          on b.all_board_list_no = a.all_board_list_no
-       where a.all_board_list_no=#{allBoardListNo} and a.team_no=#{teamNo}
-        order by b.board_no desc -->
+select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, NICKNAME, team_no, file_name,
+   (select count(*) from board_comment where board_no=b.board_no) as comment_count
+  from ( 
+   SELECT * 
+     FROM board_list
+    ORDER BY refer DESC, step asc
+   ) b
+inner join `user` u
+  on u.id = b.id
+inner join all_board_list a
+  on a.all_board_list_no = b.all_board_list_no
+left outer join board_file f
+  on f.board_no = b.board_no;	
+
         
 	</select> 
 	
