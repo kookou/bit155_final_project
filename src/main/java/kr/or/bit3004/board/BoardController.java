@@ -31,6 +31,7 @@ public class BoardController {
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
 	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo) {
+		service.updateReadCount(boardNo);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));

@@ -14,6 +14,9 @@ public interface BoardDao {
 	//게시판 상세보기
 	public Board selectBoardByNo(int boardNo);
 	
+	//게시판 조회수 증가
+	public void updateReadCount(int boardNo);
+	
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
@@ -22,6 +25,7 @@ public interface BoardDao {
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
+	
 	
 	//게시판 삭제하기
 	public int deleteBoard(int boardNo);

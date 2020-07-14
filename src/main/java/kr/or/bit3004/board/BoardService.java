@@ -11,6 +11,9 @@ public interface BoardService {
 	//게시판 상세보기
 	public Board selectBoardByBoardNo(int boardNo);
 	
+	//게시판 조회수 증가
+	public void updateReadCount(int boardNo);
+	
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	

@@ -25,6 +25,11 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectBoardByNo(boardNo);
 	}
 	
+	//게시판 조회수 증가
+	public void updateReadCount(int boardNo) {
+		dao.updateReadCount(boardNo);
+	}
+	
 	//게시판 글쓰기
 	@Override
 	public void insertBoard(Board board) {

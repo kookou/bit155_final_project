@@ -25,6 +25,13 @@
 		 where board_no=#{boardNo}  
 	</select>
 	
+	<!-- 조회수 증가 -->
+	<update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
+		update board_list 
+		   set views = views+1 
+		 where board_no=#{boardNo}
+	</update>
+	
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.board.Board">
 		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`) 
