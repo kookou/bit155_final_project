@@ -61,7 +61,7 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group">
-                                            	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요.">
+                                            	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
                                             </div>
                                             <div class="custom-file col-md-12">
                                                 <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
@@ -78,7 +78,7 @@
                                 </div>    
                                 <div class="form-actions">
                                     <div class="text-right">
-                                        <button type="submit" class="btn btn-info">등록</button>
+                                        <button type="submit" id="submitBtn" class="btn btn-info">등록</button>
                                         <button type="reset" class="btn btn-dark">초기화</button>
                                         <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1&teamNo=1">목록으로</a>
                                     </div>
@@ -107,6 +107,14 @@
 	       	lang: "ko-KR",               		// 한글 설정
 	       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
 	  	});
+ 		
+ 		//제목안쓰면 게시글 못쓰게 막기
+ 		$('#submitBtn').click(function(){
+ 			if($('#title').val() == ""){
+ 				swal('제목을 입력해주세요');
+ 				return false;
+ 			}
+ 		});
     </script>
 </body>
 </html>

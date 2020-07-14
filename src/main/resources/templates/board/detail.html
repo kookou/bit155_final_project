@@ -102,8 +102,8 @@
                                 <div style="float: left;">
                                     <a href="insertBoard.do?teamNo=1 " class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
                                     <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
+                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
+                                    <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
                                 </div>
                                 <div style="float: right;">
                                     <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1&teamNo=1">목록</a>
