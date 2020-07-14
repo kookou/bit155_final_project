@@ -153,8 +153,8 @@
                                 <div style="float: left;">
                                     <a href="insertBoard.do?teamNo=1" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
                                     <button type="button" class="btn btn-light btn-sm">답글</button>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
+                                    <a class="btn btn-light btn-sm" style="color: black;" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
+                                    <a class="btn btn-light btn-sm" style="color: black;" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
                                 </div>
                                 <div style="float: right;">
                                     <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1&teamNo=1">목록</a>
@@ -173,10 +173,11 @@
     
     <!-- 여기서부터 script -->
     <script>
-    /*<![CDATA[*/
-		var currUser = '[[${session.currentUser.id}]]';
-	/*]]*/
-
+	    /*<![CDATA[*/
+			var currUser = '[[${session.currentUser.id}]]';
+	    	var id = '[[${selectBoard.id}]]';
+		/*]]*/
+		
 	    //댓글 목록보기
 		$.ajax({
 			url: "CommentList.ajax",
@@ -190,14 +191,14 @@
 				console.log(e);
 			}
 		});
-    
-    	//댓글 등록
-    	$('#commWrite').click(function(){
-    		if($('#commentTextarea').val() == ""){
-    			swal('내용을 입력하세요');
-    			return false;
-    		}
-    		var promise = 
+	   
+	   	//댓글 등록
+	   	$('#commWrite').click(function(){
+	   		if($('#commentTextarea').val() == ""){
+	   			swal('내용을 입력하세요');
+	   			return false;
+	   		}
+	   		var promise = 
 	    		$.ajax({
 	    			url: "InsertComment.ajax",
 	    			data: {
@@ -209,13 +210,13 @@
 	    				$('#commentTextarea').val("");
 	    			}
 	    		});
-    		promise.done(reloadListPromise);
+	   		promise.done(reloadListPromise);
 	    	promise.fail(promiseError);
-    	});
-    	
-    	//댓글삭제 
-    	$('#comment-list').on('click', '.deleteComment', function(){
-    		var promise = 
+	   	});
+	   	
+	   	//댓글삭제 
+	   	$('#comment-list').on('click', '.deleteComment', function(){
+	   		var promise = 
 	   			$.ajax({
 	       			url: "DeleteComment.ajax",
 	       			data: {
@@ -223,13 +224,13 @@
 	       				commentNo: $(this).data("value")
 	       			}
 	       		});
-    		promise.done(reloadListPromise);
+	   		promise.done(reloadListPromise);
 	    	promise.fail(promiseError);
 	    	console.log($(this).data("value"));
-    	});
-    	
-    	//댓글수정
-    	$('#comment-list').on('click', '.updateComment', function(){
+	   	});
+	   	
+	   	//댓글수정
+	   	$('#comment-list').on('click', '.updateComment', function(){
 			
 				//클릭한 a태그의 class를 cancelUpdate로 바꾸고 아이콘바꾸기
 				$(this).attr('class', 'cancleUpdate');
@@ -278,51 +279,51 @@
 		    		promise.done(reloadListPromise);
 			    	promise.fail(promiseError);
 				});
-    	});
-    	
-    	//수정취소 눌렀을경우 리스트 다시 불러오기
-    	$('#comment-list').on('click', '.cancleUpdate', function(){
-    		var promise = 
-    			$.ajax({
-        			url: "CommentList.ajax",
-        			data: {
-        				boardNo: $('#boardNo').val()
-        			},
-        			error: function(e) {
-        				console.log(e);
-        			}
-        		});
-    		promise.done(reloadListPromise);
+	   	});
+	   	
+	   	//수정취소 눌렀을경우 리스트 다시 불러오기
+	   	$('#comment-list').on('click', '.cancleUpdate', function(){
+	   		var promise = 
+	   			$.ajax({
+	       			url: "CommentList.ajax",
+	       			data: {
+	       				boardNo: $('#boardNo').val()
+	       			},
+	       			error: function(e) {
+	       				console.log(e);
+	       			}
+	       		});
+	   		promise.done(reloadListPromise);
 	    	promise.fail(promiseError);
-    	});
-    	
-    	//promise 함수
-    	function reloadListPromise() {
-    		return new Promise(function(resolve, reject) {
-    			$.ajax({
-    				url: "CommentList.ajax",
-    				data: {
-    					boardNo: $('#boardNo').val()
-    				},
-    				success:function(resData){
-    					$('#comment-list').empty();
-    					makeCommnet(resData);
-    				},
-    				error: function(e) {
-    					console.log(e);
-    				}
-    			});
-    		});
-    	}
-    	
-    	//promise 에러 함수
-    	function promiseError(e) {
-    		console.log("프로미스 에러..");
-    		console.log(e);
-    		return false;
-    	}
-    	
-    	//댓글 목록 그리는 함수 
+	   	});
+	   	
+	   	//promise 함수
+	   	function reloadListPromise() {
+	   		return new Promise(function(resolve, reject) {
+	   			$.ajax({
+	   				url: "CommentList.ajax",
+	   				data: {
+	   					boardNo: $('#boardNo').val()
+	   				},
+	   				success:function(resData){
+	   					$('#comment-list').empty();
+	   					makeCommnet(resData);
+	   				},
+	   				error: function(e) {
+	   					console.log(e);
+	   				}
+	   			});
+	   		});
+	   	}
+	   	
+	   	//promise 에러 함수
+	   	function promiseError(e) {
+	   		console.log("프로미스 에러..");
+	   		console.log(e);
+	   		return false;
+	   	}
+	   	
+	   	//댓글 목록 그리는 함수 
 	    function makeCommnet(result) {
 	    	var html = "";
 	    	$.each(result, function(index , obj){
@@ -331,17 +332,17 @@
 	    		} else {
 	    			html += '<div class="comment">';
 	    		}
-    			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
-   				html += 		'<b><span> '+ obj.nickname +'</span></b>';
-   				if($('#writer').text() == obj.nickname) {
+	   			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
+	  				html += 		'<b><span> '+ obj.nickname +'</span></b>';
+	  				if($('#writer').text() == obj.nickname) {
 					html += 	'<span class="text-info"> 작성자</span>';
-   				}
+	  				}
 				html += 		'<br>';
 				html += 		'<div class="comment-content">';
 				html += 			'<h5>'+ obj.content +'</h5>';
 				html += 			'<h6 style="color: rgb(180, 180, 180);">'+ obj.writeDate +'</h6>';
 				html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment" name="updateComment"><i class="fas fa-edit" ></i></a>';
-                html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
+	               html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
 				html += 		'</div>';
 				html += 	'</div>';
 				html += 	'<hr class="my-1">';
@@ -349,7 +350,14 @@
 	    	$('#comment-list').append(html);
 	    }
 	    
-	    
+	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
+	   	if(currUser != id){
+	   		$('#editBtn').hide();
+	   		$('#deleteBtn').hide();
+	   	} else if(currUser == id){
+	   		$('#editBtn').show();
+	   		$('#deleteBtn').show();
+	   	}
     </script>
 </body>
 </html>
