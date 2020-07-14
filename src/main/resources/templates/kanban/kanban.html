@@ -17,10 +17,11 @@
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<!-- muuri -->
+<!-- Murri -->
 <script src="https://cdn.jsdelivr.net/npm/muuri@0.9.0/dist/muuri.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>ㅅ
-<!-- muuri -->
+<script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
+<!-- Murri end -->
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -111,40 +112,34 @@
 
 						<div class="card-modal-file">
 
-							<span class="fas fa-cloud card-modal-title-icon"></span>
-							<h3 class="card-modal-cloud">Cloud</h3>
+							<div id="cardModalFileList">
 
-							<div class="card-modal-list-cloudfile">
-								<div class="card-modal-list-cloud">
-									<a class=""> <span class="card-modal-filename">filenamsdawsdfasdfasdfasdfasfe.png</span>
-										<span class="card-modal-adddate">Added 2020.06.27 PM
-											8:38</span>
-									</a> <span class="card-modal-file-delete far fa-trash-alt"></span>
-								</div>
+								<span class="fas fa-cloud card-modal-title-icon"></span>
+								<h3 class="card-modal-cloud">Cloud</h3>
+	
+							
 							</div>
 
-							<div class="card-modal-list-cloudfile">
-								<p class="card-modal-list-cloud">
-									<a class=""> <span class="card-modal-filename">filename.zip</span>
-										<span class="card-modal-adddate">Added 2020.06.27 PM
-											8:38</span>
-									</a> <span class="card-modal-file-delete far fa-trash-alt"></span>
-								</p>
-							</div>
 
-							<form class="mt-2 file-upload">
+							<form id="kanbanFileInput" class="mt-2 file-upload" action="" method="POST" enctype="multipart/form-data">
 								<div class="input-group">
 									<div class="custom-file">
-										<input type="file" class="custom-file-input"
-											id="inputGroupFile04"> <label
-											class="custom-file-label" for="inputGroupFile04">Choose
-											file</label>
+										<input type="file" class="custom-file-input" id="kanbanFiles" name="kanbanFiles" multiple="multiple"> 
+											<label class="custom-file-label" for="inputGroupFile04">Choose file</label>
 									</div>
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button">Button</button>
+										<button id="kanbanFileInputBtn" class="btn btn-outline-secondary" type="button">Upload</button>
+									</div>
+									<!--  -->
+									<div class="input-group">
+										<input id="inputAllBoardListNo" name="allBoardListNo" value="" type="text" hidden/>
+										<input id="inputCardNo" name="cardNo" value="" type="text" hidden/>
+										<input id="inputTeamNo" name="teamNo" value="" type="text" hidden/>
 									</div>
 								</div>
 							</form>
+							
+							
 						</div>
 
 						<div class="card-modal-reply-list">

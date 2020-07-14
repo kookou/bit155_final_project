@@ -17,13 +17,13 @@ public class Oauth2Controller {
 	}
 	
 	@GetMapping({"/loginSuccess", "/hello"})
-	public String loginSuccess() {
+	public String loginSuccess() { // 이거 지금 소용없음
 		return "hello";
 	}
 	
 	@GetMapping({"/loginFailure"})
 	public String loginFailure() {
-		return "loginFailure";
+		return "loginFailure"; // 이거 페이지 없음
 	}
 	
 	

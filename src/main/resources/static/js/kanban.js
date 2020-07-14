@@ -1,68 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//     console.log("되나???????")
-//     var docElem = document.documentElement;
-//     var kanban = document.querySelector('.kanban-canvas');
-//     var board = kanban.querySelector('.kanban-list-wrapper');
-//     var itemContainers = Array.prototype.slice.call(kanban.querySelectorAll('.kanban-card-list'));
-//     var columnGrids = [];
-//     var dragCounter = 0;
-//     var boardGrid;
-  
-//     itemContainers.forEach(function (container) {
-  
-//       var muuri = new Muuri(container, {
-//         items: '.kanban-card-form',
-//         layoutDuration: 400,
-//         layoutEasing: 'ease',
-//         dragEnabled: true,
-//         dragSort: function () {
-//           return columnGrids;
-//         },
-//         dragSortInterval: 0,
-//         dragContainer: document.body,
-//         dragReleaseDuration: 400,
-//         dragReleaseEasing: 'ease'
-//       })
-//       .on('dragStart', function (item) {
-//         ++dragCounter;
-//         docElem.classList.add('dragging');
-//         item.getElement().style.width = item.getWidth() + 'px';
-//         item.getElement().style.height = item.getHeight() + 'px';
-//       })
-//       .on('dragEnd', function (item) {
-//         if (--dragCounter < 1) {
-//           docElem.classList.remove('dragging');
-//         }
-//       })
-//       .on('dragReleaseEnd', function (item) {
-//         item.getElement().style.width = '';
-//         item.getElement().style.height = '';
-//         columnGrids.forEach(function (muuri) {
-//           muuri.refreshItems();
-//         });
-//       })
-//       .on('layoutStart', function () {
-//         boardGrid.refreshItems().layout();
-//       });
-  
-//       columnGrids.push(muuri);
-  
-//     });
-  
-//     boardGrid = new Muuri(board, {
-//       layoutDuration: 400,
-//       layoutEasing: 'ease',
-//       dragEnabled: true,
-//       dragSortInterval: 0,
-//       dragStartPredicate: {
-//         handle: '.kanban-list-header'
-//       },
-//       dragReleaseDuration: 400,
-//       dragReleaseEasing: 'ease'
-//     });
-  
-// });
-//var id = currUser;
 
 
 var addcardbtn = 
@@ -88,6 +23,31 @@ var addlistTag =
         + "</div>"
     + "</div>"
 + "</div>";
+
+function addUploadFileTag(parent, fileName){
+	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
+						   +"<p class='card-modal-list-cloud'>"
+							   +"<a class=''>"
+								   +"<span class='card-modal-filename'>"
+								   + fileName
+								   +"</span>"
+							   +"</a>"
+							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
+						   +"</p>"
+					   +"</div>";	
+	parent.append(uploadFileTag);
+}
+
+
+	
+	
+
+	 
+	
+	
+
+
+
 
 	
 var boardName =""
@@ -499,7 +459,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
-    
+
 
      
     //카드 내용 유무 체크 후 뿌려줌 
@@ -787,6 +747,50 @@ $('.card-modal-list-description').on('click',function(){
 	 
 })
 
+//모달 카드 파일 업로드
+$('#kanbanFileInputBtn').on('click',function(){
+	 console.log("kanbanFileInputBtn 클릭");
+	 
+	 let allBoardListNo = $('#allBoardListNo').val();
+	 
+	 $('#inputAllBoardListNo').val(allBoardListNo);
+	 $('#inputCardNo').val(cardNo);
+	 $('#inputTeamNo').val(teamNo);
+	 
+	 let formData = new FormData($('#kanbanFileInput')[0]);
+	 
+	 $.ajax({ 
+		 		type: "POST", 
+		 		enctype: 'multipart/form-data', // 필수 
+		 		url: 'kanbanFilesUpload.ajax', 
+		 		data: formData,  // 필수
+		 		processData: false, // 필수 
+		 		contentType: false, // 필수 
+		 		cache: false, 
+		 		success: function(resData) {
+		 			if((resData != null) && (resData.length > 0)){
+		 				console.log(resData.length);
+		 				console.log("파일 업로드 성공");	
+		 				
+		 				$.each(resData, function(index, fileName){
+//		 					$('#cardModalFileList').append
+		 					addUploadFileTag($('#cardModalFileList'), fileName);
+		 				});
+		 				
+		 			}else{
+		 				console.log("업로드된 파일이 없습니다");
+		 			}
+		 			
+		 			
+		 			console.log(resData);
+		 		}, 
+		 		error: function (e) { 
+		 			console.log(에러발생)
+		 		} 
+		 	});
+
+	 
+})
 
 
 

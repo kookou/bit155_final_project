@@ -16,4 +16,19 @@
 		insert into board_comment (`content`, `write_date`, `id`, `board_no`) 
 		values(#{content}, now(), #{id}, #{boardNo})
 	</insert>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment" parameterType="kr.or.bit3004.comment.BoardComment">
+		delete 
+		  from board_comment
+   		 where board_no=#{boardNo} and comment_no=#{commentNo}
+	</delete>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="updateComment" parameterType="kr.or.bit3004.comment.BoardComment">
+		update board_comment
+		   set content=#{content}
+		 where board_no=#{boardNo} and comment_no=#{commentNo}
+	</update>
+	
 </mapper>
