@@ -493,6 +493,8 @@ $('#kanban').on('click', '.kanban-card-element', function() {
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
      console.log(cardNo)
+    
+     
      //카드내용
      var title =""
      var content =""
@@ -698,18 +700,32 @@ $('.card-modal-list-description').on('click',function(){
 $('#kanbanFileInputBtn').on('click',function(){
 	 console.log("kanbanFileInputBtn 클릭");
 	 
-	 let formData = new FormData($('#kanbanFileInput')[0]); 
+	 let allBoardListNo = $('#allBoardListNo').val();
+	 
+	 $('#inputAllBoardListNo').val(allBoardListNo);
+	 $('#inputCardNo').val(cardNo);
+	 
+	 let formData = new FormData($('#kanbanFileInput')[0]);
 	 
 	 $.ajax({ 
 		 		type: "POST", 
 		 		enctype: 'multipart/form-data', // 필수 
 		 		url: 'kanbanFilesUpload.ajax', 
-		 		data: formData, // 필수
+		 		data: formData,  // 필수
 		 		processData: false, // 필수 
 		 		contentType: false, // 필수 
 		 		cache: false, 
 		 		success: function(resData) {
-		 			console.log("파일 업로드 성공");
+		 			if((resData != null) && (resData.length > 0)){
+		 				console.log(resData.length);
+		 				console.log("파일 업로드 성공");	
+		 				
+		 				
+		 			}else{
+		 				console.log("업로드된 파일이 없습니다");
+		 			}
+		 			
+		 			
 		 			console.log(resData);
 		 		}, 
 		 		error: function (e) { 

@@ -6,6 +6,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.dao.KanbanDao;
+import kr.or.bit3004.kanban.KanbanUpload;
 
 @Service
 public class KanbanServiceImpl implements KanbanService {
@@ -126,18 +128,28 @@ public class KanbanServiceImpl implements KanbanService {
 	@Override
 	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request) {
 		System.out.println("= kanbanFilesUpload Impl =");
+		
 		List<MultipartFile> fileList = request.getFiles("kanbanFiles");
+		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
+		int cardNo = Integer.parseInt(request.getParameter("cardNo"));
+				
 		List<String> fileNames = new ArrayList<String>(); //		ajax return용 업로드파일목록
 		
-		System.out.println("fileListSize : "+fileList.size());
+//		System.out.println("fileListSize : "+fileList.size());
 		
 		if(fileList != null && fileList.size() >0) {
 			for(MultipartFile multiFile : fileList) {
-				String fileName = multiFile.getOriginalFilename();
+				String originFileName = multiFile.getOriginalFilename();
+				
+				UUID uuid = UUID.randomUUID();				
+				String fileName = uuid.toString() + originFileName;
+//				System.out.println(fileName);
+				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud"; 
 				String filePath = path + "\\" + fileName;
+				KanbanUpload kanbanUpload = new KanbanUpload();
 				
-				if((!fileName.equals("")) || (multiFile.getSize() > 0)) { // 파일 업로드					
+				if((!fileName.equals("")) && (multiFile.getSize() > 0)) { // 파일 업로드					
 					FileOutputStream fs = null;
 					
 					try {
@@ -156,11 +168,27 @@ public class KanbanServiceImpl implements KanbanService {
 							e.getMessage();
 						}
 					} // finally end					
-				} // if end
+				} else{ // if end
+					System.out.println("제목이 없거나 빈 파일입니다.");
+					continue;
+				}
+				
+				
+				// dto만들어서 이렇게 넣을거면 걍 HashMap으로 넣는거랑 뭐가 다르지...
+				kanbanUpload.setOriginFileName(originFileName);
+				kanbanUpload.setFileName(fileName); 
+				kanbanUpload.setFileSize(multiFile.getSize());
+				kanbanUpload.setAllBoardListNo(allBoardListNo);
+				kanbanUpload.setCardNo(cardNo);
+				
+				
 				
 //				여기에 dao 불러서 file을 DB에 추가하는 내용 들어가야함
+				dao.insertKanbanUploadFile(kanbanUpload);
 				
-				fileNames.add(fileName); //파일명 별도관리 (ajax return)
+				 //파일명 별도관리 (ajax return). 
+				//근데 이름만 보낼게 아니라 파일 객체를 리스트로 보내야할 것 같은데..
+				fileNames.add(fileName);
 			
 			} // for end
 		} // if end		

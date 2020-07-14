@@ -9,8 +9,9 @@ import lombok.ToString;
 @ToString
 public class KanbanUpload {
 	private int fileNo;
+	private String originFileName;
 	private String fileName;
-	private int fileSize;
+	private long fileSize;
 	private int allBoardListNo;
 	private int cardNo;
 	
