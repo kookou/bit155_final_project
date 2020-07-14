@@ -1,5 +1,6 @@
 package kr.or.bit3004.kanban;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
@@ -132,7 +133,9 @@ public class KanbanServiceImpl implements KanbanService {
 		List<MultipartFile> fileList = request.getFiles("kanbanFiles");
 		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
 		int cardNo = Integer.parseInt(request.getParameter("cardNo"));
-				
+		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
+		System.out.println(teamNo);
+		
 		List<String> fileNames = new ArrayList<String>(); //		ajax return용 업로드파일목록
 		
 //		System.out.println("fileListSize : "+fileList.size());
@@ -145,7 +148,22 @@ public class KanbanServiceImpl implements KanbanService {
 				String fileName = uuid.toString() + originFileName;
 //				System.out.println(fileName);
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud"; 
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
+				File folder = new File(path);
+				
+				//폴더가 없을경우 폴더 생성하기
+				if(!folder.exists()) {
+					try {
+						folder.mkdir();
+						
+					} catch (Exception e) {
+						System.out.println("폴더 생성 실패");
+						e.getMessage();
+					}
+					System.out.println("팀 폴더가 생성되었습니다.");
+				}
+				
+				
 				String filePath = path + "\\" + fileName;
 				KanbanUpload kanbanUpload = new KanbanUpload();
 				
@@ -188,7 +206,7 @@ public class KanbanServiceImpl implements KanbanService {
 				
 				 //파일명 별도관리 (ajax return). 
 				//근데 이름만 보낼게 아니라 파일 객체를 리스트로 보내야할 것 같은데..
-				fileNames.add(fileName);
+				fileNames.add(originFileName);
 			
 			} // for end
 		} // if end		

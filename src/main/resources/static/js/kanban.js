@@ -89,6 +89,31 @@ var addlistTag =
     + "</div>"
 + "</div>";
 
+function addUploadFileTag(parent, fileName){
+	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
+						   +"<p class='card-modal-list-cloud'>"
+							   +"<a class=''>"
+								   +"<span class='card-modal-filename'>"
+								   + fileName
+								   +"</span>"
+							   +"</a>"
+							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
+						   +"</p>"
+					   +"</div>";	
+	parent.append(uploadFileTag);
+}
+
+
+	
+	
+
+	 
+	
+	
+
+
+
+
 	
 var boardName =""
 
@@ -704,6 +729,7 @@ $('#kanbanFileInputBtn').on('click',function(){
 	 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
+	 $('#inputTeamNo').val(teamNo);
 	 
 	 let formData = new FormData($('#kanbanFileInput')[0]);
 	 
@@ -720,6 +746,10 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 				console.log(resData.length);
 		 				console.log("파일 업로드 성공");	
 		 				
+		 				$.each(resData, function(index, fileName){
+//		 					$('#cardModalFileList').append
+		 					addUploadFileTag($('#cardModalFileList'), fileName);
+		 				});
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
