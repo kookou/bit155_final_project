@@ -24,7 +24,7 @@
 <!-- datatablecss -->
 <link href="assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script type="text/javascript">
+ <script type="text/javascript">
     var lang_kor = {
            "decimal" : "",
            "emptyTable" : "데이터가 없습니다.",
@@ -69,7 +69,7 @@
       }); 
       }); 
       
-   </script>
+   </script> 
 </head>
 
 <body>
@@ -117,10 +117,18 @@
                                     </thead>
                                     <tbody>
                                          <tr th:each="board:${boardList}">
-                                         <td style="width:15%; text-align: center;" th:text="${board.nickname}"></td>
-                                         <td style="width:55%;"><a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=1)}" th:text="${board.title}"></a></td>
-                                         <td style="width:20%; text-align: center;" th:text="${board.writeDate}"></td>
-                                         <td style="width:10%; text-align: center;" th:text="${board.views}"></td>
+	                                         <td style="width:15%; text-align: center;" th:text="${board.nickname}"></td>
+	                                         <td style="width:55%;">
+                                   		<!-- 	 <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
+	                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
+	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=1)}" th:text="${board.title}"></a>
+	                                         	<!-- boardFile이 존재하는 경우에는 이미지를 붙여준다 -->
+	                                         	<!-- <i class="fas fa-paperclip" th:if="${!empty board.boardFile}"></i> -->
+	                                         	<!-- comment cnt가 존재하는 경우 -->
+	                                         	 <a th:if="${board.commentCount }" th:text="|[${board.commentCount}]|"></a> 
+	                                         </td>
+	                                         <td style="width:20%; text-align: center;" th:text="${board.writeDate}"></td>
+	                                         <td style="width:10%; text-align: center;" th:text="${board.views}"></td>
                                          </tr>
                                     </tbody>
                                 </table>

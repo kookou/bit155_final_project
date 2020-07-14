@@ -22,4 +22,8 @@ public interface BoardService {
 	
 	//게시판 삭제하기
 	public void deleteBoard(int boardNo);
+	
+	//게시판 답글쓰기
+	public void insertReboard(Board board);
+
 }
