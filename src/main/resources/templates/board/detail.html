@@ -77,9 +77,7 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead">
-                                                        <span th:text="${selectBoard.content}"></span>
-                                                    </p>
+                                                    <p class="lead " th:text="${selectBoard.content}"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
@@ -137,7 +135,7 @@
                                                     </div>
                                                     <div id="comment-writeForm" style="border: 1px solid silver;">
                                                         <div style="padding: 10px 10px 0px 15px;"></div>
-                                                        <textarea class="form-control autosize" name="comment" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
+                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
                                                         <div style="padding: 0px 10px 10px 10px;">
                                                             <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm" id="commWrite">등록</button>
                                                         </div>
