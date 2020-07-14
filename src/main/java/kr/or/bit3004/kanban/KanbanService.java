@@ -37,5 +37,6 @@ public interface KanbanService {
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
+	public void updateCardReply(String content, int commentNo);
 
 }

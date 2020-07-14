@@ -102,6 +102,10 @@ public class KanbanAjaxController {
 		return service.getKanbanCommentList(cardNo);
 		
 	}
+	@RequestMapping("CardReplyUpdate.ajax")
+	public void kanbanCardReplyupdate(String content , int commentNo) {
+		service.updateCardReply(content, commentNo);
+	}
 
 }
  

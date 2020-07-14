@@ -119,5 +119,10 @@ public class KanbanServiceImpl implements KanbanService {
 	public List<KanbanComment> getKanbanCommentList(int cardNo){
 		return dao.getKanbanCommentList(cardNo);
 	}
+	
+	@Override
+	public void updateCardReply(String content, int commentNo) {
+		dao.updateCardReply(content, commentNo);
+	}
 
 }
