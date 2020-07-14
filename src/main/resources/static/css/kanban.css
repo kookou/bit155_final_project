@@ -371,7 +371,7 @@ div {
     font-size: 16px;
    
     color: rgb(42, 40, 67);
-    display: block;
+
     word-wrap: break-word;
     
 }
@@ -427,7 +427,11 @@ a {
     
 }
 .replymargin{
+	
 	clear: both;
+}
+.reply-list{
+	margin-top: 16px;
 }
 .card-modal-reply-username{
     font-size: 16px;
