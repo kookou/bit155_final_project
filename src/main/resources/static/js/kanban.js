@@ -40,6 +40,17 @@ function addUploadFileTag(parent, fileName){
 	parent.append(uploadFileTag);
 }
 
+function addCardFileCountTag(parent, fileCount){
+	let cardFileCountIcon = "<div class='kanban-card-badge' title='file'>"
+								+"<span class='icon-paper-clip badge-icon'></span>"
+								+"<span class='badge-text'>"
+								+"</span>"
+							+"</div>";
+}
+
+
+	
+ 
 
 	
 	
@@ -754,10 +765,13 @@ $('.card-modal-list-description').on('click',function(){
 //모달 카드 파일 업로드
 $('#kanbanFileInputBtn').on('click',function(){
 	 console.log("kanbanFileInputBtn 클릭");
-	 console.log($('[data-cardno='+cardNo+']').find('[title=file]'));
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
 	 let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
+	 let cardBadges = $('[data-cardno='+cardNo+']').find('.kanban-card-badges');
+	 console.log(cardBadges);
+	 
+	 
 	 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
@@ -782,7 +796,12 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 					addUploadFileTag($('#cardModalFileList'), fileName);
 		 				});
 		 				
-		 				fileCount.text(Number(fileCount.text()) + resData.length);
+		 				if(fileCount.text() != ""){			 				
+			 				fileCount.text(Number(fileCount.text()) + resData.length);
+		 				}else{
+		 					addCardFileCountTag( cardBadges, resData.length)
+		 				}
+
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
