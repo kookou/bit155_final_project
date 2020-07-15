@@ -12,6 +12,7 @@ public class KanbanUpload {
 	private String originFileName;
 	private String fileName;
 	private long fileSize;
+	private String filePath;
 	private int allBoardListNo;
 	private int cardNo;
 	

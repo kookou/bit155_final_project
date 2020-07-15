@@ -149,6 +149,7 @@
 								ORIGIN_FILE_NAME,	
 								FILE_NAME,
 								FILE_SIZE,
+								FILE_PATH,
 								ALL_BOARD_LIST_NO,
 								CARD_NO	
 								)
@@ -156,6 +157,7 @@
 						#{originFileName},
 						#{fileName},
 						#{fileSize},
+						#{filePath},
 						#{allBoardListNo},
 						#{cardNo}	
 						)

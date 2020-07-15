@@ -143,7 +143,6 @@ public class KanbanServiceImpl implements KanbanService {
 		
 		List<KanbanUpload> returnFileList = new ArrayList<KanbanUpload>(); //		ajax return용 업로드파일목록
 		
-//		System.out.println("fileListSize : "+fileList.size());
 		
 		if(fileList != null && fileList.size() >0) {
 			for(MultipartFile multiFile : fileList) {
@@ -151,7 +150,6 @@ public class KanbanServiceImpl implements KanbanService {
 				
 				UUID uuid = UUID.randomUUID();				
 				String fileName = uuid.toString() + originFileName;
-//				System.out.println(fileName);
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
@@ -201,6 +199,7 @@ public class KanbanServiceImpl implements KanbanService {
 				kanbanUpload.setOriginFileName(originFileName);
 				kanbanUpload.setFileName(fileName); 
 				kanbanUpload.setFileSize(multiFile.getSize());
+				kanbanUpload.setFilePath(filePath);
 				kanbanUpload.setAllBoardListNo(allBoardListNo);
 				kanbanUpload.setCardNo(cardNo);
 				
