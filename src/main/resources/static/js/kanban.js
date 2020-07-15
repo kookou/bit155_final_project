@@ -36,21 +36,9 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 
 function addUploadFileTag(parent, fileName, fileNo){
 	
-//	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
-//						   +"<p class='card-modal-list-cloud'>"
-//							   +"<a class=''>"
-//								   +"<span class='card-modal-filename'>"
-//								   + fileName
-//								   +"</span>"
-//							   +"</a>"
-//							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
-//						   +"</p>"
-//					   +"</div>";	
-	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(fileName);
 	parent.find('.card-modal-file-delete').last().attr('fileNo', fileNo);
-	console.log(parent.find('.card-modal-file-delete').last());
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -891,17 +879,19 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 		contentType: false, // 필수 
 		 		cache: false, 
 		 		success: function(resData) { // 여기 resData 파일 객체 가져오는걸로 바꿔야함
-		 			if((resData != null) && (resData.length > 0)){
+		 			if(resData.length > 0){
 		 				console.log(resData.length);
 		 				console.log("파일 업로드 성공");	
 		 				
-		 				$.each(resData, function(index, fileName){
-		 					addUploadFileTag($('#cardModalFileList'), fileName);
+		 				$.each(resData, function(index, item){
+		 					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
 		 				});
 		 				
+		 				cardFilecount += resData.length;
 		 				
+//		 				일단 주석처리 Sunn
 		 				///////////////// 다시 셀렉트 ////////////////////
-
+//
 //		 				 $.ajax({ 
 //								url: "CardContentSelect.ajax",
 //								data: {
@@ -918,8 +908,7 @@ $('#kanbanFileInputBtn').on('click',function(){
 //									cardFilecount = cardFile;
 //								} 
 //							});
-		 				 
-		 				 
+		 				 		 				 
 
 		 				 // input label 비우기
 		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
