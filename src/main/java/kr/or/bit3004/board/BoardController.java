@@ -36,11 +36,12 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo,int allBoardListNo,int refer) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo,int allBoardListNo) {
 		service.updateReadCount(boardNo);
 		model.addAttribute("teamNo", teamNo);
+		//model.addAttribute("boardNo", boardNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
-		model.addAttribute("refer",refer);
+		//model.addAttribute("refer",refer);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -76,7 +77,8 @@ public class BoardController {
 		/*
 		 * System.out.println("보드넘"+boardNo); model.addAttribute("boardNo", boardNo);
 		 * //삭제각
-		 */		model.addAttribute("teamNo", teamNo);
+		 */	
+		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 	//	model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
@@ -87,7 +89,7 @@ public class BoardController {
 	
 	//게시판 답글쓰기
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.POST)
-	public String insertReboardService(Board board, int teamNo,int boardNo){
+	public String insertReboardService(Board board, int teamNo){
 		System.out.println(board);
 		service.insertReboard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
