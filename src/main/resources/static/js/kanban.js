@@ -761,6 +761,9 @@ $('#card-content').on('hide.bs.modal', function () {
 	
 	if(cardFilecount > 0 && cardCommentcount == 0){
 		console.log("파일 n / 코멘트 0")
+		fileElement.empty();
+		fileElement.append(fileDiv);
+		fileElement.addClass('kanban-card-badge');
 		commentElement.empty();
 		commentElement.removeClass('kanban-card-badge')
 		return;
@@ -768,6 +771,9 @@ $('#card-content').on('hide.bs.modal', function () {
 	
 	if(cardFilecount == 0 && cardCommentcount > 0){
 		console.log("파일 0 / 코멘트 n")
+		commentElement.empty();
+		commentElement.append(commentDiv);
+		commentElement.addClass('kanban-card-badge')
 		fileElement.empty();
 		fileElement.removeClass('kanban-card-badge')
 		return;
