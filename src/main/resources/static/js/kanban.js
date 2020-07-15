@@ -540,9 +540,12 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 			
 				console.log("file select 완료");
 				console.log(resData);
+				
+				$('#cardModalFileList').empty();
 
 				$.each(resData, function(index, item){
 					//여기 작업하고 있었음 파일 목록 뿌리기
+					addUploadFileTag($('#cardModalFileList'), item.originFileName);
 				});
 				
 			} 
