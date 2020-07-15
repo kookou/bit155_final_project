@@ -30,13 +30,17 @@ public class BoardController {
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		System.out.println();
 		return "board/list";
 	}
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo,int allBoardListNo,int refer) {
 		service.updateReadCount(boardNo);
+		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("allBoardListNo", allBoardListNo);
+		model.addAttribute("refer",refer);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -67,8 +71,14 @@ public class BoardController {
 	
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
-	public String insertReboardService(Model model,int boardNo, int teamNo) {
-		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
+	//public String insertReboardService(Model model,int boardNo, int teamNo,int allBoardListNo) {
+	public String insertReboardService(Model model, int teamNo,int allBoardListNo) {
+		/*
+		 * System.out.println("보드넘"+boardNo); model.addAttribute("boardNo", boardNo);
+		 * //삭제각
+		 */		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("allBoardListNo", allBoardListNo);
+	//	model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
@@ -77,9 +87,10 @@ public class BoardController {
 	
 	//게시판 답글쓰기
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.POST)
-	public String insertReboardService(Board board){
+	public String insertReboardService(Board board, int teamNo,int boardNo){
+		System.out.println(board);
 		service.insertReboard(board);
-		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
+		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	
 	//게시판 수정하기(Form)
