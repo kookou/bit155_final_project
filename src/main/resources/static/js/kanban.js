@@ -891,6 +891,8 @@ $('#kanbanFileInputBtn').on('click',function(){
 									cardFilecount = cardFile;
 								} 
 							});
+		 				 // input label 비우기
+		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
@@ -901,7 +903,35 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 			console.log("ajax 에러발생");
 		 		} 
 		 	});
-})
+});
+
+//모달 카드 파일 삭제
+
+$(document).on('click','.card-modal-file-delete',function() {
+	console.log(this);
+	
+	$.ajax({
+		url: "",
+		data: {
+			
+				},
+		dataType: "",
+		success: function(){
+			
+				},
+		error: function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+				}
+	});
+	
+});
+
+
+
+
+
+
 
 
 //모달 리플 삭제 
