@@ -18,6 +18,7 @@ public interface TeamMainDao {
 	public void delGroup(int groupNo);
 	public void insertTeam(GroupAndTeam team);
 	public void insertTeamLeader(GroupAndTeam team);
+	public void insertGroupTeam(GroupAndTeam team);
 	public int getCurrTeamNo();
 	public void moveTeamFromGroup(GroupAndTeam groupAndTeam);
 	public Team getTeam(int teamNo);

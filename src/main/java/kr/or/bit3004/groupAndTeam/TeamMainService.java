@@ -12,6 +12,7 @@ public interface TeamMainService {
 	public void moveAndDelGroup(GroupAndTeam group);
 	public void insertTeam(GroupAndTeam team);
 	public void insertTeamLeader(GroupAndTeam team);
+	public void insertGroupTeam(GroupAndTeam team);
 	public int getCurrTeamNo();
 	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group);
 	public Team getTeam(int teamNo);
