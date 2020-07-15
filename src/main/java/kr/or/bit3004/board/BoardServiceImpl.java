@@ -140,7 +140,7 @@ public class BoardServiceImpl implements BoardService{
 	public void insertReboard(Board board) {
 		System.out.println(board);
 		dao.updateReboardAddstep(board);
-		
+		board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
 		//1.답글
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
