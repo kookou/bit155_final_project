@@ -49,19 +49,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		
 		String rcvMsg = message.getPayload();
 		String sendMsg = "";
-		if (rcvMsg.startsWith("login:")) {
-			String nickname = rcvMsg.substring("login:".length());
-			users.put(nickname, wss);
-			sendMsg = nickname + "님이 접속하였습니다.";
-		}
-//		else if (rcvMsg.startsWith("logout:")) {
-//			String id = rcvMsg.substring("logout:".length());
-//			users.remove(id);
-//			sendMsg = id + "님이 접속 종료하였습니다.";
-//		}
-		else {
-			sendMsg = rcvMsg;
-		}
+		sendMsg = rcvMsg + "∥" + time.format(new Date());
 		
 		System.out.println("sendMsg : " + sendMsg);
 		System.out.println("users : " + users);
@@ -78,7 +66,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		debug(session.getId() + " 익셉션 발생 - " + exception.getMessage());
 	}
 	
-	private SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat time = new SimpleDateFormat("hh:mm a");
 	
 	private void debug(String msg) {
 		System.out.printf(this.getClass().getSimpleName() + "(%s) : %s\n", time.format(new Date()), msg);
