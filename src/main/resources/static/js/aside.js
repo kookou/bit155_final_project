@@ -1,3 +1,4 @@
+//초대버튼 누르면 input박스 비워주고, focus주기
 $('#InviteBtn').click(function() {
 	$('#searchUser').val("");
 	$('#searchUser').focus();

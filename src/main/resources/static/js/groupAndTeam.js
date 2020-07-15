@@ -268,17 +268,6 @@ $('#outer').on('click', '.teamBtn', function() {
 				html += 	'</div>';
 				html += '</div>';
 				appendTeam.before(html);
-				
-//				$.ajax({
-//					url: "insertTeamLeader.do",
-//					data: {
-//						teamNo: resData,
-//						id: currUser
-//					},
-//					error: function(e) {
-//						console.log(e);
-//					}
-//				});
 			},
 			error: function(e) {
 				console.log(e);
