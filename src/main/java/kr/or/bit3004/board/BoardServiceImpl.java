@@ -67,28 +67,29 @@ public class BoardServiceImpl implements BoardService{
 			for(MultipartFile multiFile : fileList) {
 				String originFileName = multiFile.getOriginalFilename();
 				
-				UUID uuid = UUID.randomUUID();
+				UUID uuid = UUID.randomUUID(); //UUID : 고유한 식별자를 만들어준다
 				String fileName = uuid.toString() + originFileName;
+				System.out.println(fileName);
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; //경로설정
 				File folder = new File(path);
-				System.out.println(path);
+				
 				//폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
 						folder.mkdir();
+						
 					} catch (Exception e) {
 						System.out.println("폴더생성실패");
 						e.getMessage();
 					}
 					System.out.println("팀 폴더가 생성되었습니다.");
-					
-					String filePath = path + "\\"  + fileName;
-					BoardUpload boardUpload = new BoardUpload();
+				}	
+				String filePath = path + "\\"  + fileName;
+				BoardUpload boardUpload = new BoardUpload();
 					
 					if((!fileName.equals("")) && (multiFile.getSize() > 0)) { //파일업로드
 						FileOutputStream fs = null;
-						
 						try {
 							fs = new FileOutputStream(filePath);
 							fs.write(multiFile.getBytes());
@@ -97,8 +98,8 @@ public class BoardServiceImpl implements BoardService{
 							e.getMessage();
 						} finally {
 							try {
-								fs.close();
-								System.out.println("fs:" + fs);
+								  fs.close();
+								  System.out.println("fs:" + fs);
 							} catch (IOException e) {
 								System.out.println("fs close error");
 								e.getMessage();
@@ -119,9 +120,9 @@ public class BoardServiceImpl implements BoardService{
 					fileNames.add(originFileName);
 				}//for end
 			}//if end
-		}
-	return fileNames;
+		return fileNames;
 	}
+	
 	
 	//게시판 수정하기
 	@Override
@@ -138,21 +139,25 @@ public class BoardServiceImpl implements BoardService{
 	//게시판 답글쓰기
 	@Override
 	public void insertReboard(Board board) {
-		System.out.println(board);
 		dao.updateReboardAddstep(board);
-		board.setBoardNo(board.getBoardNo());
+	//이거 주석풀까말까	board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
 		//1.답글
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
+		System.out.println("boardno="+board.getBoardNo());
 			//	System.out.println("getstep"+dao.getStep(currBoardInfo));
 		//2.위치
 		int step=dao.getStep(currBoardInfo);
 		//답글 insert
 		
 		if(step==0) {
+			System.out.println(board);
+			System.out.println("currboard="+currBoardInfo);
 			System.out.println("step==0을탔따.");
-			int maxStep= dao.getMaxStep(currBoardInfo);
+			int maxStep= dao.getMaxStep(currBoardInfo); //요녀석이 문제.
+			System.out.println("된다");
 			board.setStep(maxStep);
+			System.out.println("된다");
 		} else {
 			System.out.println("step=0이 아닌걸탔따.");
 			dao.updateStep(currBoardInfo);
