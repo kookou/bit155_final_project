@@ -2,48 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.AsideDao">
-	<select id="getTeam" resultType="kr.or.bit3004.groupAndTeam.Team">
-		select team_no, team_name, background_color
-		  from `team`
-		 where `team_no` = #{teamNo}
-	</select>
-	
-	<select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
-		select m.team_no, m.id, leader, nickname, image
-		  from `team_member` m
-		  join `user` u
-		    on m.id = u.id
-		 where m.`team_no` = #{teamNo}
-	</select>
-	
-	<select id="getAllBoardList" resultType="kr.or.bit3004.aside.AllBoardList">
-		select `all_board_list_no`, `name`, `team_no`, `board_type_no`
-		  from `all_board_list`
-		 where `team_no` = #{teamNo}
-		 order by `all_board_list_no`
-	</select>
-	
-	<insert id="insertAllBoard" parameterType="kr.or.bit3004.aside.AllBoardList">
-		insert into `ALL_BOARD_LIST` (
-			`name`, `team_no`, `id`, `board_type_no`
-		) values (
-			#{name}, #{teamNo}, #{id}, #{boardTypeNo}
-		)
-	</insert>
-	
-	<select id="getCurrAllBoardListNo" resultType="int">
-		select max(`ALL_BOARD_LIST_NO`) from `ALL_BOARD_LIST`
-	</select>
-		
-	<select id="searchUser" parameterType="String" resultType="String">
-		select id from `user` where id like '%${id}%'
-	</select>
-	
-	<insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.TeamMember">
-		insert into `TEAM_MEMBER`(`team_no`, `id`) values(#{teamNo}, #{id})
-	</insert>
-	
-	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
-		select image, nickname, id from `user` where id=#{id}
-	</select>
+   <select id="getTeam" resultType="kr.or.bit3004.groupAndTeam.Team">
+      select team_no, team_name, background_color
+        from `team`
+       where `team_no` = #{teamNo}
+   </select>
+   
+   <select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
+      select m.team_no, m.id, leader, nickname, image
+        from `team_member` m
+        join `user` u
+          on m.id = u.id
+       where m.`team_no` = #{teamNo}
+   </select>
+   
+   <select id="getAllBoardList" resultType="kr.or.bit3004.aside.AllBoardList">
+      select `all_board_list_no`, `name`, `team_no`, `board_type_no`
+        from `all_board_list`
+       where `team_no` = #{teamNo}
+       order by `all_board_list_no`
+   </select>
+   
+   <insert id="insertAllBoard" parameterType="kr.or.bit3004.aside.AllBoardList">
+      insert into `ALL_BOARD_LIST` (
+         `name`, `team_no`, `id`, `board_type_no`
+      ) values (
+         #{name}, #{teamNo}, #{id}, #{boardTypeNo}
+      )
+   </insert>
+   
+   <select id="getCurrAllBoardListNo" resultType="int">
+      select max(`ALL_BOARD_LIST_NO`) from `ALL_BOARD_LIST`
+   </select>
+      
+   <select id="searchUser" parameterType="String" resultType="String">
+      select id from `user` where id like '%${id}%'
+   </select>
+   
+   <insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.TeamMember">
+      insert into `TEAM_MEMBER`(`team_no`, `id`) values(#{teamNo}, #{id})
+   </insert>
+   
+   <select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
+      select image, nickname, id from `user` where id=#{id}
+   </select>
 </mapper>

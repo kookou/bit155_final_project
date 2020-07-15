@@ -140,7 +140,7 @@ public class BoardServiceImpl implements BoardService{
 	public void insertReboard(Board board) {
 		System.out.println(board);
 		dao.updateReboardAddstep(board);
-		board.setBoardNo(board.getBoardNo());
+	//이거 주석풀까말까	board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
 		//1.답글
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
@@ -151,8 +151,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		if(step==0) {
 			System.out.println("step==0을탔따.");
-			int maxStep= dao.getMaxStep(currBoardInfo);
+			int maxStep= dao.getMaxStep(currBoardInfo); //요녀석이 문제.
+			System.out.println("된다");
 			board.setStep(maxStep);
+			System.out.println("된다");
 		} else {
 			System.out.println("step=0이 아닌걸탔따.");
 			dao.updateStep(currBoardInfo);
