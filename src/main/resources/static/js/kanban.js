@@ -445,7 +445,7 @@ var cardCommentcount="";
 var cardFilecount="";
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
-	cardElements = $(this).parent();
+	 cardElements = $(this).parent();
 //	 $('#modallDescrioptiontextarea').hide();
 //	 $('#modallDescrioption').hide();
 
@@ -687,15 +687,12 @@ $('#card-content').on('click','.card-modal-title',function() {
 
 $('#card-content').on('hide.bs.modal', function () {
 	
-	
-	console.log("v파일 카운트?")	
-	
 	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
 	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
 	
 	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
 	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
-	console.log("v파일 카운트?")	
+	console.log("파일 카운트?")	
 	console.log((cardFilecount == 0));
 	console.log(cardFilecount);
 	console.log("코멘트 카운트?")	
