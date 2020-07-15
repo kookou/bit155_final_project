@@ -74,6 +74,17 @@ function addCardFileCountTag(parent, fileCount){
  });
  
 
+ $('.kanban-list-wrapper').sortable({
+	 connectWith: '.kanban-list-wrapper',
+	 receive: function(event, ui){
+		 if($(this).children().length > 1){
+			 $(ui.sender).sortable('cancel');
+		 }
+	 }
+		 
+ });
+ 
+
 	
 	
 
@@ -130,6 +141,11 @@ $(document).on('click', '#addlist', function() {
 //	$(this).prev().children().children().children().children().focus(); // input on focus
     titleInputBox.focus();
 
+
+    $('.kanban-list-wrapper').sortable({
+   	 connectWith: '.kanban-list-wrapper'
+    });
+    
     
 });
 
