@@ -16,4 +16,5 @@ public interface AsideService {
 	public List<String> searchUser(String id);
 	public void inviteMember(GroupAndTeam groupAndTeam);
 	public User selectInvitedMemberInfo(String id);
+	public void updateAsideBoardName(AllBoardList allBoardList);
 }

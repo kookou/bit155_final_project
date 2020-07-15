@@ -31,4 +31,9 @@ public class AsideAjaxController {
 		service.inviteMember(groupAndTeam);
 		return service.selectInvitedMemberInfo(groupAndTeam.getId());
 	}
+	
+	@RequestMapping("editBoardName.do")
+	public void updateAsideBoardName(AllBoardList allBoardList) {
+		service.updateAsideBoardName(allBoardList);
+	}
 }

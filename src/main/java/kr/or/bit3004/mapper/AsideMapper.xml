@@ -56,4 +56,12 @@
 	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
 		select image, nickname, id from `user` where id=#{id}
 	</select>
+	
+	<!-- aside의 board name 수정 -->
+	<update id="updateAsideBoardName" parameterType="kr.or.bit3004.aside.AllBoardList">
+		update `all_board_list`
+		   set `name` = #{name}
+		 where `all_board_list_no` = #{allBoardListNo}
+		   and `team_no` = #{teamNo}
+	</update>
 </mapper>

@@ -1,3 +1,74 @@
+var aTag = "";
+var icon = "";
+var boardTag = "";
+var allBoardListNo = "";
+$('#allBoardList').on('click', '.editBoardName', function() {
+	//다른 열려있는 input 닫아주기
+	$('.addedIcon').each(function(index, ele) {
+		$(this).parent().find('.board-name').show();
+		$(this).next().children().children().show();
+		$(this).parent().find('input[type="text"]').remove();
+		$(this).remove();
+	});
+	var parentTag = $(this).parents('.sidebar-item');
+	aTag = $(this).parents('.sidebar-item').find('.sidebar-link');
+	boardTag = $(this).parents('.sidebar-item').find('.board-name');
+	var oriBoardName = $(this).parents('.sidebar-item').find('.board-name').text();
+	icon = $(this).parent().parent();
+	
+	let html = '';
+	html += '<input type="text" value="'+oriBoardName+'" class="form-control newBoardName" style="width:120px; display: inline-block;">';
+	let html2 = "";
+	html2 += '<div style="display: inline-block;" class="addedIcon">';
+	html2 += 	'<a href="javascript:void(0);"><i class="fas fa-check iconStyle editBoardNameOk"></i></a>&nbsp;&nbsp;';
+	html2 += 	'<a href="javascript:void(0);"><i class="fas fa-times iconStyle cancelEditBoardName"></i></a>';
+	html2 += '</div>';
+	aTag.append(html);
+	aTag.after(html2);
+	$('input').focus();
+	boardTag.hide();
+	icon.hide();
+	aTag.attr('class', 'sidebar-link');
+	
+	console.log($(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val());
+	console.log(teamNo);
+	allBoardListNo = $(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val();
+});
+
+$('#allBoardList').on('click', '.editBoardNameOk', function() {
+	if($('.newBoardName').val() == "") {
+		swal("변경할 Board Name을 입력하세요");
+		return;
+	}
+	$.ajax({
+		url: "editBoardName.do",
+		data: {
+			name: $('.newBoardName').val(),
+			allBoardListNo: allBoardListNo,
+			teamNo: teamNo
+		},
+		success: function() {
+			console.log("보드이름바꾸기성공");
+//			$(this).parent().find('.board-name').show();
+//			$(this).next().children().children().show();
+//			$(this).parent().find('input[type="text"]').remove();
+//			$(this).remove();
+		},
+		error: function(e) {
+			console.log(e);
+		}
+	});
+});
+
+//보드이름 바꾸기 취소
+$('#allBoardList').on('click', '.cancelEditBoardName', function() {
+	aTag.attr('class', 'sidebar-link redirectBoard');
+	icon.show();
+	boardTag.show();
+	$(this).parent().parent().remove();
+	$('input[type="text"]').remove();
+});
+
 //초대버튼 누르면 input박스 비워주고, focus주기
 $('#InviteBtn').click(function() {
 	$('#searchUser').val("");
