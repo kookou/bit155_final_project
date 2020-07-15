@@ -276,20 +276,18 @@ $(document).on('click', "#addcard",function(){
 	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
 
 	   
-        var addcardTag = "<div class='kanban-card-list btn-card-hover' th:each='card : ${kanbancardlist}' th:if='${kanbanlist.kanbanListNo == card.kanbanListNo}'>"
+        var addcardTag = "<div class='kanban-card-list btn-card-hover'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
                          +"<div class='kanban-card-element' data-toggle='modal' data-target='#card-content'>"
-                         +"<span class='kanban-card-title' th:text='${card.cardTitle}' >"
+                         +"<span class='kanban-card-title' >"
                          +"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none; '></textarea>"
                          +"</span>"
                          +"<div class='kanban-card-badges'>"
-                         +'<div class="kanban-card-badge" title="comments" th:if="${card.commentcount >0}">'
-                         +'<span class="icon-bubble badge-icon"></span>'
-                         +'<span class="badge-text" th:text="${card.commentcount}"></span>'
+                         +'<div  title="comments">'
+                         
                          +'</div>'
-                         +'<div class="kanban-card-badge" title="file" th:if="${card.fileCount >0}">'
-                         +'<span class="icon-paper-clip badge-icon"></span>'
-                         +'<span class="badge-text" th:text="${card.fileCount}></span>'
+                         +'<div title="file">'
+                        
                          +'</div>'
                          +"</div>"
                          +"</div>"
@@ -317,8 +315,6 @@ $(document).on('click', "#addcard",function(){
         $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
         $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
         
-        comment.hide()
-        file.hide()
         
         console.log($(this).parent().siblings('.divForDragNDrop').children().last());
         console.log("시작");
@@ -446,7 +442,7 @@ $('#kanban').on('click','.active-card-icon',function(){
 //var newCardTitleList ="";
 //
 var cardCommentcount="";
-	
+var cardFilecount="";
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
 	cardElements = $(this).parent();
@@ -557,11 +553,14 @@ $('#card-content').on('click', '.reply-done', function(){
 					        dataType: "json",
 					        
 							success: function(result) {
-								console.log("card select 완료2");
+								console.log("인서트 코멘트/파일 카운트 셀렉트");
 								console.log(result)
+								
 								var cardComment = result.commentCount;
 								cardCommentcount = cardComment;
-								console.log(cardCommentcount);
+								
+								var cardFile = result.fileCount;
+								cardFilecount = cardFile;
 							} 
 						});
 					$('.reply-list').empty();
@@ -687,33 +686,55 @@ $('#card-content').on('click','.card-modal-title',function() {
 ////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
 
 $('#card-content').on('hide.bs.modal', function () {
-	console.log("될거니?")
-	console.log(cardCommentcount)
-//	let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
-//	let commentCount = $('[data-cardno='+cardNo+']').find('[title=comments] .badge-text');
-//	
+	
+	
+	console.log("v파일 카운트?")	
 	
 	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
 	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
 	
-	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">1</span>'
+	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
 	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
-					
-	console.log(commentElement);
-	
-//	if(!fileCount){
-//		countElement.after(fileDiv);
-//	}
-	
-	if(cardCommentcount == 0){
-		console.log("이프문타니?")
+	console.log("v파일 카운트?")	
+	console.log((cardFilecount == 0));
+	console.log(cardFilecount);
+	console.log("코멘트 카운트?")	
+	console.log((cardCommentcount == 0));
+	console.log(cardCommentcount);
+
+	if(cardFilecount == 0 && cardCommentcount == 0){
+		console.log("파일 0 / 코멘트 0")
+		fileElement.empty();
+		fileElement.removeClass('kanban-card-badge')
 		commentElement.empty();
+		commentElement.removeClass('kanban-card-badge')
 		return;
-	}else{
-		console.log("엘스타니?")
+	}
+	
+	if(cardFilecount > 0 && cardCommentcount == 0){
+		console.log("파일 n / 코멘트 0")
+		commentElement.empty();
+		commentElement.removeClass('kanban-card-badge')
+		return;
+	}
+	
+	if(cardFilecount == 0 && cardCommentcount > 0){
+		console.log("파일 0 / 코멘트 n")
+		fileElement.empty();
+		fileElement.removeClass('kanban-card-badge')
+		return;
+	}
+	if(cardFilecount > 0 && cardCommentcount > 0){
+		console.log("파일 n / 코멘트 n")
+		fileElement.empty();
+		fileElement.append(fileDiv);
+		fileElement.addClass('kanban-card-badge');
 		commentElement.empty();
 		commentElement.append(commentDiv);
+		commentElement.addClass('kanban-card-badge')
+		return;
 	};
+	
 });
 
 //모달 카드 내용 인서트 
@@ -773,7 +794,7 @@ $('#kanbanFileInputBtn').on('click',function(){
 	 console.log($('[data-cardno='+cardNo+']').find('[title=file]'));
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
-	 let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
+//	 let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
 	 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
@@ -799,10 +820,28 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 					addUploadFileTag($('#cardModalFileList'), fileName);
 		 				});
 		 				
-		 				fileCount.text(Number(fileCount.text()) + resData.length);
+//		 				fileCount.text(Number(fileCount.text()) + resData.length);
 //		 				if(fileCount.text() == null){
 //		 					
 //		 				}
+		 				///////////////// 다시 셀렉트 ////////////////////
+		 				 $.ajax({ 
+								url: "CardContentSelect.ajax",
+								data: {
+										cardNo: cardNo
+										},
+						        dataType: "json",
+						        
+								success: function(result) {
+									console.log("인서트 파일/코멘트 카운트 셀렉트");
+									var cardComment = result.commentCount;
+									cardCommentcount = cardComment;
+									
+									var cardFile = result.fileCount;
+									cardFilecount = cardFile;
+								} 
+							});
+		 				 ///////////////////////////////
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
@@ -847,11 +886,12 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 					        dataType: "json",
 					        
 							success: function(result) {
-								console.log("card select 완료2");
-								console.log(result)
+								console.log("딜리트 파일/코멘트 카운트 셀렉트");
 								var cardComment = result.commentCount;
 								cardCommentcount = cardComment;
-								console.log(cardCommentcount);
+								
+								var cardFile = result.fileCount;
+								cardFilecount = cardFile;
 							} 
 						});
 					$('.reply-list').empty();
