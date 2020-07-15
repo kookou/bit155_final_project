@@ -108,6 +108,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                <!--  <table class="table" id="table"> -->
+                               <input type="hidden">
                                 <table class="table table-bordered" id="table">
                                     <thead class="bg-primary text-white">
                                     	<tr>
@@ -123,7 +124,7 @@
 	                                         <td style="width:55%;">
                                    		<!-- 	 <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
 	                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
-	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=1)}" th:text="${board.title}"></a>
+	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${teamNo})}" th:text="${board.title}"></a>
 	                                         	<!-- boardFile이 존재하는 경우에는 이미지를 붙여준다 -->
 	                                         	<!-- <i class="fas fa-paperclip" th:if="${!empty board.boardFile}"></i> -->
 	                                         	<!-- comment cnt가 존재하는 경우 -->
@@ -136,7 +137,9 @@
                                 </table>
                             </div>
                             <div class="form-actions text-right">
-                            	<a href="insertBoard.do?teamNo=1" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+                            	<a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
+                            		<i class="fas fa-pencil-alt"></i> 글쓰기
+                            	</a>
                             </div>
                            
                         </div>
@@ -176,6 +179,5 @@
 	  <script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script>
      <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-	
 </body>
 </html>

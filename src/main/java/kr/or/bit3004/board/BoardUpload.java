@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class BoardUpload {
 	private int fileNo;
-	private String fileOriginName;
+	private String originFileName;
 	private String fileName;
 	private long fileSize;
 	private int allBoardListNo;
