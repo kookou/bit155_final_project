@@ -77,9 +77,13 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(Model model, int teamNo) {	
+	public String editUserInfo(int teamNo, Model model) {	
+		System.out.println("teamNo : "+teamNo);
+		   model.addAttribute("teamNo", teamNo);
 		   model.addAttribute("team", asideService.getTeam(teamNo));
 		   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+		   model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+
 		
 		return "user/editUser";
 	}

@@ -13,6 +13,7 @@
     <title>Edit User Info</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -25,6 +26,7 @@
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
      <th:block th:replace="common/addAllBoardModal"></th:block>
+     <th:block th:replace="common/chat"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
         <!-- ============================================================== -->
@@ -132,6 +134,14 @@
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
+    /*<![CDATA[*/
+    var currUserNickname = [[${session.currentUser.nickname}]];
+    var currUserImage = [[${session.currentUser.image}]];
+    var teamNo = [[${teamNo}]];
+ 	/*]]>*/
+
+    
+    
         $(".preloader ").fadeOut();
         //파일 미리보기
         var file = document.querySelector('#userImage');

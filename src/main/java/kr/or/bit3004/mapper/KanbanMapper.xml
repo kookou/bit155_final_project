@@ -18,32 +18,6 @@
 	 select * from kanban_list where kanban_list_no = #{kanbanListNo};
 	</select>
 	
-	<select id="allKanbanList" resultMap="selectMapList">
-		SELECT l.list_title,l.all_board_list_no, l.id , c.title, c.content,
-		c.write_date, c.file_count , c.comment_count , l.kanban_list_no,
-		a.name , a.team_no , a.board_type_no
-		FROM `KANBAN_LIST` l
-		LEFT OUTER JOIN `KANBAN_CARD` c ON l.kanban_list_no = c.kanban_list_no
-		LEFT OUTER JOIN `all_board_list` a ON l.all_board_list_no =
-		a.all_board_list_no where a.all_board_list_no = ${allBoardListNo};
-	</select>
-
-	<resultMap type="java.util.HashMap" id="selectMapList">
-		<result column="kanban_list_no" property="kanbanListNo" />
-		<result column="list_title" property="listTitle" />
-		<result column="all_board_list_no" property="allBoardListNo" />
-		<result column="id" property="id" />
-		<result column="title" property="cardTitle" />
-		<result column="content" property="cardContent" />
-		<result column="write_date" property="writeDate" />
-		<result column="file_count" property="fileCount" />
-		<result column="comment_count" property="commentcount" />
-		<result column="kanban_list_no" property="kanbanListNo" />
-		<result column="name" property="boardName" />
-		<result column="team_no" property="teamNo" />
-		<result column="board_type_no" property="boardTypeNo" />
-	</resultMap>
-
 	<select id="kanbanCardList" resultMap="selectCardList">
 		select * from kanban_card;
 	</select>
@@ -53,24 +27,29 @@
 		<result column="title" property="cardTitle" />
 		<result column="content" property="cardContent" />
 		<result column="file_count" property="fileCount" />
-		<result column="comment_count" property="commentcount" />
+		<result column="comment_count" property="commentCount" />
 		<result column="kanban_list_no" property="kanbanListNo" />
+		<result column="card_index" property="cardIndex"/>
 	</resultMap>
 	
 	<select id="kanbanListJoinCard" resultMap="selectList">
-	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , a.name , a.team_no , a.board_type_no
+	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , c.card_no, c.title , c.CONTENT , c.WRITE_DATE , c.FILE_COUNT , c.COMMENT_COUNT , c.CARD_INDEX
 	FROM KANBAN_LIST l 
-	LEFT OUTER JOIN all_board_list a ON l.all_board_list_no = a.all_board_list_no where l.all_board_list_no = ${allBoardListNo};
+	LEFT OUTER JOIN kanban_card c ON l.KANBAN_LIST_NO = c.KANBAN_LIST_NO where l.all_board_list_no = #{allBoardListNo};
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectList">
 		<result column="list_title" property="listTitle" />
 		<result column="all_board_list_no" property="allBoardListNo" />
 		<result column="id" property="id" />
+		<result column="WRITE_DATE" property="writeDate" />
+		<result column="card_no" property="cardNo" />
+		<result column="title" property="cardTitle" />
+		<result column="content" property="cardContent" />
+		<result column="file_count" property="fileCount" />
+		<result column="comment_count" property="commentcount" />
 		<result column="kanban_list_no" property="kanbanListNo" />
-		<result column="name" property="boardName" />
-		<result column="team_no" property="teamNo" />
-		<result column="board_type_no" property="boardTypeNo" />
+		<result column="card_index" property="cardIndex"/>
 	</resultMap>
 	
 	<select id="kanbanListFromAllBoardListNo" resultType="kr.or.bit3004.kanban.KanbanList">
@@ -105,9 +84,9 @@
 	
 	
 	<insert id="insertCardTitle">
-	insert into `kanban_card`
-	(`title`, `write_date`,`kanban_list_no`)  <!-- `card_index` -->
-	values(#{title}, now(),#{kanbanListNo});
+	insert into kanban_card
+	(title, write_date, kanban_list_no , card_index)  <!-- `card_index` -->
+	values(#{title}, now(),#{kanbanListNo} , #{cardIndex});
 	</insert>
 	
 	<update id="updateCardTitle">
@@ -149,6 +128,7 @@
 								ORIGIN_FILE_NAME,	
 								FILE_NAME,
 								FILE_SIZE,
+								FILE_PATH,
 								ALL_BOARD_LIST_NO,
 								CARD_NO	
 								)
@@ -156,6 +136,7 @@
 						#{originFileName},
 						#{fileName},
 						#{fileSize},
+						#{filePath},
 						#{allBoardListNo},
 						#{cardNo}	
 						)

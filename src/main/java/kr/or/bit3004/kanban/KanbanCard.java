@@ -18,5 +18,4 @@ public class KanbanCard {
 	private int commentCount;  //댓글 개수 
 	private int cardIndex;
 	private int kanbanListNo;  //공통사항 
-
 }

@@ -26,7 +26,7 @@ var addlistTag =
 
 var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
-							   +"<a class=''>"
+							   +"<a class='card-modal-fileLink' download>"
 								   +"<span class='card-modal-filename'>"
 								   +"</span>"
 							   +"</a>"
@@ -34,23 +34,12 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"</p>"
 					+"</div>";
 
-function addUploadFileTag(parent, fileName, fileNo){
-	
-//	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
-//						   +"<p class='card-modal-list-cloud'>"
-//							   +"<a class=''>"
-//								   +"<span class='card-modal-filename'>"
-//								   + fileName
-//								   +"</span>"
-//							   +"</a>"
-//							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
-//						   +"</p>"
-//					   +"</div>";	
+function addUploadFileTag(parent, file){
 	
 	parent.append(uploadFileTag);
-	parent.find('.card-modal-filename').last().append(fileName);
-	parent.find('.card-modal-file-delete').last().attr('fileNo', fileNo);
-	console.log(parent.find('.card-modal-file-delete').last());
+	parent.find('.card-modal-filename').last().append(file.originFileName);
+	parent.find('.card-modal-file-delete').last().attr('fileNo', file.fileNo);
+	parent.find('.card-modal-fileLink').last().attr('href', file.filePath);
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -71,6 +60,17 @@ function addCardFileCountTag(parent, fileCount){
 
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop'
+ });
+ 
+
+ $('.kanban-list-wrapper').sortable({
+	 connectWith: '.kanban-list-wrapper',
+	 receive: function(event, ui){
+		 if($(this).children().length > 1){
+			 $(ui.sender).sortable('cancel');
+		 }
+	 }
+		 
  });
  
 
@@ -130,6 +130,11 @@ $(document).on('click', '#addlist', function() {
 //	$(this).prev().children().children().children().children().focus(); // input on focus
     titleInputBox.focus();
 
+
+    $('.kanban-list-wrapper').sortable({
+   	 connectWith: '.kanban-list-wrapper'
+    });
+    
     
 });
 
@@ -308,10 +313,12 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 
     //카드 추가
 $(document).on('click', "#addcard",function(){
-	   
+//	   let cardCount = $(this).parents().prev().children().prevAll('.kanban-card-list')    카드 갯수 
+
 	   let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
 	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
-
+	   console.log('cardIndex')
+//	   console.log(cardIndex)
 	   
         var addcardTag = "<div class='kanban-card-list btn-card-hover'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
@@ -335,27 +342,25 @@ $(document).on('click', "#addcard",function(){
 //        $(this).parent().before(addcardTag);
         
  	   let input = $(this).parent().prev().find('textarea');// 여기는 더해지고 나서 설정돼야함
-//     var input = $(this).parent().prev().children().children().children().eq(0)
  	   let comment = $(this).parent().prev().find('[title="comments"]').last();
-//     var comment= $(this).parent().prev().children().children().children().eq(1)
  	   let file = $(this).parent().prev().find('[title="file"]').last();
-//       var file= $(this).parent().prev().children().children().children().eq(2)
  	   let kanbanCardNo = $(this).parent().siblings('.divForDragNDrop').children().last();
-// 	   var kanbanCardNo = $(this).parents().prev()
 
-	   
+ 	 
         $(this).parent().mouseleave() // a#addcardel
-//        $(this).parent().prev().children().children().children().eq(0).focus() // addCardInput
         
         input.focus();
-
+        
+        let cardIndex = kanbanCardNo.index();
+        
         $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
         $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
         
+        kanbanCardNo.attr('data-cardindex', cardIndex)
         
         console.log($(this).parent().siblings('.divForDragNDrop').children().last());
-        console.log("시작");
-	    console.log(kanbanCardNo);
+        console.log("index는 0부터 시작함");
+	    console.log(kanbanCardNo.index());
 	    
         $(input).blur(function() {
             if($(input).val() == "") {
@@ -374,6 +379,7 @@ $(document).on('click', "#addcard",function(){
             $.ajax({
     			url: "InsertKanbanCard.ajax",
     			data: { title: cardtitle,
+    					cardIndex :cardIndex,
     					kanbanListNo: kanbanListNo,
     					},
     	        dataType: "html",
@@ -559,8 +565,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				$('#cardModalFileList').empty();
 
 				$.each(resData, function(index, item){
-					//여기 작업하고 있었음 파일 목록 뿌리기
-					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
+					addUploadFileTag($('#cardModalFileList'), item);
 				});
 				
 			} 
@@ -870,36 +875,43 @@ $('#kanbanFileInputBtn').on('click',function(){
 	 $.ajax({ 
 		 		type: "POST", 
 		 		enctype: 'multipart/form-data', // 필수 
-		 		url: 'kanbanFilesUpload.ajax', 
+		 		url: 'kanbanFilesUpload.ajax', //여기 작업중
 		 		data: formData,  // 필수
 		 		processData: false, // 필수 
 		 		contentType: false, // 필수 
 		 		cache: false, 
 		 		success: function(resData) { // 여기 resData 파일 객체 가져오는걸로 바꿔야함
-		 			if((resData != null) && (resData.length > 0)){
+		 			if(resData.length > 0){
 		 				console.log(resData.length);
 		 				console.log("파일 업로드 성공");	
 		 				
-		 				$.each(resData, function(index, fileName){
-		 					addUploadFileTag($('#cardModalFileList'), fileName);
+		 				$.each(resData, function(index, item){
+		 					addUploadFileTag($('#cardModalFileList'), item);
 		 				});
 		 				
+		 				cardFilecount += resData.length;
 		 				
+//		 				일단 주석처리 Sunn
 		 				///////////////// 다시 셀렉트 ////////////////////
-		 				 $.ajax({ 
-								url: "CardContentSelect.ajax",
-								data: {
-										cardNo: cardNo
-										},
-						        dataType: "json",
-						        
-								success: function(result) {
-									console.log("인서트 파일 카운트 셀렉트");
+//
+//		 				 $.ajax({ 
+//								url: "CardContentSelect.ajax",
+//								data: {
+//										cardNo: cardNo
+//										},
+//						        dataType: "json",
+//						        
+//								success: function(result) {
+//									console.log("인서트 파일/코멘트 카운트 셀렉트");
+//									var cardComment = result.commentCount;
+//									cardCommentcount = cardComment;
+//									
+//									var cardFile = result.fileCount;
+//									cardFilecount = cardFile;
+//								} 
+//							});
+		 				 		 				 
 
-									var cardFile = result.fileCount;
-									cardFilecount = cardFile;
-								} 
-							});
 		 				 // input label 비우기
 		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
 		 				
@@ -915,7 +927,6 @@ $('#kanbanFileInputBtn').on('click',function(){
 });
 
 //모달 카드 파일 삭제
-
 $(document).on('click','.card-modal-file-delete',function() {
 	
 	let fileNo = $(this).attr('fileno')
@@ -935,7 +946,7 @@ $(document).on('click','.card-modal-file-delete',function() {
 				
 				//파일 목록 다시 뿌리기
 				$.each(resData, function(index, item){
- 					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
+ 					addUploadFileTag($('#cardModalFileList'), item);
  				});
 				
 				//파일 개수 재설정
