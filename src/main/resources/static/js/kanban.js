@@ -64,7 +64,14 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
-	
+
+
+
+
+
+ $('.divForDragNDrop').sortable({
+	 connectWith: '.divForDragNDrop'
+ });
  
 
 	
