@@ -117,7 +117,22 @@
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <div th:replace="common/script :: script"></div>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	<!-- apps -->
+	<script src="js/app-style-switcher.js"></script>
+	<script src="js/feather.min.js"></script>
+	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script src="js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="js/custom.min.js"></script>
+	<script src="js/groupAndTeam.js"></script>
+	<!--This page JavaScript -->
+	<script src="js/pages/dashboards/dashboard1.min.js"></script>
     <script th:inline="javascript">
     /*<![CDATA[*/
     	var currUser = [[${session.currentUser.id}]];

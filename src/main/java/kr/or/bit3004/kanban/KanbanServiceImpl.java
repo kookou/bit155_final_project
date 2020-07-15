@@ -222,4 +222,40 @@ public class KanbanServiceImpl implements KanbanService {
 		dao.deleteCardReply(commentNo);
 	}
 
+
+	@Override
+	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
+		return dao.getKanbanCardFiles(cardNo);
+	}
+
+
+	@Override
+	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo) {
+		List<KanbanUpload> fileList = null;
+		
+		KanbanUpload selectedFile = dao.getAKanbanCardFile(fileNo);
+		String filePath = System.getProperty("user.dir") 
+						+ "\\src\\main\\resources\\static\\cloud\\" + teamNo
+						+ "\\" + selectedFile.getFileName();
+		
+		System.out.println(filePath);
+		
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			if(file.delete()) {
+				System.out.println("파일 삭제 성공");
+			}else {
+				System.out.println("파일 삭제 실패");
+			}
+		}else {
+			System.out.println("파일이 존재하지 않습니다.");
+		}
+		
+		//트랜젝션 처리하기
+		dao.deleteKanbanCardFile(fileNo);
+		fileList = dao.getKanbanCardFiles(cardNo);
+		return fileList;
+	}
+
 }

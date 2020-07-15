@@ -6,7 +6,10 @@
 			<!-- Sidebar navigation-->
 			<nav class="sidebar-nav">
 				<ul id="sidebarnav">
-					<li class="sidebar-item" id="teaminfo-nav"><span class="team-title" th:text="${team.teamName}"></span>
+					<li class="sidebar-item" id="teaminfo-nav">
+						<a th:href="@{timeLine.do(teamNo=${team.teamNo})}">
+							<span class="team-title" th:text="${team.teamName}"></span>
+						</a>
 						<!-- <span th:text="${teamMember}"></span> -->
 						<div class="popover-icon" id="profile-group">
 							
