@@ -176,4 +176,10 @@
 		WHERE CARD_NO = #{cardNo}		   
 	</select>
 	
+	<delete id="deleteKanbanCardFile">
+		DELETE
+		FROM BOARD_FILE
+		WHERE FILE_NO = #{fileNo};
+	</delete>
+	
 </mapper>

@@ -228,4 +228,15 @@ public class KanbanServiceImpl implements KanbanService {
 		return dao.getKanbanCardFiles(cardNo);
 	}
 
+
+	@Override
+	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo) {
+		List<KanbanUpload> fileList = null;
+		
+		//두개 트랜젝션 처리하기
+		dao.deleteKanbanCardFile(fileNo);
+		fileList = dao.getKanbanCardFiles(cardNo);
+		return fileList;
+	}
+
 }
