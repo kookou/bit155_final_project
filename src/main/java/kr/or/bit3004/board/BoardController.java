@@ -53,18 +53,19 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoardService(Board board){
+	public String insertBoardService(Board board , MultipartHttpServletRequest request){
+		service.insertBoardUploadFile(request);
 		service.insertBoard(board);
 		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
 	}
 	
 	//파일 업로드
+	/*
 	@RequestMapping("insertBoard.do")
 	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
 		return service.boardFilesUpload(request);
 	}
-	
-	
+	*/
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
 	public String insertReboardService(Model model,int boardNo, int teamNo) {
@@ -92,6 +93,7 @@ public class BoardController {
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/update";
 	}
+	
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
 	public String updateBoardService(Board board) {
@@ -105,5 +107,6 @@ public class BoardController {
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
 	}
+	
 }
  

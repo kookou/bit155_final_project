@@ -48,14 +48,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//파일업로드
-	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
-		System.out.println("= boardFilesUpload Impl =");
+	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
 		
 		List<MultipartFile> fileList = request.getFiles("boardFiles");
 		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
-		System.out.println(teamNo);
 		
 		List<String> fileNames = new ArrayList<String>();
 		
@@ -66,7 +64,7 @@ public class BoardServiceImpl implements BoardService{
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid.toString() + originFileName;
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo;
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				
 				//폴더가 없을경우 폴더 생성하기
@@ -104,7 +102,7 @@ public class BoardServiceImpl implements BoardService{
 						continue;
 					}
 					
-					boardUpload.setFileOriginName(originFileName);
+					boardUpload.setOriginFileName(originFileName);
 					boardUpload.setFileName(fileName);
 					boardUpload.setFileSize(multiFile.getSize());
 					boardUpload.setAllBoardListNo(allBoardListNo);
