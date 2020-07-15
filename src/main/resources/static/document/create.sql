@@ -157,16 +157,17 @@ ALTER TABLE `TEAM` modify `TEAM_NO` INT auto_increment;
 
 -- 그룹
 CREATE TABLE `GROUP` (
-	`GROUP_NO`         INT         NOT NULL, -- 그룹식별번호
-	`GROUP_NAME`       VARCHAR(50) NOT NULL, -- 그룹명
-	`ID`               VARCHAR(50) NULL      -- 아이디
+	`GROUP_NO`   INT         NOT NULL, -- 그룹식별번호
+	`ID`         VARCHAR(50) NOT NULL, -- 아이디
+	`GROUP_NAME` VARCHAR(50) NOT NULL  -- 그룹명
 );
 
 -- 그룹
 ALTER TABLE `GROUP`
 	ADD CONSTRAINT `PK_GROUP` -- 그룹 기본키
 		PRIMARY KEY (
-			`GROUP_NO` -- 그룹식별번호
+			`GROUP_NO`, -- 그룹식별번호
+			`ID`        -- 아이디
 		);
         
 -- 그룹 시퀀스
@@ -333,13 +334,11 @@ ALTER TABLE `TIMELINE_TYPE` modify `DML_NO` INT auto_increment;
 
 -- 그룹-팀 매핑
 CREATE TABLE `GROUP_TEAM` (
-	`GROUP_TEAM_NO` INT NOT NULL, -- 그룹-팀식별번호
-	`GROUP_NO`      INT NULL,     -- 그룹식별번호
-	`TEAM_NO`       INT NULL      -- 팀식별번호
+	`GROUP_TEAM_NO` INT         NOT NULL, -- 그룹-팀식별번호
+	`GROUP_NO`      INT         NULL,     -- 그룹식별번호
+	`TEAM_NO`       INT         NULL,     -- 팀식별번호
+	`ID`            VARCHAR(50) NULL      -- 아이디
 );
-
--- 그룹-팀 매핑 시퀀스
-ALTER TABLE `GROUP_TEAM` modify `GROUP_TEAM_NO` INT auto_increment;
 
 -- 그룹-팀 매핑
 ALTER TABLE `GROUP_TEAM`
@@ -347,6 +346,9 @@ ALTER TABLE `GROUP_TEAM`
 		PRIMARY KEY (
 			`GROUP_TEAM_NO` -- 그룹-팀식별번호
 		);
+
+-- 그룹-팀 매핑 시퀀스
+ALTER TABLE `GROUP_TEAM` modify `GROUP_TEAM_NO` INT auto_increment;
 
 -- 게시판
 ALTER TABLE `BOARD_LIST`
@@ -600,10 +602,12 @@ ALTER TABLE `TIMELINE`
 ALTER TABLE `GROUP_TEAM`
 	ADD CONSTRAINT `FK_GROUP_TO_GROUP_TEAM` -- 그룹 -> 그룹-팀 매핑
 		FOREIGN KEY (
-			`GROUP_NO` -- 그룹식별번호
+			`GROUP_NO`, -- 그룹식별번호
+			`ID`        -- 아이디
 		)
 		REFERENCES `GROUP` ( -- 그룹
-			`GROUP_NO` -- 그룹식별번호
+			`GROUP_NO`, -- 그룹식별번호
+			`ID`        -- 아이디
 		) ON DELETE CASCADE;
 
 -- 그룹-팀 매핑

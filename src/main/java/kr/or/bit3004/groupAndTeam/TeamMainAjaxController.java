@@ -51,13 +51,14 @@ public class TeamMainAjaxController {
 	}
 	
 	@RequestMapping("insertTeam.do")
-	public void insertTeam(GroupAndTeam team) {
+	public int insertTeam(GroupAndTeam team) {
 		service.insertTeam(team);
 		int teamNo =  service.getCurrTeamNo();
 		team.setId(team.getId());
 		team.setTeamNo(teamNo);
 		service.insertTeamLeader(team);
 		service.insertGroupTeam(team);
+		return teamNo;
 	}
 	
 //	@RequestMapping("insertTeamLeader.do")

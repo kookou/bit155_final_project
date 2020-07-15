@@ -63,9 +63,12 @@
                                     <div class="col-lg-12">
                                         <!-- 본문 내용 -->
                                         <div id="content-outer">
+                                        	<input type="hidden" name="id" th:value="${session.currentUser.id}">
+                                            <input type="hidden" name="teamNo" th:value="${teamNo}">
+                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
                                             <h6><a th:href="@{boardList.do(allBoardListNo=1)}" th:text="${selectBoard.name}"></a></h6>
                                             <h2><a th:text="${selectBoard.title}"></a></h2>
-                                            <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo">
+                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
                                             <div style="float: left; margin-bottom: 15px;">
                                                 <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
                                                 <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
@@ -100,13 +103,13 @@
                       		</div>
                             <div class="form-actions">
                                 <div style="float: left;">
-                                    <a href="insertBoard.do?teamNo=1 " class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
-                                    <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=1)}">수정</a>
+                                <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+                                <a th:href="@{insertReboard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo},refer=${refer})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
+                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=${teamNo})}">수정</a>
                                     <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
                                 </div>
                                 <div style="float: right;">
-                                    <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=1&teamNo=1">목록</a>
+                                    <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=${allBoardListNo}&teamNo=${teamNo}">목록</a>
                                     <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
                                 </div>
                             </div>
