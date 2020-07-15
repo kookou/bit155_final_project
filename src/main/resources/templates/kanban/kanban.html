@@ -18,8 +18,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- Murri -->
-<script src="https://cdn.jsdelivr.net/npm/muuri@0.9.0/dist/muuri.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
+ <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+ <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
+ <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>   
 <!-- Murri end -->
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,7 +32,22 @@
 
 </head>
 <body>
-	
+<script>
+      (function () {
+        let addressBarHeight = computeAddressBarHeight();
+        document.documentElement.style.setProperty('--addressBarHeight', `${addressBarHeight}px`);
+
+        function computeAddressBarHeight() {
+          const div = document.createElement('div');
+          Object.assign(div.style, { height: '100vh', position: 'fixed' });
+          document.body.appendChild(div);
+          const size = Math.max(div.getBoundingClientRect().height - window.innerHeight, 0);
+          document.body.removeChild(div);
+          return size;
+        }
+      })();
+    </script>
+	<div class="drag-container"></div>
 	
 		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
 		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
@@ -45,7 +61,7 @@
 	<!-- ============================================================== -->
 	<!-- Main wrapper - style you can find in pages.scss -->
 	<!-- ============================================================== -->
-	<div id="main-wrapper" data-theme="light" data-layout="vertical"
+	<div id="main-wrapper" class="main-wrapper" data-theme="light" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
 		data-sidebar-position="fixed" data-header-position="fixed"
 		data-boxed-layout="full">
@@ -118,6 +134,7 @@
 							<h3 class="card-modal-cloud">Cloud</h3>
 
 							<div id="cardModalFileList">
+
 
 
 	
@@ -207,12 +224,12 @@
 			<!-- ============================================================== -->
 			<div class="kanban-container" id="kanban-container">
 				<div class="kanban-canvas">
-					<div id="kanban">
+					<div id="kanban" class="kanban">
 						<!-- ============================================================== -->
 						<!-- 칸반 list 시작 -->
 						<!-- ============================================================== -->
 						
-						<div class="kanban-list-wrapper"
+						<div class="kanban-list-wrapper" draggable="true"
 							th:each="kanbanlist: ${kanbanlist}">
 							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
 								<div class="kanban-card" ondrop="drop(event, this)"
@@ -226,7 +243,7 @@
 
 									<div class="divForDragNDrop">
 
-										<div class="kanban-card-list btn-card-hover"
+										<div class="kanban-card-list btn-card-hover" draggable="true"
 											th:each="card : ${kanbancardlist}"
 											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
 											<span class='icon-pencil active-card-icon'
