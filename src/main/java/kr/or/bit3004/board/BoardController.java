@@ -1,10 +1,13 @@
 package kr.or.bit3004.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.aside.AsideService;
 
@@ -55,13 +58,19 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoardService(Board board, int teamNo){
+	public String insertBoardService(Board board , int teamNo){
 		System.out.println(board);
 		service.insertBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
-
 	
+	//파일 업로드
+	/*
+	@RequestMapping("insertBoard.do")
+	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
+		return service.boardFilesUpload(request);
+	}
+	*/
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
 	public String insertReboardService(Model model,int boardNo, int teamNo) {
@@ -76,7 +85,6 @@ public class BoardController {
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.POST)
 	public String insertReboardService(Board board){
 		service.insertReboard(board);
-		//service.fileUploadBoard(board, request);
 		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
 	}
 	
@@ -89,6 +97,7 @@ public class BoardController {
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		return "board/update";
 	}
+	
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
 	public String updateBoardService(Board board) {
@@ -102,5 +111,6 @@ public class BoardController {
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
 	}
+	
 }
  

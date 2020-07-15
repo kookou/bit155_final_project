@@ -14,43 +14,6 @@
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/kanban.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <style>
-		#fixedBtn {
-		  margin: 10px 0px 0px 150px;
-		}
-		.alert_list {
-		  font-size: 11px;
-		  color: grey;
-		}
-		li.alert_li {
-		  font-size: 11px;
-		  color: grey;
-		  padding: 10px 0px 2px 0px;
-		  border-bottom: thin solid #c0c0c0;
-		}
-		li.alert_li:hover {
-		  background-color: #eee;
-		}
-		.turn_off_alert {
-		  float: right;
-		  margin-bottom: 1px;
-		}
-		a.alert_message {
-		  color: grey;
-		}
-		a.alert_message:hover {
-		  color: grey;
-		}
-		.txtMsgDiv {
-			background-color: #d0e1f5;
-			padding: 10px;
-			border-radius: 3px;
-			display: inline-block;
-		}
-		.myMsgDiv {
-			background-color: #fedcc1;
-		}
-    </style>
 </head>
 
 <body>
@@ -185,6 +148,8 @@
 			if(bgColor != 'ffffff') {
 				$('.page-wrapper').css("background", "#"+bgColor);
 			}
+			var currUserNickname = [[${session.currentUser.nickname}]];
+			var currUserImage = [[${session.currentUser.image}]];
 		/*]]>*/
 	</script>
 </body>

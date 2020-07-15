@@ -42,39 +42,73 @@ public class BoardServiceImpl implements BoardService{
 	
 	//파일업로드
 	/*
-	@Override
-	public void fileUploadBoard(Board board , HttpServletRequest request) {
+	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
 		
-		List<CommonsMultipartFile> files = board.getFiles();
+		List<MultipartFile> fileList = request.getFiles("boardFiles");
+		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
+		
 		List<String> fileNames = new ArrayList<String>();
 		
-		if(files != null && files.size() > 0) {
-			for(CommonsMultipartFile multifile : files) {
-				String fileName = multifile.getOriginalFilename();
-				String path = request.getServletContext().getRealPath("/upload");
-				String fpath = path + "\\" + fileName;
+		if(fileList != null && fileList.size() > 0) {
+			for(MultipartFile multiFile : fileList) {
+				String originFileName = multiFile.getOriginalFilename();
 				
-				if(!fileName.equals("")) {
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString() + originFileName;
+				
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
+				File folder = new File(path);
+				
+				//폴더가 없을경우 폴더 생성하기
+				if(!folder.exists()) {
 					try {
-						FileOutputStream fs = new FileOutputStream(fpath);
-						try {
-							fs.write(multifile.getBytes());
-							fs.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						folder.mkdir();
+					} catch (Exception e) {
+						System.out.println("폴더생성실패");
+						e.getMessage();
 					}
-					fileNames.add(fileName);
-				}
-			}
+					System.out.println("팀 폴더가 생성되었습니다.");
+					
+					String filePath = path + "\\"  + fileName;
+					BoardUpload boardUpload = new BoardUpload();
+					
+					if((!fileName.equals("")) && (multiFile.getSize() > 0)) { //파일업로드
+						FileOutputStream fs = null;
+						
+						try {
+							fs = new FileOutputStream(filePath);
+							fs.write(multiFile.getBytes());
+						} catch (Exception e) {
+							System.out.println("file write error");
+							e.getMessage();
+						} finally {
+							try {
+								fs.close();
+							} catch (IOException e) {
+								System.out.println("fs close error");
+								e.getMessage();
+							}
+						} //finally end
+					} else { //if end
+						System.out.println("제목이 없거나 빈 파일입니다.");
+						continue;
+					}
+					
+					boardUpload.setOriginFileName(originFileName);
+					boardUpload.setFileName(fileName);
+					boardUpload.setFileSize(multiFile.getSize());
+					boardUpload.setAllBoardListNo(allBoardListNo);
+					boardUpload.setBoardNo(boardNo);
+					
+					//dao 불러서 file을 DB에 추가하는 내용 들어가야함
+					dao.insertBoardUploadFile(boardUpload);
+					fileNames.add(originFileName);
+				}//for end
+			}//if end
 		}
-		//DB에 파일명 저장
-		board.setFileName(fileNames.get(0));
-		board.setFileName(fileNames.get(1));
-		
-		dao.insertBoard(board);
+	return fileNames;
 	}
 	*/
 	

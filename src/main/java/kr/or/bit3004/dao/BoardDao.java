@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.or.bit3004.board.Board;
+import kr.or.bit3004.board.BoardUpload;
 
 @Repository
 public interface BoardDao {
@@ -21,7 +22,7 @@ public interface BoardDao {
 	public void insertBoard(Board board);
 	
 	//파일 업로드
-	//public int fileUpload(Board board);
+	//public int insertBoardUploadFile(BoardUpload boardUpload);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
