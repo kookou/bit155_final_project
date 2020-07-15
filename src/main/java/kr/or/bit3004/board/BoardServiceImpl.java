@@ -1,16 +1,9 @@
 package kr.or.bit3004.board;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
 
@@ -48,14 +41,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//파일업로드
-	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
-		System.out.println("= boardFilesUpload Impl =");
+	/*
+	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
 		
 		List<MultipartFile> fileList = request.getFiles("boardFiles");
 		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
-		System.out.println(teamNo);
 		
 		List<String> fileNames = new ArrayList<String>();
 		
@@ -66,7 +58,7 @@ public class BoardServiceImpl implements BoardService{
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid.toString() + originFileName;
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo;
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				
 				//폴더가 없을경우 폴더 생성하기
@@ -104,7 +96,7 @@ public class BoardServiceImpl implements BoardService{
 						continue;
 					}
 					
-					boardUpload.setFileOriginName(originFileName);
+					boardUpload.setOriginFileName(originFileName);
 					boardUpload.setFileName(fileName);
 					boardUpload.setFileSize(multiFile.getSize());
 					boardUpload.setAllBoardListNo(allBoardListNo);
@@ -118,6 +110,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 	return fileNames;
 	}
+	*/
 	
 	//게시판 수정하기
 	@Override
