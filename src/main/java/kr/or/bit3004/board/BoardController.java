@@ -27,6 +27,7 @@ public class BoardController {
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		System.out.println();
 		return "board/list";
 	}
 	
