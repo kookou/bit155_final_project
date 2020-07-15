@@ -49,10 +49,6 @@ public class KanbanServiceImpl implements KanbanService {
 	}
 	
 	
-	@Override
-	public List<Map> allKanbanList(int allBoardListNo){
-		return dao.allKanbanList(allBoardListNo);
-	}
 
 	
 	@Override
@@ -84,9 +80,10 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	
 	@Override
-	public int insertCardTitle(String title , int kanbanListNo) {
+	public int insertCardTitle(String title , int cardIndex, int kanbanListNo) {
 		int newcardNo;
-		dao.insertCardTitle(title, kanbanListNo);
+		dao.insertCardTitle(title, cardIndex, kanbanListNo);
+		
 		newcardNo = dao.getANewCardNo();
 		System.out.println(newcardNo);
 		

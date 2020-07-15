@@ -33,7 +33,7 @@
 </head>
 <body>
 <script>
-      (function () {
+/*       (function () {
         let addressBarHeight = computeAddressBarHeight();
         document.documentElement.style.setProperty('--addressBarHeight', `${addressBarHeight}px`);
 
@@ -45,7 +45,7 @@
           document.body.removeChild(div);
           return size;
         }
-      })();
+      })(); */
     </script>
 	<div class="drag-container"></div>
 	
@@ -129,13 +129,13 @@
 						</div>
 
 						<div class="card-modal-file">
-						
+
 							<span class="fas fa-cloud card-modal-title-icon"></span>
 							<h3 class="card-modal-cloud">Cloud</h3>
 
+
+
 							<div id="cardModalFileList">
-
-
 
 	
 							
@@ -243,9 +243,10 @@
 
 									<div class="divForDragNDrop">
 
+
 										<div class="kanban-card-list btn-card-hover" draggable="true"
 											th:each="card : ${kanbancardlist}"
-											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}">
+											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo}" th:attr="data-cardindex=${card.cardIndex}">
 											<span class='icon-pencil active-card-icon'
 												style='position: relative;'></span>
 											<div class="kanban-card-element" data-toggle="modal"
