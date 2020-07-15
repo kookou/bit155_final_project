@@ -71,13 +71,14 @@ public class BoardController {
 	
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
-	public String insertReboardService(Model model,int boardNo, int teamNo,int allBoardListNo) {
+	//public String insertReboardService(Model model,int boardNo, int teamNo,int allBoardListNo) {
+	public String insertReboardService(Model model, int teamNo,int allBoardListNo) {
 		/*
 		 * System.out.println("보드넘"+boardNo); model.addAttribute("boardNo", boardNo);
 		 * //삭제각
 		 */		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
-		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
+	//	model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
