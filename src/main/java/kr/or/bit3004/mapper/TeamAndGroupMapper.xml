@@ -3,14 +3,12 @@
 
 <mapper namespace="kr.or.bit3004.dao.TeamMainDao">
 	<select id="getGroupAndTeam" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		select group_team_no, g.group_no, t.team_no, tm.id, leader, group_name, background_color, group_name, team_name
-		  from `group` g
-		  join `group_team` gt
-		    on g.group_no = gt.group_no
+		select *
+		  from `group_team` gt
+		  join `group` g
+		    on gt.group_no = g.group_no
 		  join `team` t
 		    on gt.team_no = t.team_no
-		  join `team_member` tm
-		    on t.team_no = tm.team_no
 		 where g.id=#{id}
 	</select>
 	
@@ -36,8 +34,9 @@
 		select group_no from `group` where group_name = 'Personal' and id = #{id}
 	</select>
 	
+	<!-- 그룹삭제시 그 그룹에 속한 팀들을 Personal 그룹으로 옮기기 -->
 	<update id="moveGroup" parameterType="hashMap">
-		update `team` set `group_no` = #{1st} where `group_no` = #{2nd}
+		update `group_team` set `group_no` = #{1st} where `group_no` = #{2nd}
 	</update>
 	
 	<delete id="delGroup" parameterType="int">
@@ -53,7 +52,7 @@
 	</insert>
 	
 	<insert id="insertGroupTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		insert into `group_team`(group_no, team_no) values(#{groupNo}, #{teamNo})
+		insert into `group_team`(group_no, team_no, id) values(#{groupNo}, #{teamNo}, #{id})
 	</insert>
 	
 	<select id="getCurrTeamNo" resultType="int">
@@ -61,7 +60,12 @@
 	</select>
 	
 	<update id="moveTeamFromGroup" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		update `team` set `group_no` = #{groupNo} where `team_no` = #{teamNo}
+		update `group_team` gt 
+		 inner join `group` g 
+		    on gt.group_no = g.group_no
+		   set gt.`group_no` = #{groupNo}
+		 where `team_no` = #{teamNo}
+		   and g.id = #{id}
 	</update>
 	
 </mapper>
