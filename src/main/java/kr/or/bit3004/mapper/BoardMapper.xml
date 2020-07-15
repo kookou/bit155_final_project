@@ -22,7 +22,12 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
 
         
 	</select> 
-	
+	  <!-- 조회수 증가 -->
+   <update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
+      update board_list 
+         set views = views+1 
+       where board_no=#{boardNo}
+   </update>
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
 		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname,b.refer
@@ -39,18 +44,7 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
 		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`,`step`,`depth`,`refer`) 
 		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id},0,0,#{refer})
 	</insert>
-	
-<!-- 	<update id="updateRefer" parameterType="kr.or.bit3004.board.Board">
-		update board_list set refer=refer+1 
-	</update> -->
-	
-	<!-- 게시판 답글쓰기 -->
-	<!-- 서영쓰가 하던 insertReboard
-	 <insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
-		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`,`step`,`depth`,`refer`)
-		values(#{title}, #{content}, now(),1, #{id},#{step}+1,#{depth}+1,#{refer})
-	</insert> -->
-	
+
 	<update id="updateReboardAddstep" parameterType="kr.or.bit3004.board.Board">
 		update board_list set step=step+1
 		where refer=#{refer} and step &gt; #{step}
@@ -87,15 +81,9 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
 	
 	<insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
 		insert into board_list(`all_board_list_no`,`title`, `content`, `write_date`,`id`,`refer`,`depth`,`step`)
-		values(1,#{title}, #{content}, now(), #{id},#{refer},#{depth}+1,#{step}+1)
+		values(#{allBoardListNo},#{title}, #{content}, now(), #{id},#{refer},#{depth}+1,#{step}+1)
 	</insert>
-	
-<!-- 	<select id="selectBoardByRefer" resultType="kr.or.bit3004.board.Board">
-		select refer
-		from board_list
-		where board_no=#{boardNo}
-	</select> -->
-	
+		
 	<!-- 게시판 업로드 -->
 	<!-- <insert id="insertFile" parameterType="kr.or.bit3004.board.Board">
 		insert into board_file(`file_no`, `file_name`, `file_size`, `all_board_list_no`)
