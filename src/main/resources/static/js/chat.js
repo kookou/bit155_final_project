@@ -30,32 +30,67 @@ $(function () {
     };
 });
 
-$(document).on('click', '#sendBtn', function() {
-	var msg = $("#message");
-//	console.log(msg);
-	// 웹소켓 서버에 데이터 전송하기
-	ws.send(currUserNickname + ":" + msg.val());
-	msg.val("");
+$('#fixedBtn').on({
+    "shown.bs.popover": function(){
+        var input = $(".popover input#message");
+        input.focus();
+        $(document).on('keydown', input, function(key) {
+        	if (key.keyCode == 13) {
+        		if(input.val() != "") {
+        			// 웹소켓 서버에 데이터 전송하기
+        			ws.send(currUserNickname + "∥" + input.val());
+        			input.val("");
+        		}
+        	}
+    	});
+		$(document).on('click', '#sendBtn', function() {
+			if(input.val() != "") {
+				// 웹소켓 서버에 데이터 전송하기
+				ws.send(currUserNickname + "∥" + input.val());
+				input.val("");
+			}
+		});
+    },
+    "hide.bs.popover": function(){
+        $(this).blur();    
+    },
+    "click": function(){
+        $(this).popover("toggle");    
+    }
 });
 
+
 function makeChatBox(data) {
-	var nickAndMsg = data.split(":");
+	var nickAndMsg = data.split("∥");
 	var nick = nickAndMsg[0];
 	var msg = nickAndMsg[1];
+	var time = nickAndMsg[2];
+	console.log("에코닉네임:"+nick);
+	console.log("에코메세지:"+msg);
+	console.log("에코타임:"+time);
 	let html = "";
-	html += '<li class="chat-item list-style-none mt-3">';
-	html += 	'<div class="chat-img d-inline-block">';
-	html += 		'<img src="assets/images/userImage/'+ currUserImage +'" alt="user" class="rounded-circle" width="45">';
-	html += 	'</div>';
-	html += 	'<div class="chat-content d-inline-block">';
-	html += 		'<h6 class="font-weight-medium">'+ nick +'</h6>';
-	html += 		'<div class="msg p-2 d-inline-block mb-1">'+ msg +'</div>';
-	html += 	'</div>';
-	html += 	'<div class="chat-time d-block font-10 mt-1 mr-0 mb-3">';
-	html += 		'10:56 am';
-	html += 	'</div>';
-	html += '</li>';
-	$("#msgUl").append(html);
+	if(nick.trim() == currUserNickname) {
+		html += '<li class="chat-item odd list-style-none mt-3">';
+		html += 	'<div class="chat-content text-right d-inline-block">';
+		html += 		'<div class="box msg p-2 d-inline-block mb-1 box">'+ msg +'</div>';
+		html += 		'<br>';
+		html += 	'</div>';
+		html += 	'<div class="chat-time text-right d-block font-10 mt-1 mr-0 mb-3 time">'+ time +'</div>';
+		html += '</li>';
+	} else {
+		html += '<li class="chat-item list-style-none mt-3">';
+		html += 	'<div class="chat-img d-inline-block">';
+		html += 		'<img src="assets/images/userImage/'+ currUserImage +'" alt="user" class="rounded-circle" width="45">';
+		html += 	'</div>';
+		html += 	'<div class="chat-content d-inline-block">';
+		html += 		'<h6 class="font-weight-medium">'+ nick +'</h6>';
+		html += 		'<div class="msg p-2 d-inline-block mb-1">'+ msg +'</div>';
+		html += 	'</div>';
+		html += 	'<div class="chat-time d-block font-10 mt-1 mr-0 mb-3">'+ time +'</div>';
+		html += '</li>';
+	}
+	$(".popover #msgUl").append(html);
+	$(".popover .chat-box").scrollTop($(".popover #msgUl")[0].scrollHeight);
 }
 
 //$('#logoutBtn').click(function() { 
