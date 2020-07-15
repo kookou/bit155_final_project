@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.AsideDao;
+import kr.or.bit3004.groupAndTeam.GroupAndTeam;
 import kr.or.bit3004.groupAndTeam.Team;
 import kr.or.bit3004.groupAndTeam.TeamMember;
 import kr.or.bit3004.user.User;
@@ -47,8 +48,11 @@ public class AsideServiceImpl implements AsideService {
 	}
 	
 	@Override
-	public void inviteMember(TeamMember teamMember) {
-		dao.inviteMember(teamMember);
+	public void inviteMember(GroupAndTeam groupAndTeam) {
+		dao.inviteMember(groupAndTeam);
+		int groupNo = dao.searchPersonalNo(groupAndTeam.getId());
+		groupAndTeam.setGroupNo(groupNo);
+		dao.insertGroupTeam(groupAndTeam);
 	}
 	
 	@Override

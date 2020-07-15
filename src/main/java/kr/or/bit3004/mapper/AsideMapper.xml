@@ -39,8 +39,18 @@
 		select id from `user` where id like '%${id}%'
 	</select>
 	
-	<insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.TeamMember">
+	<insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		insert into `TEAM_MEMBER`(`team_no`, `id`) values(#{teamNo}, #{id})
+	</insert>
+	
+	<!-- 초대된 멤버의 Personal 그룹의 no 뽑아오기 -->
+	<select id="searchPersonalNo" resultType="int">
+		select group_no from `group` where group_name = 'Personal' and id = #{id}
+	</select>
+	
+	<!-- 초대된 멤버의 그룹-팀 매핑 테이블에 insert해주기 -->
+	<insert id="insertGroupTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		insert into `group_team`(group_no, team_no, id) values(#{groupNo}, #{teamNo}, #{id})
 	</insert>
 	
 	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">

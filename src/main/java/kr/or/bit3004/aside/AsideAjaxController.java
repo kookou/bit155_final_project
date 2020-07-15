@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.bit3004.groupAndTeam.TeamMember;
+import kr.or.bit3004.groupAndTeam.GroupAndTeam;
 import kr.or.bit3004.user.User;
 
 @RestController
@@ -27,8 +27,8 @@ public class AsideAjaxController {
 	}
 	
 	@RequestMapping("inviteMember.do")
-	public User selectInvitedMemberInfo(TeamMember teamMember) {
-		service.inviteMember(teamMember);
-		return service.selectInvitedMemberInfo(teamMember.getId());
+	public User selectInvitedMemberInfo(GroupAndTeam groupAndTeam) {
+		service.inviteMember(groupAndTeam);
+		return service.selectInvitedMemberInfo(groupAndTeam.getId());
 	}
 }

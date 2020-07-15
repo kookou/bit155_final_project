@@ -2,6 +2,7 @@ package kr.or.bit3004.aside;
 
 import java.util.List;
 
+import kr.or.bit3004.groupAndTeam.GroupAndTeam;
 import kr.or.bit3004.groupAndTeam.Team;
 import kr.or.bit3004.groupAndTeam.TeamMember;
 import kr.or.bit3004.user.User;
@@ -13,6 +14,6 @@ public interface AsideService {
 	public void insertAllBoard(AllBoardList allBoard);
 	public int getCurrAllBoardListNo();
 	public List<String> searchUser(String id);
-	public void inviteMember(TeamMember teamMember);
+	public void inviteMember(GroupAndTeam groupAndTeam);
 	public User selectInvitedMemberInfo(String id);
 }
