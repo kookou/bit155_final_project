@@ -59,8 +59,10 @@ ALTER TABLE `BOARD_TYPE` modify `BOARD_TYPE_NO` INT auto_increment;
 -- 클라우드
 CREATE TABLE `BOARD_FILE` (
 	`FILE_NO`           INT          NOT NULL, -- 파일식별번호
-	`FILE_NAME`         VARCHAR(110) NULL,     -- 파일이름
-	`FILE_SIZE`         INT          NULL,     -- 파일크기
+	`FILE_NAME`         VARCHAR(300) NOT NULL, -- 파일이름
+    `ORIGIN_FILE_NAME`  VARCHAR(300) NOT NULL, -- 원본파일이름
+	`FILE_SIZE`         INT          NOT NULL, -- 파일크기
+	`FILE_PATH`			VARCHAR(2000)NULL,	   -- 파일경로
 	`ALL_BOARD_LIST_NO` INT          NULL,     -- 게시판식별번호
 	`BOARD_NO`          INT          NULL,     -- 글식별번호
 	`CARD_NO`           INT          NULL      -- 카드식별번호
@@ -140,8 +142,7 @@ ALTER TABLE `KANBAN_LIST` modify `KANBAN_LIST_NO` INT auto_increment;
 CREATE TABLE `TEAM` (
 	`TEAM_NO`          INT         NOT NULL, -- 팀식별번호
 	`TEAM_NAME`        VARCHAR(50) NOT NULL, -- 팀명
-    `BACKGROUND_COLOR` VARCHAR(50) default 'ffffff', -- 배경색
-	`GROUP_NO`         INT         NOT NULL  -- 그룹식별번호
+    `BACKGROUND_COLOR` VARCHAR(50) default 'ffffff' -- 배경색
 );
 
 -- 팀
@@ -330,6 +331,20 @@ ALTER TABLE `TIMELINE_TYPE`
 -- 타임라인작업구분 시퀀스
 ALTER TABLE `TIMELINE_TYPE` modify `DML_NO` INT auto_increment;
 
+-- 그룹-팀 매핑
+CREATE TABLE `GROUP_TEAM` (
+	`GROUP_TEAM_NO` INT NOT NULL, -- 그룹-팀식별번호
+	`GROUP_NO`      INT NULL,     -- 그룹식별번호
+	`TEAM_NO`       INT NULL      -- 팀식별번호
+);
+
+-- 그룹-팀 매핑
+ALTER TABLE `GROUP_TEAM`
+	ADD CONSTRAINT `PK_GROUP_TEAM` -- 그룹-팀 매핑 기본키
+		PRIMARY KEY (
+			`GROUP_TEAM_NO` -- 그룹-팀식별번호
+		);
+
 -- 게시판
 ALTER TABLE `BOARD_LIST`
 	ADD CONSTRAINT `FK_ALL_BOARD_LIST_TO_BOARD_LIST` -- 게시판목록 -> 게시판
@@ -338,7 +353,7 @@ ALTER TABLE `BOARD_LIST`
 		)
 		REFERENCES `ALL_BOARD_LIST` ( -- 게시판목록
 			`ALL_BOARD_LIST_NO` -- 게시판식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 게시판
 ALTER TABLE `BOARD_LIST`
@@ -348,7 +363,7 @@ ALTER TABLE `BOARD_LIST`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 클라우드
 ALTER TABLE `BOARD_FILE`
@@ -358,7 +373,7 @@ ALTER TABLE `BOARD_FILE`
 		)
 		REFERENCES `ALL_BOARD_LIST` ( -- 게시판목록
 			`ALL_BOARD_LIST_NO` -- 게시판식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 클라우드
 ALTER TABLE `BOARD_FILE`
@@ -368,7 +383,7 @@ ALTER TABLE `BOARD_FILE`
 		)
 		REFERENCES `BOARD_LIST` ( -- 게시판
 			`BOARD_NO` -- 글식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 클라우드
 ALTER TABLE `BOARD_FILE`
@@ -378,16 +393,7 @@ ALTER TABLE `BOARD_FILE`
 		)
 		REFERENCES `KANBAN_CARD` ( -- 칸반보드카드
 			`CARD_NO` -- 카드식별번호
-		);
-        
--- 클라우드 (클라우드 임시 보류 일단 로컬에 업로드)
-ALTER TABLE `BOARD_FILE` 
-	ADD COLUMN `ORIGIN_FILE_NAME` VARCHAR(300) NOT NULL AFTER `FILE_NO`,
-	CHANGE COLUMN `FILE_NAME` `FILE_NAME` VARCHAR(300) NOT NULL ,
-	CHANGE COLUMN `FILE_SIZE` `FILE_SIZE` INT NOT NULL 
-;
-        
-        
+		) ON DELETE CASCADE;
 
 -- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
@@ -397,7 +403,7 @@ ALTER TABLE `BOARD_COMMENT`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
@@ -407,7 +413,7 @@ ALTER TABLE `BOARD_COMMENT`
 		)
 		REFERENCES `BOARD_LIST` ( -- 게시판
 			`BOARD_NO` -- 글식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 게시판댓글
 ALTER TABLE `BOARD_COMMENT`
@@ -417,7 +423,7 @@ ALTER TABLE `BOARD_COMMENT`
 		)
 		REFERENCES `KANBAN_CARD` ( -- 칸반보드카드
 			`CARD_NO` -- 카드식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 칸반보드카드
 ALTER TABLE `KANBAN_CARD`
@@ -427,7 +433,7 @@ ALTER TABLE `KANBAN_CARD`
 		)
 		REFERENCES `KANBAN_LIST` ( -- 칸반보드리스트
 			`KANBAN_LIST_NO` -- 칸반리스트 식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 칸반보드리스트
 ALTER TABLE `KANBAN_LIST`
@@ -437,7 +443,7 @@ ALTER TABLE `KANBAN_LIST`
 		)
 		REFERENCES `ALL_BOARD_LIST` ( -- 게시판목록
 			`ALL_BOARD_LIST_NO` -- 게시판식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 칸반보드리스트
 ALTER TABLE `KANBAN_LIST`
@@ -447,18 +453,8 @@ ALTER TABLE `KANBAN_LIST`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
--- 팀
-ALTER TABLE `TEAM`
-	ADD CONSTRAINT `FK_GROUP_TO_TEAM` -- 그룹 -> 팀
-		FOREIGN KEY (
-			`GROUP_NO` -- 그룹식별번호
-		)
-		REFERENCES `GROUP` ( -- 그룹
-			`GROUP_NO` -- 그룹식별번호
-		);
-	
 -- 그룹
 ALTER TABLE `GROUP`
 	ADD CONSTRAINT `FK_USER_TO_GROUP` -- 사용자 -> 그룹
@@ -467,7 +463,7 @@ ALTER TABLE `GROUP`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 팀구성원
 ALTER TABLE `TEAM_MEMBER`
@@ -477,7 +473,7 @@ ALTER TABLE `TEAM_MEMBER`
 		)
 		REFERENCES `TEAM` ( -- 팀
 			`TEAM_NO` -- 팀식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 팀구성원
 ALTER TABLE `TEAM_MEMBER`
@@ -487,7 +483,7 @@ ALTER TABLE `TEAM_MEMBER`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 사용자-권한 매핑
 ALTER TABLE `ROLE_MEMBER`
@@ -497,7 +493,7 @@ ALTER TABLE `ROLE_MEMBER`
 		)
 		REFERENCES `ROLE` ( -- 권한
 			`AUTHORITY` -- 권한코드
-		);
+		) ON DELETE CASCADE;
 
 -- 사용자-권한 매핑
 ALTER TABLE `ROLE_MEMBER`
@@ -507,7 +503,7 @@ ALTER TABLE `ROLE_MEMBER`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 게시판목록
 ALTER TABLE `ALL_BOARD_LIST`
@@ -519,7 +515,7 @@ ALTER TABLE `ALL_BOARD_LIST`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 게시판목록
 ALTER TABLE `ALL_BOARD_LIST`
@@ -529,7 +525,7 @@ ALTER TABLE `ALL_BOARD_LIST`
 		)
 		REFERENCES `BOARD_TYPE` ( -- 게시판종류
 			`BOARD_TYPE_NO` -- 게시판종류식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 투두리스트내용
 ALTER TABLE `TODO_CONTENT`
@@ -539,7 +535,7 @@ ALTER TABLE `TODO_CONTENT`
 		)
 		REFERENCES `TODO_LIST` ( -- 투두리스트목록
 			`NO` -- 투두리스트목록식별번호
-		);
+		) ON DELETE CASCADE;
 
 -- 투두리스트내용
 ALTER TABLE `TODO_CONTENT`
@@ -549,7 +545,7 @@ ALTER TABLE `TODO_CONTENT`
 		)
 		REFERENCES `USER` ( -- 사용자
 			`ID` -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 투두리스트목록
 ALTER TABLE `TODO_LIST`
@@ -561,7 +557,7 @@ ALTER TABLE `TODO_LIST`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 일정관리
 ALTER TABLE `PLAN`
@@ -573,7 +569,7 @@ ALTER TABLE `PLAN`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 타임라인
 ALTER TABLE `TIMELINE`
@@ -585,7 +581,7 @@ ALTER TABLE `TIMELINE`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		);
+		) ON DELETE CASCADE;
 
 -- 타임라인
 ALTER TABLE `TIMELINE`
@@ -595,4 +591,24 @@ ALTER TABLE `TIMELINE`
 		)
 		REFERENCES `TIMELINE_TYPE` ( -- 타임라인작업구분
 			`DML_NO` -- 작업구분식별번호
-		);
+		) ON DELETE CASCADE;
+
+-- 그룹-팀 매핑
+ALTER TABLE `GROUP_TEAM`
+	ADD CONSTRAINT `FK_GROUP_TO_GROUP_TEAM` -- 그룹 -> 그룹-팀 매핑
+		FOREIGN KEY (
+			`GROUP_NO` -- 그룹식별번호
+		)
+		REFERENCES `GROUP` ( -- 그룹
+			`GROUP_NO` -- 그룹식별번호
+		) ON DELETE CASCADE;
+
+-- 그룹-팀 매핑
+ALTER TABLE `GROUP_TEAM`
+	ADD CONSTRAINT `FK_TEAM_TO_GROUP_TEAM` -- 팀 -> 그룹-팀 매핑
+		FOREIGN KEY (
+			`TEAM_NO` -- 팀식별번호
+		)
+		REFERENCES `TEAM` ( -- 팀
+			`TEAM_NO` -- 팀식별번호
+		) ON DELETE CASCADE;

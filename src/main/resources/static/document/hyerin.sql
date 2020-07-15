@@ -87,3 +87,9 @@ select COMMENT_NO, content, WRITE_DATE, b.id, NICKNAME, image
  
 insert into board_comment (`content`, `write_date`, `id`, `board_no`) values('gㅎㅇㅎㅇㅎㅇㅎㅇ', now(), 'hrin@3004.com', 1);
 select image from `user` where id='hrin@3004.com';
+
+select * from team;
+update `team` 
+set `group_no` = 1 
+where `team_no` = 1 
+and `id` = "";
