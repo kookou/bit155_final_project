@@ -56,12 +56,16 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" th:action="@{insertBoard.do(id=${session.currentUser.id})}">
+                            <form method="post" th:action="@{insertBoard.do}">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="form-group">
+                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
+                                            	<input type="hidden" name="teamNo" th:value="${teamNo}">
+                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
                                             	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
+
                                             </div>
                                             <div class="custom-file col-md-12">
                                                 <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
@@ -80,7 +84,7 @@
                                     <div class="text-right">
                                         <button type="submit" id="submitBtn" class="btn btn-info">등록</button>
                                         <button type="reset" class="btn btn-dark">초기화</button>
-                                        <a type="reset" class="btn btn-dark" href="boardList.do?allBoardListNo=1&teamNo=1">목록으로</a>
+                                        <a type="reset" class="btn btn-dark" th:href="@{boardList.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">목록으로</a>
                                     </div>
                                 </div>
                             </form>

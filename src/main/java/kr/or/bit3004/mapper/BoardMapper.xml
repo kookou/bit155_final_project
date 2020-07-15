@@ -11,13 +11,15 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
    SELECT * 
      FROM board_list
    ) b
-inner join `user` u
+	inner join `user` u
   on u.id = b.id
-inner join all_board_list a
+	inner join all_board_list a
   on a.all_board_list_no = b.all_board_list_no
-left outer join board_file f
+	left outer join board_file f
   on f.board_no = b.board_no
-  ORDER BY refer DESC, step asc;	
+  where a.all_board_list_no = #{allBoardListNo}
+    ORDER BY refer DESC, step asc,b.board_no desc
+
 
 
 	</select> 
@@ -36,7 +38,7 @@ left outer join board_file f
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.board.Board">
 		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`,`step`,`depth`,`refer`) 
-		values(#{title}, #{content}, now(), 1, #{id},0,0,#{refer})
+		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id},0,0,#{refer})
 	</insert>
 	
 <!-- 	<update id="updateRefer" parameterType="kr.or.bit3004.board.Board">
