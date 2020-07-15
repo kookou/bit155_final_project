@@ -140,18 +140,20 @@ public class BoardServiceImpl implements BoardService{
 	//게시판 답글쓰기
 	@Override
 	public void insertReboard(Board board) {
-		System.out.println(board);
 		dao.updateReboardAddstep(board);
 	//이거 주석풀까말까	board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
 		//1.답글
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
+		System.out.println("boardno="+board.getBoardNo());
 			//	System.out.println("getstep"+dao.getStep(currBoardInfo));
 		//2.위치
 		int step=dao.getStep(currBoardInfo);
 		//답글 insert
 		
 		if(step==0) {
+			System.out.println(board);
+			System.out.println("currboard="+currBoardInfo);
 			System.out.println("step==0을탔따.");
 			int maxStep= dao.getMaxStep(currBoardInfo); //요녀석이 문제.
 			System.out.println("된다");
