@@ -54,7 +54,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" th:action="@{insertReboard.do(id=${session.currentUser.id})}">
+                            <form method="post" th:action="@{insertReboard.do}">
                             <input type="hidden" name="id" th:value="${session.currentUser.id}">
                             <input type="hidden" name="teamNo" th:value="${teamNo}">
                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
@@ -65,7 +65,7 @@
                                             <div class="form-group">
                                             	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요." value="Re: ">
                                             <!-- 	 <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}"> -->
-                                            	 <input type="hidden" name="refer" id="refer" th:value="${board.refer}">
+                                            	<!--  <input type="hidden" name="refer" id="refer" th:value="${board.refer}"> -->
                                             </div>
                                             <div class="custom-file col-md-12">
                                                 <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>

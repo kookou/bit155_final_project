@@ -14,7 +14,7 @@ var ws = null;
 var loginId = null;
 
 $(function () {
-    ws = new WebSocket('ws://192.168.0.56:8090/chatting');
+    ws = new WebSocket('ws://localhost:8090/chatting');
 	ws.onopen = function() {
    	    console.log('웹소켓 서버 접속 성공');
    	    ws.send('connent∥'+teamNo+"∥"+currUserNickname+"∥"+"님 접속");
