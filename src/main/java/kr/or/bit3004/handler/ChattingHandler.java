@@ -30,6 +30,13 @@ public class ChattingHandler extends TextWebSocketHandler {
 		User currentUser = (User)attrs.get("currentUser");
 		users.put(currentUser.getNickname(), session);
 		debug(currentUser.getNickname() + " 연결됨");
+		Set<String> keys = users.keySet();
+		for (String key : keys) {
+			WebSocketSession wSession = users.get(key);
+			wSession.sendMessage(
+				new TextMessage("notice∥"+currentUser.getNickname()+"님이 접속하였습니다.∥"+time.format(new Date()))
+			);
+		}
 	}
 
 	@Override
@@ -40,6 +47,13 @@ public class ChattingHandler extends TextWebSocketHandler {
 		users.remove(currentUser.getNickname());
 		debug(currentUser.getNickname() + " 연결 종료됨");
 		System.out.println(users);
+		Set<String> keys = users.keySet();
+		for (String key : keys) {
+			WebSocketSession wSession = users.get(key);
+			wSession.sendMessage(
+				new TextMessage("notice∥"+currentUser.getNickname()+"님이 접속 종료하였습니다.∥"+time.format(new Date()))
+			);
+		}
 	}
 	
 	@Override

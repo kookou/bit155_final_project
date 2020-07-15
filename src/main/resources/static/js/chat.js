@@ -14,7 +14,7 @@ var ws = null;
 var loginId = null;
 
 $(function () {
-    ws = new WebSocket('ws://localhost:8090/chatting');
+    ws = new WebSocket('ws://192.168.0.56:8090/chatting');
 	ws.onopen = function() {
    	    console.log('웹소켓 서버 접속 성공');
     };
@@ -69,6 +69,14 @@ function makeChatBox(data) {
 	console.log("에코메세지:"+msg);
 	console.log("에코타임:"+time);
 	let html = "";
+	if(nick.trim() == "notice") {
+		html += '<li class="chat-item odd list-style-none mt-3">';
+		html += 	'<div class="chat-content text-center d-inline-block">';
+		html += 		'<div class="box msg p-2 d-inline-block mb-1 box">'+ msg +'</div>';
+		html += 		'<br>';
+		html += 	'</div>';
+		html += '</li>';
+	}
 	if(nick.trim() == currUserNickname) {
 		html += '<li class="chat-item odd list-style-none mt-3">';
 		html += 	'<div class="chat-content text-right d-inline-block">';
