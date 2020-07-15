@@ -21,8 +21,10 @@ public interface BoardDao {
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
+	public int getBoardNo();
+	
 	//파일 업로드
-	//public int insertBoardUploadFile(BoardUpload boardUpload);
+	public int insertBoardUploadFile(BoardUpload boardUpload);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
