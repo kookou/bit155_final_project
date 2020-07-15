@@ -222,4 +222,10 @@ public class KanbanServiceImpl implements KanbanService {
 		dao.deleteCardReply(commentNo);
 	}
 
+
+	@Override
+	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
+		return dao.getKanbanCardFiles(cardNo);
+	}
+
 }

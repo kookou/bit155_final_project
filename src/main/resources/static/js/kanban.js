@@ -24,20 +24,31 @@ var addlistTag =
     + "</div>"
 + "</div>";
 
-function addUploadFileTag(parent, fileName){
-	
-	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
+var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
 							   +"<a class=''>"
 								   +"<span class='card-modal-filename'>"
-								   + fileName
 								   +"</span>"
 							   +"</a>"
 							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
 						   +"</p>"
-					   +"</div>";	
+					+"</div>";
+
+function addUploadFileTag(parent, fileName){
+	
+//	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
+//						   +"<p class='card-modal-list-cloud'>"
+//							   +"<a class=''>"
+//								   +"<span class='card-modal-filename'>"
+//								   + fileName
+//								   +"</span>"
+//							   +"</a>"
+//							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
+//						   +"</p>"
+//					   +"</div>";	
 	
 	parent.append(uploadFileTag);
+	parent.find('.card-modal-filename').last().append(fileName);
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -520,6 +531,27 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				makereply(resData);
 			} 
 		});
+
+
+	 //모달 실행시 파일 목록 뿌려주기
+	 $.ajax({ 
+			url: "cardFilesSelect.ajax",
+			data: {
+					cardNo: cardNo
+					},
+	        dataType: "json",	        
+			success: function(resData) {
+			
+				console.log("file select 완료");
+				console.log(resData);
+
+				$.each(resData, function(index, item){
+					//여기 작업하고 있었음 파일 목록 뿌리기
+				});
+				
+			} 
+		});
+	 
 	 
 	 
 	 

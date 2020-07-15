@@ -122,5 +122,14 @@ public class KanbanAjaxController {
 		service.deleteCardReply(commentNo);
 	}
 	
+	
+	//카드 파일 목록 가져오기
+	@RequestMapping("cardFilesSelect.ajax")
+	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
+		System.out.println(" rest controller ");
+		
+		return service.getKanbanCardFiles(cardNo);
+	}
+	
 }
  
