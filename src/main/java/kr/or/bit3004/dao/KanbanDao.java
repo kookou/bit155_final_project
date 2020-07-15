@@ -53,5 +53,8 @@ public interface KanbanDao {
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
 	public void updateCardReply(String content, int commentNo);
 	public void deleteCardReply(int commentNo);
+	
+	//select Kanban Card Files
+	public List<KanbanUpload> getKanbanCardFiles(int cardNo);
 
 }
