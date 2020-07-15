@@ -722,6 +722,12 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 .display-control{
 	display: inline-block;
 }
+
+.divForDragNDrop{
+	min-height:15px;
+}
+
+
 /* .btn-card-hover:hover .active-card-icon{
     top : 10%;
     left: 90%;

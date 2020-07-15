@@ -87,3 +87,28 @@ select COMMENT_NO, content, WRITE_DATE, b.id, NICKNAME, image
  
 insert into board_comment (`content`, `write_date`, `id`, `board_no`) values('gㅎㅇㅎㅇㅎㅇㅎㅇ', now(), 'hrin@3004.com', 1);
 select image from `user` where id='hrin@3004.com';
+
+select * from team;
+update `team` 
+set `group_no` = 1 
+where `team_no` = 1 
+and `id` = "";
+ 
+select group_team_no, g.group_no, t.team_no, tm.id, leader, group_name, background_color, group_name, team_name
+  from `group` g
+  join `group_team` gt
+    on g.group_no = gt.group_no
+  join `team` t
+    on gt.team_no = t.team_no
+  join `team_member` tm
+    on t.team_no = tm.team_no
+ where g.id='hrin@3004.com';
+
+select * from `group`;
+select * from team;
+
+insert into `group_team`(group_no, team_no) values();
+
+select GROUP_NO, GROUP_NAME, id
+  from `group`
+ where id='hrin@3004.com';

@@ -34,7 +34,7 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"</p>"
 					+"</div>";
 
-function addUploadFileTag(parent, fileName){
+function addUploadFileTag(parent, fileName, fileNo){
 	
 //	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 //						   +"<p class='card-modal-list-cloud'>"
@@ -49,6 +49,8 @@ function addUploadFileTag(parent, fileName){
 	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(fileName);
+	parent.find('.card-modal-file-delete').last().attr('fileNo', fileNo);
+	console.log(parent.find('.card-modal-file-delete').last());
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -62,7 +64,14 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
-	
+
+
+
+
+
+ $('.divForDragNDrop').sortable({
+	 connectWith: '.divForDragNDrop'
+ });
  
 
 	
@@ -547,7 +556,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 
 				$.each(resData, function(index, item){
 					//여기 작업하고 있었음 파일 목록 뿌리기
-					addUploadFileTag($('#cardModalFileList'), item.originFileName);
+					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
 				});
 				
 			} 
@@ -862,7 +871,7 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 		processData: false, // 필수 
 		 		contentType: false, // 필수 
 		 		cache: false, 
-		 		success: function(resData) {
+		 		success: function(resData) { // 여기 resData 파일 객체 가져오는걸로 바꿔야함
 		 			if((resData != null) && (resData.length > 0)){
 		 				console.log(resData.length);
 		 				console.log("파일 업로드 성공");	
@@ -887,6 +896,8 @@ $('#kanbanFileInputBtn').on('click',function(){
 									cardFilecount = cardFile;
 								} 
 							});
+		 				 // input label 비우기
+		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
@@ -897,7 +908,50 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 			console.log("ajax 에러발생");
 		 		} 
 		 	});
-})
+});
+
+//모달 카드 파일 삭제
+
+$(document).on('click','.card-modal-file-delete',function() {
+	
+	let fileNo = $(this).attr('fileno')
+	
+	$.ajax({
+		url: "cardFilesDelete.ajax",
+		data: {
+				"fileNo": fileNo,
+				"cardNo": cardNo,
+				"teamNo": $('#teamNo').val()
+				},
+		dataType: "json",
+		success: function(resData){
+				
+				//파일 목록 비우기
+				$('#cardModalFileList').empty();
+				
+				//파일 목록 다시 뿌리기
+				$.each(resData, function(index, item){
+ 					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
+ 				});
+				
+				//파일 개수 재설정
+				cardFilecount = resData.length;
+			
+				},
+		error: function(request, status, error){
+					alert(  "code:"+request.status
+							+"\n"+"message:"+request.responseText
+							+"\n"+"error:"+error);
+				}
+	});
+	
+});
+
+
+
+
+
+
 
 
 //모달 리플 삭제 

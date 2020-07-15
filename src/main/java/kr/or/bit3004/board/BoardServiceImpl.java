@@ -47,17 +47,21 @@ public class BoardServiceImpl implements BoardService{
 		dao.insertBoard(board);
 	}
 	
+	@Override
+	public int getBoardNo() {
+		return dao.getBoardNo();
+	}
+	
 	//파일업로드
-	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
-		System.out.println("= boardFilesUpload Impl =");
-		
-		List<MultipartFile> fileList = request.getFiles("boardFiles");
+	@Override
+	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
+		List<MultipartFile> fileList = request.getFiles("file");
 		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
-		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		int boardNo = getBoardNo();
 		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
-		System.out.println(teamNo);
-		
 		List<String> fileNames = new ArrayList<String>();
+		
+		System.out.println("fileList:" + fileList);
 		
 		if(fileList != null && fileList.size() > 0) {
 			for(MultipartFile multiFile : fileList) {
@@ -66,9 +70,9 @@ public class BoardServiceImpl implements BoardService{
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid.toString() + originFileName;
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo;
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
-				
+				System.out.println(path);
 				//폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
@@ -94,6 +98,7 @@ public class BoardServiceImpl implements BoardService{
 						} finally {
 							try {
 								fs.close();
+								System.out.println("fs:" + fs);
 							} catch (IOException e) {
 								System.out.println("fs close error");
 								e.getMessage();
@@ -103,8 +108,7 @@ public class BoardServiceImpl implements BoardService{
 						System.out.println("제목이 없거나 빈 파일입니다.");
 						continue;
 					}
-					
-					boardUpload.setFileOriginName(originFileName);
+					boardUpload.setOriginFileName(originFileName);
 					boardUpload.setFileName(fileName);
 					boardUpload.setFileSize(multiFile.getSize());
 					boardUpload.setAllBoardListNo(allBoardListNo);
@@ -136,7 +140,7 @@ public class BoardServiceImpl implements BoardService{
 	public void insertReboard(Board board) {
 		System.out.println(board);
 		dao.updateReboardAddstep(board);
-		
+		board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
 		//1.답글
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());

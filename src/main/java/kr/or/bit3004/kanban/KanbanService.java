@@ -47,5 +47,8 @@ public interface KanbanService {
 	
 	//select Kanban Card Files
 	public List<KanbanUpload> getKanbanCardFiles(int cardNo);
+	
+	//delete a Kanban Card File
+	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo);
 
 }

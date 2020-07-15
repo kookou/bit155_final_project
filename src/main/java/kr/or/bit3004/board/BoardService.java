@@ -17,8 +17,10 @@ public interface BoardService {
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
+	public int getBoardNo();
+	
 	//파일 업로드
-	public List<String> boardFilesUpload(MultipartHttpServletRequest request);
+	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
