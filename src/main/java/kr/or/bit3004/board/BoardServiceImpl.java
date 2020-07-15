@@ -93,7 +93,6 @@ public class BoardServiceImpl implements BoardService{
 						try {
 							fs = new FileOutputStream(filePath);
 							fs.write(multiFile.getBytes());
-							System.out.println("너는 뭐니?");
 						} catch (Exception e) {
 							System.out.println("file write error");
 							e.getMessage();

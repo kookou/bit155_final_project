@@ -66,7 +66,6 @@ public class BoardController {
 		System.out.println(board);
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
-		System.out.println(service.insertBoardUploadFile(request));
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	
