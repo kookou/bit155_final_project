@@ -723,8 +723,12 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 	display: inline-block;
 }
 
-.divForDragNDrop{
+.divForDragNDrop {
 	min-height:15px;
+}
+
+.kanban-list-wrapper {
+	min-height:50px;
 }
 
 

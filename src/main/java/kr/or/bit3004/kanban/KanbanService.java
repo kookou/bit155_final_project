@@ -38,7 +38,7 @@ public interface KanbanService {
 	public void deleteKanbanCard(int cardNo);
 	
 	//upload file to Kanban Card
-	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request);
+	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request);
 	
 	public List<KanbanComment> getKanbanCommentList(int cardNo);
 	public void updateCardReply(String content, int commentNo);
