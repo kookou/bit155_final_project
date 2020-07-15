@@ -168,4 +168,29 @@
 		WHERE comment_no = #{commentNo};
 	</delete>
 	
+	<select id="getKanbanCardFiles" resultType="kr.or.bit3004.kanban.KanbanUpload">
+		SELECT FILE_NO,
+			   ORIGIN_FILE_NAME,
+			   FILE_NAME
+		FROM BOARD_FILE
+		WHERE CARD_NO = #{cardNo}		   
+	</select>
+			
+	<select id="getAKanbanCardFile" resultType="kr.or.bit3004.kanban.KanbanUpload">
+		SELECT FILE_NO,
+			   ORIGIN_FILE_NAME,
+			   FILE_NAME,
+			   FILE_SIZE,
+			   ALL_BOARD_LIST_NO,
+			   CARD_NO
+		FROM BOARD_FILE
+		WHERE FILE_NO = #{fileNo}		   
+	</select>
+	
+	<delete id="deleteKanbanCardFile">
+		DELETE
+		FROM BOARD_FILE
+		WHERE FILE_NO = #{fileNo}
+	</delete>
+	
 </mapper>
