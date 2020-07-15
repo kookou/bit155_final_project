@@ -17,6 +17,7 @@ public class TimelineController {
 	
 	@RequestMapping("timeLine.do")
 	public String timeLine(int teamNo, Model model) {
+		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("timelineList", service.getTimeline(teamNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
