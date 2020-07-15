@@ -1,9 +1,16 @@
 package kr.or.bit3004.board;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
 
@@ -40,16 +47,21 @@ public class BoardServiceImpl implements BoardService{
 		dao.insertBoard(board);
 	}
 	
+	@Override
+	public int getBoardNo() {
+		return dao.getBoardNo();
+	}
+	
 	//파일업로드
-	/*
+	@Override
 	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
-		
-		List<MultipartFile> fileList = request.getFiles("boardFiles");
+		List<MultipartFile> fileList = request.getFiles("file");
 		int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
-		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		int boardNo = getBoardNo();
 		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
-		
 		List<String> fileNames = new ArrayList<String>();
+		
+		System.out.println("fileList:" + fileList);
 		
 		if(fileList != null && fileList.size() > 0) {
 			for(MultipartFile multiFile : fileList) {
@@ -60,7 +72,7 @@ public class BoardServiceImpl implements BoardService{
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
-				
+				System.out.println(path);
 				//폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
@@ -86,6 +98,7 @@ public class BoardServiceImpl implements BoardService{
 						} finally {
 							try {
 								fs.close();
+								System.out.println("fs:" + fs);
 							} catch (IOException e) {
 								System.out.println("fs close error");
 								e.getMessage();
@@ -95,7 +108,6 @@ public class BoardServiceImpl implements BoardService{
 						System.out.println("제목이 없거나 빈 파일입니다.");
 						continue;
 					}
-					
 					boardUpload.setOriginFileName(originFileName);
 					boardUpload.setFileName(fileName);
 					boardUpload.setFileSize(multiFile.getSize());
@@ -110,7 +122,6 @@ public class BoardServiceImpl implements BoardService{
 		}
 	return fileNames;
 	}
-	*/
 	
 	//게시판 수정하기
 	@Override
