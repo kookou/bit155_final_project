@@ -25,6 +25,7 @@ var addlistTag =
 + "</div>";
 
 function addUploadFileTag(parent, fileName){
+	
 	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
 							   +"<a class=''>"
@@ -35,6 +36,7 @@ function addUploadFileTag(parent, fileName){
 							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
 						   +"</p>"
 					   +"</div>";	
+	
 	parent.append(uploadFileTag);
 }
 
@@ -509,6 +511,8 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 	 
 
 });
+
+
 //리플달기 
 $('#card-content').on('click', '.reply-done', function(){
 	console.log("안되겠지?")
@@ -582,7 +586,7 @@ function makereply(resData) {
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/users/"+obj.image+"' alt='user' href='javascript:void(0)'"
+				        + "<img src='assets/images/userimage/"+obj.image+"' alt='user' href='javascript:void(0)'"
 				                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		
@@ -750,8 +754,10 @@ $('.card-modal-list-description').on('click',function(){
 //모달 카드 파일 업로드
 $('#kanbanFileInputBtn').on('click',function(){
 	 console.log("kanbanFileInputBtn 클릭");
+	 console.log($('[data-cardno='+cardNo+']').find('[title=file]'));
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
+	 let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
 	 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
@@ -773,19 +779,18 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 				console.log("파일 업로드 성공");	
 		 				
 		 				$.each(resData, function(index, fileName){
-//		 					$('#cardModalFileList').append
 		 					addUploadFileTag($('#cardModalFileList'), fileName);
 		 				});
+		 				
+		 				fileCount.text(Number(fileCount.text()) + resData.length);
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
 		 			}
 		 			
-		 			
-		 			console.log(resData);
 		 		}, 
 		 		error: function (e) { 
-		 			console.log(에러발생)
+		 			console.log("ajax 에러발생");
 		 		} 
 		 	});
 
@@ -803,7 +808,35 @@ $('#kanbanFileInputBtn').on('click',function(){
 
 
 $('#card-content').on('click', '.card-modal-reply-delete',function(){
-    console.log("올거니?")
+    var commentNo = $(this).parent().prev().children().attr('data-cardreplyno')
+    console.log(commentNo)
+    $.ajax({
+		url: "CardReplyDelete.ajax",
+		data: {
+				commentNo : commentNo
+				},
+        dataType: "html",
+        
+		success: function() {
+			console.log("reply delete 완료");
+			
+			$.ajax({ 
+				url: "CardReplySelect.ajax",
+				data: {
+						cardNo: cardNo
+						},
+		        dataType: "json",
+		        
+				success: function(resData) {
+				
+					console.log("reply select 완료2");
+					console.log(resData);
+					$('.reply-list').empty();
+					makereply(resData);
+				} 
+			});
+		}
+	});
 })
 
 //모달 리플 수정
