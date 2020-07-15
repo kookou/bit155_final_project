@@ -345,12 +345,13 @@ div {
 }
 .card-modal-list-name{
     
-    padding: 5px 0 0 10px;
+    padding: 5px 0 0 12px;
 
 }
 .card-modal-list-description{
     padding: 5px 0 0 10px;
     word-wrap: break-word;
+   	margin-left:5px
 }
 .card-modal-file{
     margin: 20px 45px 8px 56px;
@@ -368,7 +369,7 @@ div {
 .card-modal-filename{
     font-weight: 500;
     font-size: 16px;
-   
+   	margin-left : 4px;
     color: rgb(42, 40, 67);
 
     word-wrap: break-word;
@@ -665,14 +666,13 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     border-radius: 3px;
     width: 100%;
     overflow-y: auto;
-    min-height: 40px;
-    padding: 7px 6px;
+    padding: 7px;
     vertical-align: middle;
     min-height: 100px;
 }
 
 .modal-textarea-description{
-    padding: 4px 0 0 10px;
+    padding: 4px 0 0 8px;
 }
 
 
@@ -722,6 +722,12 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 .display-control{
 	display: inline-block;
 }
+
+.divForDragNDrop{
+	min-height:15px;
+}
+
+
 /* .btn-card-hover:hover .active-card-icon{
     top : 10%;
     left: 90%;

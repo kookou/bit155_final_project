@@ -64,7 +64,14 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
-	
+
+
+
+
+
+ $('.divForDragNDrop').sortable({
+	 connectWith: '.divForDragNDrop'
+ });
  
 
 	
@@ -122,6 +129,7 @@ $(document).on('click', '#addlist', function() {
     
 //	$(this).prev().children().children().children().children().focus(); // input on focus
     titleInputBox.focus();
+
     
 });
 
@@ -168,7 +176,10 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	    		+"</div>"
 	    		+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
 	    		+ "</a>"
-	    		+ "<div class='divForDragNDrop'></div>");
+	    		+ "<div class='divForDragNDrop'></div>")
+	    		  .find('.divForDragNDrop').sortable({
+	    			 connectWith: '.divForDragNDrop'
+	    		 });
     
 
     kanbanListContent.attr('data-title', listName);    
@@ -499,7 +510,9 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				console.log("card select 완료");
 				console.log(resData)
 				var cardComment = resData.commentCount;
-				cardCommentcount = cardComment
+				cardCommentcount = cardComment;
+				var cardFile = resData.fileCount;
+				cardFilecount = cardFile;
 				 if(resData.content == "" || resData.content == null){
 					 console.log("없다")
 					 $('#modallDescrioption').hide();
@@ -603,14 +616,13 @@ $('#card-content').on('click', '.reply-done', function(){
 					        dataType: "json",
 					        
 							success: function(result) {
-								console.log("인서트 코멘트/파일 카운트 셀렉트");
+								console.log("인서트 코멘트 카운트 셀렉트");
 								console.log(result)
 								
 								var cardComment = result.commentCount;
 								cardCommentcount = cardComment;
 								
-								var cardFile = result.fileCount;
-								cardFilecount = cardFile;
+
 							} 
 						});
 					$('.reply-list').empty();
@@ -733,7 +745,7 @@ $('#card-content').on('click','.card-modal-title',function() {
 });
 
 
-////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
+// 모달 닫힐때 화면에 뿌리는 이벤트 
 
 $('#card-content').on('hide.bs.modal', function () {
 	
@@ -882,10 +894,8 @@ $('#kanbanFileInputBtn').on('click',function(){
 						        dataType: "json",
 						        
 								success: function(result) {
-									console.log("인서트 파일/코멘트 카운트 셀렉트");
-									var cardComment = result.commentCount;
-									cardCommentcount = cardComment;
-									
+									console.log("인서트 파일 카운트 셀렉트");
+
 									var cardFile = result.fileCount;
 									cardFilecount = cardFile;
 								} 
@@ -979,12 +989,10 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 					        dataType: "json",
 					        
 							success: function(result) {
-								console.log("딜리트 파일/코멘트 카운트 셀렉트");
+								console.log("딜리트 코멘트 카운트 셀렉트");
 								var cardComment = result.commentCount;
 								cardCommentcount = cardComment;
-								
-								var cardFile = result.fileCount;
-								cardFilecount = cardFile;
+
 							} 
 						});
 					$('.reply-list').empty();
@@ -1071,4 +1079,101 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////// 드래그앤 드랍 ////////////////////////////////////////////
+
+//혜정 짠것 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//$(document).ready(function() {
+//	var selectcard = "";
+//	$('.kanban-card-list').on('mousedown', function(e) {
+//		selectcard = $(this).outerHeight(true);
+//		// console.log(selectcard)
+//	});
+//
+//	const list_items = document.querySelectorAll('.kanban-card-list');
+//	const lists = document.querySelectorAll('.divForDragNDrop');
+//	let draggedItem = null;
+//
+//	for (let i = 0; i < list_items.length; i++) {
+//		const item = list_items[i];
+//
+//		item.addEventListener('dragstart', function(e) {
+//
+//			draggedItem = item;
+//
+//			setTimeout(function() {
+//				item.style.display = 'none';
+//			}, 0);
+//		});
+//		item.addEventListener('dragend', function(h) {
+//
+//			setTimeout(function() {
+//				draggedItem.style.display = 'block';
+//				draggedItem = null;
+//			}, 0);
+//		})
+//
+//		for (let j = 0; j < lists.length; j++) {
+//			const list = lists[j];
+//
+//			list.addEventListener('dragover', function(e) {
+//				e.preventDefault();
+//
+//			})
+//
+//			list.addEventListener('dragenter', function() {
+//				// e.preventDefault();
+//				console.log('dragenter');
+//				console.log(this.parentNode)
+//				var cardlistheight = this.parentNode.offsetHeight;
+//
+////				this.style.height = cardlistheight + selectcard + 'px';
+//				console.log(cardlistheight)
+//			})
+//			list.addEventListener('dragleave', function() {
+//				// this.style.backgroundColor = 'rgba(0,0,0,0.5)';
+//				var cardlistheight = this.parentNode.offsetHeight;
+//				console.log(this)
+//				this.style.height = 'auto';
+//			})
+//			list.addEventListener('drop', function() {
+//				this.append(draggedItem);
+//				this.style.height = 'auto';
+//			});
+//
+//		}
+//	}
+//});
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
