@@ -92,6 +92,7 @@ public class BoardServiceImpl implements BoardService{
 						try {
 							fs = new FileOutputStream(filePath);
 							fs.write(multiFile.getBytes());
+							System.out.println("너는 뭐니?" + fs);
 						} catch (Exception e) {
 							System.out.println("file write error");
 							e.getMessage();
@@ -118,6 +119,7 @@ public class BoardServiceImpl implements BoardService{
 					dao.insertBoardUploadFile(boardUpload);
 					fileNames.add(originFileName);
 				}//for end
+				System.out.println("파일네임  : " + fileNames.add(originFileName));
 			}//if end
 		}
 	return fileNames;
