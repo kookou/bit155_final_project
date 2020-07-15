@@ -127,7 +127,6 @@ public class KanbanAjaxController {
 	@RequestMapping("cardFilesSelect.ajax")
 	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
 		System.out.println(" rest controller ");
-		
 		return service.getKanbanCardFiles(cardNo);
 	}
 	
