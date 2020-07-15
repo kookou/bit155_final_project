@@ -67,39 +67,40 @@ public class BoardServiceImpl implements BoardService{
 			for(MultipartFile multiFile : fileList) {
 				String originFileName = multiFile.getOriginalFilename();
 				
-				UUID uuid = UUID.randomUUID();
+				UUID uuid = UUID.randomUUID(); //UUID : 고유한 식별자를 만들어준다
 				String fileName = uuid.toString() + originFileName;
+				System.out.println(fileName);
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; //경로설정
 				File folder = new File(path);
-				System.out.println(path);
+				
 				//폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
 						folder.mkdir();
+						
 					} catch (Exception e) {
 						System.out.println("폴더생성실패");
 						e.getMessage();
 					}
 					System.out.println("팀 폴더가 생성되었습니다.");
-					
-					String filePath = path + "\\"  + fileName;
-					BoardUpload boardUpload = new BoardUpload();
+				}	
+				String filePath = path + "\\"  + fileName;
+				BoardUpload boardUpload = new BoardUpload();
 					
 					if((!fileName.equals("")) && (multiFile.getSize() > 0)) { //파일업로드
 						FileOutputStream fs = null;
-						
 						try {
 							fs = new FileOutputStream(filePath);
 							fs.write(multiFile.getBytes());
-							System.out.println("너는 뭐니?" + fs);
+							System.out.println("너는 뭐니?");
 						} catch (Exception e) {
 							System.out.println("file write error");
 							e.getMessage();
 						} finally {
 							try {
-								fs.close();
-								System.out.println("fs:" + fs);
+								  fs.close();
+								  System.out.println("fs:" + fs);
 							} catch (IOException e) {
 								System.out.println("fs close error");
 								e.getMessage();
@@ -119,11 +120,10 @@ public class BoardServiceImpl implements BoardService{
 					dao.insertBoardUploadFile(boardUpload);
 					fileNames.add(originFileName);
 				}//for end
-				System.out.println("파일네임  : " + fileNames.add(originFileName));
 			}//if end
-		}
-	return fileNames;
+		return fileNames;
 	}
+	
 	
 	//게시판 수정하기
 	@Override
