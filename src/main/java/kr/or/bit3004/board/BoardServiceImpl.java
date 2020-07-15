@@ -1,16 +1,9 @@
 package kr.or.bit3004.board;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
 
@@ -48,6 +41,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//파일업로드
+	/*
 	public List<String> insertBoardUploadFile(MultipartHttpServletRequest request){
 		
 		List<MultipartFile> fileList = request.getFiles("boardFiles");
@@ -116,6 +110,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 	return fileNames;
 	}
+	*/
 	
 	//게시판 수정하기
 	@Override

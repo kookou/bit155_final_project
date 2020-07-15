@@ -22,7 +22,7 @@ public interface BoardDao {
 	public void insertBoard(Board board);
 	
 	//파일 업로드
-	public int insertBoardUploadFile(BoardUpload boardUpload);
+	//public int insertBoardUploadFile(BoardUpload boardUpload);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
