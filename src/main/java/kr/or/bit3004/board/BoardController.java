@@ -96,19 +96,21 @@ public class BoardController {
 	
 	//게시판 수정하기(Form)
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
-	public String updateBoardService(Model model, int boardNo, int teamNo) {
+	public String updateBoardService(Model model, int boardNo, int teamNo, int allBoardListNo) {
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		model.addAttribute("allBoardListNo",allBoardListNo);
+		model.addAttribute("teamNo", teamNo);
 		return "board/update";
 	}
 	
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
-	public String updateBoardService(Board board) {
+	public String updateBoardService(Board board,int allBoardListNo,int teamNo) {
 		service.updateBoard(board);
-		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
+		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
 	
 	//게시판 삭제하기
