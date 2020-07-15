@@ -134,7 +134,6 @@
     display: inline-block;
     margin: 0 4px 4px 0;
     max-width: 100%;
-    min-height: 20px;
     overflow: hidden;
     position: relative;
     padding: 2px;
@@ -719,6 +718,9 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     z-index: 50;
     float: right;
     display: none;
+}
+.display-control{
+	display: inline-block;
 }
 /* .btn-card-hover:hover .active-card-icon{
     top : 10%;

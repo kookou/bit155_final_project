@@ -2,6 +2,8 @@ package kr.or.bit3004.board;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 public interface BoardService {
 	//게시판 목록보기
 	public List<Board> selectBoardList(int allBoardListNo);
@@ -16,7 +18,7 @@ public interface BoardService {
 	public void insertBoard(Board board);
 	
 	//파일 업로드
-	//public void fileUploadBoard(Board board , HttpServletRequest request);
+	public List<String> boardFilesUpload(MultipartHttpServletRequest request);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);
