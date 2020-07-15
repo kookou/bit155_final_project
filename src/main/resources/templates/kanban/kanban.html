@@ -233,18 +233,17 @@
 												data-target="#card-content" >
 												<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
 												<div class="kanban-card-badges">
-													<div th:classappend = "${card.commentcount > 0} ? 'display-control' : ''" title="comments">
+													<div th:classappend = "${card.commentcount > 0} ? 'kanban-card-badge' : ''" title="comments">
 														<span th:if="${card.commentcount > 0}" class="icon-bubble badge-icon"></span> <span
 															 th:if="${card.commentcount > 0}" class="badge-text" th:text="${card.commentcount}"></span>
 													</div>
-													<div th:classappend = "${card.fileCount > 0} ? 'display-control' : ''" title="file">
+													<div th:classappend = "${card.fileCount > 0} ? 'kanban-card-badge' : ''" title="file">
 														<span th:if="${card.fileCount > 0}" class="icon-paper-clip badge-icon"></span> <span
 															th:if="${card.fileCount > 0}" class="badge-text" th:text="${card.fileCount}"></span>
 													</div>
 												</div>
 											</div>
 										</div>
-									
 									</div>
 									
 									
