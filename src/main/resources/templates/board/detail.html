@@ -66,7 +66,8 @@
                                         	<input type="hidden" name="id" th:value="${session.currentUser.id}">
                                             <input type="hidden" name="teamNo" th:value="${teamNo}">
                                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-                                            <h6><a th:href="@{boardList.do(allBoardListNo=1)}" th:text="${selectBoard.name}"></a></h6>
+                                           <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
+                                            <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
                                             <h2><a th:text="${selectBoard.title}"></a></h2>
                                             <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
                                             <div style="float: left; margin-bottom: 15px;">
@@ -104,7 +105,7 @@
                             <div class="form-actions">
                                 <div style="float: left;">
                                 <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
-                                <a th:href="@{insertReboard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo},refer=${refer})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
+                                <a th:href="@{insertReboard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
                                     <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=${teamNo})}">수정</a>
                                     <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo})}">삭제</a>
                                 </div>

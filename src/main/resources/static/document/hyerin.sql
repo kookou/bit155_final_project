@@ -102,9 +102,8 @@ select group_team_no, g.group_no, t.team_no, tm.id, leader, group_name, backgrou
     on gt.team_no = t.team_no
   join `team_member` tm
     on t.team_no = tm.team_no
- where g.id='hrin@3004.com';
+ where tm.id='hrin@3004.com';
 
-select * from `group`;
 select * from team;
 
 insert into `group_team`(group_no, team_no) values();
@@ -112,3 +111,26 @@ insert into `group_team`(group_no, team_no) values();
 select GROUP_NO, GROUP_NAME, id
   from `group`
  where id='hrin@3004.com';
+ 
+select * 
+from `group_team` gt
+join `group` g
+on gt.group_no = g.group_no
+where id='hrin@3004.com';
+
+select * from group_team;
+
+select *
+  from `group_team` gt
+  join `group` g
+    on gt.group_no = g.group_no
+  join `team` t
+    on gt.team_no = t.team_no
+ where g.id='hrin@3004.com';
+ 
+update `group_team` gt 
+ inner join `group` g 
+	on gt.group_no = g.group_no
+   set gt.`group_no` = 3
+ where `team_no` = 1
+   and g.id = 'a@a.aa';
