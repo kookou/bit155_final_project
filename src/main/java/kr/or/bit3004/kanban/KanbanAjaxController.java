@@ -132,10 +132,9 @@ public class KanbanAjaxController {
 	
 	//카드 파일  삭제하기
 	@RequestMapping("cardFilesDelete.ajax")
-	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo) {
+	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo) {
 		System.out.println(" rest controller ");
-		
-		return service.deleteKanbanCardFile(fileNo, cardNo);
+		return service.deleteKanbanCardFile(fileNo, cardNo, teamNo);
 	}
 	
 	

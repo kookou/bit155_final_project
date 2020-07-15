@@ -914,7 +914,8 @@ $(document).on('click','.card-modal-file-delete',function() {
 		url: "cardFilesDelete.ajax",
 		data: {
 				"fileNo": fileNo,
-				"cardNo": cardNo
+				"cardNo": cardNo,
+				"teamNo": $('#teamNo').val()
 				},
 		dataType: "json",
 		success: function(resData){
