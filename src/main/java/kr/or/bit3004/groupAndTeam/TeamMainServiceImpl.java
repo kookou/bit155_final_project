@@ -64,6 +64,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
+	public void insertGroupTeam(GroupAndTeam team) {
+		dao.insertGroupTeam(team);
+	}
+	
+	@Override
 	public int getCurrTeamNo() {
 		return dao.getCurrTeamNo();
 	}

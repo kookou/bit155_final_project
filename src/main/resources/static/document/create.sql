@@ -338,6 +338,9 @@ CREATE TABLE `GROUP_TEAM` (
 	`TEAM_NO`       INT NULL      -- 팀식별번호
 );
 
+-- 그룹-팀 매핑 시퀀스
+ALTER TABLE `GROUP_TEAM` modify `GROUP_TEAM_NO` INT auto_increment;
+
 -- 그룹-팀 매핑
 ALTER TABLE `GROUP_TEAM`
 	ADD CONSTRAINT `PK_GROUP_TEAM` -- 그룹-팀 매핑 기본키

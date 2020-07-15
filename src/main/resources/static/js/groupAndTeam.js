@@ -255,7 +255,8 @@ $('#outer').on('click', '.teamBtn', function() {
 			data: {
 				teamName: $('#teamName').val(),
 				backgroundColor: $('input[name="backColor"]:checked').val(),
-				groupNo: $('#hiddenGroupNo').val()
+				groupNo: $('#hiddenGroupNo').val(),
+				id: currUser
 			},
 			success: function(resData) {
 				let html = "";
@@ -268,16 +269,16 @@ $('#outer').on('click', '.teamBtn', function() {
 				html += '</div>';
 				appendTeam.before(html);
 				
-				$.ajax({
-					url: "insertTeamLeader.do",
-					data: {
-						teamNo: resData,
-						id: currUser
-					},
-					error: function(e) {
-						console.log(e);
-					}
-				});
+//				$.ajax({
+//					url: "insertTeamLeader.do",
+//					data: {
+//						teamNo: resData,
+//						id: currUser
+//					},
+//					error: function(e) {
+//						console.log(e);
+//					}
+//				});
 			},
 			error: function(e) {
 				console.log(e);

@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.bit3004.dao.AsideDao">
 	<select id="getTeam" resultType="kr.or.bit3004.groupAndTeam.Team">
-		select team_no, team_name, background_color, group_no
+		select team_no, team_name, background_color
 		  from `team`
 		 where `team_no` = #{teamNo}
 	</select>

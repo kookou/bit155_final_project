@@ -3,13 +3,15 @@
 
 <mapper namespace="kr.or.bit3004.dao.TeamMainDao">
 	<select id="getGroupAndTeam" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		select t.team_no, t.team_name, background_color, g.group_no, m.id, leader, group_name
-		  from team t
-		  join team_member m
-		    on t.team_no = m.team_no
-		  join `group` g
-		    on t.group_no = g.group_no
-		 where m.id=#{id}
+		select group_team_no, g.group_no, t.team_no, tm.id, leader, group_name, background_color, group_name, team_name
+		  from `group` g
+		  join `group_team` gt
+		    on g.group_no = gt.group_no
+		  join `team` t
+		    on gt.team_no = t.team_no
+		  join `team_member` tm
+		    on t.team_no = tm.team_no
+		 where g.id=#{id}
 	</select>
 	
 	<select id="getGroup" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
@@ -43,11 +45,15 @@
 	</delete>
 
 	<insert id="insertTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		insert into `TEAM`(`team_name`, `background_color`, `group_no`) values(#{teamName}, #{backgroundColor}, #{groupNo})
+		insert into `TEAM`(`team_name`, `background_color`) values(#{teamName}, #{backgroundColor})
 	</insert>
 	
 	<insert id="insertTeamLeader" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		insert into `TEAM_MEMBER`(`team_no`, `id`, `leader`) values(#{teamNo}, #{id}, 'Y')
+	</insert>
+	
+	<insert id="insertGroupTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		insert into `group_team`(group_no, team_no) values(#{groupNo}, #{teamNo})
 	</insert>
 	
 	<select id="getCurrTeamNo" resultType="int">
