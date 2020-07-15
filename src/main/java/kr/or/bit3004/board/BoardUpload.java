@@ -14,6 +14,4 @@ public class BoardUpload {
 	private long fileSize;
 	private int allBoardListNo;
 	private int boardNo;
-	
-	
 }
