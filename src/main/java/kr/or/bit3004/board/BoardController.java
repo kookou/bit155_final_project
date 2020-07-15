@@ -30,7 +30,6 @@ public class BoardController {
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
-		System.out.println();
 		return "board/list";
 	}
 	
@@ -114,9 +113,10 @@ public class BoardController {
 	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoardService(int boardNo) {
+	public String deleteBoardService(int boardNo,int allBoardListNo,int teamNo) {
 		service.deleteBoard(boardNo);
-		return "redirect:boardList.do?allBoardListNo=1&teamNo=1";
+		/* return "redirect:boardList.do?allBoardListNo=1&teamNo=1"; */
+		 return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
 	
 }
