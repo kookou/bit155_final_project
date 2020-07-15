@@ -51,12 +51,6 @@ $('#fixedBtn').on({
 				input.val("");
 			}
 		});
-    },
-    "hide.bs.popover": function(){
-        $(this).blur();    
-    },
-    "click": function(){
-        $(this).popover("toggle");    
     }
 });
 
