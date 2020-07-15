@@ -55,7 +55,7 @@
 	</select>
 	
 	<update id="moveTeamFromGroup" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		update `team` set `group_no` = #{groupNo} where `team_no` = #{teamNo}
+		update `team` set `group_no` = #{groupNo} where `team_no` = #{teamNo} and id = #{id}
 	</update>
 	
 </mapper>
