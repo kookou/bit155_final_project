@@ -129,6 +129,7 @@ $(document).on('click', '#addlist', function() {
     
 //	$(this).prev().children().children().children().children().focus(); // input on focus
     titleInputBox.focus();
+
     
 });
 
@@ -175,7 +176,10 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	    		+"</div>"
 	    		+ "<a class='kanban-list-menu far fa-trash-alt' data-toggle='modal' data-target='#info-alert-modal'>"
 	    		+ "</a>"
-	    		+ "<div class='divForDragNDrop'></div>");
+	    		+ "<div class='divForDragNDrop'></div>")
+	    		  .find('.divForDragNDrop').sortable({
+	    			 connectWith: '.divForDragNDrop'
+	    		 });
     
 
     kanbanListContent.attr('data-title', listName);    
