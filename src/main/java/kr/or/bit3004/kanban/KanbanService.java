@@ -14,7 +14,6 @@ public interface KanbanService {
 	//List title insert
 	public int insertListTitle(KanbanList kanbanlist, Principal principal);
 
-	public List<Map> allKanbanList(int allBoardListNo);
 	public List<Map> kanbanCardList();
 	public List<Map> kanbanListJoinCard(int allBoardListNo);
 
@@ -27,7 +26,7 @@ public interface KanbanService {
 	//update Kanban List
 	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal);
 	
-	public int insertCardTitle(String title , int kanbanListNo);
+	public int insertCardTitle(String title , int cardIndex, int kanbanListNo);
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void kanbanCardTitleUpdate(String title , int cardNo);

@@ -62,8 +62,8 @@ public class KanbanAjaxController {
 	}
 		
 	@RequestMapping("InsertKanbanCard.ajax")
-	public String kanbanCardInsert(String title, int kanbanListNo) {
-		int newcardNo = service.insertCardTitle(title, kanbanListNo);
+	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo) {
+		int newcardNo = service.insertCardTitle(title, cardIndex, kanbanListNo);
 		String newcardNoString = Integer.toString(newcardNo);
 		return newcardNoString;
 	}

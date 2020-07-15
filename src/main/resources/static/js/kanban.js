@@ -304,10 +304,12 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 
     //카드 추가
 $(document).on('click', "#addcard",function(){
-	   
+//	   let cardCount = $(this).parents().prev().children().prevAll('.kanban-card-list')    카드 갯수 
+
 	   let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
 	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
-
+	   console.log('cardIndex')
+//	   console.log(cardIndex)
 	   
         var addcardTag = "<div class='kanban-card-list btn-card-hover'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
@@ -331,27 +333,25 @@ $(document).on('click', "#addcard",function(){
 //        $(this).parent().before(addcardTag);
         
  	   let input = $(this).parent().prev().find('textarea');// 여기는 더해지고 나서 설정돼야함
-//     var input = $(this).parent().prev().children().children().children().eq(0)
  	   let comment = $(this).parent().prev().find('[title="comments"]').last();
-//     var comment= $(this).parent().prev().children().children().children().eq(1)
  	   let file = $(this).parent().prev().find('[title="file"]').last();
-//       var file= $(this).parent().prev().children().children().children().eq(2)
  	   let kanbanCardNo = $(this).parent().siblings('.divForDragNDrop').children().last();
-// 	   var kanbanCardNo = $(this).parents().prev()
 
-	   
+ 	 
         $(this).parent().mouseleave() // a#addcardel
-//        $(this).parent().prev().children().children().children().eq(0).focus() // addCardInput
         
         input.focus();
-
+        
+        let cardIndex = kanbanCardNo.index();
+        
         $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
         $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
         
+        kanbanCardNo.attr('data-cardindex', cardIndex)
         
         console.log($(this).parent().siblings('.divForDragNDrop').children().last());
-        console.log("시작");
-	    console.log(kanbanCardNo);
+        console.log("index는 0부터 시작함");
+	    console.log(kanbanCardNo.index());
 	    
         $(input).blur(function() {
             if($(input).val() == "") {
@@ -370,6 +370,7 @@ $(document).on('click', "#addcard",function(){
             $.ajax({
     			url: "InsertKanbanCard.ajax",
     			data: { title: cardtitle,
+    					cardIndex :cardIndex,
     					kanbanListNo: kanbanListNo,
     					},
     	        dataType: "html",
