@@ -233,6 +233,7 @@ public class KanbanServiceImpl implements KanbanService {
 	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo) {
 		List<KanbanUpload> fileList = null;
 		
+		//파일 이름만 필요한데 파일 객체 정보가 통째로 필요할까..?그건 좀 고민해보자
 		KanbanUpload selectedFile = dao.getAKanbanCardFile(fileNo);
 		String filePath = System.getProperty("user.dir") 
 						+ "\\src\\main\\resources\\static\\cloud\\" + teamNo

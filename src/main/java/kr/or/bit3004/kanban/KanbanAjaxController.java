@@ -112,9 +112,10 @@ public class KanbanAjaxController {
 	}
 
 	@RequestMapping(value="kanbanFilesUpload.ajax", method=RequestMethod.POST)
-	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request){
+	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request){
 		System.out.println("= kanbanFilesUpload.ajax =");
-		return service.kanbanFilesUpload(request);
+		service.kanbanFilesUpload(request);
+		return null;
 	}
 	
 	@RequestMapping("CardReplyDelete.ajax")

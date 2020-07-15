@@ -559,7 +559,6 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				$('#cardModalFileList').empty();
 
 				$.each(resData, function(index, item){
-					//여기 작업하고 있었음 파일 목록 뿌리기
 					addUploadFileTag($('#cardModalFileList'), item.originFileName, item.fileNo);
 				});
 				
@@ -870,7 +869,7 @@ $('#kanbanFileInputBtn').on('click',function(){
 	 $.ajax({ 
 		 		type: "POST", 
 		 		enctype: 'multipart/form-data', // 필수 
-		 		url: 'kanbanFilesUpload.ajax', 
+		 		url: 'kanbanFilesUpload.ajax', //여기 작업중
 		 		data: formData,  // 필수
 		 		processData: false, // 필수 
 		 		contentType: false, // 필수 
@@ -886,20 +885,26 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 				
 		 				
 		 				///////////////// 다시 셀렉트 ////////////////////
-		 				 $.ajax({ 
-								url: "CardContentSelect.ajax",
-								data: {
-										cardNo: cardNo
-										},
-						        dataType: "json",
-						        
-								success: function(result) {
-									console.log("인서트 파일 카운트 셀렉트");
 
-									var cardFile = result.fileCount;
-									cardFilecount = cardFile;
-								} 
-							});
+//		 				 $.ajax({ 
+//								url: "CardContentSelect.ajax",
+//								data: {
+//										cardNo: cardNo
+//										},
+//						        dataType: "json",
+//						        
+//								success: function(result) {
+//									console.log("인서트 파일/코멘트 카운트 셀렉트");
+//									var cardComment = result.commentCount;
+//									cardCommentcount = cardComment;
+//									
+//									var cardFile = result.fileCount;
+//									cardFilecount = cardFile;
+//								} 
+//							});
+		 				 
+		 				 
+
 		 				 // input label 비우기
 		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
 		 				
@@ -915,7 +920,6 @@ $('#kanbanFileInputBtn').on('click',function(){
 });
 
 //모달 카드 파일 삭제
-
 $(document).on('click','.card-modal-file-delete',function() {
 	
 	let fileNo = $(this).attr('fileno')
