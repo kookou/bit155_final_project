@@ -27,7 +27,7 @@
 		<result column="title" property="cardTitle" />
 		<result column="content" property="cardContent" />
 		<result column="file_count" property="fileCount" />
-		<result column="comment_count" property="commentcount" />
+		<result column="comment_count" property="commentCount" />
 		<result column="kanban_list_no" property="kanbanListNo" />
 		<result column="card_index" property="cardIndex"/>
 	</resultMap>
