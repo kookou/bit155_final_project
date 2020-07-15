@@ -685,6 +685,7 @@ $('#card-content').on('click','.card-modal-title',function() {
 
 
 ////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
+
 $('#card-content').on('hide.bs.modal', function () {
 	console.log("될거니?")
 	console.log(cardCommentcount)
@@ -692,8 +693,8 @@ $('#card-content').on('hide.bs.modal', function () {
 //	let commentCount = $('[data-cardno='+cardNo+']').find('[title=comments] .badge-text');
 //	
 	
-	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file');
-	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments');
+	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
+	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
 	
 	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">1</span>'
 	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
