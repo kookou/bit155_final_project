@@ -53,5 +53,61 @@ END $$
 DELIMITER ;
 
 
+-- 파일 등록시 칸반카드 테이블에 파일 갯수 자동 증가시키기
+
+DELIMITER $$
+
+CREATE TRIGGER `CARD_FILE_COUNT_TRIGGER`
+AFTER INSERT ON `board_file`
+FOR EACH ROW 
+BEGIN
+   IF (NEW.`CARD_NO` > 0) THEN
+      UPDATE `KANBAN_CARD`
+      SET `FILE_COUNT` = `FILE_COUNT`+1
+      WHERE `CARD_NO` = NEW.`CARD_NO`;
+   END IF;
+END $$
+
+DELIMITER ;
+
+
+
+
+-- 댓글 삭제시 칸반카드 테이블에 댓글 갯수 자동 감소시키기
+
+DELIMITER $$
+
+CREATE TRIGGER `CARD_COMMENT_DELETE_COUNT_TRIGGER`
+AFTER delete ON `board_comment`
+FOR EACH ROW 
+BEGIN
+   IF (old.`comment_NO` > 0) THEN
+      UPDATE `KANBAN_CARD`
+      SET `comment_COUNT` = `comment_COUNT`-1
+      WHERE `CARD_NO` = old.`CARD_NO`;
+   END IF;
+END $$
+
+DELIMITER ;
+
+
+-- 파일 삭제시 칸반카드 테이블에 파일 갯수 자동 감소시키기
+
+DELIMITER $$
+
+CREATE TRIGGER `CARD_FILE_DELETE_COUNT_TRIGGER`
+AFTER delete ON `board_file`
+FOR EACH ROW 
+BEGIN
+   IF (old.`FILE_NO` > 0) THEN
+      UPDATE `KANBAN_CARD`
+      SET `FILE_COUNT` = `FILE_COUNT`-1
+      WHERE `CARD_NO` = old.`CARD_NO`;
+   END IF;
+END $$
+
+DELIMITER ;
+
+
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

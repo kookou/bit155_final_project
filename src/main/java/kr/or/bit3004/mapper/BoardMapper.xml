@@ -5,6 +5,7 @@
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.board.Board">
 
+
 select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, NICKNAME, team_no, file_name,
    (select count(*) from board_comment where board_no=b.board_no) as comment_count
   from ( 
@@ -23,6 +24,13 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
 
 
 	</select> 
+	
+	  <!-- 조회수 증가 -->
+   <update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
+      update board_list 
+         set views = views+1 
+       where board_no=#{boardNo}
+   </update>
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
@@ -98,10 +106,10 @@ select b.board_no, title, content, views, write_date, refer, depth, step, b.all_
 	</select> -->
 	
 	<!-- 게시판 업로드 -->
-	<!-- <insert id="insertFile" parameterType="kr.or.bit3004.board.Board">
-		insert into board_file(`file_no`, `file_name`, `file_size`, `all_board_list_no`)
-		values(#{fileNo}, #{fileName}, #{file_size}, 1)
-	</insert> -->
+	<insert id="insertBoardUploadFile" parameterType="kr.or.bit3004.board.BoardUpload">
+		insert into board_file(origin_file_name, file_name, file_size, all_board_list_no, board_no)
+		values(#{originFileName}, #{fileName}, #{fileSize}, #{allBoardListNo}, #{boardNo})
+	</insert>
 	
 	<!-- 사원수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">

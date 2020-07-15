@@ -25,6 +25,7 @@ var addlistTag =
 + "</div>";
 
 function addUploadFileTag(parent, fileName){
+	
 	let uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
 							   +"<a class=''>"
@@ -35,6 +36,7 @@ function addUploadFileTag(parent, fileName){
 							   +"<span class='card-modal-file-delete far fa-trash-alt'></span>"
 						   +"</p>"
 					   +"</div>";	
+	
 	parent.append(uploadFileTag);
 }
 
@@ -443,7 +445,7 @@ $('#kanban').on('click','.active-card-icon',function(){
 //var cardElements = "";
 //var newCardTitleList ="";
 //
-//var cardCommentcount="";
+var cardCommentcount="";
 	
 //모달
 $('#kanban').on('click', '.kanban-card-element', function() {
@@ -451,11 +453,12 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 //	 $('#modallDescrioptiontextarea').hide();
 //	 $('#modallDescrioption').hide();
 
-     listtitle = $(this).parent().parent().children().eq(0).children().text()
+     listtitle = $(this).parent().parent().parent().children().eq(0).text()
      cardtitletext = $(this).children().eq(0).text()
      cardtitle = $(this).children().eq(0)
      cardNo = $(this).parent().attr("data-cardno")
-     
+     console.log("여기체크")
+     console.log(cardNo)
 
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
@@ -509,6 +512,8 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 	 
 
 });
+
+
 //리플달기 
 $('#card-content').on('click', '.reply-done', function(){
 	console.log("안되겠지?")
@@ -521,7 +526,6 @@ $('#card-content').on('click', '.reply-done', function(){
     }
 	
     var replycontent = $('#modalreply').val()
-   
     $('#modalreply').val("")
     
     $.ajax({
@@ -566,9 +570,6 @@ $('#card-content').on('click', '.reply-done', function(){
 			});
 		}
 	});
-    
-    
-    
 });
 
 //리플 그리는 함수 
@@ -582,7 +583,7 @@ function makereply(resData) {
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/users/"+obj.image+"' alt='user' href='javascript:void(0)'"
+				        + "<img src='assets/images/userimage/"+obj.image+"' alt='user' href='javascript:void(0)'"
 				                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		
@@ -606,16 +607,13 @@ function makereply(resData) {
 			            + 	"<a class='card-modal-reply-edit'><i class='far fa-edit'></i>Edit</a>"
 			            + "</div>"
 				    }
-				    
 				    + "</div>"
 			}
 		});
 		 $('.reply-list').append(replyhtml);
 	}
 
-//$( '.card-modal-content' ).animate( {
-//	height: 'auto'
-//  } );
+
 
 //모달 카드 삭제
 $('.card-modal-close').on('click',function(){
@@ -629,8 +627,9 @@ $('.card-modal-close').on('click',function(){
 		 			"cardNo": cardNo
 		 			},
 		 	success: function(){
-		 		console.log("card delete 성공");		 		
-		 		}	
+		 		console.log("card delete 성공");
+ 		
+		 		}
 	 	});
 	 cardElements.remove();
 });
@@ -641,9 +640,8 @@ $('.card-modal-close').on('click',function(){
 $('#card-content').on('click','.card-modal-title',function() {
 	
 	console.log("타이틀 클릭 ")
-	console.log(cardNo)
-    // let cardTitle = $('.kanban-card-title').text();
-    // console.log($('.kanban-card-title').text())
+	console.log(cardCommentcount)
+    
 	var newCardTitle="";
 	
 	$('.card-modal-title').hide();
@@ -657,13 +655,12 @@ $('#card-content').on('click','.card-modal-title',function() {
 			$('#modallisttitle').focus();
 			return;
         }
-                              
         
 		$('.card-modal-title').show();
 		
         $('.card-modal-title').text($('#modallisttitle').val());
-        console.log($('#modallisttitle').val())
-        newCardTitle = $('#modallisttitle').val()
+        console.log($('#modallisttitle').val());
+        newCardTitle = $('#modallisttitle').val();
         
         newCardTitleList = newCardTitle //모달 밖 카드 타이틀 바꾸기 
         cardtitletext = newCardTitle  //현재 모달창 카드 타이틀 바꾸기 
@@ -683,24 +680,46 @@ $('#card-content').on('click','.card-modal-title',function() {
 
 			}
 		});
-		
     });
-    
 });
 
+
 ////모달 타이틀 수정 후 모달 닫힐때 화면에 뿌리는 이벤트 
-//$('#card-content').on('hide.bs.modal', function () {
-//	console.log(cardtitle)
-//	console.log(newCardTitleList)
-//	cardtitle.text(newCardTitleList)
-//	console.log("될거니?")
+
+$('#card-content').on('hide.bs.modal', function () {
+	console.log("될거니?")
+	console.log(cardCommentcount)
+//	let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
+//	let commentCount = $('[data-cardno='+cardNo+']').find('[title=comments] .badge-text');
 //	
-//})
+	
+	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
+	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
+	
+	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">1</span>'
+	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
+					
+	console.log(commentElement);
+	
+//	if(!fileCount){
+//		countElement.after(fileDiv);
+//	}
+	
+	if(cardCommentcount == 0){
+		console.log("이프문타니?")
+		commentElement.empty();
+		return;
+	}else{
+		console.log("엘스타니?")
+		commentElement.empty();
+		commentElement.append(commentDiv);
+	};
+});
 
 //모달 카드 내용 인서트 
 $('.modal-textarea-description-edit').on('focus',function(){
 	 
-	 console.log(cardNo)
+	 console.log(cardNo);
 	 $('#modallDescrioptiontextarea').val("");
 	 $('.modal-textarea-description-edit').on('blur',function(){
 			 if($('#modallDescrioptiontextarea').val() ==""){
@@ -710,7 +729,7 @@ $('.modal-textarea-description-edit').on('focus',function(){
 				 console.log($('#modallDescrioptiontextarea').val())
 				 var cardDescription = $('#modallDescrioptiontextarea').val()
 				 $('#modallDescrioptiontextarea').hide();
-				 $('#modallDescrioption').text(cardDescription)
+				 $('#modallDescrioption').text(cardDescription);
 				 $('#modallDescrioption').show();
 				 $('#modallDescrioptiontextarea').val("");
 				 
@@ -719,6 +738,7 @@ $('.modal-textarea-description-edit').on('focus',function(){
 						data: {
 								cardNo: cardNo,
 								content :cardDescription
+								
 								},
 				        dataType: "html",
 				        
@@ -750,11 +770,14 @@ $('.card-modal-list-description').on('click',function(){
 //모달 카드 파일 업로드
 $('#kanbanFileInputBtn').on('click',function(){
 	 console.log("kanbanFileInputBtn 클릭");
+	 console.log($('[data-cardno='+cardNo+']').find('[title=file]'));
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
+	 let fileCount = $('[data-cardno='+cardNo+']').find('[title=file] .badge-text');
 	 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
+	 console.log(cardNo);
 	 $('#inputTeamNo').val(teamNo);
 	 
 	 let formData = new FormData($('#kanbanFileInput')[0]);
@@ -773,37 +796,70 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 				console.log("파일 업로드 성공");	
 		 				
 		 				$.each(resData, function(index, fileName){
-//		 					$('#cardModalFileList').append
 		 					addUploadFileTag($('#cardModalFileList'), fileName);
 		 				});
+		 				
+		 				fileCount.text(Number(fileCount.text()) + resData.length);
+//		 				if(fileCount.text() == null){
+//		 					
+//		 				}
 		 				
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
 		 			}
 		 			
-		 			
-		 			console.log(resData);
 		 		}, 
 		 		error: function (e) { 
-		 			console.log(에러발생)
+		 			console.log("ajax 에러발생");
 		 		} 
 		 	});
-
-	 
 })
 
 
-
-
-
-
-
-//댓글 영역
-
-
-
+//모달 리플 삭제 
 $('#card-content').on('click', '.card-modal-reply-delete',function(){
-    console.log("올거니?")
+    var commentNo = $(this).parent().prev().children().attr('data-cardreplyno')
+    console.log(commentNo)
+    $.ajax({
+		url: "CardReplyDelete.ajax",
+		data: {
+				commentNo : commentNo
+				},
+        dataType: "html",
+        
+		success: function() {
+			console.log("reply delete 완료");
+			
+			$.ajax({ 
+				url: "CardReplySelect.ajax",
+				data: {
+						cardNo: cardNo
+						},
+		        dataType: "json",
+		        
+				success: function(resData) {
+					console.log("reply select 완료2");
+					 $.ajax({ 
+							url: "CardContentSelect.ajax",
+							data: {
+									cardNo: cardNo
+									},
+					        dataType: "json",
+					        
+							success: function(result) {
+								console.log("card select 완료2");
+								console.log(result)
+								var cardComment = result.commentCount;
+								cardCommentcount = cardComment;
+								console.log(cardCommentcount);
+							} 
+						});
+					$('.reply-list').empty();
+					makereply(resData);
+				} 
+			});
+		}
+	});
 })
 
 //모달 리플 수정
@@ -818,7 +874,7 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
     $(this).parent().prev().children().children().eq(1).focus()
     replyinput.text(replycontent.text());
 	console.log(replycontent.text())
-    var display= $(this).parent().prev()
+    var display= $(this).parent().prev();
 
     $(display).removeClass('display')
 
@@ -875,24 +931,9 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
 	
 })
 
-//$('#modalreply').focusout(function() {
-//    if($('#modalreply').val() == ""){
-//        $('.reply-done').hide()
-//    }
-//});
 
 
 
-
-//모달 내용 텍스트박스
-// $(document).on('click', '.kanban-card-element' , function(){
-//     console.log($('.card-modal-list-description').text())
-//     var cardmodaldescription = "<textarea rows='1' class='autosize modal-textarea-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none;'></textarea>"
-//     if($('.card-modal-list-description').text() == ""){
-//         $('.card-modal-description');
-//     }
-
-// })
 
 
 

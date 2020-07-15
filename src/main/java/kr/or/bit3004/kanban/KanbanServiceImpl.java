@@ -217,5 +217,9 @@ public class KanbanServiceImpl implements KanbanService {
 		} // if end		
 		return fileNames;
 	}
+	
+	public void deleteCardReply(int commentNo) {
+		dao.deleteCardReply(commentNo);
+	}
 
 }

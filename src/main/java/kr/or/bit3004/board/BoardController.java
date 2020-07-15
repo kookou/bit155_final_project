@@ -1,10 +1,13 @@
 package kr.or.bit3004.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.aside.AsideService;
 
@@ -59,7 +62,13 @@ public class BoardController {
 		service.insertBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
-
+	
+	//파일 업로드
+	@RequestMapping("insertBoard.do")
+	public List<String> boardFilesUpload(MultipartHttpServletRequest request){
+		return service.boardFilesUpload(request);
+	}
+	
 	
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
