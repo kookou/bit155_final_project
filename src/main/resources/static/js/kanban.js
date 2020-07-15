@@ -44,8 +44,10 @@ function addCardFileCountTag(parent, fileCount){
 	let cardFileCountIcon = "<div class='kanban-card-badge' title='file'>"
 								+"<span class='icon-paper-clip badge-icon'></span>"
 								+"<span class='badge-text'>"
+								+ fileCount
 								+"</span>"
 							+"</div>";
+	parent.append(cardFileCountIcon);
 }
 
 
