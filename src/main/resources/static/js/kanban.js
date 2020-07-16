@@ -99,21 +99,23 @@ var endListIDX = "";
 			   newcardarrayno1.push($(item).attr("data-cardno"));
 		   })
 		   
-		   tmpObj1.cardIndex = newcardarrayindex1;
-		   tmpObj1.cardNo = newcardarrayno1;
-		   var jsonData1 = JSON.stringify(tmpObj1);
+//		   tmpObj1.cardIndex = newcardarrayindex1;
+//		   tmpObj1.cardNo = newcardarrayno1;
+//		   var jsonData1 = JSON.stringify(tmpObj1);
 		   
 		   $.ajax({
+//			   type: "POST", 
+//			   contentType:'application/json; charset=UTF-8',
+//  				dataType:'json',
 	     		url: "StartDragCardUpdate.ajax",
-//	     		traditional : true,
-	     		contentType:'application/json; charset=UTF-8',
-   				dataType:'json',
+	     		traditional : true,
 	     		data: {
-	     			kanbanListNo:newkanbanlistno1,
-	     			json :jsonData1
+	     			cardIndex :newcardarrayindex1,
+	     			cardNo : newcardarrayno1,
+	     			kanbanListNo:newkanbanlistno1
 	     			
 	     				},
-	             dataType: "text",
+	     				dataType:'text',
 	     		success: function(resData) {
 	     			console.log("list update 완료");
 	     		
@@ -154,20 +156,23 @@ var endListIDX = "";
 			   newcardarrayno2.push($(item).attr("data-cardno"));
 		   })
 		   
-		   tmpObj2.cardIndex = newcardarrayindex2;
-		   tmpObj2.cardNo = newcardarrayno2;
-		   var jsonData2 = JSON.stringify(tmpObj2);
+//		   tmpObj2.cardIndex = newcardarrayindex2;
+//		   tmpObj2.cardNo = newcardarrayno2;
+//		   var jsonData2 = JSON.stringify(tmpObj2);
+		   
 		   $.ajax({
+//			   type: "POST", 
+//			   contentType:'application/json; charset=UTF-8',
+//  				dataType:'json',
 	     		url: "StartDragCardUpdate.ajax",
-//	     		traditional : true,
-	     		contentType:'application/json; charset=UTF-8',
-   				dataType:'json',
+	     		traditional : true,
 	     		data: {
+	     			cardIndex :newcardarrayindex2,
+	     			cardNo : newcardarrayno2,
+	     			kanbanListNo:newkanbanlistno2
 	     			
-	     			json : jsonData2,
-	     			kanbanListNo :newkanbanlistno2
 	     				},
-	             dataType: "text",
+	     				dataType:'text',
 	     		success: function(resData) {
 	     			console.log("list update 완료");
 	     		

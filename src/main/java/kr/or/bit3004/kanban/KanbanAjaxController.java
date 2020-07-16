@@ -130,7 +130,7 @@ public class KanbanAjaxController {
 	}
 	
 //	@RequestMapping("DragCardNoUpdate.ajax")
-//	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo) {
+//	public void dragCardUpdateCardno(int[] scardNo , int kanbanListNo) {
 //		service.dragCardUpdateCardno(cardNo, kanbanListNo);
 //	}
 //	@RequestMapping("DragCardIndexUpdate.ajax")
@@ -139,8 +139,8 @@ public class KanbanAjaxController {
 //	}
 //	
 	@RequestMapping("StartDragCardUpdate.ajax")
-	public void drag(JSONObject json , int kanbanListNo) {
-		System.out.println(json);
+	public void drag(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		service.drag(cardNo, cardIndex, kanbanListNo);
 	}
 }
  

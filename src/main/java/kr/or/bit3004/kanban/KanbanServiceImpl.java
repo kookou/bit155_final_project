@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -291,6 +292,26 @@ public class KanbanServiceImpl implements KanbanService {
 		
 		
 //		dao.resortKanbanListIndex(kanbanListNo, endListIDX);
+		
+	}
+	
+	@Override
+	public void drag(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		Map<Object, Object> cardnomap = new HashMap<Object, Object>();
+		Map<Object, Object> cardindexmap = new HashMap<Object, Object>();
+		for(int i = 0 ; i < cardNo.length; i++) {
+			cardnomap.put(i, cardNo[i]);
+			System.out.println(cardnomap.get(i));
+		}
+		for(int i = 0; i < cardIndex.length; i ++ ) {
+			cardindexmap.put(i, cardIndex[i]);
+			
+		}
+		for(int i = 0; i < cardNo.length; i ++) {
+			dao.dragCardUpdate((int)cardnomap.get(i), (int)cardindexmap.get(i), kanbanListNo);
+			System.out.println(cardnomap.get(i));
+			System.out.println(cardnomap.get(i));
+		}
 		
 	}
 
