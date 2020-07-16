@@ -59,20 +59,21 @@ function addCardFileCountTag(parent, fileCount){
 
 
  $('.divForDragNDrop').sortable({
-	 connectWith: '.divForDragNDrop'
- });
- 
-
- $('.kanban-list-wrapper').sortable({
-	 connectWith: '.kanban-list-wrapper',
+	 connectWith: '.divForDragNDrop',
 	 receive: function(event, ui){
-		 if($(this).children().length > 1){
-			 $(ui.sender).sortable('cancel');
+		  console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
 		 }
-	 }
-		 
  });
+
  
+ $('#kanban').sortable({ // 상위요소
+     filter: ".kanban-list-wrapper",
+     itemOrientation: "horizontal",
+//     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+     moveItemOnDrop: true
+
+
+ });
 
 	
 	
@@ -131,8 +132,12 @@ $(document).on('click', '#addlist', function() {
     titleInputBox.focus();
 
 
-    $('.kanban-list-wrapper').sortable({
-   	 connectWith: '.kanban-list-wrapper'
+    
+    $('#kanban').sortable({ // 상위요소
+        filter: ".kanban-list-wrapper",
+        itemOrientation: "horizontal",
+//        handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+        moveItemOnDrop: true
     });
     
     
