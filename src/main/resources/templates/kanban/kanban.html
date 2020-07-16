@@ -226,6 +226,9 @@
 							th:each="kanbanlist: ${kanbanlist}">
 							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
 								<div class="kanban-card">
+							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
+								<div class="kanban-card" ondrop="drop(event, this)"
+									ondragover="allowDrop(event)">
 									<div class="kanban-list-header" id="listheader">
 										<h4 class="kanban-list-title"
 											th:text="${kanbanlist.listTitle}"></h4>
@@ -300,11 +303,13 @@
 
 	</div>
 	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+
 	<div th:replace="common/script :: script"></div>
 	
 <!--     <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
     <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
     <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>  -->
+	<div th:replace="common/script :: script"></div>  
 	<script th:inline="javascript">
     /*<![CDATA[*/
        var currUser = [[${session.currentUser.id}]];
