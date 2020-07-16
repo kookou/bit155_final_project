@@ -95,18 +95,18 @@ END $$
 DELIMITER ;
 
 
--- 글 등록시 타임라인 테이블에 로그입력하기
-DELIMITER $$
-CREATE TRIGGER `INSERT_TIMELINE_TRIGGER`
-AFTER INSERT ON `ALL_BOARD_LIST`
-FOR EACH ROW 
-BEGIN
-	INSERT INTO `GROUP` 
-	SET 
-	`GROUP_NAME` = 'Personal',  
-	`ID` = NEW.`ID`;
-END $$
-DELIMITER ;
+-- 보드 추가시 타임라인 테이블에 로그입력하기
+-- DELIMITER $$
+-- CREATE TRIGGER `INSERT_TIMELINE_TRIGGER`
+-- AFTER INSERT ON `ALL_BOARD_LIST`
+-- FOR EACH ROW 
+-- BEGIN
+-- 	INSERT INTO `TIMELINE`
+-- 	SET
+-- 	`COLUMN_NAME` = 'Personal',  
+-- 	`ID` = NEW.`ID`;
+-- END $$
+-- DELIMITER ;
 
--- 트리거가 만들어졌는지 확인
+트리거가 만들어졌는지 확인
 SHOW TRIGGERS;
