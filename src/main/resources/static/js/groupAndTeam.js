@@ -35,7 +35,7 @@ $('#outer').on('click', '.teamBtn', function() {
 	//그룹명 입력받고 체크버튼 눌렀을 때
 	$(document).on('click', '#addGroupName', function() {
 		if($('#inputGroupName').val() == "") {
-			swal('그룹명을 입력하세요.');
+			Swal.fire('', '그룹명을 입력하세요', 'warning');
 			$(this).parent().prev().children('input').focus();
 			return;
 		}
@@ -105,7 +105,7 @@ $('#outer').on('click', '.teamBtn', function() {
 		let groupNo = $(this).parent().parent().parent().data('groupno');
 		if (key.keyCode == 13) {
 			if($(this).val() == "") {
-				swal('그룹명을 입력하세요.');
+				Swal.fire('', '그룹명을 입력하세요', 'warning');
 				$(this).focus();
 				return;
 			}
@@ -131,16 +131,17 @@ $('#outer').on('click', '.teamBtn', function() {
 	$('#outer').on('click', '.delGroupName', function() {
 		//그룹 번호
 		let groupNo = $(this).parent().parent().parent().data('groupno');
-		swal({
+		
+		Swal.fire({
 			title: "Group을 삭제하시겠습니까?",
 			text: "Group을 삭제하면 그 Group에 속한 Tema List는 Personal Group으로 이동됩니다.",
-			icon: "warning",
-			buttons: true,
-			dangerMode: true,
-		})
-		.then((willDelete) => {
-		    if(willDelete) {
-		    	var promise = 
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'No, keep it'
+		}).then((result) => {
+			if (result.value) {
+				var promise = 
 		    		$.ajax({
 						url: "delGroup.do",
 						data: {
@@ -246,7 +247,7 @@ $('#outer').on('click', '.teamBtn', function() {
 		console.log($('#hiddenGroupNo').val());
 		console.log($('input[name="backColor"]:checked').val());
 		if($('#teamName').val() == "") {
-			swal("Team Name을 입력하세요");
+			Swal.fire('', 'Team Name을 입력하세요', 'warning');
 			return;
 		}
 		

@@ -1,3 +1,4 @@
+// 보드이름 수정하기
 var aTag = "";
 var icon = "";
 var boardTag = "";
@@ -6,7 +7,7 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 	//다른 열려있는 input 닫아주기
 	$('.addedIcon').each(function(index, ele) {
 		$(this).parent().find('.board-name').show();
-		$(this).next().children().children().show();
+		$(this).parent().find('.oriIcon').show();
 		$(this).parent().find('input[type="text"]').remove();
 		$(this).remove();
 	});
@@ -30,16 +31,16 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 	icon.hide();
 	aTag.attr('class', 'sidebar-link');
 	
-	console.log($(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val());
-	console.log(teamNo);
 	allBoardListNo = $(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val();
 });
 
+//수정완료 버튼 
 $('#allBoardList').on('click', '.editBoardNameOk', function() {
 	if($('.newBoardName').val() == "") {
-		swal("변경할 Board Name을 입력하세요");
+		Swal.fire('', '변경할 Board Name을 입력하세요', 'error');
 		return;
 	}
+	var addedIcon = $(this).parent().parent();
 	$.ajax({
 		url: "editBoardName.do",
 		data: {
@@ -48,11 +49,11 @@ $('#allBoardList').on('click', '.editBoardNameOk', function() {
 			teamNo: teamNo
 		},
 		success: function() {
-			console.log("보드이름바꾸기성공");
-//			$(this).parent().find('.board-name').show();
-//			$(this).next().children().children().show();
-//			$(this).parent().find('input[type="text"]').remove();
-//			$(this).remove();
+			aTag.attr('class', 'sidebar-link redirectBoard');
+			icon.show();
+			boardTag.text($('.newBoardName').val()).show();
+			addedIcon.remove();
+			$('input[type="text"]').remove();
 		},
 		error: function(e) {
 			console.log(e);
@@ -67,6 +68,44 @@ $('#allBoardList').on('click', '.cancelEditBoardName', function() {
 	boardTag.show();
 	$(this).parent().parent().remove();
 	$('input[type="text"]').remove();
+});
+
+//보드 삭제하기
+$('#allBoardList').on('click', '.delBoard', function() {
+	var boardName = $(this).parents('.sidebar-item').find('.board-name').text();
+	allBoardListNo = $(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val();
+	var deleteBoard = $(this).parents('.sidebar-item');
+	
+	Swal.fire({
+		title: '"' + boardName + '" Board를<br>정말 삭제하시겠습니까?',
+		text: "삭제되면 데이터를 복구할 수 없습니다!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		cancelButtonText: 'No, keep it'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: "delBoard.do",
+				data: {
+					allBoardListNo: allBoardListNo,
+					teamNo: teamNo
+				},
+				success: function() {
+					deleteBoard.remove();
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+			Swal.fire(
+	    		'Deleted!',
+	    		'"' + boardName + '" Board가 삭제되었습니다.',
+	    		'success'
+	    	)
+		}
+	});
+	
 });
 
 //초대버튼 누르면 input박스 비워주고, focus주기
@@ -89,7 +128,7 @@ $('#createBoardBtn').click(function() {
 //	console.log(teamNo);
 //	console.log(currUser);
 	if($('#boardName').val() == "") {
-		swal("Board Name을 입력하세요");
+		Swal.fire('', 'Board Name을 입력하세요', 'error');
 		return;
 	}
 	
@@ -103,16 +142,30 @@ $('#createBoardBtn').click(function() {
 		},
 		success: function(resData) {
 			let html = "";
-			html += '<li class="sidebar-item" th:each="board: ${allBoardList}">';
-			html += 	'<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false">'; 
+			html += '<li class="sidebar-item">';
+			html += 	'<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false" style="display: inline-block;">'; 
 			html += 		'<input type="hidden" value="'+ resData +'" class="hiddenAllBoardListNo">'
 			if($('input[name="boardType"]:checked').val() == '1') {
 				html +=			'<i class="fas fa-table"></i>';
 			} else {
 				html +=			'<i class="fab fa-trello"></i>';
 			}
-			html +=			'<span class="hide-menu"">'+ $('#boardName').val() +'</span>';
+			html +=			'<span class="hide-menu board-name">'+ $('#boardName').val() +'</span>';
 			html += 	'</a>';
+			$.each(teamMember, function(index, obj) {
+				html += '<div style="display: inline-block; vertical-align: middle; height: 100%;">';
+				if(obj.nickname == currUserNickname) {
+					if(obj.leader == 'Y') {
+						html += 	'<div>';
+						html += 		'<div class="oriIcon">';
+						html += 			'<a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle editBoardName"></i></a>&nbsp;';
+						html += 			'<a href="javascript:void(0);"><i class="fas fa-trash-alt iconStyle delBoard"></i></a>';
+						html += 		'</div>';
+						html += 	'</div>';
+					}
+				}
+				html += '</div>';
+			});
 			html += '</li>';
 			$('#allBoardList').append(html);
 		},
@@ -153,7 +206,7 @@ $("#searchUser").autocomplete({
 //        console.log(ui.item.value);
     	$('.hiddenMemberId').each(function(index, ele) {
     		if($(this).val() == ui.item.value) {
-    			swal("이미 초대된 회원입니다.");
+    			Swal.fire('', '이미 초대된 회원입니다.', 'warning');
     		}
     	});
     },
@@ -195,7 +248,8 @@ $("#InviteMember").on("shown.bs.modal", function() {
 
 $('#sendInvitationBtn').click(function() {
 	if($("#searchUser").val() == "") {
-		swal('초대할 Email을 입력하세요.');
+		Swal.fire('초대할 Email을 입력하세요.');
+		Swal.fire('', '초대할 Email을 입력하세요.', 'warning');
 		$("#searchUser").focus();
 		return;
 	}
@@ -206,7 +260,7 @@ $('#sendInvitationBtn').click(function() {
 			id: $("#searchUser").val()
 		},
 		success: function(resData) {
-			swal($("#searchUser").val() + '님이 초대되었습니다.');
+			Swal.fire('', $("#searchUser").val() + '님이 초대되었습니다.', 'success');
 			let html = "";
 			html += '<div class="rounded-circle popover-item" style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">';
 			html += 	'<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">';

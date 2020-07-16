@@ -43,7 +43,7 @@
 							<!-- 넘어온 멤버닉네임과 현재 접속한 닉네임이 같고 리더가 Y이면 수정, 삭제 버튼 보이기 -->
 							<div th:each="member: ${teamMember}" style="display: inline-block; vertical-align: middle; height: 100%;">
 								<div th:if="${member.nickname} == ${session.currentUser.nickname}">
-									<div th:if="${member.leader.equals('Y')}">
+									<div th:if="${member.leader.equals('Y')}" class="oriIcon">
 										<a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle editBoardName"></i></a>&nbsp;
 										<a href="javascript:void(0);"><i class="fas fa-trash-alt iconStyle delBoard"></i></a>
 									</div>

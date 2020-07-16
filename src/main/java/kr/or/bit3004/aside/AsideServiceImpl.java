@@ -64,4 +64,9 @@ public class AsideServiceImpl implements AsideService {
 	public void updateAsideBoardName(AllBoardList allBoardList) {
 		dao.updateAsideBoardName(allBoardList);
 	}
+	
+	@Override
+	public void deleteAsideBoard(AllBoardList allBoardList) {
+		dao.deleteAsideBoard(allBoardList);
+	}
 }

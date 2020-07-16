@@ -20,4 +20,5 @@ public interface AsideDao {
 	public void insertGroupTeam(GroupAndTeam groupAndTeam);
 	public User selectInvitedMemberInfo(String id);
 	public void updateAsideBoardName(AllBoardList allBoardList);
+	public void deleteAsideBoard(AllBoardList allBoardList);
 }

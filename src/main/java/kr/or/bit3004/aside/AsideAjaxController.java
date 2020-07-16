@@ -36,4 +36,9 @@ public class AsideAjaxController {
 	public void updateAsideBoardName(AllBoardList allBoardList) {
 		service.updateAsideBoardName(allBoardList);
 	}
+
+	@RequestMapping("delBoard.do")
+	public void deleteAsideBoard(AllBoardList allBoardList) {
+		service.deleteAsideBoard(allBoardList);
+	}
 }

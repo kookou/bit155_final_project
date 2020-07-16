@@ -14,7 +14,7 @@ var ws = null;
 var loginId = null;
 
 $(function () {
-    ws = new WebSocket('ws://192.168.0.56:8090/chatting');
+    ws = new WebSocket('ws://localhost:8090/chatting');
 	ws.onopen = function() {
    	    console.log('웹소켓 서버 접속 성공');
    	    ws.send('connent∥'+teamNo+"∥"+currUserNickname+"∥"+"님 접속");
@@ -24,10 +24,10 @@ $(function () {
     	makeChatBox(evt.data);
     };
     ws.onerror = function(evt) {
-    	swal('웹소켓 에러 발생 : ' + evt.data);
+    	console.log('웹소켓 에러 발생 : ' + evt.data);
     };
     ws.onclose = function() {
-    	swal("웹소켓 연결이 종료됨");
+    	console.log("웹소켓 연결이 종료됨");
     };
 });
 

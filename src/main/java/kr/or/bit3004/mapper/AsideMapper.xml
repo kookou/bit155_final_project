@@ -64,4 +64,11 @@
 		 where `all_board_list_no` = #{allBoardListNo}
 		   and `team_no` = #{teamNo}
 	</update>
+	
+	<!-- aside의 board 삭제 -->
+	<delete id="deleteAsideBoard" parameterType="kr.or.bit3004.aside.AllBoardList">
+		delete from `all_board_list` 
+		 where `all_board_list_no` = #{allBoardListNo}
+		   and `team_no` = #{teamNo}
+	</delete>
 </mapper>
