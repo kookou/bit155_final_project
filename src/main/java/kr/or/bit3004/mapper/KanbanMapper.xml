@@ -3,23 +3,34 @@
 
 <mapper namespace="kr.or.bit3004.dao.KanbanDao">
 	<insert id="insertListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
-		insert into KANBAN_LIST (LIST_TITLE, ALL_BOARD_LIST_NO , id)
-		values(#{listTitle}, #{allBoardListNo}, #{id});
+		INSERT INTO KANBAN_LIST (
+									KANBAN_LIST_INDEX, 
+									LIST_TITLE, 
+									ALL_BOARD_LIST_NO , 
+									id
+									)
+				VALUES(
+						#{kanbanListIndex}, 
+						#{listTitle}, 
+						#{allBoardListNo}, 
+						#{id}
+						)
 	</insert>
 	
 	<update id="updateKanbanListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
 		update KANBAN_LIST 
 		set LIST_TITLE = #{listTitle} , 
 			id = #{id} 
-		where kanban_list_no = #{kanbanListNo};
+		where kanban_list_no = #{kanbanListNo}
 	</update>
 	
    	<select id="kanbanList" parameterType="kr.or.bit3004.kanban.KanbanList">
-	 select * from kanban_list where kanban_list_no = #{kanbanListNo};
+	 select * from kanban_list 
+	 where kanban_list_no = #{kanbanListNo}
 	</select>
 	
 	<select id="kanbanCardList" resultMap="selectCardList">
-		select * from kanban_card;
+		select * from kanban_card
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectCardList">
@@ -35,7 +46,7 @@
 	<select id="kanbanListJoinCard" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , c.card_no, c.title , c.CONTENT , c.WRITE_DATE , c.FILE_COUNT , c.COMMENT_COUNT , c.CARD_INDEX
 	FROM KANBAN_LIST l 
-	LEFT OUTER JOIN kanban_card c ON l.KANBAN_LIST_NO = c.KANBAN_LIST_NO where l.all_board_list_no = #{allBoardListNo};
+	LEFT OUTER JOIN kanban_card c ON l.KANBAN_LIST_NO = c.KANBAN_LIST_NO where l.all_board_list_no = #{allBoardListNo}
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectList">
@@ -53,7 +64,8 @@
 	</resultMap>
 	
 	<select id="kanbanListFromAllBoardListNo" resultType="kr.or.bit3004.kanban.KanbanList">
-	 select * from kanban_list where all_board_list_no = #{allBoardListNo};
+	 select * from kanban_list where all_board_list_no = #{allBoardListNo}
+	 ORDER BY KANBAN_LIST_INDEX
 	</select>
 	
 	
@@ -86,24 +98,24 @@
 	<insert id="insertCardTitle">
 	insert into kanban_card
 	(title, write_date, kanban_list_no , card_index)  <!-- `card_index` -->
-	values(#{title}, now(),#{kanbanListNo} , #{cardIndex});
+	values(#{title}, now(),#{kanbanListNo} , #{cardIndex})
 	</insert>
 	
 	<update id="updateCardTitle">
-	update KANBAN_CARD set title = #{title} , write_date = now() where card_no = #{cardNo};
+	update KANBAN_CARD set title = #{title} , write_date = now() where card_no = #{cardNo}
 	</update>
 	
 	<select id="kanbanCardContent" resultType="kr.or.bit3004.kanban.KanbanCard">
-		select * from kanban_card where card_no = #{cardNo};
+		select * from kanban_card where card_no = #{cardNo}
 	</select>
 	
 	<update id="updateCardDescrioption">
-	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo};
+	update KANBAN_CARD set CONTENT = #{content} , write_date = now() where card_no = #{cardNo}
 	</update>
 	
 
 	<insert id="insertCardReply">
-	insert into board_comment(content,write_date,id,card_no) values(#{content},now(),#{id},#{cardNo});
+	insert into board_comment(content,write_date,id,card_no) values(#{content},now(),#{id},#{cardNo})
 	</insert>
 	
 	<delete id="deleteKanbanCard">
@@ -116,11 +128,11 @@
 		select b.comment_no, b.content, b.write_date, b.id, b.card_no , u.nickname, u.image
 		 from board_comment b
 		 inner join `user` u on b.id = u.id
-		 where card_no = #{cardNo} order by b.comment_no desc;
+		 where card_no = #{cardNo} order by b.comment_no desc
 	</select>
 
 	<update id="updateCardReply">
-	update board_comment set CONTENT = #{content} , write_date = now() where comment_no = #{commentNo};
+	update board_comment set CONTENT = #{content} , write_date = now() where comment_no = #{commentNo}
 	</update>
 	
 	<insert id="insertKanbanUploadFile" parameterType="kr.or.bit3004.kanban.KanbanUpload">
@@ -146,7 +158,7 @@
 	<delete id="deleteCardReply">
 		DELETE
 		FROM board_comment
-		WHERE comment_no = #{commentNo};
+		WHERE comment_no = #{commentNo}
 	</delete>
 	
 	<select id="getKanbanCardFiles" resultType="kr.or.bit3004.kanban.KanbanUpload">
@@ -173,5 +185,33 @@
 		FROM BOARD_FILE
 		WHERE FILE_NO = #{fileNo}
 	</delete>
+	
+	<update id="updateKanbanListIndex">
+		UPDATE KANBAN_LIST
+		SET KANBAN_LIST_INDEX = #{endListIDX}
+		WHERE KANBAN_LIST_NO = #{kanbanListNo}	
+	</update>
+	
+	
+	<update id="resortKanbanListIndexSTB">	
+	<![CDATA[
+		UPDATE KANBAN_LIST
+		SET `KANBAN_LIST_INDEX` = `KANBAN_LIST_INDEX` -1
+		WHERE (`KANBAN_LIST_INDEX` BETWEEN (#{startListIDX}+1) AND #{endListIDX})
+		AND `KANBAN_LIST_NO` != #{kanbanListNo}
+	]]>
+	</update>
+	
+
+	<update id="resortKanbanListIndexBTS">	
+	<![CDATA[
+		UPDATE KANBAN_LIST
+		SET `KANBAN_LIST_INDEX` = `KANBAN_LIST_INDEX` +1
+		WHERE (`KANBAN_LIST_INDEX` BETWEEN #{endListIDX} AND (#{startListIDX}-1))
+		AND `KANBAN_LIST_NO` != #{kanbanListNo}
+	]]>
+	</update>
+
+	 
 	
 </mapper>

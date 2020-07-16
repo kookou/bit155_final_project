@@ -30,6 +30,17 @@ public interface KanbanDao {
 	
 	//get A KanbanList By KanbanListNo
 	public KanbanList getAKanbanListByKanbanListNo(int kanbanListNo);
+	
+	//update Kanban List Index
+	public void updateKanbanListIndex(int kanbanListNo, int endListIDX);
+	
+	//resort Kanban List Index(S to B)
+	public void resortKanbanListIndexSTB(int kanbanListNo, int startListIDX, int endListIDX);
+	
+	//resort Kanban List Index(B to S)
+	public void resortKanbanListIndexBTS(int kanbanListNo, int startListIDX, int endListIDX);
+	
+	
 
 	public void deleteKanbanList(String listTitle);
 	public int insertCardTitle(String title ,  int cardIndex, int kanbanListNo);
