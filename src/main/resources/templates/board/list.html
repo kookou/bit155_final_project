@@ -125,7 +125,7 @@
 	                                         <td style="width:55%;">
                                    		<!-- 	 <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
 	                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
-	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
+	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"><i class="far fa-folder" style="cursor: pointer;"></i></a>
 	                                         	<!-- boardFile이 존재하는 경우에는 이미지를 붙여준다 -->
 	                                         	<!-- <i class="fas fa-paperclip" th:if="${!empty board.boardFile}"></i> -->
 	                                         	<!-- comment cnt가 존재하는 경우 -->

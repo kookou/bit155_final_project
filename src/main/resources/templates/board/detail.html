@@ -353,7 +353,6 @@
 	   	
 	   	//파일 경로 찾아서 다운로드
 	   	$('#download_list .boardFileName').each(function() {
-	   		console.log($(this).next().val());
 	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
 	   	
