@@ -90,6 +90,7 @@ var endListIDX = "";
     	 console.log(currentListNo);
     	 
     	 if(!(startListIDX == endListIDX)){
+    		 
     		
     		 $.ajax({
     				url: "resortKanbanList.ajax",

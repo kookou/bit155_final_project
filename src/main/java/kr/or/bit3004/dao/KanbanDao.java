@@ -34,8 +34,11 @@ public interface KanbanDao {
 	//update Kanban List Index
 	public void updateKanbanListIndex(int kanbanListNo, int endListIDX);
 	
-	//resort Kanban List Index
-	public void resortKanbanListIndex(int kanbanListNo, int endListIDX);
+	//resort Kanban List Index(S to B)
+	public void resortKanbanListIndexSTB(int kanbanListNo, int startListIDX, int endListIDX);
+	
+	//resort Kanban List Index(B to S)
+	public void resortKanbanListIndexBTS(int kanbanListNo, int startListIDX, int endListIDX);
 	
 	
 
