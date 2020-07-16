@@ -43,6 +43,14 @@ public class KanbanAjaxController {
 		System.out.println(kanbanlist);
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
+	
+	
+	@RequestMapping("resortKanbanList.ajax")
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("Controller resortKanbanList");
+		service.resortKanbanList(allBoardListNo, kanbanListNo, startListIDX, endListIDX);
+	}
+	
 		
 	@RequestMapping("InsertKanbanCard.ajax")
 	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo) {

@@ -270,4 +270,31 @@ public class KanbanServiceImpl implements KanbanService {
 		
 	}
 
+
+	@Override
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("ServiceImpl resortKanbanList");
+		dao.updateKanbanListIndex(kanbanListNo, endListIDX);
+		
+		int difference = Math.abs(endListIDX-startListIDX);
+		System.out.println(difference);
+		
+		if(endListIDX-startListIDX > 0) {
+			System.out.println("큰 index로 이동");
+			// 중간 index들 -1
+			dao.resortKanbanListIndexSTB(kanbanListNo, startListIDX, endListIDX);
+
+			
+		}else if(endListIDX-startListIDX < 0) {
+			System.out.println("작은 index로 이동");
+			// 중간 index들 +1
+			dao.resortKanbanListIndexBTS(kanbanListNo, startListIDX, endListIDX);
+
+		}
+		
+		
+//		dao.resortKanbanListIndex(kanbanListNo, endListIDX);
+		
+	}
+
 }
