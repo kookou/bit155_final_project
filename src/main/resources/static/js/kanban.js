@@ -67,10 +67,10 @@ function addCardFileCountTag(parent, fileCount){
 
 
  $('#kanban').sortable({ // 상위요소
- 	filter: ".kanban-list-add-header",
-//	 	items: ".kanban-list-wrapper",
+// 	filter: ".kanban-list-add-header", // 이거 소용 없고 (버튼 뒤로 드래그 가능해짐)
+	 items: ".kanban-list-wrapper",
      itemOrientation: "horizontal",
-     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+     handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
      moveItemOnDrop: true
  });
 
@@ -134,10 +134,10 @@ $(document).on('click', '#addlist', function() {
 
     
     $('#kanban').sortable({ // 상위요소
-     	filter: ".kanban-list-add-header",
-//    	 	items: ".kanban-list-wrapper",
+//     	filter: ".kanban-list-add-header", // 이거 소용 없고 (버튼 뒤로 드래그 가능해짐)
+    	 items: ".kanban-list-wrapper",
          itemOrientation: "horizontal",
-         handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
          moveItemOnDrop: true
      });
     
