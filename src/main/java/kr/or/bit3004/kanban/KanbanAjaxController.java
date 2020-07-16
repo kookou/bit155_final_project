@@ -1,19 +1,12 @@
 package kr.or.bit3004.kanban;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.comment.KanbanComment;
@@ -24,19 +17,7 @@ public class KanbanAjaxController {
 	@Autowired
 	private KanbanService service;
 	
-//	@RequestMapping("/kanban.do")
-//	public String kanbanList(int teamNo, Model model) {
-//		List<Map> kanbanlist = new ArrayList<>();
-//		List<Map> kanbancardlist = new ArrayList<>();
-//		
-//		kanbanlist = service.kanbanList(teamNo);
-//		kanbancardlist = service.kanbanCardList();
-//		model.addAttribute("kanbanlist",kanbanlist);
-//		model.addAttribute("kanbancardlist",kanbancardlist);
-//		System.out.println(kanbanlist);
-//		System.out.println(kanbancardlist);
-//		return "kanban/kanban";
-//	}
+
 	@RequestMapping("InsertKanbanList.ajax")
 	public String kanbanListInsert(KanbanList kanbanlist, Principal principal) {
 		System.out.println("Controller kanbanListInsert");
@@ -62,8 +43,8 @@ public class KanbanAjaxController {
 	}
 		
 	@RequestMapping("InsertKanbanCard.ajax")
-	public String kanbanCardInsert(String title, int kanbanListNo) {
-		int newcardNo = service.insertCardTitle(title, kanbanListNo);
+	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo) {
+		int newcardNo = service.insertCardTitle(title, cardIndex, kanbanListNo);
 		String newcardNoString = Integer.toString(newcardNo);
 		return newcardNoString;
 	}
@@ -112,8 +93,9 @@ public class KanbanAjaxController {
 	}
 
 	@RequestMapping(value="kanbanFilesUpload.ajax", method=RequestMethod.POST)
-	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request){
+	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request){
 		System.out.println("= kanbanFilesUpload.ajax =");
+		
 		return service.kanbanFilesUpload(request);
 	}
 	

@@ -25,11 +25,9 @@ public class KanbanController {
 	
 	@RequestMapping("/kanban.do")
 	public String kanbanList(int teamNo ,int allBoardListNo, Model model) {
-//		List<Map> kanbanlist = new ArrayList<>();
 		List<Map> kanbancardlist = new ArrayList<>();
 		List<KanbanList> kanbanlist = new ArrayList<>();
-		
-//		kanbanlist = service.allKanbanList(allBoardListNo);
+
 		kanbanlist = service.kanbanListFromAllBoardListNo(allBoardListNo);
 		kanbancardlist = service.kanbanCardList();
 		
