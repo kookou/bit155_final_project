@@ -60,21 +60,14 @@ var endListIDX = "";
 
 
 
-//
-//
-//let newcardarrayno = new Object();
-//let newcardarrayindex = new Object();
-//let newkanbanlistno = new Object();
 
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
-	 
 	 receive: function(event, ui){
-		 let tmpObj1 = new Object();
-		 var newcardarrayno1 = [];
-		 var newcardarrayindex1 = [];
-		 var newkanbanlistno1;
-		 var newcardcount1 = $(this).children().length
+		
+		  var newcardarrayno1 = [];
+		  var newcardarrayindex1 = [];
+		  var newkanbanlistno1 = $(this).parent().parent().attr('data-listno');
 		  console.log("recevie")
 		  var endcard = $(this).children();
 		  
@@ -84,10 +77,7 @@ var endListIDX = "";
 		  console.log("드롭 된 카드 전체");
 	      console.log(endcard)
 		  
-//		  console.log("드롭 된 리스트에서 이벤트 발생된 카드 인덱스");
-//		  console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
-	     
-		  var newkanbanlistno1 = $(this).parent().parent().attr('data-listno')
+
 		  
 		   $(endcard).each(function(index,item){
 			   console.log($(item).index())
@@ -99,14 +89,8 @@ var endListIDX = "";
 			   newcardarrayno1.push($(item).attr("data-cardno"));
 		   })
 		   
-//		   tmpObj1.cardIndex = newcardarrayindex1;
-//		   tmpObj1.cardNo = newcardarrayno1;
-//		   var jsonData1 = JSON.stringify(tmpObj1);
-		   
 		   $.ajax({
-//			   type: "POST", 
-//			   contentType:'application/json; charset=UTF-8',
-//  				dataType:'json',
+
 	     		url: "StartDragCardUpdate.ajax",
 	     		traditional : true,
 	     		data: {
@@ -118,19 +102,16 @@ var endListIDX = "";
 	     				dataType:'text',
 	     		success: function(resData) {
 	     			console.log("list update 완료");
-	     		
 	     		}
 	     	});
-		   
 		 },
 		
 
 	 stop:function(event, ui){
-		 let tmpObj2 = new Object();
-		 var newcardarrayno2 = [];
-		 var newcardarrayindex2 = [];
-		 var newkanbanlistno2;
-		 var newcardcount2 = $(this).children().length
+		 
+		  var newcardarrayno2 = [];
+		  var newcardarrayindex2 = [];
+		  var newkanbanlistno2 = $(this).parent().parent().attr('data-listno')
 		   console.log("stop")
 		   var startcard = $(this).children()
 		   
@@ -140,37 +121,23 @@ var endListIDX = "";
 		   console.log("드롭 전 카드 전체");
 		   console.log(startcard);
 		   
-//		   console.log("드롭 전 리스트에서 이벤트 발생된 카드 인덱스");
-//		   console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
-		   
-		   var newkanbanlistno2 = $(this).parent().parent().attr('data-listno')
-		   
 		   $(startcard).each(function(index,item){
 			   console.log($(item).index())
 			   newcardarrayindex2.push($(item).index());
 		   })
-		   
 		   
 		   $(startcard).each(function(index,item){
 			   console.log($(item).attr("data-cardno"))
 			   newcardarrayno2.push($(item).attr("data-cardno"));
 		   })
 		   
-//		   tmpObj2.cardIndex = newcardarrayindex2;
-//		   tmpObj2.cardNo = newcardarrayno2;
-//		   var jsonData2 = JSON.stringify(tmpObj2);
-		   
 		   $.ajax({
-//			   type: "POST", 
-//			   contentType:'application/json; charset=UTF-8',
-//  				dataType:'json',
 	     		url: "StartDragCardUpdate.ajax",
 	     		traditional : true,
 	     		data: {
 	     			cardIndex :newcardarrayindex2,
 	     			cardNo : newcardarrayno2,
 	     			kanbanListNo:newkanbanlistno2
-	     			
 	     				},
 	     				dataType:'text',
 	     		success: function(resData) {
@@ -178,20 +145,7 @@ var endListIDX = "";
 	     		
 	     		}
 	     	});
-		   
-//		  
-//		   console.log(newcardarrayno);
-//		   console.log(newcardarrayindex);
-		   
-		   
-
-		  
 	 }
-	
-
-   
- 
- 
  });
 
 
@@ -283,7 +237,8 @@ $(document).ready(function(){
 	console.log("될거니???????")
 	console.log(boardName)
 	$('#board-name').text(boardName)
-})
+});
+
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
