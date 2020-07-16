@@ -59,4 +59,19 @@ public class AsideServiceImpl implements AsideService {
 	public User selectInvitedMemberInfo(String id) {
 		return dao.selectInvitedMemberInfo(id);
 	}
+	
+	@Override
+	public void updateAsideBoardName(AllBoardList allBoardList) {
+		dao.updateAsideBoardName(allBoardList);
+	}
+	
+	@Override
+	public void deleteAsideBoard(AllBoardList allBoardList) {
+		dao.deleteAsideBoard(allBoardList);
+	}
+	
+	@Override
+	public void updateTeamName(Team team) {
+		dao.updateTeamName(team);
+	}
 }
