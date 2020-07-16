@@ -65,17 +65,17 @@ function addCardFileCountTag(parent, fileCount){
 		 }
  });
 
- 
+
  $('#kanban').sortable({ // 상위요소
-	 items: ".kanban-list-wrapper",
+ 	filter: ".kanban-list-add-header",
+//	 	items: ".kanban-list-wrapper",
      itemOrientation: "horizontal",
-//     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
      moveItemOnDrop: true
-
-
  });
 
-	
+
+// $( ".kanban-list-add-wrapper" ).sortable( "disable" );
 	
 
 	 
@@ -134,11 +134,12 @@ $(document).on('click', '#addlist', function() {
 
     
     $('#kanban').sortable({ // 상위요소
-   	 	items: ".kanban-list-wrapper",
-        itemOrientation: "horizontal",
-//        handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-        moveItemOnDrop: true
-    });
+     	filter: ".kanban-list-add-header",
+//    	 	items: ".kanban-list-wrapper",
+         itemOrientation: "horizontal",
+         handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
+         moveItemOnDrop: true
+     });
     
 });
 
