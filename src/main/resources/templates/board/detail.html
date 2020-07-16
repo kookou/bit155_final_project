@@ -129,8 +129,12 @@
 	    </div>
 	</div>
 	
-	<div style="display:none;" id="download_list" th:each="boardFile:${selectBoardDownloadFile}">
-		<a href="${boardFile.filePath}" download th:text="${boardFile.originFileName}"></a>
+	<!-- 다운로드 popover창 -->
+	<div style="display:none;" id="download_list">
+		<div th:each="boardFile:${selectBoardDownloadFile}">
+			<a href="javascript:void(0);" download th:text="${boardFile.originFileName}" class="boardFileName"></a>
+			<input type="hidden" th:value="${boardFile.fileName}">
+		</div>
 	</div>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
@@ -339,6 +343,12 @@
 			content: function() {
 			  return $("#download_list").html();
 			}
+		});
+	   	
+	   	//파일 경로 찾아서 다운로드
+	   	$('#download_list .boardFileName').each(function() {
+	   		console.log($(this).next().val());
+	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
     </script>
 </body>
