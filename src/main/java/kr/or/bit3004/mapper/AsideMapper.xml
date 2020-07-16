@@ -72,5 +72,10 @@
 		 where `all_board_list_no` = #{allBoardListNo}
 		   and `team_no` = #{teamNo}
 	</delete>
+	
+	<!-- Team name 수정 -->
+	<update id="updateTeamName" parameterType="kr.or.bit3004.groupAndTeam.Team">
+		update `team` set `team_name` = #{teamName} where `team_no` = #{teamNo}
+	</update>
 </mapper>
 

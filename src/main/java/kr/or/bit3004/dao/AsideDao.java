@@ -21,4 +21,5 @@ public interface AsideDao {
 	public User selectInvitedMemberInfo(String id);
 	public void updateAsideBoardName(AllBoardList allBoardList);
 	public void deleteAsideBoard(AllBoardList allBoardList);
+	public void updateTeamName(Team team);
 }

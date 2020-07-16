@@ -9,7 +9,13 @@
 					<li class="sidebar-item" id="teaminfo-nav">
 						<a th:href="@{timeLine.do(teamNo=${team.teamNo})}">
 							<span class="team-title" th:text="${team.teamName}"></span>
+							<!-- 넘어온 멤버닉네임과 현재 접속한 닉네임이 같고 리더가 Y이면 수정, 삭제 버튼 보이기 -->
 						</a>
+						<div th:each="member: ${teamMember}" th:if="${member.nickname} == ${session.currentUser.nickname}" style="display: inline-block; vertical-align: middle; height: 100%;">
+								<div th:if="${member.leader.equals('Y')}">
+									<a href="javascript:void(0);" id="editTeamName" data-toggle="modal" data-target="#editTeamNameModal" ><i class="fas fa-pencil-alt iconStyle"></i></a>
+								</div>
+						</div>
 						<!-- <span th:text="${teamMember}"></span> -->
 						<div class="popover-icon" id="profile-group">
 							

@@ -1,3 +1,29 @@
+//팀이름 수정하기
+var teamTitleTag = "";
+$('#editTeamName').click(function() {
+	console.log($(this).parents('#teaminfo-nav').find('.team-title').text());
+	teamTitleTag = $(this).parents('#teaminfo-nav').find('.team-title');
+	let teamTitleText = $(this).parents('#teaminfo-nav').find('.team-title').text();
+	$('#inputTeamName').val(teamTitleText);
+	$('#inputTeamName').focus();
+});
+
+$('#editOkBtn').click(function() {
+	$.ajax({
+		url: "editTeamName.do",
+		data: {
+			teamName: $('#inputTeamName').val(),
+			teamNo: teamNo
+		},
+		success: function() {
+			teamTitleTag.text($('#inputTeamName').val());
+		},
+		error: function(e) {
+			console.log(e);
+		}
+	});
+});
+
 // 보드이름 수정하기
 var aTag = "";
 var icon = "";

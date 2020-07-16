@@ -69,4 +69,9 @@ public class AsideServiceImpl implements AsideService {
 	public void deleteAsideBoard(AllBoardList allBoardList) {
 		dao.deleteAsideBoard(allBoardList);
 	}
+	
+	@Override
+	public void updateTeamName(Team team) {
+		dao.updateTeamName(team);
+	}
 }

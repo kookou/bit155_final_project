@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.bit3004.groupAndTeam.GroupAndTeam;
+import kr.or.bit3004.groupAndTeam.Team;
 import kr.or.bit3004.user.User;
 
 @RestController
@@ -41,4 +42,10 @@ public class AsideAjaxController {
 	public void deleteAsideBoard(AllBoardList allBoardList) {
 		service.deleteAsideBoard(allBoardList);
 	}
+	
+	@RequestMapping("editTeamName.do")
+	public void updateTeamName(Team team) {
+		service.updateTeamName(team);
+	}
+	
 }
