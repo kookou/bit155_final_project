@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://wwww.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<title>Bit 155 Final Project</title>
 <link href="css/style.min.css" rel="stylesheet">
-    <title>그림판</title>
+<link href="css/kanban.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
     	.paintcellborder{
@@ -27,6 +33,7 @@
 		}
       canvas {
         border: 1px solid grey;
+        background-color: #ffffff;
       }
 		
       .jb_table {
@@ -46,13 +53,35 @@
       textarea {
         background-color: #fcf3cf;
       }
+/*  .page-wrapper-canvas{
+		transition: 0.2s ease-in;
+		display: block;
+ 		 box-shadow: 0px 3px 9px 0px rgba(162, 176, 190, 0.15);
+ 		 border-top-left-radius: 5px;
+ 		 border-top-right-radius: 5px;
+ 		 
+ }
+ @media (min-width: 768px)
+#main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse, #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .page-wrapper-canvas {
+    margin-left: 65px;
+}
+#main-wrapper[data-layout=vertical][data-header-position=fixed] .page-wrapper-canvas {
+    padding-top: 80px;
+} */
     </style>
-
-
   </head>
 
   <body>
-  
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+     <th:block th:replace="common/addAllBoardModal"></th:block>
+     <th:block th:replace="common/chat"></th:block>
+     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+   <div class="page-wrapper">
+      
     <div class="jb_table">
       <div class="row">
         
@@ -64,19 +93,18 @@
         <span class="cell">
         <!--   <INPUT type="file" id="load_filename" value="Load" onChange="loadFile()" /> -->
        <!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
-       
           <div>
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
                   <img src="img/red.png" class="colorChip" onclick="selectColor('red')" />
-                  <img src="img/brown.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
+                  <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
                    <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
-                   <img src="img/pink.png" class="colorChip" onclick="selectColor('#FF61CA')"/>    		
+                   <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')"/>    		
                 </span>
               </div>
               <div class="row">
@@ -118,16 +146,10 @@
                  <div class="row">
                  <span class="cell">
                   <i class="fas fa-pencil-alt" onclick="selectTool('pencil')"></i>
-                  <i class="fas fa-minus" onclick="selectTool('line')"></i>
+                 <!--  <i class="fas fa-minus" onclick="selectTool('line')"></i> -->
                 </span>
           	    </div> 
-            <!--   <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/pencil.png"  onclick="selectTool('pencil')" />
-                  <img src="../../../dist/img/line.png"  onclick="selectTool('line')" />
-                </span>
-              </div> -->
-              <div class="row">
+             <!--  <div class="row">
                  <span class="cell">
                   <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
                   <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
@@ -144,44 +166,19 @@
                   <img src="img/triangle_.png" class="pad hi" onclick="selectTool('tri')" />
                   <img src="img/filledtriangle.png" class="pad" onclick="selectTool('filledtri')" />
                 </span>
-              </div>
+              </div> -->
          	<div class="row">
                 <span class="cell">
                   <img src="img/bucket1.png" class="pad fill" id="fill"  />
                 </span>
               </div>
- <!--             <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/circle.png" onclick="selectTool('circle')"/>
-                  <img src="../../../dist/img/filledcircle.png" onclick="selectTool('filledcircle')"/>
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/ellipse.png" onclick="selectTool('ellipse')"/>
-                  <img src="../../../dist/img/filledellipse.png" onclick="selectTool('filledellipse')"/>
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/square.png" onclick="selectTool('square')"/>
-                  <img src="../../../dist/img/filledsquare.png" onclick="selectTool('filledsquare')"/>
-                </span>
-              </div>
-              <div class="row">
-                <span class="cell">
-                  <img src="../../../dist/img/rect.png" onclick="selectTool('rect')" />
-                  <img src="../../../dist/img/filledrect.png" onclick="selectTool('filledrect')" />
-                </span>
-              </div> -->
-
               <div class="row">
                   <span class="cell">
                    <i class="fas fa-angle-double-left" onclick="undo()"></i>
                    <i class="fas fa-angle-double-right" onclick="redo()"></i>
                   </span>
               </div>
-              
+                            
           <div> <i class="fas fa-quidditch" onClick="initPage()"></i> Clear</div>
           <div class="padd"></div>
           <div>Title <input id="title" size="10" /></div>
@@ -199,7 +196,9 @@
         </span>
       </div>
     </div>
-    
+    </div>
+    </div>
+    <div th:replace="common/script :: script"></div>
     <script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
     <!-- 컬러피커 -->
@@ -364,5 +363,17 @@
 		 });	
  
    </script>
+   <script th:inline="javascript">
+		/*<![CDATA[*/
+			/* var bgColor = [[${team.backgroundColor}]];
+			if(bgColor != 'ffffff') {
+				$('.page-wrapper').css("background", "#"+bgColor);
+			} */
+			var currUserNickname = [[${session.currentUser.nickname}]];
+			var currUserImage = [[${session.currentUser.image}]];
+			var teamNo = [[${teamNo}]];
+			$('.page-wrapper').css('position', '');
+		/*]]>*/
+	</script>
   </body>
 </html>
