@@ -254,22 +254,19 @@ public class KanbanServiceImpl implements KanbanService {
 		return fileList;
 	}
 	//드래그앤 드랍 카드 업데이트 (스타트 리스트)
-	@Override
-	public void dragCardUpdateStart(int[] cardNo , int[] cardIndex , int kanbanListNo) {
-		List<KanbanCard> cardList = dao.kanbanCardList();
-		for(int i = 0; i < cardList.size(); i++) {
-			if(kanbanListNo == cardList.get(i).getKanbanListNo()) {
-				for(int j = 0; j < cardNo.length; j++) {
-					for(int k = 0; k < cardIndex.length; k++) {
-						dao.dragCardUpdateStart(cardNo[j],cardIndex[k], kanbanListNo);
-					}
-				}
-			
-			}
-		}
-		
-	}
-
+//	@Override
+//	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo) {
+//		for(int i = 0; i <= cardNo.length; i++) {
+//			dao.dragCardUpdateCardno(cardNo[i], kanbanListNo);
+//		}
+//	}
+//	@Override
+//	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo) {
+//		for(int i = 0; i <= cardIndex.length; i++) {
+//			dao.dragCardUpdateIndex(cardIndex[i], kanbanListNo);
+//		}
+//	}
+//	
 
 	@Override
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {

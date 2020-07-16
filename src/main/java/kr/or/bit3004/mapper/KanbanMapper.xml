@@ -32,6 +32,7 @@
 	
 	<select id="kanbanCardList" resultType="kr.or.bit3004.kanban.KanbanCard">
 		select * from kanban_card order by card_index desc
+	</select>
 	
 	<select id="kanbanListJoinCard" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , c.card_no, c.title , c.CONTENT , c.WRITE_DATE , c.FILE_COUNT , c.COMMENT_COUNT , c.CARD_INDEX
@@ -177,11 +178,18 @@
 	</delete>
 	
 
-	<update id="dragCardUpdateStart" parameterType="kr.or.bit3004.kanban.KanbanCard">
+	<update id="dragCardUpdateIndex" parameterType="kr.or.bit3004.kanban.KanbanCard">
 		update KANBAN_card
-		set card_index = #{cardIndex} , kanban_list_no = #{kanbanListNo} 
+		set kanban_list_no = #{kanbanListNo} 
 		where card_no = #{cardNo} 
 	</update>
+	
+	<update id="dragCardUpdateCardno" parameterType="kr.or.bit3004.kanban.KanbanCard">
+		update KANBAN_card
+		set card_index = #{cardIndex}
+		where card_no = #{cardNo} 
+	</update>
+	
 
 	<update id="updateKanbanListIndex">
 		UPDATE KANBAN_LIST
@@ -210,5 +218,5 @@
 	</update>
 
 	 
-\
+
 </mapper>

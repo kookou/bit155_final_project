@@ -129,10 +129,18 @@ public class KanbanAjaxController {
 		return service.deleteKanbanCardFile(fileNo, cardNo, teamNo);
 	}
 	
+//	@RequestMapping("DragCardNoUpdate.ajax")
+//	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo) {
+//		service.dragCardUpdateCardno(cardNo, kanbanListNo);
+//	}
+//	@RequestMapping("DragCardIndexUpdate.ajax")
+//	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo) {
+//		service.dragCardUpdateIndex(cardIndex, kanbanListNo);
+//	}
+//	
 	@RequestMapping("StartDragCardUpdate.ajax")
-	public void dragCardUpdateStart(int[] cardNo , int[] cardIndex , int kanbanListNo) {
-		service.dragCardUpdateStart(cardNo ,cardIndex ,kanbanListNo);
+	public void drag(JSONObject json , int kanbanListNo) {
+		System.out.println(json);
 	}
-	
 }
  
