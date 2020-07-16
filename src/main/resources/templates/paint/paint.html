@@ -238,7 +238,9 @@
 	 var isPress = false;
 	 
 	 $(document).ready(function(){
-		paintWs  = new WebSocket("ws://192.168.0.35:8090/paint");
+	paintWs  = new WebSocket("ws://192.168.0.35:8090/paint"); 
+   			/*  paintWs  = new WebSocket("ws://192.168.0.35:8090/paint.do?teamNo="+${team.teamNo}); */
+
 		paintWs.onopen=function(){
 			console.log("웹소켓 접속 성공");
 		};
@@ -254,11 +256,6 @@
 				console.log("추주툴",chooseTool);
             	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
               	//selectTool('circle');
-   	 /*	$('.colorChip').click(function() {
-   		 	$('.colorChip').removeClass('paintcellborder');
-   			$(this).addClass('paintcellborder');
-   		});	*/	
-            		
             },
             mousemove: function (e) {
                 var x = e.offsetX;
@@ -280,34 +277,7 @@
                 ctx.closePath();
             	paintWs.send(JSON.stringify(now));//now를 json객체로변환
             	now =[]; //now 배열을 다시 비워줌
-            }/* ,
-   			linemousedown: function (e) {
-               	e.preventDefault();
-   		        isPress = true;
-                ctx.beginPath();
-   				prevX = e.offsetX;
-   				prevY = e.offsetY;
-               	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color}); //now 배열에 이거 집어넣음
-                 	
-             },
-            linemousemove: function (e) {
-                   var x = e.offsetX;
-                   var y = e.offsetY;
-                   if (isPress) {
-                   	now.push({x, y});
-                   	ctx.moveTo(prevX, prevY);
-                       ctx.lineTo(x, y);
-                       ctx.stroke();
-                       prevX = e.offsetX;
-                       prevY = e.offsetY;
-                   }
-             },
-             linemouseup: function (e) {
-                   isPress = false;
-                   ctx.closePath();
-              	 	paintWs.send(JSON.stringify(now));//now를 json객체로변환
-             	  	now =[]; //now 배열을 다시 비워줌
-             } */
+            }
         });
 		paintWs.onmessage = function(evt){
 			var c = document.querySelector("#canvas");

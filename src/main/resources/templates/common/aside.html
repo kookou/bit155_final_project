@@ -64,9 +64,11 @@
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
+						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false" > 
 							<i class="fas fa-paint-brush"></i> 
-							<span class="hide-menu">Canvas </span>
+							<a th:href="@{paint.do(teamNo=${team.teamNo})}">
+							Canvas
+							</a>
 						</a>
 					</li>
 

@@ -16,7 +16,7 @@ public class PaintController {
 	@Autowired
 	private AsideService asideService;
 	
-	@RequestMapping("/paint.do")
+	@RequestMapping("paint.do")
 	public String chat(Model model, RedirectAttributes rttr, HttpSession session,int teamNo) {
 		if(session.getAttribute("id")==null) {
 			model.addAttribute("team", asideService.getTeam(teamNo));
