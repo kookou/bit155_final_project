@@ -18,9 +18,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- Murri -->
- <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+<!-- <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
  <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
- <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>   
+ <script src="https://sortablejs.github.io/Sortable/st/app.js"></script> -->
 <!-- Murri end -->
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -222,11 +222,10 @@
 						<!-- 칸반 list 시작 -->
 						<!-- ============================================================== -->
 						
-						<div class="kanban-list-wrapper" draggable="true"
+						<div class="kanban-list-wrapper"
 							th:each="kanbanlist: ${kanbanlist}">
 							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}" >
-								<div class="kanban-card" ondrop="drop(event, this)"
-									ondragover="allowDrop(event)">
+								<div class="kanban-card">
 									<div class="kanban-list-header" id="listheader">
 										<h4 class="kanban-list-title"
 											th:text="${kanbanlist.listTitle}"></h4>
@@ -237,7 +236,7 @@
 									<div class="divForDragNDrop">
 
 
-										<div class="kanban-card-list btn-card-hover" draggable="true"
+										<div class="kanban-card-list btn-card-hover"
 											th:each="card : ${kanbancardlist}"
 											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo} , data-cardindex=${card.cardIndex}">
 											<span class='icon-pencil active-card-icon'
@@ -302,9 +301,10 @@
 	</div>
 	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
 	<div th:replace="common/script :: script"></div>
-	<script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+	
+<!--     <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
     <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
-    <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>  
+    <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>  -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
        var currUser = [[${session.currentUser.id}]];

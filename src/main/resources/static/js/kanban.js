@@ -55,22 +55,88 @@ function addCardFileCountTag(parent, fileCount){
 
 
 
-
-
+let newcardArray = [];
+let tmpObj = new Object();
 
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
-	 receive: function(event, ui){
-		  console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
-		 }
+//	 receive: function(event, ui){
+////		  console.log("드롭된 list 의 카드 갯수 ");
+////		  console.log($(this).children().length)
+////		  console.log("드롭된 list에서의 이벤트 발생된 카드 인덱스");
+////		  console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
+//	      console.log("recevie")
+//		  var cardlist2 = $(this).children()
+//		   console.log("드롭 된 카드 전체");
+//	      console.log(cardlist2)
+////		   console.log(cardlist2);
+//		   
+//		 },
+//		
+//
+//	 stop:function(event, ui){
+//		   console.log("stop")
+//		   var cardlist = $(this).children()
+//	
+//		   console.log("드롭 전 카드 전체");
+//		   console.log(cardlist);
+//		   
+//		   $(cardlist).each(function(index,item){
+//			   console.log($(item).index())
+//			   newcardArray.push($(item).index());
+//		   })
+//		   
+//		   tmpObj.cardIndex = newcardArray;
+//		   console.log(newcardArray);
+//		   $(cardlist).each(function(index,item){
+//			   console.log($(item).attr("data-cardno"))
+//			   newcardArray.push($(item).attr("data-cardno"));
+//		   })
+//		  
+//		   tmpObj.cardNo = newcardArray;
+//		   console.log(newcardArray);
+//		   console.log(tmpObj)
+//	 }
+	 
+	 start:function(event, ui){
+		 var startlistno = $(this).parent().parent().attr('data-listno')
+		 console.log(startlistno)
+		 var startcardindex
+		 console.log("드롭전 list에서의 이벤트 발생된 카드 인덱스");
+         console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
+		 
+	 },
+		 
+	 receive:function(event, ui){
+		var endlistno = $(this).parent().parent().attr('data-listno')
+		console.log(endlistno)
+		var endcardindex
+		console.log("드롭된 list에서의 이벤트 발생된 카드 인덱스");
+        console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
+
+	 }
+   
+   
+   
+//   $(cardlength).each(cardlsit , function(index , item){
+//	   console.log("히")
+//	   cardArray.push(item.attr("data-cardno"));
+//   })
+//   //배열로 저장한다. 
+//   console.log(cardArray);
+ 
+ 
  });
 
  
  $('#kanban').sortable({ // 상위요소
      filter: ".kanban-list-wrapper",
      itemOrientation: "horizontal",
+     item :"kanban-card-list",
+     moveItemOnDrop: true,
+   
 //     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-     moveItemOnDrop: true
+     
 
 
  });
@@ -136,6 +202,7 @@ $(document).on('click', '#addlist', function() {
     $('#kanban').sortable({ // 상위요소
         filter: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
+
 //        handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
         moveItemOnDrop: true
     });
