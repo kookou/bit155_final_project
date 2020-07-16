@@ -62,9 +62,10 @@ public class BoardController {
 	//게시판 글쓰기
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoardService(Board board , int teamNo , MultipartHttpServletRequest request){
-		System.out.println(board);
+		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
+		
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	

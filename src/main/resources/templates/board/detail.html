@@ -66,7 +66,7 @@
                                         	<input type="hidden" name="id" th:value="${session.currentUser.id}">
                                             <input type="hidden" name="teamNo" th:value="${teamNo}">
                                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-                                           <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
+                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
                                             <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
                                             <h2><a th:text="${selectBoard.title}"></a></h2>
                                             <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
@@ -218,7 +218,7 @@
 				
 				$('#commentUpdateBtn').click(function(){
 					if($('#updateContent').val() == ""){
-						swal('내용을 입력하세요');
+						Swal.fire('', '내용을 입력해주세요', 'warning');
 						return false;
 					}
 					var promise = 
