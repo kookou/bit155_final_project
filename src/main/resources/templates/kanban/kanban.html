@@ -220,8 +220,6 @@
 
                     <div class="kanban-list-wrapper" th:each="kanbanlist: ${kanbanlist}">
                         <div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}">
-                            <div class="kanban-card">
-                                <div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}">
                                     <div class="kanban-card" ondrop="drop(event, this)" ondragover="allowDrop(event)">
                                         <div class="kanban-list-header" id="listheader">
                                             <h4 class="kanban-list-title" th:text="${kanbanlist.listTitle}"></h4>
@@ -240,7 +238,7 @@
                                                     style='position: relative;'></span>
                                                 <div class="kanban-card-element" data-toggle="modal"
                                                     data-target="#card-content">
-                                                    <span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+                                                    <span class="kanban-card-title" th:text="${card.title}"></span>
                                                     <div class="kanban-card-badges">
                                                         <div th:classappend="${card.commentCount > 0} ? 'kanban-card-badge' : ''"
                                                             title="comments">
@@ -295,8 +293,8 @@
                 <!-- End Container fluid  -->
                 <!-- ============================================================== -->
             </div>
-        </div>
-    </div>
+      
+
 
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 

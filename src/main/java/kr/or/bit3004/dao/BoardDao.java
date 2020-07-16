@@ -53,4 +53,5 @@ public interface BoardDao {
 	
 	public void updateStep(Board board);
 	
+	public void dragCardUpdateStart(int kanbanListNo , int cardIndex);
 }

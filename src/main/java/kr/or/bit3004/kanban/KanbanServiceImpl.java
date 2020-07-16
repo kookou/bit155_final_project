@@ -54,7 +54,7 @@ public class KanbanServiceImpl implements KanbanService {
 
 	
 	@Override
-	public List<Map> kanbanCardList(){
+	public List<KanbanCard> kanbanCardList(){
 		return dao.kanbanCardList();
 	}
 	
@@ -252,6 +252,22 @@ public class KanbanServiceImpl implements KanbanService {
 		dao.deleteKanbanCardFile(fileNo);
 		fileList = dao.getKanbanCardFiles(cardNo);
 		return fileList;
+	}
+	//드래그앤 드랍 카드 업데이트 (스타트 리스트)
+	@Override
+	public void dragCardUpdateStart(int[] cardNo , int[] cardIndex , int kanbanListNo) {
+		List<KanbanCard> cardList = dao.kanbanCardList();
+		for(int i = 0; i < cardList.size(); i++) {
+			if(kanbanListNo == cardList.get(i).getKanbanListNo()) {
+				for(int j = 0; j < cardNo.length; j++) {
+					for(int k = 0; k < cardIndex.length; k++) {
+						dao.dragCardUpdateStart(cardNo[j],cardIndex[k], kanbanListNo);
+					}
+				}
+			
+			}
+		}
+		
 	}
 
 }
