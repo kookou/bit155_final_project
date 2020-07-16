@@ -8,7 +8,7 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 	$('.addedIcon').each(function(index, ele) {
 		$(this).parent().find('.board-name').show();
 		$(this).parent().find('.oriIcon').show();
-		$(this).parent().find('input[type="text"]').remove();
+		$(this).parent().find('.newBoardName').remove();
 		$(this).remove();
 	});
 	var parentTag = $(this).parents('.sidebar-item');
@@ -53,7 +53,7 @@ $('#allBoardList').on('click', '.editBoardNameOk', function() {
 			icon.show();
 			boardTag.text($('.newBoardName').val()).show();
 			addedIcon.remove();
-			$('input[type="text"]').remove();
+			$('.newBoardName').remove();
 		},
 		error: function(e) {
 			console.log(e);
@@ -67,7 +67,7 @@ $('#allBoardList').on('click', '.cancelEditBoardName', function() {
 	icon.show();
 	boardTag.show();
 	$(this).parent().parent().remove();
-	$('input[type="text"]').remove();
+	$('.newBoardName').remove();
 });
 
 //보드 삭제하기
