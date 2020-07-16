@@ -9,7 +9,13 @@
 					<li class="sidebar-item" id="teaminfo-nav">
 						<a th:href="@{timeLine.do(teamNo=${team.teamNo})}">
 							<span class="team-title" th:text="${team.teamName}"></span>
+							<!-- 넘어온 멤버닉네임과 현재 접속한 닉네임이 같고 리더가 Y이면 수정, 삭제 버튼 보이기 -->
 						</a>
+						<div th:each="member: ${teamMember}" th:if="${member.nickname} == ${session.currentUser.nickname}" style="display: inline-block; vertical-align: middle; height: 100%;">
+								<div th:if="${member.leader.equals('Y')}">
+									<a href="javascript:void(0);" id="editTeamName" data-toggle="modal" data-target="#editTeamNameModal" ><i class="fas fa-pencil-alt iconStyle"></i></a>
+								</div>
+						</div>
 						<!-- <span th:text="${teamMember}"></span> -->
 						<div class="popover-icon" id="profile-group">
 							
@@ -32,16 +38,27 @@
 
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Board List</span></li>
+						
 					<div id="allBoardList">
 						<li class="sidebar-item" th:each="board: ${allBoardList}">
-							<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false">
+							<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false" style="display: inline-block;">
 								<input type="hidden" th:value="${board.allBoardListNo}" class="hiddenAllBoardListNo">
 								<i th:class="${board.boardTypeNo == 1} ? 'fas fa-table' : 'fab fa-trello'"></i>
 								<span class="hide-menu board-name"  th:text="${board.name}"></span>
 							</a>
+							<!-- 넘어온 멤버닉네임과 현재 접속한 닉네임이 같고 리더가 Y이면 수정, 삭제 버튼 보이기 -->
+							<div th:each="member: ${teamMember}" style="display: inline-block; vertical-align: middle; height: 100%;">
+								<div th:if="${member.nickname} == ${session.currentUser.nickname}">
+									<div th:if="${member.leader.equals('Y')}" class="oriIcon">
+										<a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle editBoardName"></i></a>&nbsp;
+										<a href="javascript:void(0);"><i class="fas fa-trash-alt iconStyle delBoard"></i></a>
+									</div>
+								</div>
+							</div>
 						</li>
 					</div>
-					<li class="sidebar-item">
+						
+					<li class="sidebar-item" style="clear: both;">
 						<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" data-toggle="modal" data-target="#createNewAllBoard"  id="addBaordBtn"> 
 							<i data-feather="plus-circle" class="feather-icon"></i> 
 							<span class="hide-menu">Add Board</span>
@@ -79,7 +96,8 @@
 		<script th:inline="javascript">
 	    /*<![CDATA[*/
 	    	var currUser = [[${session.currentUser.id}]];
-	    	var currUSerNick = [[${session.currentUser.nickname}]];
+	    	var currUserNick = [[${session.currentUser.nickname}]];
+	    	var currUserImage = [[${session.currentUser.image}]];
 	    	var teamNo = [[${team.teamNo}]];
 	    /*]]>*/
 	    </script>

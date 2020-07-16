@@ -61,11 +61,6 @@ public class TeamMainAjaxController {
 		return teamNo;
 	}
 	
-//	@RequestMapping("insertTeamLeader.do")
-//	public void insertTeamLeader(GroupAndTeam team) {
-//		service.insertTeamLeader(team);
-//	}
-	
 	@RequestMapping("moveTeamFromGroup.do")
 	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group) {
 		return service.moveTeamFromGroup(group);

@@ -22,12 +22,6 @@
         #addTodoListBtn {
             cursor: pointer;
         }
-        .iconStyle {
-            color: silver;
-        }
-        .iconStyle:hover {
-            color: gray;
-        }
     </style>
 </head>
 
@@ -104,7 +98,7 @@
 			                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
 			                                            </div>
 			                                            <div style="float: right;">
-			                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp
+			                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
 			                                                <a href="#"><i class="fas fa-trash-alt iconStyle"></i></a>
 			                                            </div>
 			                                        </div>
