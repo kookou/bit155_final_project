@@ -31,6 +31,12 @@
    .comment-content {
        margin-left: 35px;
    }
+   .popover{
+	   /* height: 30px; */
+	   max-height: 1000px;
+	   /* width: 100px; */
+	   max-width: 1000px
+   }
 </style>
 </head>
 
@@ -66,7 +72,7 @@
                                         	<input type="hidden" name="id" th:value="${session.currentUser.id}">
                                             <input type="hidden" name="teamNo" th:value="${teamNo}">
                                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-                                           <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
+                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
                                             <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
                                             <h2><a th:text="${selectBoard.title}"></a></h2>
                                             <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
@@ -81,7 +87,8 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead" id="summernote"></p>
+                                                	<a href="#" id="downLoadBtn" class="btn" style="float:right;"><i class="far fa-folder" style="cursor: pointer;"></i></a>
+                                                    <p class="lead" id="summernote" style="clear:both"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
@@ -120,6 +127,10 @@
 	            </div>
 	        </div>
 	    </div>
+	</div>
+	
+	<div style="display:none;" id="download_list" th:each="boardFile:${selectBoardDownloadFile}">
+		<a href="${boardFile.filePath}" download th:text="${boardFile.originFileName}"></a>
 	</div>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
@@ -218,7 +229,7 @@
 				
 				$('#commentUpdateBtn').click(function(){
 					if($('#updateContent').val() == ""){
-						swal('내용을 입력하세요');
+						Swal.fire('', '내용을 입력해주세요', 'warning');
 						return false;
 					}
 					var promise = 
@@ -318,6 +329,17 @@
 	   		$('#editBtn').show();
 	   		$('#deleteBtn').show();
 	   	}
+	   	
+	   	//다운로드 창
+	   	$("#downLoadBtn").popover({
+		/*  title: "Notifiche",*/
+			html: true,
+			sanitize: false,
+			placement: "bottom",
+			content: function() {
+			  return $("#download_list").html();
+			}
+		});
     </script>
 </body>
 </html>

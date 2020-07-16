@@ -24,10 +24,10 @@ $(function () {
     	makeChatBox(evt.data);
     };
     ws.onerror = function(evt) {
-    	swal('웹소켓 에러 발생 : ' + evt.data);
+    	console.log('웹소켓 에러 발생 : ' + evt.data);
     };
     ws.onclose = function() {
-    	swal("웹소켓 연결이 종료됨");
+    	console.log("웹소켓 연결이 종료됨");
     };
 });
 
