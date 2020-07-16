@@ -1,8 +1,11 @@
 package kr.or.bit3004.board;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
-import kr.or.bit3004.kanban.KanbanUpload;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -118,6 +120,7 @@ public class BoardServiceImpl implements BoardService{
 				
 				boardUpload.setOriginFileName(originFileName);
 				boardUpload.setFileName(fileName); 
+				boardUpload.setFilePath(filePath);
 				boardUpload.setFileSize(multiFile.getSize());
 				boardUpload.setAllBoardListNo(allBoardListNo);
 				boardUpload.setBoardNo(boardNo);
@@ -129,6 +132,12 @@ public class BoardServiceImpl implements BoardService{
 			} // for end
 		} // if end		
 		return fileNames;
+	}
+	
+	//파일 다운로드
+	@Override
+	public List<BoardUpload> selectBoardDownloadFile(int boardNo){
+		return dao.selectBoardDownloadFile(boardNo);
 	}
 	
 	//게시판 수정하기

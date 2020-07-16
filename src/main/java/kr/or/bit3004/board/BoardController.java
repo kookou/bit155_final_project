@@ -40,6 +40,7 @@ public class BoardController {
 		model.addAttribute("teamNo", teamNo);
 		//model.addAttribute("boardNo", boardNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
+		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
 		//model.addAttribute("refer",refer);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
@@ -59,7 +60,7 @@ public class BoardController {
 		return "board/insert";
 	}
 	
-	//게시판 글쓰기
+	//게시판 글쓰기, 업로드
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoardService(Board board , int teamNo , MultipartHttpServletRequest request){
 		System.out.println("controller");

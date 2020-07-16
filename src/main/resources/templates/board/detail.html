@@ -31,6 +31,12 @@
    .comment-content {
        margin-left: 35px;
    }
+   .popover{
+	   /* height: 30px; */
+	   max-height: 1000px;
+	   /* width: 100px; */
+	   max-width: 1000px
+   }
 </style>
 </head>
 
@@ -81,7 +87,8 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead" id="summernote"></p>
+                                                	<a href="#" id="downLoadBtn" class="btn" style="float:right;"><i class="far fa-folder" style="cursor: pointer;"></i></a>
+                                                    <p class="lead" id="summernote" style="clear:both"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
@@ -120,6 +127,10 @@
 	            </div>
 	        </div>
 	    </div>
+	</div>
+	
+	<div style="display:none;" id="download_list" th:each="boardFile:${selectBoardDownloadFile}">
+		<a href="${boardFile.filePath}" download th:text="${boardFile.originFileName}"></a>
 	</div>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
@@ -318,6 +329,17 @@
 	   		$('#editBtn').show();
 	   		$('#deleteBtn').show();
 	   	}
+	   	
+	   	//다운로드 창
+	   	$("#downLoadBtn").popover({
+		/*  title: "Notifiche",*/
+			html: true,
+			sanitize: false,
+			placement: "bottom",
+			content: function() {
+			  return $("#download_list").html();
+			}
+		});
     </script>
 </body>
 </html>
