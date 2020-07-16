@@ -53,7 +53,8 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
-
+var startListIDX = "";
+var endListIDX = "";
 
 
 
@@ -67,11 +68,50 @@ function addCardFileCountTag(parent, fileCount){
 
 
  $('#kanban').sortable({ // 상위요소
-// 	filter: ".kanban-list-add-header", // 이거 소용 없고 (버튼 뒤로 드래그 가능해짐)
 	 items: ".kanban-list-wrapper",
      itemOrientation: "horizontal",
      handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
-     moveItemOnDrop: true
+     moveItemOnDrop: true,
+     
+     start( event, ui ){
+    	 console.log("start");
+    	 console.log(ui.item);
+
+    	 startListIDX = ui.item.index();
+    	 console.log(startListIDX);
+     },
+     stop( event, ui ){
+    	 console.log("stop");
+    	 console.log(ui.item);
+    	 
+    	 endListIDX = ui.item.index();
+    	 console.log(endListIDX);
+    	 currentListNo = ui.item.children().data('listno');
+    	 console.log(currentListNo);
+    	 
+    	 if(!(startListIDX == endListIDX)){
+    		
+    		 $.ajax({
+    				url: "resortKanbanList.ajax",
+    				data: {
+    						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+    						"kanbanListNo": $.trim(currentListNo),
+    						"startListIDX": $.trim(startListIDX),
+    						"endListIDX": $.trim(endListIDX)
+    						},
+    		        dataType: "json",
+    		        
+    				success: function(resData) {
+    					console.log("resortKanbanList 완료");
+    					console.log(resData);
+
+
+    				}
+    		 });
+    	 }
+     }
+     
+     //( start > activate > over > sort(움직이는 동안 계속 호출) > change > sort(움직이는 동안 계속 호출) > beforeStop > update > deactivate > stop )
  });
 
 

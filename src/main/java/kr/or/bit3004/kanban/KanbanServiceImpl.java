@@ -254,4 +254,13 @@ public class KanbanServiceImpl implements KanbanService {
 		return fileList;
 	}
 
+
+	@Override
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("ServiceImpl resortKanbanList");
+		dao.updateKanbanListIndex(kanbanListNo, endListIDX);
+		dao.resortKanbanListIndex(kanbanListNo, endListIDX);
+		
+	}
+
 }

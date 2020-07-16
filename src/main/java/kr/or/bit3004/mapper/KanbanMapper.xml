@@ -15,7 +15,6 @@
 						#{allBoardListNo}, 
 						#{id}
 						)
-		ORDER BY KANBAN_LIST_INDEX
 		;
 	</insert>
 	
@@ -27,7 +26,10 @@
 	</update>
 	
    	<select id="kanbanList" parameterType="kr.or.bit3004.kanban.KanbanList">
-	 select * from kanban_list where kanban_list_no = #{kanbanListNo};
+	 select * from kanban_list 
+	 where kanban_list_no = #{kanbanListNo}
+	 ORDER BY KANBAN_LIST_INDEX
+	 ;
 	</select>
 	
 	<select id="kanbanCardList" resultMap="selectCardList">
@@ -185,5 +187,18 @@
 		FROM BOARD_FILE
 		WHERE FILE_NO = #{fileNo}
 	</delete>
+	
+	<update id="updateKanbanListIndex">
+		UPDATE KANBAN_LIST
+		SET KANBAN_LIST_INDEX = #{endListIDX}
+		WHERE KANBAN_LIST_NO = #{kanbanListNo}	
+	</update>
+	
+	<update id="resortKanbanListIndex">	
+		UPDATE KANBAN_LIST
+		SET KANBAN_LIST_INDEX = KANBAN_LIST_INDEX -1
+		WHERE KANBAN_LIST_INDEX <= #{endListIDX} 
+			AND `KANBAN_LIST_NO` != #{kanbanListNo}
+	</update>
 	
 </mapper>
