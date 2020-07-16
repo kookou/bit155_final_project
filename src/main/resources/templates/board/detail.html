@@ -87,7 +87,10 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                	<a href="#" id="downLoadBtn" class="btn" style="float:right;"><i class="far fa-folder" style="cursor: pointer;"></i></a>
+                                                	<a href="javascript:void(0);" id="downLoadBtn" class="btn" style="float:right;" th:if="${#lists.size(selectBoardDownloadFile) > 0}">
+                                                		<i class="far fa-folder" style="cursor: pointer;"></i>
+                                                		<span th:text="${#lists.size(selectBoardDownloadFile)}"></span>
+                                                	</a>
                                                     <p class="lead" id="summernote" style="clear:both"></p>
                                                 </div>
                                                 <hr class="my-4">
@@ -146,7 +149,10 @@
 			var currUser = '[[${session.currentUser.id}]]';
 	    	var id = '[[${selectBoard.id}]]';
 	    	var boardContent = '[[${selectBoard.content}]]';
+	    	var fileName = '[[${selectBoardDownloadFile}]]';
 		/*]]*/
+		
+		console.log(fileName);
 		
 		boardContent = boardContent.replace(/&lt;/gi, "<");
 		boardContent = boardContent.replace(/&gt;/gi, ">");
@@ -336,7 +342,7 @@
 	   	
 	   	//다운로드 창
 	   	$("#downLoadBtn").popover({
-		/*  title: "Notifiche",*/
+		    title: "Upload File",
 			html: true,
 			sanitize: false,
 			placement: "bottom",
@@ -350,6 +356,8 @@
 	   		console.log($(this).next().val());
 	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
+	   	
+	   	//업로드한 파일이 없으면 폴더 아이콘 없애기
     </script>
 </body>
 </html>
