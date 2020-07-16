@@ -26,6 +26,8 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	@Override
 	public int insertListTitle(KanbanList kanbanlist, Principal principal) {
+		System.out.println(kanbanlist);
+		
 		int newKanbanListNo = 0;
 		kanbanlist.setId(principal.getName());
 		

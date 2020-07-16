@@ -123,6 +123,7 @@ ALTER TABLE `KANBAN_CARD` modify `CARD_NO` INT auto_increment;
 -- 칸반보드리스트
 CREATE TABLE `KANBAN_LIST` (
 	`KANBAN_LIST_NO`    INT          NOT NULL, -- 칸반리스트 식별번호
+    `KANBAN_LIST_INDEX` INT			 NOT NULL, -- 칸반리스트 인덱스
 	`LIST_TITLE`        VARCHAR(100) NOT NULL, -- 칸반리스트 이름
 	`ALL_BOARD_LIST_NO` INT          NULL,     -- 게시판식별번호
 	`ID`                VARCHAR(50)  NULL      -- 아이디

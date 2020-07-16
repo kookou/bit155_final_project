@@ -160,26 +160,25 @@ $(document).on('click', '.kanban-addlistCancle', function(){
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
     let listName = $(this).parent().find('textarea').val();
-//	console.log(listName);
 		
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
     let titleInputBox = $(this).siblings('div').find('textarea');
     let new1 = $(this).parent();
-    //    var new1 = $(this).parent().parent().children();
     let addlist = $(this).parents('.kanban-list-wrapper').next();
-    //    var addlist = $(this).parent().parent().parent().next()
     let txtIpTrIconAddBtn = $(this).parent().children();
+    let newKanbanList = $(this).parents().find('.kanban-list-wrapper').last();
+    
+    let kanbanListIndex = newKanbanList.index(); //추가된 리스트 index
+    
 
 	if(listName == "") {
         alert('list title을 입력하세요.');        
-        titleInputBox.focus(); //input on focus
-//		$(this).parent().children().find('input').focus();        
+        titleInputBox.focus(); //input on focus       
 		return;
     }
 
 	txtIpTrIconAddBtn.remove();
-//  $(this).parent().parent().children().children().remove()
     
     new1.append("<div class='kanban-list-header'id='listheader'>"
 	    		+"<h4 class='kanban-list-title'>"+listName+"</h4>"
@@ -192,7 +191,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	    		 });
     
 
-    kanbanListContent.attr('data-title', listName);    
+    kanbanListContent.attr('data-title', listName);			//속성에 listName추가하기
+	kanbanListContent.attr('data-listindex', kanbanListIndex);    //속성에 index 추가하기
     
     new1.append(addcardbtn);
     var trash = $(this).prev();
@@ -205,13 +205,14 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 		url: "InsertKanbanList.ajax",
 		data: {
 				"listTitle": $.trim(listName),
+				"kanbanListIndex": $.trim(kanbanListIndex),
 				"allBoardListNo": $.trim(allBoardListNo)
 				},
         dataType: "text",
 		success: function(resData) {
 			console.log("list insert 완료");
+						
 			kanbanListContent.attr('data-listno', resData);
-			console.log(resData)
 		}
 	});
 	
