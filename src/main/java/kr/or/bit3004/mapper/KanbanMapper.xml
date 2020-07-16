@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="kanbanCardList" resultMap="selectCardList">
-		select * from kanban_card;
+		select * from kanban_card order by card_index;
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectCardList">
