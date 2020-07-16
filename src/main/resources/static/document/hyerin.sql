@@ -134,3 +134,15 @@ update `group_team` gt
    set gt.`group_no` = 3
  where `team_no` = 1
    and g.id = 'a@a.aa';
+   
+select *
+  from `team_member`
+ where team_no =1
+   and id='hrin@3004.com';
+   
+
+select * 
+  from timeline t
+  join `user` u
+    on t.id = u.id
+ where team_no = 1;
