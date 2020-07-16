@@ -52,11 +52,8 @@ BEGIN
 END $$
 DELIMITER ;
 
-
 -- 파일 등록시 칸반카드 테이블에 파일 갯수 자동 증가시키기
-
 DELIMITER $$
-
 CREATE TRIGGER `CARD_FILE_COUNT_TRIGGER`
 AFTER INSERT ON `board_file`
 FOR EACH ROW 
@@ -67,16 +64,10 @@ BEGIN
       WHERE `CARD_NO` = NEW.`CARD_NO`;
    END IF;
 END $$
-
 DELIMITER ;
 
-
-
-
 -- 댓글 삭제시 칸반카드 테이블에 댓글 갯수 자동 감소시키기
-
 DELIMITER $$
-
 CREATE TRIGGER `CARD_COMMENT_DELETE_COUNT_TRIGGER`
 AFTER delete ON `board_comment`
 FOR EACH ROW 
@@ -87,14 +78,10 @@ BEGIN
       WHERE `CARD_NO` = old.`CARD_NO`;
    END IF;
 END $$
-
 DELIMITER ;
 
-
 -- 파일 삭제시 칸반카드 테이블에 파일 갯수 자동 감소시키기
-
 DELIMITER $$
-
 CREATE TRIGGER `CARD_FILE_DELETE_COUNT_TRIGGER`
 AFTER delete ON `board_file`
 FOR EACH ROW 
@@ -105,9 +92,21 @@ BEGIN
       WHERE `CARD_NO` = old.`CARD_NO`;
    END IF;
 END $$
-
 DELIMITER ;
 
+
+-- 글 등록시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `INSERT_TIMELINE_TRIGGER`
+AFTER INSERT ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `GROUP` 
+	SET 
+	`GROUP_NAME` = 'Personal',  
+	`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
 
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

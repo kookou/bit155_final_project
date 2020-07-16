@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.bit3004.dao.TimelineDao">
 	<select id="getTimeline" resultType="kr.or.bit3004.timeline.Timeline">
-		select `timeline_no`, `action`, `field`, `team_no`, `id`, `dml_no` 
+		select `timeline_no`, `COLUMN_NAME`, `COLUMN_NO`, `team_no`, `id`, `dml_no` 
 		  from `timeline`
 		 where `team_no` = #{teamNo}
 	</select>
