@@ -53,7 +53,8 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
-
+var startListIDX = "";
+var endListIDX = "";
 
 
 
@@ -65,17 +66,57 @@ function addCardFileCountTag(parent, fileCount){
 		 }
  });
 
- 
+
  $('#kanban').sortable({ // 상위요소
-     filter: ".kanban-list-wrapper",
+	 items: ".kanban-list-wrapper",
      itemOrientation: "horizontal",
-//     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-     moveItemOnDrop: true
+     handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+     moveItemOnDrop: true,
+     
+     start( event, ui ){
+    	 console.log("start");
+    	 console.log(ui.item);
+
+    	 startListIDX = ui.item.index();
+    	 console.log(startListIDX);
+     },
+     stop( event, ui ){
+    	 console.log("stop");
+    	 console.log(ui.item);
+    	 
+    	 endListIDX = ui.item.index();
+    	 console.log(endListIDX);
+    	 currentListNo = ui.item.children().data('listno');
+    	 console.log(currentListNo);
+    	 
+    	 if(!(startListIDX == endListIDX)){
+    		 
+    		
+    		 $.ajax({
+    				url: "resortKanbanList.ajax",
+    				data: {
+    						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+    						"kanbanListNo": $.trim(currentListNo),
+    						"startListIDX": $.trim(startListIDX),
+    						"endListIDX": $.trim(endListIDX)
+    						},
+    		        dataType: "json",
+    		        
+    				success: function(resData) {
+    					console.log("resortKanbanList 완료");
+    					console.log(resData);
 
 
+    				}
+    		 });
+    	 }
+     }
+     
+     //( start > activate > over > sort(움직이는 동안 계속 호출) > change > sort(움직이는 동안 계속 호출) > beforeStop > update > deactivate > stop )
  });
 
-	
+
+// $( ".kanban-list-add-wrapper" ).sortable( "disable" );
 	
 
 	 
@@ -134,12 +175,12 @@ $(document).on('click', '#addlist', function() {
 
     
     $('#kanban').sortable({ // 상위요소
-        filter: ".kanban-list-wrapper",
-        itemOrientation: "horizontal",
-//        handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-        moveItemOnDrop: true
-    });
-    
+//     	filter: ".kanban-list-add-header", // 이거 소용 없고 (버튼 뒤로 드래그 가능해짐)
+    	 items: ".kanban-list-wrapper",
+         itemOrientation: "horizontal",
+         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+         moveItemOnDrop: true
+     });
     
 });
 
@@ -160,26 +201,25 @@ $(document).on('click', '.kanban-addlistCancle', function(){
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
     let listName = $(this).parent().find('textarea').val();
-//	console.log(listName);
 		
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
     let titleInputBox = $(this).siblings('div').find('textarea');
     let new1 = $(this).parent();
-    //    var new1 = $(this).parent().parent().children();
     let addlist = $(this).parents('.kanban-list-wrapper').next();
-    //    var addlist = $(this).parent().parent().parent().next()
     let txtIpTrIconAddBtn = $(this).parent().children();
+    let newKanbanList = $(this).parents().find('.kanban-list-wrapper').last();
+    
+    let kanbanListIndex = newKanbanList.index(); //추가된 리스트 index
+    
 
 	if(listName == "") {
         alert('list title을 입력하세요.');        
-        titleInputBox.focus(); //input on focus
-//		$(this).parent().children().find('input').focus();        
+        titleInputBox.focus(); //input on focus       
 		return;
     }
 
 	txtIpTrIconAddBtn.remove();
-//  $(this).parent().parent().children().children().remove()
     
     new1.append("<div class='kanban-list-header'id='listheader'>"
 	    		+"<h4 class='kanban-list-title'>"+listName+"</h4>"
@@ -192,7 +232,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	    		 });
     
 
-    kanbanListContent.attr('data-title', listName);    
+    kanbanListContent.attr('data-title', listName);			//속성에 listName추가하기
+	kanbanListContent.attr('data-listindex', kanbanListIndex);    //속성에 index 추가하기
     
     new1.append(addcardbtn);
     var trash = $(this).prev();
@@ -205,13 +246,14 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 		url: "InsertKanbanList.ajax",
 		data: {
 				"listTitle": $.trim(listName),
+				"kanbanListIndex": $.trim(kanbanListIndex),
 				"allBoardListNo": $.trim(allBoardListNo)
 				},
         dataType: "text",
 		success: function(resData) {
 			console.log("list insert 완료");
+						
 			kanbanListContent.attr('data-listno', resData);
-			console.log(resData)
 		}
 	});
 	
