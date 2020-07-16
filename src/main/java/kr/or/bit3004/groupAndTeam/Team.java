@@ -11,5 +11,4 @@ public class Team {
 	private int teamNo;
 	private String teamName;
 	private String backgroundColor;
-	private int groupNo;
 }
