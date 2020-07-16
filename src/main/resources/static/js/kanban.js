@@ -68,52 +68,50 @@ var endListIDX = "";
 
 
  $('#kanban').sortable({ // 상위요소
-	 items: ".kanban-list-wrapper",
-     itemOrientation: "horizontal",
-     handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
-     moveItemOnDrop: true,
-     
-     start( event, ui ){
-    	 console.log("start");
-    	 console.log(ui.item);
-
-    	 startListIDX = ui.item.index();
-    	 console.log(startListIDX);
-     },
-     stop( event, ui ){
-    	 console.log("stop");
-    	 console.log(ui.item);
-    	 
-    	 endListIDX = ui.item.index();
-    	 console.log(endListIDX);
-    	 currentListNo = ui.item.children().data('listno');
-    	 console.log(currentListNo);
-    	 
-    	 if(!(startListIDX == endListIDX)){
-    		 
-    		
-    		 $.ajax({
-    				url: "resortKanbanList.ajax",
-    				data: {
-    						"allBoardListNo": $.trim($('#allBoardListNo').val()),
-    						"kanbanListNo": $.trim(currentListNo),
-    						"startListIDX": $.trim(startListIDX),
-    						"endListIDX": $.trim(endListIDX)
-    						},
-    		        dataType: "json",
-    		        
-    				success: function(resData) {
-    					console.log("resortKanbanList 완료");
-    					console.log(resData);
-
-
-    				}
-    		 });
-    	 }
-     }
-     
-     //( start > activate > over > sort(움직이는 동안 계속 호출) > change > sort(움직이는 동안 계속 호출) > beforeStop > update > deactivate > stop )
- });
+   	 items: ".kanban-list-wrapper",
+        itemOrientation: "horizontal",
+        handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+        moveItemOnDrop: true,
+        
+        start( event, ui ){
+       	 console.log("start");
+       	 startListIDX = ui.item.index();
+        },
+        deactivate( event, ui ){
+	       	 console.log("deactivate");
+	       	 endListIDX = ui.item.index();
+	       	 currentListNo = ui.item.children().data('listno');
+	       	 
+	       	 if(!(startListIDX == endListIDX)){
+	       		 
+	       		
+	       		 $.ajax({
+	       				url: "resortKanbanList.ajax",
+	       				data: {
+	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+	       						"kanbanListNo": $.trim(currentListNo),
+	       						"startListIDX": $.trim(startListIDX),
+	       						"endListIDX": $.trim(endListIDX)
+	       						},
+	       				success: function() {
+			       					console.log("resortKanbanList 완료");
+	       						},
+	       				error: function(e){
+	       					console.log("ajax error");
+	       				}
+	       		 });
+	       	 }
+        },
+        stop( event, ui ){
+        	console.log("stop");
+        	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+        	
+        	$.each(kanbanListArr, function(index, item){
+        		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+        	});
+        }
+        
+    });
 
 
 // $( ".kanban-list-add-wrapper" ).sortable( "disable" );
@@ -174,13 +172,53 @@ $(document).on('click', '#addlist', function() {
 
 
     
+
     $('#kanban').sortable({ // 상위요소
-//     	filter: ".kanban-list-add-header", // 이거 소용 없고 (버튼 뒤로 드래그 가능해짐)
-    	 items: ".kanban-list-wrapper",
-         itemOrientation: "horizontal",
-         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
-         moveItemOnDrop: true
-     });
+   	 items: ".kanban-list-wrapper",
+        itemOrientation: "horizontal",
+        handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+        moveItemOnDrop: true,
+        
+        start( event, ui ){
+       	 console.log("start");
+       	 startListIDX = ui.item.index();
+        },
+        deactivate( event, ui ){
+	       	 console.log("deactivate");
+	       	 endListIDX = ui.item.index();
+	       	 currentListNo = ui.item.children().data('listno');
+	       	 
+	       	 if(!(startListIDX == endListIDX)){
+	       		 
+	       		
+	       		 $.ajax({
+	       				url: "resortKanbanList.ajax",
+	       				data: {
+	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+	       						"kanbanListNo": $.trim(currentListNo),
+	       						"startListIDX": $.trim(startListIDX),
+	       						"endListIDX": $.trim(endListIDX)
+	       						},
+	       		        dataType: "json",
+	       				success: function() {
+			       					console.log("resortKanbanList 완료");
+	       						},
+	       				error: function(e){
+	       					console.log("ajax error");
+	       				}
+	       		 });
+	       	 }
+        },
+        stop( event, ui ){
+        	console.log("stop");
+        	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+        	
+        	$.each(kanbanListArr, function(index, item){
+        		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+        	});
+        }
+        
+    });
     
 });
 
@@ -210,7 +248,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
     let txtIpTrIconAddBtn = $(this).parent().children();
     let newKanbanList = $(this).parents().find('.kanban-list-wrapper').last();
     
-    let kanbanListIndex = newKanbanList.index(); //추가된 리스트 index
+    //추가된 리스트 index >> 어차피 index는 sortable에서 가져오는데 이게 필요할까?
+    let kanbanListIndex = newKanbanList.index();
     
 
 	if(listName == "") {
