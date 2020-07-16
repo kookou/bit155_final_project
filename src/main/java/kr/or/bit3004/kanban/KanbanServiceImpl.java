@@ -49,10 +49,6 @@ public class KanbanServiceImpl implements KanbanService {
 	}
 	
 	
-	@Override
-	public List<Map> allKanbanList(int allBoardListNo){
-		return dao.allKanbanList(allBoardListNo);
-	}
 
 	
 	@Override
@@ -84,9 +80,10 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	
 	@Override
-	public int insertCardTitle(String title , int kanbanListNo) {
+	public int insertCardTitle(String title , int cardIndex, int kanbanListNo) {
 		int newcardNo;
-		dao.insertCardTitle(title, kanbanListNo);
+		dao.insertCardTitle(title, cardIndex, kanbanListNo);
+		
 		newcardNo = dao.getANewCardNo();
 		System.out.println(newcardNo);
 		
@@ -132,7 +129,7 @@ public class KanbanServiceImpl implements KanbanService {
 
 
 	@Override
-	public List<String> kanbanFilesUpload(MultipartHttpServletRequest request) {
+	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request) {
 		System.out.println("= kanbanFilesUpload Impl =");
 		
 		List<MultipartFile> fileList = request.getFiles("kanbanFiles");
@@ -141,9 +138,8 @@ public class KanbanServiceImpl implements KanbanService {
 		int teamNo = Integer.parseInt(request.getParameter("teamNo"));
 		System.out.println(teamNo);
 		
-		List<String> fileNames = new ArrayList<String>(); //		ajax return용 업로드파일목록
+		List<KanbanUpload> returnFileList = new ArrayList<KanbanUpload>(); //		ajax return용 업로드파일목록
 		
-//		System.out.println("fileListSize : "+fileList.size());
 		
 		if(fileList != null && fileList.size() >0) {
 			for(MultipartFile multiFile : fileList) {
@@ -151,7 +147,6 @@ public class KanbanServiceImpl implements KanbanService {
 				
 				UUID uuid = UUID.randomUUID();				
 				String fileName = uuid.toString() + originFileName;
-//				System.out.println(fileName);
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
@@ -201,21 +196,19 @@ public class KanbanServiceImpl implements KanbanService {
 				kanbanUpload.setOriginFileName(originFileName);
 				kanbanUpload.setFileName(fileName); 
 				kanbanUpload.setFileSize(multiFile.getSize());
+				kanbanUpload.setFilePath(filePath);
 				kanbanUpload.setAllBoardListNo(allBoardListNo);
 				kanbanUpload.setCardNo(cardNo);
-				
-				
 				
 //				여기에 dao 불러서 file을 DB에 추가하는 내용 들어가야함
 				dao.insertKanbanUploadFile(kanbanUpload);
 				
-				 //파일명 별도관리 (ajax return). 
-				//근데 이름만 보낼게 아니라 파일 객체를 리스트로 보내야할 것 같은데..
-				fileNames.add(originFileName);
+				//파일 객체 리스트를 보내도록 수정
+				returnFileList.add(kanbanUpload);
 			
 			} // for end
 		} // if end		
-		return fileNames;
+		return returnFileList;
 	}
 	
 	public void deleteCardReply(int commentNo) {
@@ -233,6 +226,7 @@ public class KanbanServiceImpl implements KanbanService {
 	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo) {
 		List<KanbanUpload> fileList = null;
 		
+		//파일 이름만 필요한데 파일 객체 정보가 통째로 필요할까..?그건 좀 고민해보자
 		KanbanUpload selectedFile = dao.getAKanbanCardFile(fileNo);
 		String filePath = System.getProperty("user.dir") 
 						+ "\\src\\main\\resources\\static\\cloud\\" + teamNo

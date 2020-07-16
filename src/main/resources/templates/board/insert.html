@@ -117,7 +117,7 @@
  		//제목안쓰면 게시글 못쓰게 막기
  		$('#submitBtn').click(function(){
  			if($('#title').val() == ""){
- 				swal('제목을 입력해주세요');
+ 				Swal.fire('', '제목을 입력하세요.', 'warning');
  				return false;
  			}
  		});
