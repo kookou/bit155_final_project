@@ -254,20 +254,27 @@ public class KanbanServiceImpl implements KanbanService {
 		fileList = dao.getKanbanCardFiles(cardNo);
 		return fileList;
 	}
+	
 	//드래그앤 드랍 카드 업데이트 (스타트 리스트)
-//	@Override
-//	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo) {
-//		for(int i = 0; i <= cardNo.length; i++) {
-//			dao.dragCardUpdateCardno(cardNo[i], kanbanListNo);
-//		}
-//	}
-//	@Override
-//	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo) {
-//		for(int i = 0; i <= cardIndex.length; i++) {
-//			dao.dragCardUpdateIndex(cardIndex[i], kanbanListNo);
-//		}
-//	}
-//	
+	@Override
+	public void dragCard(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		Map<Integer, Integer> cardnomap = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> cardindexmap = new HashMap<Integer, Integer>();
+		for(int i = 0 ; i < cardNo.length; i++) {
+			cardnomap.put(i, cardNo[i]);
+			System.out.println(cardnomap.get(i));
+		}
+		for(int i = 0; i < cardIndex.length; i ++ ) {
+			cardindexmap.put(i, cardIndex[i]);
+			
+		}
+		for(int i = 0; i < cardNo.length; i ++) {
+			dao.dragCardUpdate(cardnomap.get(i), cardindexmap.get(i), kanbanListNo);
+			System.out.println(cardnomap.get(i));
+			System.out.println(cardnomap.get(i));
+		}
+		
+	}
 
 	@Override
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
@@ -294,25 +301,6 @@ public class KanbanServiceImpl implements KanbanService {
 //		dao.resortKanbanListIndex(kanbanListNo, endListIDX);
 		
 	}
-	
-	@Override
-	public void drag(int[]cardNo , int[] cardIndex, int kanbanListNo) {
-		Map<Object, Object> cardnomap = new HashMap<Object, Object>();
-		Map<Object, Object> cardindexmap = new HashMap<Object, Object>();
-		for(int i = 0 ; i < cardNo.length; i++) {
-			cardnomap.put(i, cardNo[i]);
-			System.out.println(cardnomap.get(i));
-		}
-		for(int i = 0; i < cardIndex.length; i ++ ) {
-			cardindexmap.put(i, cardIndex[i]);
-			
-		}
-		for(int i = 0; i < cardNo.length; i ++) {
-			dao.dragCardUpdate((int)cardnomap.get(i), (int)cardindexmap.get(i), kanbanListNo);
-			System.out.println(cardnomap.get(i));
-			System.out.println(cardnomap.get(i));
-		}
-		
-	}
+
 
 }

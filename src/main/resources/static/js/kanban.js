@@ -77,8 +77,6 @@ var endListIDX = "";
 		  console.log("드롭 된 카드 전체");
 	      console.log(endcard)
 		  
-
-		  
 		   $(endcard).each(function(index,item){
 			   console.log($(item).index())
 			   newcardarrayindex1.push($(item).index());
@@ -101,7 +99,7 @@ var endListIDX = "";
 	     				},
 	     				dataType:'text',
 	     		success: function(resData) {
-	     			console.log("list update 완료");
+	     			console.log("recevie list update 완료");
 	     		}
 	     	});
 		 },
@@ -141,7 +139,7 @@ var endListIDX = "";
 	     				},
 	     				dataType:'text',
 	     		success: function(resData) {
-	     			console.log("list update 완료");
+	     			console.log("stop list update 완료");
 	     		
 	     		}
 	     	});
@@ -534,11 +532,11 @@ $(document).on('click', "#addcard",function(){
 	    console.log(kanbanCardNo.index());
 	    
         $(input).blur(function() {
-            if($(input).val() == "") {
-                alert('Card title을 입력하세요');
-                $(input).focus();
-                return;
-            }
+//            if($(input).val() == "") {
+//                alert('Card title을 입력하세요');
+//                $(input).focus();
+//                return;
+//            }
             var cardtitle = $(input).val();
             $(this).parent().text($(input).val());
             console.log("card")
@@ -561,7 +559,8 @@ $(document).on('click', "#addcard",function(){
     				 console.log(resData);
     			}
     		}); 
-        });   
+        });
+        
 });
 
 

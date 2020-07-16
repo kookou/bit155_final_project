@@ -72,8 +72,6 @@ public interface KanbanDao {
 	//delete a Kanban Card File
 	public void deleteKanbanCardFile(int fileNo);
 	
-	public void dragCardUpdateCardno(int cardNo , int kanbanListNo);
-	public void dragCardUpdateIndex(int cardIndex , int kanbanListNo);
 	public void dragCardUpdate(int cardNo , int cardIndex, int kanbanListNo);
 
 }

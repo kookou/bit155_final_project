@@ -229,10 +229,11 @@
 
                                         <div class="divForDragNDrop">
 
+
                                             <div class="kanban-card-list btn-card-hover"
                                                 th:each="card : ${kanbancardlist}"
                                                 th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}"
-                                                th:attr="data-cardno=${card.cardNo} , data-cardindex=${card.cardIndex}">
+                                                th:attr="data-cardno=${card.cardNo}">
                                                 <span class='icon-pencil active-card-icon'
                                                     style='position: relative;'></span>
                                                 <div class="kanban-card-element" data-toggle="modal"

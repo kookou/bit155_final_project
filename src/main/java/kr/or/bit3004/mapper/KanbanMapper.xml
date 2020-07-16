@@ -31,7 +31,7 @@
 	</select>
 	
 	<select id="kanbanCardList" resultType="kr.or.bit3004.kanban.KanbanCard">
-		select * from kanban_card order by card_index desc
+		select * from kanban_card order by card_index
 	</select>
 	
 	<select id="kanbanListJoinCard" resultMap="selectList">
@@ -182,19 +182,6 @@
 		set card_index = #{cardIndex}, kanban_list_no = #{kanbanListNo} 
 		where card_no = #{cardNo} 
 	</update>
-
-<!-- 	<update id="dragCardUpdateIndex" parameterType="kr.or.bit3004.kanban.KanbanCard">
-		update KANBAN_card
-		set kanban_list_no = #{kanbanListNo} 
-		where card_no = #{cardNo} 
-	</update>
-	
-	<update id="dragCardUpdateCardno" parameterType="kr.or.bit3004.kanban.KanbanCard">
-		update KANBAN_card
-		set card_index = #{cardIndex}
-		where card_no = #{cardNo} 
-	</update> -->
-	
 
 	<update id="updateKanbanListIndex">
 		UPDATE KANBAN_LIST

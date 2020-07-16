@@ -55,5 +55,5 @@ public interface KanbanService {
 //	public void dragCardUpdateCardno(int[] cardNo , int[] cardIndex,int kanbanListNo);
 //	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo);
 //	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo);
-	public void drag(int[]cardNo , int[] cardindex, int kanbanListNo);
+	public void dragCard(int[]cardNo , int[] cardindex, int kanbanListNo);
 }
