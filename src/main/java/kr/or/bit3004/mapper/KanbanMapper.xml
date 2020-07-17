@@ -15,9 +15,10 @@
 						#{allBoardListNo}, 
 						#{id}
 						)
+
 	</insert>
 	
-	<update id="updateKanbanListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
+	<update id="updateKanbanListTitle">
 		update KANBAN_LIST 
 		set LIST_TITLE = #{listTitle} , 
 			id = #{id} 
@@ -29,20 +30,10 @@
 	 where kanban_list_no = #{kanbanListNo}
 	</select>
 	
-	<select id="kanbanCardList" resultMap="selectCardList">
+	<select id="kanbanCardList" resultType="kr.or.bit3004.kanban.KanbanCard">
 		select * from kanban_card
 		ORDER BY CARD_INDEX
 	</select>
-	
-	<resultMap type="java.util.HashMap" id="selectCardList">
-		<result column="card_no" property="cardNo" />
-		<result column="title" property="cardTitle" />
-		<result column="content" property="cardContent" />
-		<result column="file_count" property="fileCount" />
-		<result column="comment_count" property="commentCount" />
-		<result column="kanban_list_no" property="kanbanListNo" />
-		<result column="card_index" property="cardIndex"/>
-	</resultMap>
 	
 	<select id="kanbanListJoinCard" resultMap="selectList">
 	SELECT l.list_title,l.all_board_list_no,l.kanban_list_no,l.id , c.card_no, c.title , c.CONTENT , c.WRITE_DATE , c.FILE_COUNT , c.COMMENT_COUNT , c.CARD_INDEX
@@ -187,6 +178,12 @@
 		WHERE FILE_NO = #{fileNo}
 	</delete>
 	
+	<update id="dragCardUpdate" parameterType="kr.or.bit3004.kanban.KanbanCard">
+		update KANBAN_card
+		set card_index = #{cardIndex}, kanban_list_no = #{kanbanListNo} 
+		where card_no = #{cardNo} 
+	</update>
+
 	<update id="updateKanbanListIndex">
 		UPDATE KANBAN_LIST
 		SET KANBAN_LIST_INDEX = #{endListIDX}
@@ -272,5 +269,5 @@
 	</update>
 
 	 
-	
+
 </mapper>

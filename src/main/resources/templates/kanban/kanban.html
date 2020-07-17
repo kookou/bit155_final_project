@@ -229,7 +229,7 @@
 						<!-- 칸반 list 시작 -->
 						<!-- ============================================================== -->
 						
-						<div class="kanban-list-wrapper" draggable="true"
+						<div class="kanban-list-wrapper" 
 							th:each="kanbanlist: ${kanbanlist}">
 							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}, data-listindex=${kanbanlist.kanbanListIndex}" >
 								<div class="kanban-card" ondrop="drop(event, this)"
@@ -244,14 +244,14 @@
 									<div class="divForDragNDrop">
 
 
-										<div class="kanban-card-list btn-card-hover" draggable="true"
+										<div class="kanban-card-list btn-card-hover"
 											th:each="card : ${kanbancardlist}"
 											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo} , data-cardindex=${card.cardIndex}">
 											<span class='icon-pencil active-card-icon'
 												style='position: relative;'></span>
 											<div class="kanban-card-element" data-toggle="modal"
 												data-target="#card-content" >
-												<span class="kanban-card-title" th:text="${card.cardTitle}"></span>
+												<span class="kanban-card-title" th:text="${card.title}"></span>
 												<div class="kanban-card-badges">
 													<div th:classappend = "${card.commentCount > 0} ? 'kanban-card-badge' : ''" title="comments">
 														<span th:if="${card.commentCount > 0}" class="icon-bubble badge-icon"></span> <span
