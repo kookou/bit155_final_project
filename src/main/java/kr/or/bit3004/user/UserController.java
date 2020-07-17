@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,17 +33,17 @@ public class UserController {
 	}
 	
 //	//이거 안먹음 
-//	@RequestMapping("/login/oauth2/code/naver")
-//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session) {
-//		
-//		
-//		System.out.println("여기는 naver callback");
-//		OAuth2AccessToken oauthToken;
-//		oauthToken = customOAuth2Service.getAccessToken();
-//		System.out.println(oauthToken.getScopes());
-//		
-//		return "user/signIn";
-//	}
+	@RequestMapping("/login/oauth2/code/naver")
+	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session,  HttpServletRequest request) {
+		
+		
+		System.out.println("여기는 naver callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = customOAuth2Service.getAccessToken();
+		System.out.println(oauthToken.getScopes());
+		
+		return "user/signIn";
+	}
 	
 	
 	// 가입 폼
