@@ -93,6 +93,13 @@ public class KanbanAjaxController {
 		service.deleteKanbanCard(cardNo);
 	}
 	
+	@RequestMapping("resortKanbanCard.ajax")
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
+		System.out.println("Controller resortKanbanCard");
+		service.resortKanbanCard(allBoardListNo, kanbanCardNo, startListNo, endListNo, startCardIDX, endCardIDX);
+	}
+	
+	
 	@RequestMapping("CardReplySelect.ajax")
 	public List<KanbanComment> getKanbanCommentList(int cardNo){
 		return service.getKanbanCommentList(cardNo);		

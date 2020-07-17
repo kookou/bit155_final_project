@@ -81,7 +81,7 @@ public class BoardServiceImpl implements BoardService{
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
-				
+				System.out.println(path);
 				//폴더가 없을경우 폴더 생성하기
 				//왜 나는 폴더가 안 만들어지지?;;;;
 				if(!folder.exists()) {

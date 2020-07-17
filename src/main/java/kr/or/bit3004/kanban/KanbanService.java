@@ -40,6 +40,10 @@ public interface KanbanService {
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
 	
+	//resort Kanban Card
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX);
+
+	
 	//upload file to Kanban Card
 	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request);
 	

@@ -108,5 +108,5 @@ DELIMITER ;
 -- END $$
 -- DELIMITER ;
 
-트리거가 만들어졌는지 확인
+-- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

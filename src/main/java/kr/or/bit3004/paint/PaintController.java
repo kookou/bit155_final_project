@@ -26,14 +26,14 @@ public class PaintController {
 			System.out.println("로그인해야..");
 			
 			//return "redirect:/main"; 로그인구현하면 풀기!!!!!★★
-			return "paint/paint";
+			return "paint";
 		}
 		
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		
-		return "paint/paint";
+		return "paint";
 	}
 	
 }
