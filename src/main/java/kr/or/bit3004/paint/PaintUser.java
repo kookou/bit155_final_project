@@ -13,4 +13,5 @@ public class PaintUser {
 	private String nickname;
 	private WebSocketSession sessionInfo;
 	private String teamNo;
+	//paintUserInfo Map의 value값이 될 녀석들.... key는 teamNo
 }
