@@ -1,11 +1,8 @@
 package kr.or.bit3004.board;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +41,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void insertBoard(Board board) {
 		System.out.println("글쓰기임");
-//		dao.updateRefer(board);
+	    //dao.updateRefer(board);
 		int maxRefer = dao.getMaxRefer();
 		int refer = maxRefer + 1;
 		board.setRefer(refer);
@@ -112,8 +109,8 @@ public class BoardServiceImpl implements BoardService{
 							System.out.println("fs close error");
 							e.getMessage();
 						}
-					} // finally end					
-				} else{ // if end
+					}				
+				} else{
 					System.out.println("제목이 없거나 빈 파일입니다.");
 					continue;
 				}
@@ -125,12 +122,12 @@ public class BoardServiceImpl implements BoardService{
 				boardUpload.setAllBoardListNo(allBoardListNo);
 				boardUpload.setBoardNo(boardNo);
 				
-				//여기에 dao 불러서 file을 DB에 추가하는 내용 들어가야함
+				//dao 호출하여 DB에 저장하기
 				dao.insertBoardUploadFile(boardUpload);
 				fileNames.add(originFileName);
 			
-			} // for end
-		} // if end		
+			}
+		}
 		return fileNames;
 	}
 	
@@ -185,7 +182,6 @@ public class BoardServiceImpl implements BoardService{
 		board.setStep(step);
 		dao.insertReboard(board);
 	}
-	
 	
 }
 

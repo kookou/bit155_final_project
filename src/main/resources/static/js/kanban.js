@@ -36,10 +36,13 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 
 function addUploadFileTag(parent, file){
 	
+	let filePath = 'cloud/'+ $('#teamNo').val() + '/' + file.fileName;
+	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(file.originFileName);
 	parent.find('.card-modal-file-delete').last().attr('fileNo', file.fileNo);
-	parent.find('.card-modal-fileLink').last().attr('href', file.filePath);
+	parent.find('.card-modal-fileLink').last().attr('href', filePath);
+	parent.find('.card-modal-fileLink').last().attr('download', file.originFileName);
 }
 
 function addCardFileCountTag(parent, fileCount){
