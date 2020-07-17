@@ -300,14 +300,15 @@ ALTER TABLE `PLAN` modify `NO` INT auto_increment;
 -- 타임라인
 CREATE TABLE `TIMELINE` (
 	`TIMELINE_NO` INT          NOT NULL, -- 타임라인식별번호
-	`ACTION`      VARCHAR(100) NOT NULL, -- 액션
-	`FIELD`       VARCHAR(100) NULL,     -- 필드
+	`COLUMN_NAME` VARCHAR(100) NOT NULL, -- 해당테이블의 기본키 컬럼명
+	`COLUMN_NO`   INT          NOT NULL, -- 해당테이블의 식별번호
+    `OLD_HISTORY` VARCHAR(100) NULL,     -- 원래 내용
+    `HISTORY`     VARCHAR(100) NOT NULL, -- 작업내용
 	`TEAM_NO`     INT          NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)  NOT NULL, -- 아이디
 	`DML_NO`      INT          NOT NULL  -- 작업구분식별번호
 );
-alter table `TIMELINE` change `ACTION` `COLUMN_NAME` VARCHAR(100) NOT NULL;
-alter table `TIMELINE` change `FIELD` `COLUMN_NO` INT NOT NULL;
+
 -- 타임라인
 ALTER TABLE `TIMELINE`
 	ADD CONSTRAINT `PK_TIMELINE` -- 타임라인 기본키

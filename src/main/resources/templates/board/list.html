@@ -25,54 +25,51 @@
 <!-- datatablecss -->
 <link href="assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
- <script type="text/javascript">
-    var lang_kor = {
-           "decimal" : "",
-           "emptyTable" : "데이터가 없습니다.",
-           "info" : "_START_ - _END_ (전체 _TOTAL_ )",
-           "infoEmpty" : "0",
-           "infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
-           "infoPostFix" : "",
-           "thousands" : ",",
-           "lengthMenu" : "_MENU_개씩 보기",
-           "loadingRecords" : "로딩중...",
-           "processing" : "처리중...",
-           "search" : "검색 : ",
-           "zeroRecords" : "검색된 데이터가 없습니다.",
-           "paginate" : {
-               "first" : "첫 페이지",
-               "last" : "마지막 페이지",
-               "next" : "다음",
-               "previous" : "이전"
-           },
-           "aria" : {
-               "sortAscending" : " :  오름차순 정렬",
-               "sortDescending" : " :  내림차순 정렬"
-           }
-       }; 
+<script type="text/javascript">
+	var lang_kor = {
+		"decimal" : "",
+		"emptyTable" : "데이터가 없습니다.",
+		"info" : "_START_ - _END_ (전체 _TOTAL_ )",
+		"infoEmpty" : "0",
+		"infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
+		"infoPostFix" : "",
+		"thousands" : ",",
+		"lengthMenu" : "_MENU_개씩 보기",
+		"loadingRecords" : "로딩중...",
+		"processing" : "처리중...",
+		"search" : "검색 : ",
+		"zeroRecords" : "검색된 데이터가 없습니다.",
+		"paginate" : {
+		    "first" : "첫 페이지",
+		    "last" : "마지막 페이지",
+		    "next" : "다음",
+		    "previous" : "이전"
+		},
+		"aria" : {
+		    "sortAscending" : " :  오름차순 정렬",
+		    "sortDescending" : " :  내림차순 정렬"
+		}
+	}; 
 
-
-   	$(document).ready(function(){
-      $("#table").DataTable({
-        /*   "paging" : true,
-          "pagingType"   : "full_numbers",
-          "ordering" : true,
-          "info" : true,
-          "filter" : true,
-          scroll:false,
-         "lengthChange" : true,
-         // "scrollX":true 
-          "lengthMenu": [ 10, 20, 30, 40, 50 ],
-          "displayLength": 10,
-          "stateSave": true,*/
-           language: lang_kor 
-           
-      }); 
-      }); 
-      
-   </script> 
+	$(document).ready(function(){
+		$("#table").DataTable({
+		  /*   "paging" : true,
+		    "pagingType"   : "full_numbers",
+		    "ordering" : true,
+		    "info" : true,
+		    "filter" : true,
+		    scroll:false,
+		   "lengthChange" : true,
+		   // "scrollX":true 
+		    "lengthMenu": [ 10, 20, 30, 40, 50 ],
+		    "displayLength": 10,
+		    "stateSave": true,*/
+		     language: lang_kor 
+		           
+		}); 
+	}); 
+</script> 
 </head>
-
 <body>
  	<!-- <div class="preloader">
         <div class="lds-ripple">
@@ -157,29 +154,32 @@
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-		<!-- datatable -->
+	<!-- datatable -->
 	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-	
 	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<!-- apps -->
+	
 	<!-- apps -->
 	<script src="js/app-style-switcher.js"></script>
 	<script src="js/feather.min.js"></script>
 	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
 	<script src="js/sidebarmenu.js"></script>
+	
 	<!--Custom JavaScript -->
 	<script src="js/custom.min.js"></script>
 	<script src="js/kanban.js"></script>
 	<script src="js/groupAndTeam.js"></script>
 	<script src="js/aside.js"></script>
+	
 	<!--This page JavaScript -->
 	<script src="js/pages/dashboards/dashboard1.min.js"></script>
-    	<!-- datatable -->
+	
+   	<!-- datatable -->
 	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script> 
 	<script src="assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-	  <script src="assets/extra-libs/c3/d3.min.js"></script>
+  	<script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script>
-     <script src="assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
+    
 </body>
 </html>

@@ -9,10 +9,13 @@ import lombok.ToString;
 @ToString
 public class Timeline {
 	private int timelineNo;
-	private String action;
-	private String field;
+	private String columnName;
+	private String columnNo;
 	private int teamNo;
 	private String id;
 	private int dmlNo;
+	private String history;
 	private String dmlName;
+	private String nickname;
+	private String image;
 }
