@@ -85,7 +85,7 @@
      <th:block th:replace="common/addAllBoardModal"></th:block>
      <th:block th:replace="common/chat"></th:block>
      <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-   <div class="page-wrapper seo"> <!-- 여기임 !! 서영야 해결했어 ^^ -->
+   <div class="page-wrapper seo">
       
     <div class="jb_table">
       <div class="row">
@@ -175,7 +175,7 @@
               </div> -->
          	<div class="row">
                 <span class="cell">
-                  <img src="img/bucket1.png" class="pad fill" id="fill"  />
+                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('fill')" />
                 </span>
               </div>
               <div class="row">
@@ -240,21 +240,27 @@
 		};
 		$("canvas").on({
 			mousedown: function (e) {
-          	e.preventDefault();
+          	    e.preventDefault();
 		        isPress = true;
-              ctx.beginPath();
+                ctx.beginPath();
 				prevX = e.offsetX;
 				prevY = e.offsetY;
 				console.log("추주툴",chooseTool);
           		now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
+          		if(chooseTool=="fill"){
+          			console.log("이걸탔따");
+          			cvs.fillStyle=pos.color;
+          			cvs.fill();	
+          		
+          		}
             	//selectTool('circle');
           },
           mousemove: function (e) {
               var x = e.offsetX;
               var y = e.offsetY;
               if (isPress) {
-              	now.push({x, y});
-              	ctx.moveTo(prevX, prevY);
+              	  now.push({x, y});
+              	  ctx.moveTo(prevX, prevY);
                   ctx.lineTo(x, y);
                   ctx.stroke();
                   prevX = e.offsetX;
