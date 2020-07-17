@@ -289,7 +289,6 @@ public class KanbanServiceImpl implements KanbanService {
 			//업데이트
 			dao.updateKanbanCardIndex(kanbanCardNo, endCardIDX);
 			
-			//정렬
 			if(endCardIDX-startCardIDX > 0) {
 				System.out.println("큰 index로 이동");
 				// 중간 index들 -1
