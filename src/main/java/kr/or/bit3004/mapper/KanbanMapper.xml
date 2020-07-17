@@ -18,7 +18,7 @@
 
 	</insert>
 	
-	<update id="updateKanbanListTitle" parameterType="kr.or.bit3004.kanban.KanbanList">
+	<update id="updateKanbanListTitle">
 		update KANBAN_LIST 
 		set LIST_TITLE = #{listTitle} , 
 			id = #{id} 
@@ -30,7 +30,7 @@
 	 where kanban_list_no = #{kanbanListNo}
 	</select>
 	
-	<select id="kanbanCardList" resultMap="selectCardList">
+	<select id="kanbanCardList" resultType="kr.or.bit3004.kanban.KanbanCard">
 		select * from kanban_card
 		ORDER BY CARD_INDEX
 	</select>

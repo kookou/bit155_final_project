@@ -17,6 +17,7 @@ public interface KanbanDao {
 	public void updateKanbanListTitle(KanbanList kanbanlist);
 	
 	public int getANewKanbanListNo();
+	
 	public int getANewCardNo();
 	
 	public List<KanbanCard> kanbanCardList();
