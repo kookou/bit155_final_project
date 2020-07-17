@@ -1,7 +1,5 @@
 package kr.or.bit3004.board;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +33,7 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo,int allBoardListNo) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo) {
 		service.updateReadCount(boardNo);
 		model.addAttribute("teamNo", teamNo);
 		//model.addAttribute("boardNo", boardNo);

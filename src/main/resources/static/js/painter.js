@@ -1,133 +1,9 @@
-/*       var textareaList = ["history"]; */
-      var canvas = document.querySelector("#canvas");
-      var ctx = canvas.getContext("2d");
-	//웹소켓
-	 var paintWs = null;
-	 var now = [];
-	 var color = pos.color;
-	 var isPress = false;
-	 
-	 $(document).ready(function(){
-	paintWs  = new WebSocket("ws://192.168.0.35:8090/paint"); 
-   	/*  paintWs  = new WebSocket("ws://192.168.0.35:8090/paint.do?teamNo="+${team.teamNo}); */
 
-		paintWs.onopen=function(){
-			console.log("웹소켓 접속 성공-paint");
-		};
-		$("canvas").on(
-				{
-			mousedown: function (e) {
-            	e.preventDefault();
-		        isPress = true;
-                ctx.beginPath();
-				prevX = e.offsetX;
-				prevY = e.offsetY;
-				//console.log("과연",drwaCommand().mode);
-				console.log("추주툴",chooseTool);
-            	now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
-              	//selectTool('circle');
-            },
-            mousemove: function (e) {
-                var x = e.offsetX;
-                var y = e.offsetY;
-                if (isPress) {
-                	now.push({x, y});
-                	ctx.moveTo(prevX, prevY);
-                    ctx.lineTo(x, y);
-                    ctx.stroke();
-                    prevX = e.offsetX;
-                    prevY = e.offsetY;
-                   if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
-                        isPress = false;
-                    } 
-                }
-            },
-            mouseup: function (e) {
-                isPress = false;
-                ctx.closePath();
-            	paintWs.send(JSON.stringify(now));//now를 json객체로변환
-            	now =[]; //now 배열을 다시 비워줌
-            }
-        });
-		paintWs.onmessage = function(evt){
-			var c = document.querySelector("#canvas");
-            var otherCtx = c.getContext("2d");
-        	var drawData;
-        	var fillData;
-        	if (evt.data.startsWith('{')) {
-        		fillData = JSON.parse(evt.data);
-		        console.log(fillData);
-	            if(fillData.mode != undefined && fillData.mode == "fill") {
-	            	otherCtx.fillStyle = fillData.color;
-	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
-	            	otherCtx.closePath()
-	            	
-	            	return;
-	            }
-        	}
-        	if (evt.data.startsWith('[{"')) {
-        		drawData = JSON.parse(evt.data);
-		        console.log("drawData: ",drawData);
-		        //if(drawData[0])
-	            otherCtx.strokeStyle = drawData[0].color;
-	            otherCtx.beginPath();
-		        console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color,drawData[0].mode)
-	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
-				for (let i = 1; i < drawData.length; i++) {
-//					console.log(drawData[i].x, drawData[i].y);
-		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
-				}
-				switch(drawData[0].mode){
-				case "pencil":
-					console.log("펜슬 ㅎㅎ");
-					break;
-				case "circle":
-					console.log("원 ㅎㅎ");
-					break;	
-				case "square":
-					console.log("네모 ㅎㅎ");
-					break;
-				case "tri":
-					console.log("세모 ㅎㅎ");
-					break;
-				}
-	            otherCtx.stroke();
-		        otherCtx.closePath();
-		    	//selectTool('circle');
-        	}
-		};
-		paintWs.onclose=function(){
-			console.log("웹소켓 접속 종료-paint");
-		};
-		 
-		 });	
- 
-	 function clearText(idOfTextArea) {
-	        document.getElementById(idOfTextArea).value = "";
-	      }
-		 	$('.colorChip').click(function() {
-			 	$('.colorChip').removeClass('paintcellborder');
-				$(this).addClass('paintcellborder');
-			});//선택된 컬러 테두리 만들기
-			$('#colorPicker').change(function() {
-				selectColor($('#colorPicker').val());
-				pos.color=$('#colorPicker').val();
-			});//컬러 피커 색 선택
-
-	/* 		$('.cell').click(function() {
-				$('#colorPicker').val()=selectColor;
-				console.log('ddddd');
-			}); */
-	      $("#fill").click ( function () {
-	           ctx.fillStyle=pos.color;
-	          console.log($('selectColor').val());
-	          ctx.fillRect(0, 0, 720, 720);
-	      });//색 채우기
-		      
 
 
 
 ///////////////////////////////////////////기존 painter.js
+//구현을 위한 재료들 도형, 컬러 등..
 var cvs;
 var canvas;
 
@@ -224,7 +100,7 @@ var paintMouseMoveAction = {
 
 var pos = {
   isDraw: false,
-  color: "red",
+  color: "black",
   colorIdx: 0,
   drawMode: 0,
   filled: false,
