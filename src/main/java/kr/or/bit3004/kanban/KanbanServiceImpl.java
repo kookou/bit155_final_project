@@ -280,6 +280,7 @@ public class KanbanServiceImpl implements KanbanService {
 	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
 		System.out.println("ServiceImpl resortKanbanCard");
 		System.out.println("kanbanCardNo : "+kanbanCardNo);
+		System.out.println(endListNo +"/"+ kanbanCardNo +"/"+ startCardIDX +"/"+ endCardIDX);
 				
 		int difference = Math.abs(endCardIDX-startCardIDX);
 		System.out.println(difference);

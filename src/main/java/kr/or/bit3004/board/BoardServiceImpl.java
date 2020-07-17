@@ -158,29 +158,31 @@ public class BoardServiceImpl implements BoardService{
 		dao.updateReboardAddstep(board);
 	//이거 주석풀까말까	board.setBoardNo(board.getBoardNo());
 			//	System.out.println("리퍼"+dao.getMaxRefer());
-		//1.답글
+		//1.현재 내가 읽은글의 refer, depth, step
 		Board currBoardInfo = dao.getReferDepthStep(board.getBoardNo());
 		System.out.println("boardno="+board.getBoardNo());
 			//	System.out.println("getstep"+dao.getStep(currBoardInfo));
 		//2.위치
 		int step=dao.getStep(currBoardInfo);
-		//답글 insert
+		System.out.println("step:" + step);
 		
+		//답글 insert
 		if(step==0) {
 			System.out.println(board);
 			System.out.println("currboard="+currBoardInfo);
 			System.out.println("step==0을탔따.");
-			int maxStep= dao.getMaxStep(currBoardInfo); //요녀석이 문제.
+			int maxStep= dao.getMaxStep(currBoardInfo.getRefer()); //요녀석이 문제.
 			System.out.println("된다");
-			board.setStep(maxStep);
+			step = maxStep;
 			System.out.println("된다");
 		} else {
 			System.out.println("step=0이 아닌걸탔따.");
 			dao.updateStep(currBoardInfo);
 		}
 		
-		board.setDepth(currBoardInfo.getDepth()+1);
 		board.setRefer(currBoardInfo.getRefer());
+		board.setDepth(currBoardInfo.getDepth()+1);
+		board.setStep(step);
 		dao.insertReboard(board);
 	}
 	
