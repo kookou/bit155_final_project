@@ -1,3 +1,5 @@
+@font-face { font-family: 'GmarketSansBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+
 @media screen and (min-width: 1200px) {
 	.w-container {
 		max-width: 1170px;
@@ -1995,9 +1997,9 @@ h1 {
 	z-index: 1;
 	margin-right: 0px;
 	margin-left: 0px;
-	font-family: "Montserrat", sans-serif;
+	font-family: 'GmarketSansBold';
 	color: black;
-	font-size: 99px;
+	font-size: 75px;
 	line-height: 87px;
 	font-weight: 800;
 	text-transform: uppercase;
@@ -2100,12 +2102,18 @@ p {
 	position: relative;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	padding-bottom: 99px;
-	background-color: #3ec7c2;
+	padding-bottom: 70px;
+	background-color: #5f76e8;
+	/* background: url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80'); */
+	background-size: cover;
+	
 }
-
+.test{
+    /* background-image: linear-gradient(rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)); */
+   /*  background-size: cover; */
+}
 .header.page {
-	padding-bottom: 47px;
+	padding-bottom: 40px;
 }
 
 .nav-link {
@@ -3580,7 +3588,7 @@ html.w-mod-js *[data-ix="awwwwwards"] {
 
 @media ( max-width : 767px) {
 	h1 {
-		font-size: 69px;
+		font-size: 50px;
 		line-height: 63px;
 		text-align: left;
 	}
@@ -3824,7 +3832,7 @@ html.w-mod-js *[data-ix="awwwwwards"] {
 
 @media ( max-width : 479px) {
 	h1 {
-		font-size: 40px;
+		font-size: 30px;
 		line-height: 43px;
 	}
 	h3 {

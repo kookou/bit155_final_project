@@ -16,24 +16,26 @@ public class PaintController {
 	@Autowired
 	private AsideService asideService;
 	
-	@RequestMapping("paint.do")
-	public String chat(Model model, RedirectAttributes rttr, HttpSession session,int teamNo) {
+	@RequestMapping("/paint.do")
+	public String paint(Model model, RedirectAttributes rttr, HttpSession session,int teamNo) {
+		System.out.println("paint실험 = 아이디를 불러오는가? "+session.getAttribute("id"));
+		
 		if(session.getAttribute("id")==null) {
 			model.addAttribute("team", asideService.getTeam(teamNo));
 			model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 			model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
-			rttr.addFlashAttribute("msg","You need to login first");
+			//rttr.addFlashAttribute("msg","You need to login first");
 			System.out.println("로그인해야..");
 			
 			//return "redirect:/main"; 로그인구현하면 풀기!!!!!★★
-			return "paint";
+			return "paint/paint";
 		}
 		
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		
-		return "paint";
+		return "paint/paint";
 	}
 	
 }

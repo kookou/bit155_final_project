@@ -68,6 +68,9 @@ var endCardIDX = "";
 
 
 
+
+
+
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
 	 start( event, ui ){
@@ -158,7 +161,6 @@ var endCardIDX = "";
         itemOrientation: "horizontal",
         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
         moveItemOnDrop: true,
-        
         start( event, ui ){
        	 console.log("start");
        	 startListIDX = ui.item.index();
@@ -236,10 +238,9 @@ $('.redirectBoard').on('click',function(){
 })
 
 $(document).ready(function(){
-	console.log("될거니???????")
-	console.log(boardName)
 	$('#board-name').text(boardName)
 })
+
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
@@ -649,9 +650,6 @@ $(document).on('click', "#addcard",function(){
        	 }
        	 
         });
-
-        
-        
         
 });
 
