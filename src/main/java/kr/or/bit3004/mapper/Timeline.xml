@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.bit3004.dao.TimelineDao">
 	<select id="getTimeline" resultType="kr.or.bit3004.timeline.Timeline">
-		select `timeline_no`, `COLUMN_NAME`, `COLUMN_NO`, `history`, `team_no`, t.`id`, `dml_no`, `nickname`, `image`
+		select `timeline_no`, `COLUMN_NAME`, `COLUMN_NO`, `history`, `team_no`, t.`id`, `nickname`, `image`
 		  from `timeline` t
 		  join `user` u
 		    on t.id = u.id

@@ -304,9 +304,9 @@ CREATE TABLE `TIMELINE` (
 	`COLUMN_NO`   INT          NOT NULL, -- 해당테이블의 식별번호
     `OLD_HISTORY` VARCHAR(100) NULL,     -- 원래 내용
     `HISTORY`     VARCHAR(100) NOT NULL, -- 작업내용
+    `DML_KIND`    varchar(20)  NOT NULL, -- 작업구분
 	`TEAM_NO`     INT          NOT NULL, -- 팀식별번호
-	`ID`          VARCHAR(50)  NOT NULL, -- 아이디
-	`DML_NO`      INT          NOT NULL  -- 작업구분식별번호
+	`ID`          VARCHAR(50)  NOT NULL  -- 아이디
 );
 
 -- 타임라인
@@ -318,22 +318,6 @@ ALTER TABLE `TIMELINE`
         
 -- 타임라인 시퀀스
 ALTER TABLE `TIMELINE` modify `TIMELINE_NO` INT auto_increment;
-
--- 타임라인작업구분
-CREATE TABLE `TIMELINE_TYPE` (
-	`DML_NO`   INT         NOT NULL, -- 작업구분식별번호
-	`DML_NAME` VARCHAR(20) NOT NULL  -- 작업구분
-);
-
--- 타임라인작업구분
-ALTER TABLE `TIMELINE_TYPE`
-	ADD CONSTRAINT `PK_TIMELINE_TYPE` -- 타임라인작업구분 기본키
-		PRIMARY KEY (
-			`DML_NO` -- 작업구분식별번호
-		);
-        
--- 타임라인작업구분 시퀀스
-ALTER TABLE `TIMELINE_TYPE` modify `DML_NO` INT auto_increment;
 
 -- 그룹-팀 매핑
 CREATE TABLE `GROUP_TEAM` (
@@ -589,16 +573,6 @@ ALTER TABLE `TIMELINE`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		) ON DELETE CASCADE;
-
--- 타임라인
-ALTER TABLE `TIMELINE`
-	ADD CONSTRAINT `FK_TIMELINE_TYPE_TO_TIMELINE` -- 타임라인작업구분 -> 타임라인
-		FOREIGN KEY (
-			`DML_NO` -- 작업구분식별번호
-		)
-		REFERENCES `TIMELINE_TYPE` ( -- 타임라인작업구분
-			`DML_NO` -- 작업구분식별번호
 		) ON DELETE CASCADE;
 
 -- 그룹-팀 매핑
