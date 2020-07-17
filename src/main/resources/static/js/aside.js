@@ -314,3 +314,14 @@ $('#allBoardList').on('click', '.redirectBoard', function() {
 		location.href = 'kanban.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
 	}
 });
+
+
+
+/*$('#canvas').on('click',function(){
+	console.log('hi');
+	location.href = 'paint.do?teamNo=' + teamNo;
+});*/
+
+
+
+

@@ -32,13 +32,15 @@
 	      on a.all_board_list_no = b.all_board_list_no
 	  where a.all_board_list_no = #{allBoardListNo}
 	  ORDER BY refer DESC, step asc
-	</select> 
-	  <!-- 조회수 증가 -->
-   <update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
-      update board_list 
-         set views = views+1 
-       where board_no=#{boardNo}
-   </update>
+	</select>
+	 
+	<!-- 조회수 증가 -->
+	<update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
+		update board_list 
+	       set views = views+1 
+	     where board_no=#{boardNo}
+	</update>
+	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
 		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname,b.refer
@@ -55,7 +57,8 @@
 		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`,`step`,`depth`,`refer`) 
 		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id},0,0,#{refer})
 	</insert>
-
+	
+	<!-- 게시판 답글 -->
 	<update id="updateReboardAddstep" parameterType="kr.or.bit3004.board.Board">
 		update board_list set step=step+1
 		where refer=#{refer} and step &gt; #{step}
@@ -66,12 +69,14 @@
 		from board_list
 	</select>
 	
+	<!-- 현재 내가 읽은 글의 refer, depth, step -->
 	<select id="getReferDepthStep" resultType="kr.or.bit3004.board.Board">
 		select refer,depth,step 
 		from board_list
 		where board_no=#{boardNo}
 	</select>
 	
+	<!-- 위치 -->
 	<select id="getStep" resultType="int">
 		select ifnull(min(step),0) step
 		from board_list
@@ -92,30 +97,36 @@
 	
 	<insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
 		insert into board_list(`all_board_list_no`,`title`, `content`, `write_date`,`id`,`refer`,`depth`,`step`)
-		values(#{allBoardListNo},#{title}, #{content}, now(), #{id},#{refer},#{depth}+1,#{step}+1)
+		values(#{allBoardListNo}, #{title}, #{content}, now(), #{id}, #{refer}, #{depth}, #{step})
 	</insert>
-
 	
 <!-- 	<select id="selectBoardByRefer" resultType="kr.or.bit3004.board.Board">
 		select refer
 		from board_list
 		where board_no=#{boardNo}
 	</select> -->
+	<!-- 게시판 답글 END -->
 	
+	<!-- 업로드 게시판 번호 가져오기 -->
 	<select id="getBoardNo" resultType="int">
 		select max(`board_no`) from `board_list`
 	</select>
 	
 
 	<!-- 게시판 업로드 -->
-
 	<insert id="insertBoardUploadFile" parameterType="kr.or.bit3004.board.BoardUpload">
-		insert into board_file(origin_file_name, file_name, file_size, all_board_list_no, board_no)
-		values(#{originFileName}, #{fileName}, #{fileSize}, #{allBoardListNo}, #{boardNo})
+		insert into board_file(origin_file_name, file_name, file_path, file_size, all_board_list_no, board_no)
+		values(#{originFileName}, #{fileName}, #{filePath}, #{fileSize}, #{allBoardListNo}, #{boardNo})
 	</insert>
-
 	
-	<!-- 사원수정하기 -->
+	<!-- 게시판 다운로드 -->
+	<select id="selectBoardDownloadFile" resultType="kr.or.bit3004.board.BoardUpload">
+		select file_name, origin_file_name, file_no, file_path
+		  from board_file
+		 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 게시판 수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">
 		update board_list
 		   set board_no=#{boardNo}, title=#{title}, content=#{content}

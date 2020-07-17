@@ -26,6 +26,9 @@ public interface KanbanService {
 	//update Kanban List
 	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal);
 	
+	//resort Kanban List
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX);
+	
 	public int insertCardTitle(String title , int cardIndex, int kanbanListNo);
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
@@ -36,6 +39,10 @@ public interface KanbanService {
 	
 	//delete Kanban Card
 	public void deleteKanbanCard(int cardNo);
+	
+	//resort Kanban Card
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX);
+
 	
 	//upload file to Kanban Card
 	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request);

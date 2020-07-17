@@ -41,6 +41,14 @@ public class KanbanAjaxController {
 		System.out.println(kanbanlist);
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
+	
+	
+	@RequestMapping("resortKanbanList.ajax")
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("Controller resortKanbanList");
+		service.resortKanbanList(allBoardListNo, kanbanListNo, startListIDX, endListIDX);
+	}
+	
 		
 	@RequestMapping("InsertKanbanCard.ajax")
 	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo) {
@@ -82,6 +90,13 @@ public class KanbanAjaxController {
 		System.out.println("카드 내용 업데이트");
 		service.deleteKanbanCard(cardNo);
 	}
+	
+	@RequestMapping("resortKanbanCard.ajax")
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
+		System.out.println("Controller resortKanbanCard");
+		service.resortKanbanCard(allBoardListNo, kanbanCardNo, startListNo, endListNo, startCardIDX, endCardIDX);
+	}
+	
 	
 	@RequestMapping("CardReplySelect.ajax")
 	public List<KanbanComment> getKanbanCommentList(int cardNo){

@@ -31,6 +31,12 @@
    .comment-content {
        margin-left: 35px;
    }
+   .popover{
+	   /* height: 30px; */
+	   max-height: 1000px;
+	   /* width: 100px; */
+	   max-width: 1000px
+   }
 </style>
 </head>
 
@@ -81,7 +87,11 @@
                                             <div style="clear: both;">
                                                 <hr>
                                                 <div id="main-content" style="min-height: 250px;">
-                                                    <p class="lead" id="summernote"></p>
+                                                	<a href="javascript:void(0);" id="downLoadBtn" class="btn" style="float:right;" th:if="${#lists.size(selectBoardDownloadFile) > 0}">
+                                                		<i class="far fa-folder" style="cursor: pointer;"></i>
+                                                		<span th:text="${#lists.size(selectBoardDownloadFile)}"></span>
+                                                	</a>
+                                                    <p class="lead" id="summernote" style="clear:both"></p>
                                                 </div>
                                                 <hr class="my-4">
                                                 <!-- 댓글 -->
@@ -121,6 +131,14 @@
 	        </div>
 	    </div>
 	</div>
+	
+	<!-- 다운로드 popover창 -->
+	<div style="display:none;" id="download_list">
+		<div th:each="boardFile:${selectBoardDownloadFile}">
+			<a href="javascript:void(0);" download th:text="${boardFile.originFileName}" class="boardFileName"></a>
+			<input type="hidden" th:value="${boardFile.fileName}">
+		</div>
+	</div>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/script :: script"></div>
@@ -131,7 +149,10 @@
 			var currUser = '[[${session.currentUser.id}]]';
 	    	var id = '[[${selectBoard.id}]]';
 	    	var boardContent = '[[${selectBoard.content}]]';
+	    	var fileName = '[[${selectBoardDownloadFile}]]';
 		/*]]*/
+		
+		console.log(fileName);
 		
 		boardContent = boardContent.replace(/&lt;/gi, "<");
 		boardContent = boardContent.replace(/&gt;/gi, ">");
@@ -318,6 +339,22 @@
 	   		$('#editBtn').show();
 	   		$('#deleteBtn').show();
 	   	}
+	   	
+	   	//다운로드 창
+	   	$("#downLoadBtn").popover({
+		    title: "Upload File",
+			html: true,
+			sanitize: false,
+			placement: "bottom",
+			content: function() {
+			  return $("#download_list").html();
+			}
+		});
+	   	
+	   	//파일 경로 찾아서 다운로드
+	   	$('#download_list .boardFileName').each(function() {
+	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
+		});
     </script>
 </body>
 </html>

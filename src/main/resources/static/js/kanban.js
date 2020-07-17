@@ -53,29 +53,151 @@ function addCardFileCountTag(parent, fileCount){
 }
 
 
+var startListIDX = "";
+var endListIDX = "";
 
+var currentCardNo = "";
+var startListNo = "";
+var endListNo = "";
+var startCardIDX = "";
+var endCardIDX = "";
 
 
 
 
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
-	 receive: function(event, ui){
-		  console.log(ui.item.index()); // 이벤트 발생된 item의 index값 
-		 }
+	 start( event, ui ){
+		 console.log("start");
+		 currentCardNo = ui.item.data('cardno');
+		 console.log(currentCardNo);
+		 startCardIDX = ui.item.index();
+		 console.log(startCardIDX);
+		 startListNo = ui.item.parents('div.kanban-list-content').data('listno');
+		 console.log(startListNo);
+		 
+	 },
+	 receive: function(event, ui){ // 다른 리스트간 이동
+		 console.log("receive");
+		 endCardIDX = ui.item.index();
+       	 console.log(endCardIDX);
+       	 endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+		 console.log(endListNo);
+
+       	 
+       	 if(startListNo != endListNo){
+       		 
+       		
+       		 $.ajax({
+       				url: "resortKanbanCard.ajax",
+       				data: {
+       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+       						"kanbanCardNo": $.trim(currentCardNo),
+       						"startListNo": $.trim(startListNo),
+       						"endListNo": $.trim(endListNo),
+       						"startCardIDX": $.trim(startCardIDX),
+       						"endCardIDX": $.trim(endCardIDX) 
+       						},
+       				success: function() {
+		       					console.log("resortKanbanList 완료");
+       						},
+       				error: function(e){
+       					console.log("ajax error");
+       				}
+       		 });
+       	 }
+	 },
+	 stop( event, ui ){ // 같은 리스트 내에서 이동
+     	console.log("stop");
+     	console.log(ui.item.parent());
+     	
+     	//같은 카드 내에서 이동될 경우 recive를 사용할 수 없다
+     	endCardIDX = ui.item.index();
+     	console.log(endCardIDX);
+     	endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+     	console.log(endListNo);
+
+     	
+      	 if((startListNo == endListNo) && (startCardIDX != endCardIDX)){
+        		
+       		 $.ajax({
+       				url: "resortKanbanCard.ajax",
+       				data: {
+       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+       						"kanbanCardNo": $.trim(currentCardNo),
+       						"startListNo": $.trim(startListNo),
+       						"endListNo": $.trim(endListNo),
+       						"startCardIDX": $.trim(startCardIDX),
+       						"endCardIDX": $.trim(endCardIDX) 
+       						},
+       				success: function() {
+		       					console.log("resortKanbanList 완료");
+       						},
+       				error: function(e){
+       					console.log("ajax error");
+       				}
+       		 });
+       	 }
+     	
+//    	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+//    	
+//    	$.each(kanbanListArr, function(index, item){
+//    		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+//    	});
+		 
+	 }
+	 
  });
 
- 
+
  $('#kanban').sortable({ // 상위요소
-     filter: ".kanban-list-wrapper",
-     itemOrientation: "horizontal",
-//     handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-     moveItemOnDrop: true
+   	 items: ".kanban-list-wrapper",
+        itemOrientation: "horizontal",
+        handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+        moveItemOnDrop: true,
+        
+        start( event, ui ){
+       	 console.log("start");
+       	 startListIDX = ui.item.index();
+        },
+        deactivate( event, ui ){
+	       	 console.log("deactivate");
+	       	 endListIDX = ui.item.index();
+	       	 let currentListNo = ui.item.children().data('listno');
+	       	 
+	       	 if(!(startListIDX == endListIDX)){
+	       		 
+	       		
+	       		 $.ajax({
+	       				url: "resortKanbanList.ajax",
+	       				data: {
+	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+	       						"kanbanListNo": $.trim(currentListNo),
+	       						"startListIDX": $.trim(startListIDX),
+	       						"endListIDX": $.trim(endListIDX)
+	       						},
+	       				success: function() {
+			       					console.log("resortKanbanList 완료");
+	       						},
+	       				error: function(e){
+	       					console.log("ajax error");
+	       				}
+	       		 });
+	       	 }
+        },
+        stop( event, ui ){
+        	console.log("stop");
+        	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+        	
+        	$.each(kanbanListArr, function(index, item){
+        		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+        	});
+        }
+        
+    });
 
 
- });
-
-	
+// $( ".kanban-list-add-wrapper" ).sortable( "disable" );
 	
 
 	 
@@ -133,13 +255,53 @@ $(document).on('click', '#addlist', function() {
 
 
     
+
     $('#kanban').sortable({ // 상위요소
-        filter: ".kanban-list-wrapper",
+   	 items: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
-//        handle: ".kanban-list-title", // 이부분 주석 풀면 제목 누를때만 dnd 가능
-        moveItemOnDrop: true
+        handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
+        moveItemOnDrop: true,
+        
+        start( event, ui ){
+       	 console.log("start");
+       	 startListIDX = ui.item.index();
+        },
+        deactivate( event, ui ){
+	       	 console.log("deactivate");
+	       	 endListIDX = ui.item.index();
+	       	 let currentListNo = ui.item.children().data('listno');
+	       	 
+	       	 if(!(startListIDX == endListIDX)){
+	       		 
+	       		
+	       		 $.ajax({
+	       				url: "resortKanbanList.ajax",
+	       				data: {
+	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+	       						"kanbanListNo": $.trim(currentListNo),
+	       						"startListIDX": $.trim(startListIDX),
+	       						"endListIDX": $.trim(endListIDX)
+	       						},
+	       		        dataType: "json",
+	       				success: function() {
+			       					console.log("resortKanbanList 완료");
+	       						},
+	       				error: function(e){
+	       					console.log("ajax error");
+	       				}
+	       		 });
+	       	 }
+        },
+        stop( event, ui ){
+        	console.log("stop");
+        	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+        	
+        	$.each(kanbanListArr, function(index, item){
+        		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+        	});
+        }
+        
     });
-    
     
 });
 
@@ -160,26 +322,26 @@ $(document).on('click', '.kanban-addlistCancle', function(){
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
     let listName = $(this).parent().find('textarea').val();
-//	console.log(listName);
 		
     let allBoardListNo = Number($('#allBoardListNo').val());
     let kanbanListContent = $(this).parent().parent();
     let titleInputBox = $(this).siblings('div').find('textarea');
     let new1 = $(this).parent();
-    //    var new1 = $(this).parent().parent().children();
     let addlist = $(this).parents('.kanban-list-wrapper').next();
-    //    var addlist = $(this).parent().parent().parent().next()
     let txtIpTrIconAddBtn = $(this).parent().children();
+    let newKanbanList = $(this).parents().find('.kanban-list-wrapper').last();
+    
+    //추가된 리스트 index >> 어차피 index는 sortable에서 가져오는데 이게 필요할까?
+    let kanbanListIndex = newKanbanList.index();
+    
 
 	if(listName == "") {
         alert('list title을 입력하세요.');        
-        titleInputBox.focus(); //input on focus
-//		$(this).parent().children().find('input').focus();        
+        titleInputBox.focus(); //input on focus       
 		return;
     }
 
 	txtIpTrIconAddBtn.remove();
-//  $(this).parent().parent().children().children().remove()
     
     new1.append("<div class='kanban-list-header'id='listheader'>"
 	    		+"<h4 class='kanban-list-title'>"+listName+"</h4>"
@@ -192,7 +354,8 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	    		 });
     
 
-    kanbanListContent.attr('data-title', listName);    
+    kanbanListContent.attr('data-title', listName);			//속성에 listName추가하기
+	kanbanListContent.attr('data-listindex', kanbanListIndex);    //속성에 index 추가하기
     
     new1.append(addcardbtn);
     var trash = $(this).prev();
@@ -205,13 +368,14 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 		url: "InsertKanbanList.ajax",
 		data: {
 				"listTitle": $.trim(listName),
+				"kanbanListIndex": $.trim(kanbanListIndex),
 				"allBoardListNo": $.trim(allBoardListNo)
 				},
         dataType: "text",
 		success: function(resData) {
 			console.log("list insert 완료");
+						
 			kanbanListContent.attr('data-listno', resData);
-			console.log(resData)
 		}
 	});
 	
@@ -395,7 +559,97 @@ $(document).on('click', "#addcard",function(){
     				 console.log(resData);
     			}
     		}); 
-        });   
+        });  
+        
+
+
+        $('.divForDragNDrop').sortable({
+       	 connectWith: '.divForDragNDrop',
+       	 start( event, ui ){
+       		 console.log("start");
+       		 currentCardNo = ui.item.data('cardno');
+       		 console.log(currentCardNo);
+       		 startCardIDX = ui.item.index();
+       		 console.log(startCardIDX);
+       		 startListNo = ui.item.parents('div.kanban-list-content').data('listno');
+       		 console.log(startListNo);
+       		 
+       	 },
+       	 receive: function(event, ui){ // 다른 리스트간 이동
+       		 console.log("receive");
+       		 endCardIDX = ui.item.index();
+              	 console.log(endCardIDX);
+              	 endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+       		 console.log(endListNo);
+
+              	 
+              	 if(startListNo != endListNo){
+              		 
+              		
+              		 $.ajax({
+              				url: "resortKanbanCard.ajax",
+              				data: {
+              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+              						"kanbanCardNo": $.trim(currentCardNo),
+              						"startListNo": $.trim(startListNo),
+              						"endListNo": $.trim(endListNo),
+              						"startCardIDX": $.trim(startCardIDX),
+              						"endCardIDX": $.trim(endCardIDX) 
+              						},
+              				success: function() {
+       		       					console.log("resortKanbanList 완료");
+              						},
+              				error: function(e){
+              					console.log("ajax error");
+              				}
+              		 });
+              	 }
+       	 },
+       	 stop( event, ui ){ // 같은 리스트 내에서 이동
+            	console.log("stop");
+            	console.log(ui.item.parent());
+            	
+            	//같은 카드 내에서 이동될 경우 recive를 사용할 수 없다
+            	endCardIDX = ui.item.index();
+            	console.log(endCardIDX);
+            	endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+            	console.log(endListNo);
+
+            	
+             	 if((startListNo == endListNo) && (startCardIDX != endCardIDX)){
+               		
+              		 $.ajax({
+              				url: "resortKanbanCard.ajax",
+              				data: {
+              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+              						"kanbanCardNo": $.trim(currentCardNo),
+              						"startListNo": $.trim(startListNo),
+              						"endListNo": $.trim(endListNo),
+              						"startCardIDX": $.trim(startCardIDX),
+              						"endCardIDX": $.trim(endCardIDX) 
+              						},
+              				success: function() {
+       		       					console.log("resortKanbanList 완료");
+              						},
+              				error: function(e){
+              					console.log("ajax error");
+              				}
+              		 });
+              	 }
+            	
+//           	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+//           	
+//           	$.each(kanbanListArr, function(index, item){
+//           		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+//           	});
+       		 
+       	 }
+       	 
+        });
+
+        
+        
+        
 });
 
 
