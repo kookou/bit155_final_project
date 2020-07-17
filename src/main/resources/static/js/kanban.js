@@ -65,93 +65,8 @@ var endCardIDX = "";
 
 
 
-
-
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
-
-//	 receive: function(event, ui){
-//		
-//		  var newcardarrayno1 = [];
-//		  var newcardarrayindex1 = [];
-//		  var newkanbanlistno1 = $(this).parent().parent().attr('data-listno');
-//		  console.log("recevie")
-//		  var endcard = $(this).children();
-//		  
-//		  console.log("드롭 된 리스트의 카드 갯수 ");
-//		  console.log($(this).children().length)
-//		   
-//		  console.log("드롭 된 카드 전체");
-//	      console.log(endcard)
-//		  
-//		   $(endcard).each(function(index,item){
-//			   console.log($(item).index())
-//			   newcardarrayindex1.push($(item).index());
-//		   })
-//		   
-//		   $(endcard).each(function(index,item){
-//			   console.log($(item).attr("data-cardno"))
-//			   newcardarrayno1.push($(item).attr("data-cardno"));
-//		   })
-//		   
-//		   $.ajax({
-//
-//	     		url: "StartDragCardUpdate.ajax",
-//	     		traditional : true,
-//	     		data: {
-//	     			cardIndex :newcardarrayindex1,
-//	     			cardNo : newcardarrayno1,
-//	     			kanbanListNo:newkanbanlistno1
-//	     			
-//	     				},
-//	     				dataType:'text',
-//	     		success: function(resData) {
-//	     			console.log("recevie list update 완료");
-//	     		}
-//	     	});
-//		 },
-//		
-//
-//	 stop:function(event, ui){
-//		 
-//		  var newcardarrayno2 = [];
-//		  var newcardarrayindex2 = [];
-//		  var newkanbanlistno2 = $(this).parent().parent().attr('data-listno')
-//		   console.log("stop")
-//		   var startcard = $(this).children()
-//		   
-//		   console.log("드롭 전 리스트의 카드 갯수 ");
-//		   console.log($(this).children().length)
-//		  
-//		   console.log("드롭 전 카드 전체");
-//		   console.log(startcard);
-//		   
-//		   $(startcard).each(function(index,item){
-//			   console.log($(item).index())
-//			   newcardarrayindex2.push($(item).index());
-//		   })
-//		   
-//		   $(startcard).each(function(index,item){
-//			   console.log($(item).attr("data-cardno"))
-//			   newcardarrayno2.push($(item).attr("data-cardno"));
-//		   })
-//		   
-//		   $.ajax({
-//	     		url: "StartDragCardUpdate.ajax",
-//	     		traditional : true,
-//	     		data: {
-//	     			cardIndex :newcardarrayindex2,
-//	     			cardNo : newcardarrayno2,
-//	     			kanbanListNo:newkanbanlistno2
-//	     				},
-//	     				dataType:'text',
-//	     		success: function(resData) {
-//	     			console.log("stop list update 완료");
-//	     		
-//	     		}
-//	     	});
-//	 }
-
 	 start( event, ui ){
 		 console.log("start");
 		 currentCardNo = ui.item.data('cardno');
@@ -232,12 +147,10 @@ var endCardIDX = "";
 		 
 	 }
 	 
-
  });
 
 
  $('#kanban').sortable({ // 상위요소
-
    	 items: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
@@ -284,7 +197,6 @@ var endCardIDX = "";
     });
 
 
-
 // $( ".kanban-list-add-wrapper" ).sortable( "disable" );
 	
 
@@ -324,8 +236,7 @@ $(document).ready(function(){
 	console.log("될거니???????")
 	console.log(boardName)
 	$('#board-name').text(boardName)
-});
-
+})
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
@@ -391,7 +302,7 @@ $(document).on('click', '#addlist', function() {
         }
         
     });
-
+    
 });
 
 
@@ -621,11 +532,11 @@ $(document).on('click', "#addcard",function(){
 	    console.log(kanbanCardNo.index());
 	    
         $(input).blur(function() {
-//            if($(input).val() == "") {
-//                alert('Card title을 입력하세요');
-//                $(input).focus();
-//                return;
-//            }
+            if($(input).val() == "") {
+                alert('Card title을 입력하세요');
+                $(input).focus();
+                return;
+            }
             var cardtitle = $(input).val();
             $(this).parent().text($(input).val());
             console.log("card")
@@ -648,8 +559,7 @@ $(document).on('click', "#addcard",function(){
     				 console.log(resData);
     			}
     		}); 
-        });
-        
+        });   
 });
 
 
