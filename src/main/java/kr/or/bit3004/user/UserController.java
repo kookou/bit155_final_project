@@ -30,19 +30,7 @@ public class UserController {
 	public String signIn() {
 		return "user/signIn";
 	}
-	
-//	//이거 안먹음 
-//	@RequestMapping("/login/oauth2/code/naver")
-//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session) {
-//		
-//		
-//		System.out.println("여기는 naver callback");
-//		OAuth2AccessToken oauthToken;
-//		oauthToken = customOAuth2Service.getAccessToken();
-//		System.out.println(oauthToken.getScopes());
-//		
-//		return "user/signIn";
-//	}
+
 	
 	
 	// 가입 폼
@@ -110,12 +98,18 @@ public class UserController {
 	
 	
 	
-	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다
-	@RequestMapping(value="/login/oauth2/code/naver", method=RequestMethod.GET)
-	public void callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+	@RequestMapping(value="/signin/oauth2/code/naver")
+	public void naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
 	         HttpServletRequest request) {
-		System.out.println("code" + code);
-		System.out.println("state"+state);
+		System.out.println("code : " + code);
+		System.out.println("state : "+state);
+	}
+	
+	@RequestMapping(value="/login/oauth2/code/google")
+	public void googleCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+	         HttpServletRequest request) {
+		System.out.println("code : " + code);
+		System.out.println("state : "+state);
 	}
 
 	
