@@ -2102,7 +2102,7 @@ p {
 	position: relative;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	padding-bottom: 30px;
+	padding-bottom: 70px;
 	background-color: #5f76e8;
 	/* background: url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80'); */
 	background-size: cover;
@@ -2113,7 +2113,7 @@ p {
    /*  background-size: cover; */
 }
 .header.page {
-	padding-bottom: 20px;
+	padding-bottom: 40px;
 }
 
 .nav-link {

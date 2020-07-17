@@ -18,9 +18,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- Murri -->
-<!-- <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+ <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
  <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
- <script src="https://sortablejs.github.io/Sortable/st/app.js"></script> -->
+ <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>   
 <!-- Murri end -->
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -61,258 +61,258 @@
 	<!-- ============================================================== -->
 	<!-- Main wrapper - style you can find in pages.scss -->
 	<!-- ============================================================== -->
-<div id="main-wrapper" class="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6"
-    data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+	<div id="main-wrapper" class="main-wrapper" data-theme="light" data-layout="vertical"
+		data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed"
+		data-boxed-layout="full">
 
-    <th:block th:replace="common/header :: header"></th:block>
-    <th:block th:replace="common/aside :: aside"></th:block>
-    <th:block th:replace="common/addAllBoardModal"></th:block>
-    <th:block th:replace="common/chat"></th:block>
+		<th:block th:replace="common/header :: header"></th:block>
+		<th:block th:replace="common/aside :: aside"></th:block>
+		<th:block th:replace="common/addAllBoardModal"></th:block>
+		<th:block th:replace="common/chat"></th:block>
+		 
+		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-
-    <!-- Info Alert Modal -->
-    <div id="info-alert-modal" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-body p-4">
-                    <div class="text-center">
-                        <i class="dripicons-information h1 text-info"></i>
-                        <h4 class="mt-2">List를 삭제 하시겠습니까?</h4>
-                        <button type="button" class="btn btn-info my-2" data-dismiss="modal"
-                            id="list-modal-cancel">취소</button>
-                        <button type="button" class="btn btn-danger my-2" data-dismiss="modal"
-                            id="list-modal-delete">삭제</button>
-                    </div>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-
-
-
-
-    <!-- content modal -->
-    <div id="card-content" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="card-modal-content">
-                <a class="card-modal-close far fa-trash-alt" data-dismiss="modal" aria-hidden="true"> Delete Card </a>
-                <div class="card-modal-detail">
-
-                    <div class="card-modal-header">
-                        <span class="fas fa-quote-left card-modal-title-icon"></span>
-                        <h3 class="card-modal-title" id="modaltitle"></h3>
-                        <textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle'
-                            style='overflow: hidden; overflow-wrap: break-word; resize: none; display:none;'></textarea>
-                        <div class="card-modal-list-name">
-                            <p class="card-in-list"></p>
-                        </div>
-                    </div>
-
-                    <div class="card-modal-body">
-                        <span class="fas fa-align-left card-modal-title-icon"></span>
-                        <h3 class="card-modal-description" id="modalDescriptionLabel">Description</h3>
-                        <div class="modal-textarea-description">
-                            <textarea rows="1" id="modallDescrioptiontextarea"
-                                class="autosize modal-textarea-description-edit"
-                                style="overflow: hidden; overflow-wrap: break-word; resize: none;"></textarea>
-                        </div>
-                        <p class="card-modal-list-description" id="modallDescrioption"></p>
-                    </div>
-
-                    <div class="card-modal-file">
-
-                        <span class="fas fa-cloud card-modal-title-icon"></span>
-                        <h3 class="card-modal-cloud">Cloud</h3>
-                        <div id="cardModalFileList">
-                        </div>
-
-                        <form id="kanbanFileInput" class="mt-2 file-upload" action="" method="POST"
-                            enctype="multipart/form-data">
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="kanbanFiles" name="kanbanFiles"
-                                        multiple="multiple">
-                                    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <button id="kanbanFileInputBtn" class="btn btn-outline-secondary"
-                                        type="button">Upload</button>
-                                </div>
-                                <!--  -->
-                                <div class="input-group">
-                                    <input id="inputAllBoardListNo" name="allBoardListNo" value="" type="text" hidden />
-                                    <input id="inputCardNo" name="cardNo" value="" type="text" hidden />
-                                    <input id="inputTeamNo" name="teamNo" value="" type="text" hidden />
-                                </div>
-                            </div>
-                        </form>
+		<!-- Info Alert Modal -->
+		<div id="info-alert-modal" class="modal fade" tabindex="1"
+			role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body p-4">
+						<div class="text-center">
+							<i class="dripicons-information h1 text-info"></i>
+							<h4 class="mt-2">List를 삭제 하시겠습니까?</h4>
+							<button type="button" class="btn btn-info my-2"
+								data-dismiss="modal" id="list-modal-cancel">취소</button>
+							<button type="button" class="btn btn-danger my-2"
+								data-dismiss="modal" id="list-modal-delete">삭제</button>
+						</div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
 
 
-                    </div>
-
-                    <div class="card-modal-reply-list">
-                        <span class="fas fa-paper-plane card-modal-title-icon"></span>
-                        <h3 class="card-modal-reply-title" id="myModalLabel">Reply</h3>
-
-                        <div class="card-modal-reply-top">
-                            <div class="rounded-circle card-modal-profile"
-                                style="float: left; background-color: white; overflow: hidden; height: 35px; width: 35px;">
-                                <div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                                    <img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
-                                        href="javascript:void(0)"
-                                        style="width: auto; height: 50px; transform: translate(-50%, -50%);">
-                                </div>
-                            </div>
-
-                            <div class="form-group card-modal-reply-input">
-                                <textarea rows="1" class="autosize modal-textarea-reply" id="modalreply"
-                                    style="overflow: hidden; overflow-wrap: break-word; resize: none;"
-                                    placeholder="댓글입력"></textarea>
-                                <button type="button" class="btn waves-effect waves-light btn-primary reply-done"
-                                    id="replydonebtn">Save</button>
-                            </div>
-                        </div>
-                        <div class="replymargin"></div>
-                        <div class="reply-list"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="page-wrapper">
-        <!-- 	<div id="kanbanlistall" th:text="{kanbanlist.allBoardListNo}" style="display:none;"></div> -->
-        <!-- 
-		<div th:text = "${kanban}"></div> -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
-                    <div class="d-flex align-items-center">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb m-0 p-0">
-                                <li class="breadcrumb-item"><i class="fab fa-trello"
-                                        style="margin-right: 8px;"></i><span>Kanban</span></li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="kanban-container" id="kanban-container">
-            <div class="kanban-canvas">
-                <div id="kanban" class="kanban">
-                    <!-- ============================================================== -->
-                    <!-- 칸반 list 시작 -->
-                    <!-- ============================================================== -->
-
-                    <div class="kanban-list-wrapper" th:each="kanbanlist: ${kanbanlist}">
-                        <div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}">
-                                    <div class="kanban-card" ondrop="drop(event, this)" ondragover="allowDrop(event)">
-                                        <div class="kanban-list-header" id="listheader">
-                                            <h4 class="kanban-list-title" th:text="${kanbanlist.listTitle}"></h4>
-                                        </div>
-                                        <a class="kanban-list-menu far fa-trash-alt" data-toggle="modal"
-                                            data-target="#info-alert-modal"></a>
-
-                                        <div class="divForDragNDrop">
 
 
-                                            <div class="kanban-card-list btn-card-hover"
-                                                th:each="card : ${kanbancardlist}"
-                                                th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}"
-                                                th:attr="data-cardno=${card.cardNo}">
-                                                <span class='icon-pencil active-card-icon'
-                                                    style='position: relative;'></span>
-                                                <div class="kanban-card-element" data-toggle="modal"
-                                                    data-target="#card-content">
-                                                    <span class="kanban-card-title" th:text="${card.title}"></span>
-                                                    <div class="kanban-card-badges">
-                                                        <div th:classappend="${card.commentCount > 0} ? 'kanban-card-badge' : ''"
-                                                            title="comments">
-                                                            <span th:if="${card.commentCount > 0}"
-                                                                class="icon-bubble badge-icon"></span> <span
-                                                                th:if="${card.commentCount > 0}" class="badge-text"
-                                                                th:text="${card.commentCount}"></span>
-                                                        </div>
-                                                        <div th:classappend="${card.fileCount > 0} ? 'kanban-card-badge' : ''"
-                                                            title="file">
-                                                            <span th:if="${card.fileCount > 0}"
-                                                                class="icon-paper-clip badge-icon"></span> <span
-                                                                th:if="${card.fileCount > 0}" class="badge-text"
-                                                                th:text="${card.fileCount}"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
+		<!-- content modal -->
+		<div id="card-content" class="modal fade" tabindex="-1" role="dialog"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="card-modal-content">
+					<a class="card-modal-close far fa-trash-alt" data-dismiss="modal"
+						aria-hidden="true"> Delete Card </a>
+					<div class="card-modal-detail">
+
+						<div class="card-modal-header">
+							<span class="fas fa-quote-left card-modal-title-icon"></span>
+							<h3 class="card-modal-title" id="modaltitle"></h3>
+							<textarea rows='1' class='autosize modal-textarea-title-edit' id='modallisttitle' style='overflow: hidden; overflow-wrap: break-word; resize: none; display:none;'></textarea>
+							<div class="card-modal-list-name">
+								<p class="card-in-list"></p>
+							</div>
+						</div>
+
+						<div class="card-modal-body">
+							<span class="fas fa-align-left card-modal-title-icon"></span>
+							<h3 class="card-modal-description" id="modalDescriptionLabel">Description</h3>
+							<div class="modal-textarea-description">
+								<textarea rows="1" id="modallDescrioptiontextarea"
+									class="autosize modal-textarea-description-edit"
+									style="overflow: hidden; overflow-wrap: break-word; resize: none;"></textarea>
+							</div>
+							<p class="card-modal-list-description" id="modallDescrioption"></p>
+						</div>
+
+						<div class="card-modal-file">
+
+							<span class="fas fa-cloud card-modal-title-icon"></span>
+							<h3 class="card-modal-cloud">Cloud</h3>
 
 
-                                        <div class="kanban-card-add-list" id="addcardel">
-                                            <a class="kanban-card-add-el btn-light-my" id="addcard"><span
-                                                    class="icon">+</span><span class="kanban-card-add-text">Add
-                                                    Card</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- 칸반 list  -->
-                            <!-- ============================================================== -->
 
-                            <!-- ============================================================== -->
-                            <!-- 칸반 add list 시작  -->
-                            <!-- ============================================================== -->
-                            <div class="kanban-list-add-wrapper" id="addlist">
-                                <a class="kanban-list-add btn-primary">
-                                    <div class="kanban-list-add-header">
-                                        <span class="icon">+</span> <span class="kanban-card-add-text">Add
-                                            List</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- 칸반 add list 끝  -->
-                            <!-- ============================================================== -->
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Container fluid  -->
-                <!-- ============================================================== -->
-            </div>
-      
+							<div id="cardModalFileList">
 
-
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-
-</div>
-	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-
-	<div th:replace="common/script :: script"></div>
 	
-<!--<script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
-    <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
-    <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>  -->
+							
+							</div>
+
+
+							<form id="kanbanFileInput" class="mt-2 file-upload" action="" method="POST" enctype="multipart/form-data">
+								<div class="input-group">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="kanbanFiles" name="kanbanFiles" multiple="multiple"> 
+											<label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+									</div>
+									<div class="input-group-append">
+										<button id="kanbanFileInputBtn" class="btn btn-outline-secondary" type="button">Upload</button>
+									</div>
+									<!--  -->
+									<div class="input-group">
+										<input id="inputAllBoardListNo" name="allBoardListNo" value="" type="text" hidden/>
+										<input id="inputCardNo" name="cardNo" value="" type="text" hidden/>
+										<input id="inputTeamNo" name="teamNo" value="" type="text" hidden/>
+									</div>
+								</div>
+							</form>
+							
+							
+						</div>
+
+						<div class="card-modal-reply-list">
+							<span class="fas fa-paper-plane card-modal-title-icon"></span>
+							<h3 class="card-modal-reply-title" id="myModalLabel">Reply</h3>
+
+							<div class="card-modal-reply-top">
+								<div class="rounded-circle card-modal-profile"
+									style="float: left; background-color: white; overflow: hidden; height: 35px; width: 35px;">
+									<div
+										style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+										<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
+											href="javascript:void(0)"
+											style="width: auto; height: 50px; transform: translate(-50%, -50%);">
+									</div>
+								</div>
+
+								<div class="form-group card-modal-reply-input">
+									<textarea rows="1" class="autosize modal-textarea-reply"
+										id="modalreply"
+										style="overflow: hidden; overflow-wrap: break-word; resize: none;"
+										placeholder="댓글입력"></textarea>
+									<button type="button"
+										class="btn waves-effect waves-light btn-primary reply-done"
+										id="replydonebtn">Save</button>
+								</div>
+							</div>
+							<div class="replymargin"></div>
+							<div class="reply-list"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
+		<div class="page-wrapper">
+			<!-- 	<div id="kanbanlistall" th:text="{kanbanlist.allBoardListNo}" style="display:none;"></div> -->
+			<!-- 
+		<div th:text = "${kanban}"></div> -->
+			<div class="page-breadcrumb">
+				<div class="row">
+					<div class="col-7 align-self-center">
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
+						<div class="d-flex align-items-center">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb m-0 p-0">
+									<li class="breadcrumb-item"><i class="fab fa-trello"
+										style="margin-right: 8px;"></i><span>Kanban</span></li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- Container fluid  -->
+			<!-- ============================================================== -->
+			<div class="kanban-container" id="kanban-container">
+				<div class="kanban-canvas">
+					<div id="kanban" class="kanban">
+						<!-- ============================================================== -->
+						<!-- 칸반 list 시작 -->
+						<!-- ============================================================== -->
+						
+						<div class="kanban-list-wrapper" draggable="true"
+							th:each="kanbanlist: ${kanbanlist}">
+							<div class="kanban-list-content" th:attr="data-listno=${kanbanlist.kanbanListNo}, data-listindex=${kanbanlist.kanbanListIndex}" >
+								<div class="kanban-card" ondrop="drop(event, this)"
+									ondragover="allowDrop(event)">
+									<div class="kanban-list-header" id="listheader">
+										<h4 class="kanban-list-title"
+											th:text="${kanbanlist.listTitle}"></h4>
+									</div>
+									<a class="kanban-list-menu far fa-trash-alt"
+										data-toggle="modal" data-target="#info-alert-modal"></a>
+
+									<div class="divForDragNDrop">
+
+
+										<div class="kanban-card-list btn-card-hover" draggable="true"
+											th:each="card : ${kanbancardlist}"
+											th:if="${kanbanlist.kanbanListNo == card.kanbanListNo}" th:attr="data-cardno=${card.cardNo} , data-cardindex=${card.cardIndex}">
+											<span class='icon-pencil active-card-icon'
+												style='position: relative;'></span>
+											<div class="kanban-card-element" data-toggle="modal"
+												data-target="#card-content" >
+												<span class="kanban-card-title" th:text="${card.title}"></span>
+												<div class="kanban-card-badges">
+													<div th:classappend = "${card.commentCount > 0} ? 'kanban-card-badge' : ''" title="comments">
+														<span th:if="${card.commentCount > 0}" class="icon-bubble badge-icon"></span> <span
+															 th:if="${card.commentCount > 0}" class="badge-text" th:text="${card.commentCount}"></span>
+													</div>
+													<div th:classappend = "${card.fileCount > 0} ? 'kanban-card-badge' : ''" title="file">
+														<span th:if="${card.fileCount > 0}" class="icon-paper-clip badge-icon"></span> <span
+															th:if="${card.fileCount > 0}" class="badge-text" th:text="${card.fileCount}"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="kanban-card-add-list" id="addcardel">
+										<a class="kanban-card-add-el btn-light-my" id="addcard"><span class="icon">+</span><span
+											class="kanban-card-add-text">Add Card</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ============================================================== -->
+						<!-- 칸반 list  -->
+						<!-- ============================================================== -->
+
+						<!-- ============================================================== -->
+						<!-- 칸반 add list 시작  -->
+						<!-- ============================================================== -->
+						<div class="kanban-list-add-wrapper" id="addlist">
+							<a class="kanban-list-add btn-primary">
+								<div class="kanban-list-add-header">
+									<span class="icon">+</span> <span class="kanban-card-add-text">Add
+										List</span>
+								</div>
+							</a>
+						</div>
+						<!-- ============================================================== -->
+						<!-- 칸반 add list 끝  -->
+						<!-- ============================================================== -->
+					</div>
+				</div>
+			</div>
+			<!-- ============================================================== -->
+			<!-- End Container fluid  -->
+			<!-- ============================================================== -->
+		</div>
+
+
+
+
+
+		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+
+	</div>
+	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
 	<div th:replace="common/script :: script"></div>  
 	<script th:inline="javascript">
     /*<![CDATA[*/
-    var currUserNickname = [[${session.currentUser.nickname}]];
-	var currUserImage = [[${session.currentUser.image}]];
-	var teamNo = [[${team.teamNo}]];
-	var teamMember = [[${teamMember}]];
+       var currUser = [[${session.currentUser.id}]];
+       var currUserimage = [[${session.currentUser.image}]];
     /*]]>*/
     </script>
 
