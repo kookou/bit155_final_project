@@ -214,6 +214,32 @@
 	</update>
 	
 	
+	<update id="updateKanbanCardIndex">
+		UPDATE KANBAN_CARD
+		SET CARD_INDEX = #{endCardIDX}
+		WHERE CARD_NO = #{kanbanCardNo}	
+	</update>
+	
+		<update id="resortKanbanCardIndexSTB">	
+	<![CDATA[
+		UPDATE KANBAN_CARD
+		SET `CARD_INDEX` = `CARD_INDEX` -1
+		WHERE (`CARD_INDEX` BETWEEN (#{startCardIDX}+1) AND #{endCardIDX})
+		AND `CARD_NO` != #{kanbanCardNo}
+	]]>
+	</update>
+	
+
+	<update id="resortKanbanCardIndexBTS">	
+	<![CDATA[
+		UPDATE KANBAN_CARD
+		SET `CARD_INDEX` = `CARD_INDEX` +1
+		WHERE (`CARD_INDEX` BETWEEN #{endCardIDX} AND (#{startCardIDX}-1))
+		AND `CARD_NO` != #{kanbanCardNo}
+	]]>
+	</update>
+	
+	
 		
 	<update id="updateKanbanCardIndexBL">
 		UPDATE KANBAN_CARD
@@ -227,7 +253,8 @@
 	<![CDATA[
 		UPDATE KANBAN_CARD
 		SET `CARD_INDEX` = `CARD_INDEX` -1
-		WHERE `CARD_INDEX` > #{startCardIDX}
+		WHERE (`CARD_INDEX` > #{startCardIDX})
+			AND (KANBAN_LIST_NO = #{startListNo})
 	]]>
 	</update>
 	
@@ -237,7 +264,8 @@
 		UPDATE KANBAN_CARD
 		SET `CARD_INDEX` = `CARD_INDEX` +1
 		WHERE (`CARD_INDEX` >= #{endCardIDX})
-		AND `CARD_NO` != #{kanbanCardNo}
+			AND (`CARD_NO` != #{kanbanCardNo})
+			AND (KANBAN_LIST_NO = #{endListNo})
 	]]>
 	</update>
 
