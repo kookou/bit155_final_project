@@ -31,6 +31,7 @@
 	
 	<select id="kanbanCardList" resultMap="selectCardList">
 		select * from kanban_card
+		ORDER BY CARD_INDEX
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="selectCardList">
@@ -209,6 +210,34 @@
 		SET `KANBAN_LIST_INDEX` = `KANBAN_LIST_INDEX` +1
 		WHERE (`KANBAN_LIST_INDEX` BETWEEN #{endListIDX} AND (#{startListIDX}-1))
 		AND `KANBAN_LIST_NO` != #{kanbanListNo}
+	]]>
+	</update>
+	
+	
+		
+	<update id="updateKanbanCardIndexBL">
+		UPDATE KANBAN_CARD
+		SET CARD_INDEX = #{endCardIDX},
+			KANBAN_LIST_NO = #{endListNo}
+		WHERE CARD_NO = #{kanbanCardNo}	
+	</update>
+	
+	
+	<update id="resortStartKanbanCardIndex">	
+	<![CDATA[
+		UPDATE KANBAN_CARD
+		SET `CARD_INDEX` = `CARD_INDEX` -1
+		WHERE `CARD_INDEX` > #{startCardIDX}
+	]]>
+	</update>
+	
+
+	<update id="resortEndKanbanCardIndex">	
+	<![CDATA[
+		UPDATE KANBAN_CARD
+		SET `CARD_INDEX` = `CARD_INDEX` +1
+		WHERE (`CARD_INDEX` >= #{endCardIDX})
+		AND `CARD_NO` != #{kanbanCardNo}
 	]]>
 	</update>
 
