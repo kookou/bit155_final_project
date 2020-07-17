@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -123,7 +125,7 @@ public class KanbanAjaxController {
 	//카드 파일 목록 가져오기
 	@RequestMapping("cardFilesSelect.ajax")
 	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
-		System.out.println(" rest controller ");		
+		System.out.println(" rest controller ");
 		return service.getKanbanCardFiles(cardNo);
 	}
 	
@@ -134,6 +136,9 @@ public class KanbanAjaxController {
 		return service.deleteKanbanCardFile(fileNo, cardNo, teamNo);
 	}
 	
-	
+	@RequestMapping("StartDragCardUpdate.ajax")
+	public void dragCard(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		service.dragCard(cardNo, cardIndex, kanbanListNo);
+	}
 }
  

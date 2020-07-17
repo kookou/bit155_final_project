@@ -13,7 +13,8 @@ $('#editOkBtn').click(function() {
 		url: "editTeamName.do",
 		data: {
 			teamName: $('#inputTeamName').val(),
-			teamNo: teamNo
+			teamNo: teamNo,
+			id: currUser
 		},
 		success: function() {
 			teamTitleTag.text($('#inputTeamName').val());
@@ -72,7 +73,8 @@ $('#allBoardList').on('click', '.editBoardNameOk', function() {
 		data: {
 			name: $('.newBoardName').val(),
 			allBoardListNo: allBoardListNo,
-			teamNo: teamNo
+			teamNo: teamNo,
+			id: currUser
 		},
 		success: function() {
 			aTag.attr('class', 'sidebar-link redirectBoard');
@@ -115,7 +117,8 @@ $('#allBoardList').on('click', '.delBoard', function() {
 				url: "delBoard.do",
 				data: {
 					allBoardListNo: allBoardListNo,
-					teamNo: teamNo
+					teamNo: teamNo,
+					id: currUser
 				},
 				success: function() {
 					deleteBoard.remove();

@@ -36,10 +36,13 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 
 function addUploadFileTag(parent, file){
 	
+	let filePath = 'cloud/'+ $('#teamNo').val() + '/' + file.fileName;
+	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(file.originFileName);
 	parent.find('.card-modal-file-delete').last().attr('fileNo', file.fileNo);
-	parent.find('.card-modal-fileLink').last().attr('href', file.filePath);
+	parent.find('.card-modal-fileLink').last().attr('href', filePath);
+	parent.find('.card-modal-fileLink').last().attr('download', file.originFileName);
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -62,6 +65,14 @@ var endListNo = "";
 var startCardIDX = "";
 var endCardIDX = "";
 
+
+
+
+$(document).ready(function(){
+	var h = $(window).height();
+	console.log(h)
+	
+}
 
 
 
@@ -155,7 +166,6 @@ var endCardIDX = "";
         itemOrientation: "horizontal",
         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
         moveItemOnDrop: true,
-        
         start( event, ui ){
        	 console.log("start");
        	 startListIDX = ui.item.index();
@@ -559,7 +569,97 @@ $(document).on('click', "#addcard",function(){
     				 console.log(resData);
     			}
     		}); 
-        });   
+        });  
+        
+
+
+        $('.divForDragNDrop').sortable({
+       	 connectWith: '.divForDragNDrop',
+       	 start( event, ui ){
+       		 console.log("start");
+       		 currentCardNo = ui.item.data('cardno');
+       		 console.log(currentCardNo);
+       		 startCardIDX = ui.item.index();
+       		 console.log(startCardIDX);
+       		 startListNo = ui.item.parents('div.kanban-list-content').data('listno');
+       		 console.log(startListNo);
+       		 
+       	 },
+       	 receive: function(event, ui){ // 다른 리스트간 이동
+       		 console.log("receive");
+       		 endCardIDX = ui.item.index();
+              	 console.log(endCardIDX);
+              	 endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+       		 console.log(endListNo);
+
+              	 
+              	 if(startListNo != endListNo){
+              		 
+              		
+              		 $.ajax({
+              				url: "resortKanbanCard.ajax",
+              				data: {
+              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+              						"kanbanCardNo": $.trim(currentCardNo),
+              						"startListNo": $.trim(startListNo),
+              						"endListNo": $.trim(endListNo),
+              						"startCardIDX": $.trim(startCardIDX),
+              						"endCardIDX": $.trim(endCardIDX) 
+              						},
+              				success: function() {
+       		       					console.log("resortKanbanList 완료");
+              						},
+              				error: function(e){
+              					console.log("ajax error");
+              				}
+              		 });
+              	 }
+       	 },
+       	 stop( event, ui ){ // 같은 리스트 내에서 이동
+            	console.log("stop");
+            	console.log(ui.item.parent());
+            	
+            	//같은 카드 내에서 이동될 경우 recive를 사용할 수 없다
+            	endCardIDX = ui.item.index();
+            	console.log(endCardIDX);
+            	endListNo = ui.item.parents('div.kanban-list-content').data('listno');
+            	console.log(endListNo);
+
+            	
+             	 if((startListNo == endListNo) && (startCardIDX != endCardIDX)){
+               		
+              		 $.ajax({
+              				url: "resortKanbanCard.ajax",
+              				data: {
+              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
+              						"kanbanCardNo": $.trim(currentCardNo),
+              						"startListNo": $.trim(startListNo),
+              						"endListNo": $.trim(endListNo),
+              						"startCardIDX": $.trim(startCardIDX),
+              						"endCardIDX": $.trim(endCardIDX) 
+              						},
+              				success: function() {
+       		       					console.log("resortKanbanList 완료");
+              						},
+              				error: function(e){
+              					console.log("ajax error");
+              				}
+              		 });
+              	 }
+            	
+//           	kanbanListArr = ui.item.parent().find('.kanban-list-content');
+//           	
+//           	$.each(kanbanListArr, function(index, item){
+//           		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
+//           	});
+       		 
+       	 }
+       	 
+        });
+
+        
+        
+        
 });
 
 

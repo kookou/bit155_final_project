@@ -17,17 +17,18 @@ ALTER TABLE `USER`
 
 -- 게시판
 CREATE TABLE `BOARD_LIST` (
-	`BOARD_NO`      INT          NOT NULL, -- 글식별번호
-	`TITLE`         VARCHAR(100) NOT NULL, -- 글제목
-	`CONTENT`       TEXT         NOT NULL, -- 글내용
-	`VIEWS`         INT          NULL default 0,     -- 조회수
-	`WRITE_DATE`    DATETIME     NOT NULL, -- 작성일
-	`COMMENT_COUNT` INT          NULL default 0,     -- 댓글개수
-	`REFER`         INT          NULL default 0,     -- 그룹번호
-	`DEPTH`         INT          NULL default 0,     -- 들여쓰기
-	`STEP`          INT          NULL default 0,     -- 답변정렬
-	`ALL_BOARD_LIST_NO`            INT          NULL,     -- 게시판식별번호
-	`ID`            VARCHAR(50)  NULL      -- 아이디
+	`BOARD_NO`          INT          NOT NULL,        -- 글식별번호
+	`TITLE`             VARCHAR(100) NOT NULL,        -- 글제목
+	`CONTENT`           TEXT         NOT NULL,        -- 글내용
+	`VIEWS`             INT          NULL default 0,  -- 조회수
+	`WRITE_DATE`        DATETIME     NOT NULL,        -- 작성일
+	`COMMENT_COUNT`     INT          NULL default 0,  -- 댓글개수
+    `FILE_COUNT`        INT          default 0,       -- 파일 유무
+	`REFER`             INT          NULL default 0,  -- 그룹번호
+	`DEPTH`             INT          NULL default 0,  -- 들여쓰기
+	`STEP`              INT          NULL default 0,  -- 답변정렬
+	`ALL_BOARD_LIST_NO` INT          NULL,            -- 게시판식별번호
+	`ID`                VARCHAR(50)  NULL             -- 아이디
 );
 
 -- 게시판
@@ -299,15 +300,17 @@ ALTER TABLE `PLAN` modify `NO` INT auto_increment;
 
 -- 타임라인
 CREATE TABLE `TIMELINE` (
-	`TIMELINE_NO` INT          NOT NULL, -- 타임라인식별번호
-	`ACTION`      VARCHAR(100) NOT NULL, -- 액션
-	`FIELD`       VARCHAR(100) NULL,     -- 필드
-	`TEAM_NO`     INT          NOT NULL, -- 팀식별번호
-	`ID`          VARCHAR(50)  NOT NULL, -- 아이디
-	`DML_NO`      INT          NOT NULL  -- 작업구분식별번호
+	`TIMELINE_NO`  INT          NOT NULL, -- 타임라인식별번호
+	`COLUMN_NAME`  VARCHAR(100) NOT NULL, -- 해당테이블의 기본키 컬럼명
+	`COLUMN_NO`    INT          NOT NULL, -- 해당테이블의 식별번호
+    `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용
+    `HISTORY`      VARCHAR(100) NOT NULL, -- 작업내용
+    `DML_KIND`     varchar(20)  NOT NULL, -- 작업구분
+    `HISTORY_TIME` DATETIME NOT NULL,     -- 작업시간
+	`TEAM_NO`      INT          NOT NULL, -- 팀식별번호
+	`ID`           VARCHAR(50)  NOT NULL  -- 아이디
 );
-alter table `TIMELINE` change `ACTION` `COLUMN_NAME` VARCHAR(100) NOT NULL;
-alter table `TIMELINE` change `FIELD` `COLUMN_NO` INT NOT NULL;
+
 -- 타임라인
 ALTER TABLE `TIMELINE`
 	ADD CONSTRAINT `PK_TIMELINE` -- 타임라인 기본키
@@ -317,22 +320,6 @@ ALTER TABLE `TIMELINE`
         
 -- 타임라인 시퀀스
 ALTER TABLE `TIMELINE` modify `TIMELINE_NO` INT auto_increment;
-
--- 타임라인작업구분
-CREATE TABLE `TIMELINE_TYPE` (
-	`DML_NO`   INT         NOT NULL, -- 작업구분식별번호
-	`DML_NAME` VARCHAR(20) NOT NULL  -- 작업구분
-);
-
--- 타임라인작업구분
-ALTER TABLE `TIMELINE_TYPE`
-	ADD CONSTRAINT `PK_TIMELINE_TYPE` -- 타임라인작업구분 기본키
-		PRIMARY KEY (
-			`DML_NO` -- 작업구분식별번호
-		);
-        
--- 타임라인작업구분 시퀀스
-ALTER TABLE `TIMELINE_TYPE` modify `DML_NO` INT auto_increment;
 
 -- 그룹-팀 매핑
 CREATE TABLE `GROUP_TEAM` (
@@ -588,16 +575,6 @@ ALTER TABLE `TIMELINE`
 		REFERENCES `TEAM_MEMBER` ( -- 팀구성원
 			`TEAM_NO`, -- 팀식별번호
 			`ID`       -- 아이디
-		) ON DELETE CASCADE;
-
--- 타임라인
-ALTER TABLE `TIMELINE`
-	ADD CONSTRAINT `FK_TIMELINE_TYPE_TO_TIMELINE` -- 타임라인작업구분 -> 타임라인
-		FOREIGN KEY (
-			`DML_NO` -- 작업구분식별번호
-		)
-		REFERENCES `TIMELINE_TYPE` ( -- 타임라인작업구분
-			`DML_NO` -- 작업구분식별번호
 		) ON DELETE CASCADE;
 
 -- 그룹-팀 매핑

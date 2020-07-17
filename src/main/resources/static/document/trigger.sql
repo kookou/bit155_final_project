@@ -94,19 +94,173 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- ---------------------------------------------------------------------타임라인 트리거------------------------------------
 
 -- 보드 추가시 타임라인 테이블에 로그입력하기
--- DELIMITER $$
--- CREATE TRIGGER `INSERT_TIMELINE_TRIGGER`
--- AFTER INSERT ON `ALL_BOARD_LIST`
--- FOR EACH ROW 
--- BEGIN
--- 	INSERT INTO `TIMELINE`
--- 	SET
--- 	`COLUMN_NAME` = 'Personal',  
--- 	`ID` = NEW.`ID`;
--- END $$
--- DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_ALLBOARDLIST_TRIGGER`
+AFTER INSERT ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'BOARD LIST',
+		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
+		`HISTORY` = NEW.`NAME`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = NEW.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- 보드 삭제시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_ALLBOARDLIST_TRIGGER`
+AFTER delete ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'BOARD LIST',
+		`COLUMN_NO` = OLD.`ALL_BOARD_LIST_NO`,
+		`HISTORY` = OLD.`NAME`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
+
+-- 보드 수정시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_ALLBOARDLIST_TRIGGER`
+AFTER update ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'BOARD LIST',
+		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
+        `OLD_HISTORY` = OLD.`NAME`,
+		`HISTORY` = NEW.`NAME`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- -------------------
+-- 팀구성원 추가시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_TEAMMEMBER_TRIGGER`
+AFTER INSERT ON `TEAM_MEMBER`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'TEAM_NO',
+		`COLUMN_NO` = NEW.`TEAM_NO`,
+		`HISTORY` = NEW.`ID`,
+		`DML_KIND` = 'join team',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = NEW.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- 보드 삭제시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_TEAMMEMBER_TRIGGER`
+AFTER delete ON `TEAM_MEMBER`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'TEAM_NO',
+		`COLUMN_NO` = OLD.`TEAM_NO`,
+		`HISTORY` = OLD.`ID`,
+		`DML_KIND` = 'wthdr team',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
+
+-- -------------------
+-- 일반게시판 게시물 추가시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_BOARDLIST_TRIGGER`
+AFTER INSERT ON `BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `BOARD_LIST` b
+	  join `ALL_BOARD_LIST` a
+		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where b.`ALL_BOARD_LIST_NO` = NEW.`ALL_BOARD_LIST_NO`
+	   and `BOARD_NO` = NEW.`BOARD_NO`;
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = NEW.`BOARD_NO`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+select `name`, `team_no`
+  from `BOARD_LIST` b
+  join `all_board_list` a
+    on b.`all_board_list_no` = a.`all_board_list_no`
+ where b.`ALL_BOARD_LIST_NO` = 8
+   and `board_no` = 66;
+
+-- 보드 삭제시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_ALLBOARDLIST_TRIGGER`
+AFTER delete ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'BOARD LIST',
+		`COLUMN_NO` = OLD.`ALL_BOARD_LIST_NO`,
+		`HISTORY` = OLD.`NAME`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
+
+-- 보드 수정시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_ALLBOARDLIST_TRIGGER`
+AFTER update ON `ALL_BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = 'BOARD LIST',
+		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
+        `OLD_HISTORY` = OLD.`NAME`,
+		`HISTORY` = NEW.`NAME`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+
 
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;
