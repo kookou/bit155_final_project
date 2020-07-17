@@ -155,7 +155,6 @@ var endCardIDX = "";
         itemOrientation: "horizontal",
         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
         moveItemOnDrop: true,
-        
         start( event, ui ){
        	 console.log("start");
        	 startListIDX = ui.item.index();
