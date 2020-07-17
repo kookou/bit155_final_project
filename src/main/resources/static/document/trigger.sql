@@ -216,13 +216,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-select `name`, `team_no`
-  from `BOARD_LIST` b
-  join `all_board_list` a
-    on b.`all_board_list_no` = a.`all_board_list_no`
- where b.`ALL_BOARD_LIST_NO` = 8
-   and `board_no` = 66;
-
 -- 보드 삭제시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_DELETE_ALLBOARDLIST_TRIGGER`
