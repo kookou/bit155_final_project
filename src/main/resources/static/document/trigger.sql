@@ -188,7 +188,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- -------------------
+-- -------------------  여기부터 트리거 다 삭제했음..다시만들어서 확인하기
 -- 일반게시판 게시물 추가시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_BOARDLIST_TRIGGER`
@@ -216,39 +216,140 @@ BEGIN
 END $$
 DELIMITER ;
 
--- 보드 삭제시 타임라인 테이블에 로그입력하기
+-- 일반게시판 게시물 삭제시 타임라인 테이블에 로그입력하기
 DELIMITER $$
-CREATE TRIGGER `TIMELINE_DELETE_ALLBOARDLIST_TRIGGER`
-AFTER delete ON `ALL_BOARD_LIST`
+CREATE TRIGGER `TIMELINE_DELETE_BOARDLIST_TRIGGER`
+AFTER delete ON `BOARD_LIST`
 FOR EACH ROW 
 BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `BOARD_LIST` b
+	  join `ALL_BOARD_LIST` a
+		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where b.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
+	   and `BOARD_NO` = OLD.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
-		`COLUMN_NAME` = 'BOARD LIST',
-		`COLUMN_NO` = OLD.`ALL_BOARD_LIST_NO`,
-		`HISTORY` = OLD.`NAME`,
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = OLD.`BOARD_NO`,
+		`HISTORY` = OLD.`TITLE`,
 		`DML_KIND` = 'delete',
         `HISTORY_TIME` = now(),
-		`TEAM_NO` = OLD.`TEAM_NO`,
+		`TEAM_NO` = team_no1,
 		`ID` = OLD.`ID`;
 END $$
 DELIMITER ;
 
--- 보드 수정시 타임라인 테이블에 로그입력하기
+-- 일반게시판 게시물 수정시 타임라인 테이블에 로그입력하기
 DELIMITER $$
-CREATE TRIGGER `TIMELINE_UPDATE_ALLBOARDLIST_TRIGGER`
-AFTER update ON `ALL_BOARD_LIST`
+CREATE TRIGGER `TIMELINE_UPDATE_BOARDLIST_TRIGGER`
+AFTER update ON `BOARD_LIST`
 FOR EACH ROW 
 BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `BOARD_LIST` b
+	  join `ALL_BOARD_LIST` a
+		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where b.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
+	   and `BOARD_NO` = OLD.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
-		`COLUMN_NAME` = 'BOARD LIST',
-		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
-        `OLD_HISTORY` = OLD.`NAME`,
-		`HISTORY` = NEW.`NAME`,
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = NEW.`BOARD_NO`,
+        `OLD_HISTORY` = OLD.`TITLE`,
+		`HISTORY` = NEW.`TITLE`,
 		`DML_KIND` = 'update',
         `HISTORY_TIME` = now(),
-		`TEAM_NO` = OLD.`TEAM_NO`,
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- -------------------
+-- 칸반보드리스트 insert시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_KANBANLIST_TRIGGER`
+AFTER INSERT ON `KANBAN_LIST`
+FOR EACH ROW 
+BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `KANBAN_LIST` k
+	  join `ALL_BOARD_LIST` a
+		on k.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where k.`ALL_BOARD_LIST_NO` = NEW.`ALL_BOARD_LIST_NO`
+	   and `KANBAN_LIST_NO` = NEW.`KANBAN_LIST_NO`;
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = NEW.`KANBAN_LIST_NO`,
+		`HISTORY` = NEW.`LIST_TITLE`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- 칸반보드리스트 delete시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_KANBANLIST_TRIGGER`
+AFTER delete ON `KANBAN_LIST`
+FOR EACH ROW 
+BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `KANBAN_LIST` k
+	  join `ALL_BOARD_LIST` a
+		on k.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where k.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
+	   and `KANBAN_LIST_NO` = OLD.`KANBAN_LIST_NO`;
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = OLD.`KANBAN_LIST_NO`,
+		`HISTORY` = OLD.`LIST_TITLE`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
+
+-- 일반게시판 게시물 수정시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_BOARDLIST_TRIGGER`
+AFTER update ON `BOARD_LIST`
+FOR EACH ROW 
+BEGIN
+	DECLARE board_name varchar(50);
+    DECLARE team_no1 int;
+    
+	select `NAME`, `team_no` into board_name, team_no1
+	  from `BOARD_LIST` b
+	  join `ALL_BOARD_LIST` a
+		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where b.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
+	   and `BOARD_NO` = OLD.`BOARD_NO`;
+	INSERT INTO `TIMELINE`
+	SET
+		`COLUMN_NAME` = board_name,
+		`COLUMN_NO` = NEW.`BOARD_NO`,
+        `OLD_HISTORY` = OLD.`TITLE`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
 		`ID` = NEW.`ID`;
 END $$
 DELIMITER ;
