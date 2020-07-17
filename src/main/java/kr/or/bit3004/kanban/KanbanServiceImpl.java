@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -54,7 +55,7 @@ public class KanbanServiceImpl implements KanbanService {
 
 	
 	@Override
-	public List<Map> kanbanCardList(){
+	public List<KanbanCard> kanbanCardList(){
 		return dao.kanbanCardList();
 	}
 	
@@ -253,7 +254,27 @@ public class KanbanServiceImpl implements KanbanService {
 		fileList = dao.getKanbanCardFiles(cardNo);
 		return fileList;
 	}
-
+	
+	//드래그앤 드랍 카드 업데이트 (스타트 리스트)
+	@Override
+	public void dragCard(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		Map<Integer, Integer> cardnomap = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> cardindexmap = new HashMap<Integer, Integer>();
+		for(int i = 0 ; i < cardNo.length; i++) {
+			cardnomap.put(i, cardNo[i]);
+			System.out.println(cardnomap.get(i));
+		}
+		for(int i = 0; i < cardIndex.length; i ++ ) {
+			cardindexmap.put(i, cardIndex[i]);
+			
+		}
+		for(int i = 0; i < cardNo.length; i ++) {
+			dao.dragCardUpdate(cardnomap.get(i), cardindexmap.get(i), kanbanListNo);
+			System.out.println(cardnomap.get(i));
+			System.out.println(cardnomap.get(i));
+		}
+		
+	}
 
 	@Override
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
@@ -310,5 +331,6 @@ public class KanbanServiceImpl implements KanbanService {
 		}
 		
 	}
+
 
 }

@@ -20,18 +20,18 @@
 		  where a.all_board_list_no = #{allBoardListNo}
 		  ORDER BY refer DESC, step asc --> 
   
-	  select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, NICKNAME, team_no,
-	   (select count(*) from board_comment where board_no=b.board_no) as comment_count
-	  from ( 
-	   SELECT * 
-	     FROM board_list
-	   ) b
-		inner join `user` u
-	      on u.id = b.id
-		inner join all_board_list a
-	      on a.all_board_list_no = b.all_board_list_no
+	  select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, nickname, team_no,
+	 (select count(*) from board_comment where board_no=b.board_no) as comment_count
+	    from ( 
+	     select * 
+	       from board_list
+	    ) b
+	  inner join `user` u
+         on u.id = b.id
+	  inner join all_board_list a
+         on a.all_board_list_no = b.all_board_list_no
 	  where a.all_board_list_no = #{allBoardListNo}
-	  ORDER BY refer DESC, step asc
+	  order by refer desc, step asc
 	</select>
 	 
 	<!-- 조회수 증가 -->
@@ -61,38 +61,38 @@
 	<!-- 게시판 답글 -->
 	<update id="updateReboardAddstep" parameterType="kr.or.bit3004.board.Board">
 		update board_list set step=step+1
-		where refer=#{refer} and step &gt; #{step}
+		 where refer=#{refer} and step &gt; #{step}
 	</update>
 	
 	<select id="getMaxRefer" resultType="int">
 		select ifnull(max(refer),0) 
-		from board_list
+		  from board_list
 	</select>
 	
 	<!-- 현재 내가 읽은 글의 refer, depth, step -->
 	<select id="getReferDepthStep" resultType="kr.or.bit3004.board.Board">
 		select refer,depth,step 
-		from board_list
-		where board_no=#{boardNo}
+		  from board_list
+		 where board_no=#{boardNo}
 	</select>
 	
 	<!-- 위치 -->
 	<select id="getStep" resultType="int">
 		select ifnull(min(step),0) step
-		from board_list
-		where refer=#{refer} and step &gt; #{step} and depth &lt;= #{depth}
+		  from board_list
+		 where refer=#{refer} and step &gt; #{step} and depth &lt;= #{depth}
 	</select>
 	
 	<select id="getMaxStep" resultType="int">
 		select max(step)+1 maxStep
-		from board_list
-		where refer=#{refer}
+		  from board_list
+		 where refer=#{refer}
 	</select>
 	
 	<update id="updateStep" parameterType="kr.or.bit3004.board.Board">
 		update board_list
-		set step=step+1
-		where refer=#{refer} and step &gt;= #{step}
+		   set step=step+1
+		 where refer=#{refer} and step &gt;= #{step}
 	</update>
 	
 	<insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
@@ -109,7 +109,8 @@
 	
 	<!-- 업로드 게시판 번호 가져오기 -->
 	<select id="getBoardNo" resultType="int">
-		select max(`board_no`) from `board_list`
+		select max(`board_no`) 
+		  from `board_list`
 	</select>
 	
 

@@ -15,10 +15,8 @@
 </head>
 <body>
    <div class="header" data-ix="show-nav">
-      <div class="w-nav nav" data-collapse="medium"
-         data-animation="over-right" data-duration="400" data-contain="1"
-         data-doc-height="1" data-ix="nav-bar-load"
-         data-easing="ease-out-quart" data-easing2="ease-out-quart">
+   <div class="test" > 
+<div class="w-nav nav" data-collapse="medium" data-animation="over-right" data-duration="400" data-contain="1" data-doc-height="1" data-ix="nav-bar-load" data-easing="ease-out-quart" data-easing2="ease-out-quart" style="opacity: 1; transform: translateX(0px) translateY(0px); transition: opacity 1200ms ease 0s, transform 1200ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s;">
          <div class="w-container">
             <a class="w-nav-brand w-clearfix brand" href="https://bit.ly/1CD88Kh" target="_blank">
                <!-- 로고 이미지 -->
@@ -32,12 +30,13 @@
                <a class="w-hidden-main w-inline-block close-link" href="#">
                   <div>✕</div>
                </a>
-               <a class="w-nav-link nav-link sign-up" target="_blank" href="https://bit.ly/1CD88Kh">Go to Webflow.com</a>
+               <a class="w-nav-link nav-link sign-up" target="_blank" href="https://bit.ly/1CD88Kh" style="max-width: 940px;">Go to Webflow.com</a>
             </nav>
             <div class="w-nav-button menu-button">
                <div class="w-icon-nav-menu"></div>
             </div>
          </div>
+      <div class="w-nav-overlay" data-wf-ignore=""></div>
       </div>
       <div class="w-container contents">
          <div class="main-heading-wrapper">
@@ -49,17 +48,22 @@
                <a style="text-decoration: none; color: white;" target="_blank" th:href="@{teamMain.do(id=${session.currentUser.id})}">지금 시작하기</a>
             </div>
          </div>
-         <a href="boardList.do?allBoardListNo=1&teamNo=1">boardList Test</a> <br>
+         <!-- <a href="boardList.do?allBoardListNo=1&teamNo=1">boardList Test</a> <br>
          <a href="insertForm.do">insertForm Test</a> <br>
          <a href="include.do">인클루드 테스트</a> <br>
          <a href="file.do">클라우드 테스트(임시폐업)</a> <br>
          <a th:href="@{paint.do(teamNo=3)}">그림판 테스트</a> <br>
          <a href="calendar.do?teamNo=2">Calendar 테스트</a> <br>
          <a href="todoList.do?teamNo=1">todoList 테스트</a> <br>
-         <a href="kanban.do">칸반 테스트</a> <br>
+         <a href="kanban.do">칸반 테스트</a> <br> -->
+         <a class="w-inline-block down-arrow" href="#more" data-ix="down-arrow">
+              <div class="down-inner" data-ix="down-arrow-on-load" style="opacity: 1; transform: translateX(0px) translateY(0px); transition: opacity 600ms cubic-bezier(0.645, 0.045, 0.355, 1) 0s, transform 500ms ease 0s;"><img src="http://uploads.webflow.com/5317d67d660658b254000454/534dd73febf08c3e3000003c_arrow-down.svg" alt="534dd73febf08c3e3000003c_arrow-down.svg">
+              </div>
+          </a>
       </div>
       <div class="object _2"></div>
       <div class="object"></div>
+   </div>
    </div>
    <div class="w-nav nav-scroll" data-collapse="small"
       data-animation="over-right" data-duration="600" data-contain="1"

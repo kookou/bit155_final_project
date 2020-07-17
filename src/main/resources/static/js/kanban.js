@@ -36,10 +36,13 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 
 function addUploadFileTag(parent, file){
 	
+	let filePath = 'cloud/'+ $('#teamNo').val() + '/' + file.fileName;
+	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(file.originFileName);
 	parent.find('.card-modal-file-delete').last().attr('fileNo', file.fileNo);
-	parent.find('.card-modal-fileLink').last().attr('href', file.filePath);
+	parent.find('.card-modal-fileLink').last().attr('href', filePath);
+	parent.find('.card-modal-fileLink').last().attr('download', file.originFileName);
 }
 
 function addCardFileCountTag(parent, fileCount){
@@ -62,6 +65,14 @@ var endListNo = "";
 var startCardIDX = "";
 var endCardIDX = "";
 
+
+
+
+$(document).ready(function(){
+	var h = $(window).height();
+	console.log(h)
+	
+}
 
 
 
@@ -155,7 +166,6 @@ var endCardIDX = "";
         itemOrientation: "horizontal",
         handle: ".kanban-list-title", // 이부분 주석처리하면 버튼도 움직임..
         moveItemOnDrop: true,
-        
         start( event, ui ){
        	 console.log("start");
        	 startListIDX = ui.item.index();
