@@ -311,8 +311,10 @@
 	<div th:replace="common/script :: script"></div>  
 	<script th:inline="javascript">
     /*<![CDATA[*/
-       var currUser = [[${session.currentUser.id}]];
-       var currUserimage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${team.teamNo}]];
+	var teamMember = [[${teamMember}]];
     /*]]>*/
     </script>
 
