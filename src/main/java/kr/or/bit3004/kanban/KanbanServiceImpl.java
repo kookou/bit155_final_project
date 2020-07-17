@@ -301,6 +301,7 @@ public class KanbanServiceImpl implements KanbanService {
 	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
 		System.out.println("ServiceImpl resortKanbanCard");
 		System.out.println("kanbanCardNo : "+kanbanCardNo);
+		System.out.println(endListNo +"/"+ kanbanCardNo +"/"+ startCardIDX +"/"+ endCardIDX);
 				
 		int difference = Math.abs(endCardIDX-startCardIDX);
 		System.out.println(difference);
@@ -309,7 +310,6 @@ public class KanbanServiceImpl implements KanbanService {
 			//업데이트
 			dao.updateKanbanCardIndex(kanbanCardNo, endCardIDX);
 			
-			//정렬
 			if(endCardIDX-startCardIDX > 0) {
 				System.out.println("큰 index로 이동");
 				// 중간 index들 -1

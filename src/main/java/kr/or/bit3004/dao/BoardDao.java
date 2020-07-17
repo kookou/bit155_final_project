@@ -49,7 +49,7 @@ public interface BoardDao {
 	
 	public int getStep (Board board);
 	
-	public int getMaxStep (Board board);
+	public int getMaxStep (int refer);
 	
 	public void updateStep(Board board);
 	
