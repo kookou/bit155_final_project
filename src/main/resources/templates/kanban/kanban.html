@@ -32,21 +32,7 @@
 
 </head>
 <body>
-<script>
-/*       (function () {
-        let addressBarHeight = computeAddressBarHeight();
-        document.documentElement.style.setProperty('--addressBarHeight', `${addressBarHeight}px`);
-
-        function computeAddressBarHeight() {
-          const div = document.createElement('div');
-          Object.assign(div.style, { height: '100vh', position: 'fixed' });
-          document.body.appendChild(div);
-          const size = Math.max(div.getBoundingClientRect().height - window.innerHeight, 0);
-          document.body.removeChild(div);
-          return size;
-        }
-      })(); */
-    </script>
+<div th:replace="common/scriptA :: scriptA"></div> 
 	<div class="drag-container"></div>
 	
 		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
@@ -308,11 +294,13 @@
 
 	</div>
 	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-	<div th:replace="common/script :: script"></div>  
+	<div th:replace="common/scriptB :: scriptB"></div> 
 	<script th:inline="javascript">
     /*<![CDATA[*/
-       var currUser = [[${session.currentUser.id}]];
-       var currUserimage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${team.teamNo}]];
+	var teamMember = [[${teamMember}]];
     /*]]>*/
     </script>
 

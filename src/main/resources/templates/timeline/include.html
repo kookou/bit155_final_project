@@ -17,6 +17,7 @@
 </head>
 
 <body>
+<div th:replace="common/scriptA :: scriptA"></div> 
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -91,7 +92,7 @@
 	</div>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <div th:replace="common/script :: script"></div>
+<div th:replace="common/scriptB :: scriptB"></div> 
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];

@@ -68,11 +68,6 @@ var endCardIDX = "";
 
 
 
-$(document).ready(function(){
-	var h = $(window).height();
-	console.log(h)
-	
-}
 
 
 
@@ -243,10 +238,9 @@ $('.redirectBoard').on('click',function(){
 })
 
 $(document).ready(function(){
-	console.log("될거니???????")
-	console.log(boardName)
 	$('#board-name').text(boardName)
 })
+
 //리스트 추가
 $(document).on('click', '#addlist', function() {
 
@@ -656,9 +650,6 @@ $(document).on('click', "#addcard",function(){
        	 }
        	 
         });
-
-        
-        
         
 });
 
