@@ -68,6 +68,14 @@ var endCardIDX = "";
 
 
 
+$(document).ready(function(){
+	var h = $(window).height();
+	console.log(h)
+	
+}
+
+
+
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
 	 start( event, ui ){

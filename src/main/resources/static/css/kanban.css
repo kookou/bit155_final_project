@@ -6,6 +6,9 @@
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
+  
+    min-height:50px;
+
 }
 .kanban-list-content{
     background-color: #ebecf0;
@@ -114,7 +117,8 @@
 .kanban-card-title{
     clear: both;
     display: block;
-    margin: 0 0 4px;
+  
+    margin: 0 0 4px 0;
     overflow: hidden;
     text-decoration: none;
     word-wrap: break-word;
@@ -720,16 +724,19 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
     display: none;
 }
 .display-control{
-	display: inline-block;
+	/* display: inline-block; */
+	overflow:auto; 
+    height:150px;
 }
 
 .divForDragNDrop {
 	min-height:15px;
+	overflow-y: auto;
+	/* max-height: calc(100vh - 11.8rem); */
+	grid-template-rows: auto minmax(auto, 1fr) auto;
+	
 }
 
-.kanban-list-wrapper {
-	min-height:50px;
-}
 
 .ui-sortable-placeholder { 
 	@extend .kanban-list-wrapper;
@@ -745,6 +752,8 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 	transform: rotateZ(4deg) scale(1.05);
 	transition: 0.2s transform;
 }
+
+
 /* .btn-card-hover:hover .active-card-icon{
     top : 10%;
     left: 90%;
