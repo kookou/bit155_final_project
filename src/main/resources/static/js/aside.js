@@ -307,22 +307,6 @@ $('#sendInvitationBtn').click(function() {
 	});
 });
 
-//////////////////////////////////////////////////////////////////////////////////////// 페이지 이동
-$('#allBoardList').on('click', '.redirectBoard', function() {
-//	console.log($(this).find('.hiddenAllBoardListNo').val());
-	console.log($(this).find('i').attr('class'));
-	if($(this).find('i').attr('class') == 'fas fa-table') {
-		location.href = 'boardList.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
-	} else {
-		location.href = 'kanban.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
-	}
-});
-
-/*$('#canvas').on('click',function(){
-	console.log('hi');
-	location.href = 'paint.do?teamNo=' + teamNo;
-});*/
-
 //팀 탈퇴하기
 $('#teamOut').click(function() {
 	Swal.fire({
@@ -359,3 +343,19 @@ $('#teamOut').click(function() {
 		}
 	});
 });
+
+////////////////////////////////////////////////////////////////////////////////////////페이지 이동
+$('#allBoardList').on('click', '.redirectBoard', function() {
+	//console.log($(this).find('.hiddenAllBoardListNo').val());
+	console.log($(this).find('i').attr('class'));
+	if($(this).find('i').attr('class') == 'fas fa-table') {
+		location.href = 'boardList.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
+	} else {
+		location.href = 'kanban.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
+	}
+});
+
+/*$('#canvas').on('click',function(){
+console.log('hi');
+location.href = 'paint.do?teamNo=' + teamNo;
+});*/
