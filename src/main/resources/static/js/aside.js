@@ -122,16 +122,16 @@ $('#allBoardList').on('click', '.delBoard', function() {
 				},
 				success: function() {
 					deleteBoard.remove();
+					Swal.fire(
+							'Deleted!',
+							'"' + boardName + '" Board가 삭제되었습니다.',
+							'success'
+					)
 				},
 				error: function(e) {
 					console.log(e);
 				}
 			});
-			Swal.fire(
-	    		'Deleted!',
-	    		'"' + boardName + '" Board가 삭제되었습니다.',
-	    		'success'
-	    	)
 		}
 	});
 	
@@ -318,13 +318,44 @@ $('#allBoardList').on('click', '.redirectBoard', function() {
 	}
 });
 
-
-
 /*$('#canvas').on('click',function(){
 	console.log('hi');
 	location.href = 'paint.do?teamNo=' + teamNo;
 });*/
 
-
-
-
+//팀 탈퇴하기
+$('#teamOut').click(function() {
+	Swal.fire({
+		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
+		text: "초대를 통해서 다시 들어올 수 있습니다.",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		cancelButtonText: 'No, keep it'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: "teamOut.do",
+				data: {
+					teamNo: teamNo,
+					id: currUser
+				},
+				success: function() {
+					Swal.fire({
+						title: '"' + teamName + '"',
+						text: 'Team에서 탈퇴되었습니다.',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.value) {
+							location.href = 'teamMain.do?id='+currUser;
+						}
+					});
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		}
+	});
+});

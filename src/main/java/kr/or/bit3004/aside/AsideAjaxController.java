@@ -33,6 +33,12 @@ public class AsideAjaxController {
 		return service.selectInvitedMemberInfo(groupAndTeam.getId());
 	}
 	
+	@RequestMapping("teamOut.do")
+	public void deleteTeamMember(GroupAndTeam groupAndTeam) {
+		service.deleteTeamMember(groupAndTeam);
+		service.deleteGroupTeam(groupAndTeam);
+	}
+	
 	@RequestMapping("editBoardName.do")
 	public void updateAsideBoardName(AllBoardList allBoardList) {
 		service.updateAsideBoardName(allBoardList);
