@@ -104,6 +104,7 @@ FOR EACH ROW
 BEGIN
 	INSERT INTO `TIMELINE`
 	SET
+		`TABLE_NAME` = 'ALL_BOARD_LIST',
 		`COLUMN_NAME` = 'BOARD LIST',
 		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = NEW.`NAME`,
@@ -122,6 +123,7 @@ FOR EACH ROW
 BEGIN
 	INSERT INTO `TIMELINE`
 	SET
+		`TABLE_NAME` = 'ALL_BOARD_LIST',
 		`COLUMN_NAME` = 'BOARD LIST',
 		`COLUMN_NO` = OLD.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = OLD.`NAME`,
@@ -140,6 +142,7 @@ FOR EACH ROW
 BEGIN
 	INSERT INTO `TIMELINE`
 	SET
+		`TABLE_NAME` = 'ALL_BOARD_LIST',
 		`COLUMN_NAME` = 'BOARD LIST',
 		`COLUMN_NO` = NEW.`ALL_BOARD_LIST_NO`,
         `OLD_HISTORY` = OLD.`NAME`,
@@ -160,6 +163,7 @@ FOR EACH ROW
 BEGIN
 	INSERT INTO `TIMELINE`
 	SET
+		`TABLE_NAME` = 'TEAM_MEMBER',
 		`COLUMN_NAME` = 'TEAM_NO',
 		`COLUMN_NO` = NEW.`TEAM_NO`,
 		`HISTORY` = NEW.`ID`,
@@ -170,7 +174,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- 보드 삭제시 타임라인 테이블에 로그입력하기
+-- 팀구성원 탈퇴시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_DELETE_TEAMMEMBER_TRIGGER`
 AFTER delete ON `TEAM_MEMBER`
@@ -178,6 +182,7 @@ FOR EACH ROW
 BEGIN
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'TEAM_MEMBER',
 		`COLUMN_NAME` = 'TEAM_NO',
 		`COLUMN_NO` = OLD.`TEAM_NO`,
 		`HISTORY` = OLD.`ID`,
@@ -188,7 +193,6 @@ BEGIN
 END $$
 DELIMITER ;
 
--- -------------------  여기부터 트리거 다 삭제했음..다시만들어서 확인하기
 -- 일반게시판 게시물 추가시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_BOARDLIST_TRIGGER`
@@ -197,7 +201,6 @@ FOR EACH ROW
 BEGIN
 	DECLARE board_name varchar(50);
     DECLARE team_no1 int;
-    
 	select `NAME`, `team_no` into board_name, team_no1
 	  from `BOARD_LIST` b
 	  join `ALL_BOARD_LIST` a
@@ -206,6 +209,7 @@ BEGIN
 	   and `BOARD_NO` = NEW.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`BOARD_NO`,
 		`HISTORY` = NEW.`TITLE`,
@@ -233,6 +237,7 @@ BEGIN
 	   and `BOARD_NO` = OLD.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = OLD.`BOARD_NO`,
 		`HISTORY` = OLD.`TITLE`,
@@ -251,7 +256,6 @@ FOR EACH ROW
 BEGIN
 	DECLARE board_name varchar(50);
     DECLARE team_no1 int;
-    
 	select `NAME`, `team_no` into board_name, team_no1
 	  from `BOARD_LIST` b
 	  join `ALL_BOARD_LIST` a
@@ -260,6 +264,7 @@ BEGIN
 	   and `BOARD_NO` = OLD.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`BOARD_NO`,
         `OLD_HISTORY` = OLD.`TITLE`,
@@ -271,7 +276,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- -------------------
+-- ------------------- 여기부터 만들어야댐 위에 보드 수정, 삭제는 확인 못해봄
 -- 칸반보드리스트 insert시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_KANBANLIST_TRIGGER`

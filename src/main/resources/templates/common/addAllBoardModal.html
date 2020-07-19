@@ -61,7 +61,7 @@
                 <div class="text-center">
                     <h5 class="text-warning">Team Leader 권한을<br>넘겨줄 팀원을 선택하세요</h5>
                     <div class="card">
-						<div class="card-body text-left">
+						<div class="card-body text-left alert-warning">
                             <div class="custom-control custom-radio" th:each="member: ${teamMember}" th:if="${member.id != session.currentUser.id}">
                                 <input type="radio" th:id="${member.id}" name="passLeader" th:value="${member.id}" class="custom-control-input">
                                 <label class="custom-control-label" th:for="${member.id}" th:text="${member.id}"></label>
