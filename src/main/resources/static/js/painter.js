@@ -838,7 +838,7 @@ function initHistory() {
 
   var newColor = drwaCommand();
   newColor.mode = "color";
-  newColor.color = "red";
+  newColor.color = "black";
   commandHistory.push(newColor.toCommand());
   addHistory(newColor.toCommand());
 }

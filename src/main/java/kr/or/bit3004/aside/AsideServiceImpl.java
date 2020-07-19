@@ -57,6 +57,16 @@ public class AsideServiceImpl implements AsideService {
 	}
 	
 	@Override
+	public void deleteTeamMember(GroupAndTeam groupAndTeam) {
+		dao.deleteTeamMember(groupAndTeam);
+	}
+	
+	@Override
+	public void deleteGroupTeam(GroupAndTeam groupAndTeam) {
+		dao.deleteGroupTeam(groupAndTeam);
+	}
+	
+	@Override
 	public User selectInvitedMemberInfo(String id) {
 		return dao.selectInvitedMemberInfo(id);
 	}

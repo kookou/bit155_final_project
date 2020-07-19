@@ -69,27 +69,34 @@
 					<li class="nav-small-cap"><span class="hide-menu">Components</span></li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
+						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
 							<i class="fas fa-cloud-download-alt"></i> 
 							<span class="hide-menu">Cloud</span>
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
+						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
 							<i class="fas fa-calendar-check"></i> 
-							<span class="hide-menu">Calender </span>
+							<span class="hide-menu">Calender</span>
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false" > 
+						<a class="sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
 							<i class="fas fa-paint-brush"></i> 
-							<a th:href="@{paint.do(teamNo=${team.teamNo})}">
-							Canvas
-							</a>
+							<span class="hide-menu">Canvas</span>
 						</a>
 					</li>
-
+					<br>
+					<li class="sidebar-item text-right">
+						<a class="sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
+							<span class="hide-menu">팀나가기 <i class="fas fa-share-square"></i></span>
+						</a>
+					</li>
 				</ul>
+				<br>
+				<div class="text-right" style="padding-right:20px;">
+					<a href="javascript:void(0);" style="color:#818181;" id="teamOut">팀나가기 <i class="fas fa-share-square"></i></a>
+				</div>
 			</nav>
 			<!-- End Sidebar navigation -->
 		</div>
@@ -101,6 +108,7 @@
 	    	var currUserNick = [[${session.currentUser.nickname}]];
 	    	var currUserImage = [[${session.currentUser.image}]];
 	    	var teamNo = [[${team.teamNo}]];
+	    	var teamName = [[${team.teamName}]];
 	    /*]]>*/
 	    </script>
 	</aside>

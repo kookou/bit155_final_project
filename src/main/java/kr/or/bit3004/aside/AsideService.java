@@ -15,6 +15,8 @@ public interface AsideService {
 	public int getCurrAllBoardListNo();
 	public List<String> searchUser(String id);
 	public void inviteMember(GroupAndTeam groupAndTeam);
+	public void deleteTeamMember(GroupAndTeam groupAndTeam);
+	public void deleteGroupTeam(GroupAndTeam groupAndTeam);
 	public User selectInvitedMemberInfo(String id);
 	public void updateAsideBoardName(AllBoardList allBoardList);
 	public void deleteAsideBoard(AllBoardList allBoardList);
