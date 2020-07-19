@@ -15,6 +15,6 @@ public interface UserService {
 	public User getUser(String id);
 	public List<User> getUserList();
 	
-	public void deleteUser(String id);
+	public void deleteUser(String id, HttpSession session);
 	
 }

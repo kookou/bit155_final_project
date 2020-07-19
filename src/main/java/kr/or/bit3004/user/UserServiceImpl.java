@@ -113,9 +113,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteUser(String id) {
-		System.out.println("dao");
+	public void deleteUser(String id, HttpSession session) {
+		System.out.println("dao deleteUser");
 		dao.deleteUser(id);
+		session.invalidate();
 		
 	}
 
