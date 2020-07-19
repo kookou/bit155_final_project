@@ -95,7 +95,7 @@ END $$
 DELIMITER ;
 
 -- ---------------------------------------------------------------------타임라인 트리거------------------------------------
-
+-- ------------------ ALL_BOARD_LIST
 -- 보드 추가시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_ALLBOARDLIST_TRIGGER`
@@ -154,7 +154,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- -------------------
+-- ------------------- TEAM_MEMBER
 -- 팀구성원 추가시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_TEAMMEMBER_TRIGGER`
@@ -193,6 +193,7 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- ---------------------- BOARD_LIST
 -- 일반게시판 게시물 추가시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_BOARDLIST_TRIGGER`
@@ -223,22 +224,20 @@ DELIMITER ;
 -- 일반게시판 게시물 삭제시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_DELETE_BOARDLIST_TRIGGER`
-AFTER delete ON `BOARD_LIST`
+before delete ON `BOARD_LIST`
 FOR EACH ROW 
 BEGIN
-	DECLARE board_name varchar(50);
+	DECLARE board_name1 varchar(50);
     DECLARE team_no1 int;
-    
-	select `NAME`, `team_no` into board_name, team_no1
+	select `NAME`, `team_no` into board_name1, team_no1
 	  from `BOARD_LIST` b
 	  join `ALL_BOARD_LIST` a
 		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
-	 where b.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
-	   and `BOARD_NO` = OLD.`BOARD_NO`;
+	 where `BOARD_NO` = OLD.`BOARD_NO`;
 	INSERT INTO `TIMELINE`
 	SET
     	`TABLE_NAME` = 'BOARD_LIST',
-		`COLUMN_NAME` = board_name,
+		`COLUMN_NAME` = board_name1,
 		`COLUMN_NO` = OLD.`BOARD_NO`,
 		`HISTORY` = OLD.`TITLE`,
 		`DML_KIND` = 'delete',
@@ -276,7 +275,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- ------------------- 여기부터 만들어야댐 위에 보드 수정, 삭제는 확인 못해봄
+-- ------------------- KANBAN_LIST
 -- 칸반보드리스트 insert시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_INSERT_KANBANLIST_TRIGGER`
@@ -285,7 +284,6 @@ FOR EACH ROW
 BEGIN
 	DECLARE board_name varchar(50);
     DECLARE team_no1 int;
-    
 	select `NAME`, `team_no` into board_name, team_no1
 	  from `KANBAN_LIST` k
 	  join `ALL_BOARD_LIST` a
@@ -294,6 +292,7 @@ BEGIN
 	   and `KANBAN_LIST_NO` = NEW.`KANBAN_LIST_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`KANBAN_LIST_NO`,
 		`HISTORY` = NEW.`LIST_TITLE`,
@@ -307,12 +306,11 @@ DELIMITER ;
 -- 칸반보드리스트 delete시 타임라인 테이블에 로그입력하기
 DELIMITER $$
 CREATE TRIGGER `TIMELINE_DELETE_KANBANLIST_TRIGGER`
-AFTER delete ON `KANBAN_LIST`
+before delete ON `KANBAN_LIST`
 FOR EACH ROW 
 BEGIN
 	DECLARE board_name varchar(50);
     DECLARE team_no1 int;
-    
 	select `NAME`, `team_no` into board_name, team_no1
 	  from `KANBAN_LIST` k
 	  join `ALL_BOARD_LIST` a
@@ -321,6 +319,7 @@ BEGIN
 	   and `KANBAN_LIST_NO` = OLD.`KANBAN_LIST_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = OLD.`KANBAN_LIST_NO`,
 		`HISTORY` = OLD.`LIST_TITLE`,
@@ -331,27 +330,27 @@ BEGIN
 END $$
 DELIMITER ;
 
--- 일반게시판 게시물 수정시 타임라인 테이블에 로그입력하기
+-- 칸반보드리스트 update시 타임라인 테이블에 로그입력하기
 DELIMITER $$
-CREATE TRIGGER `TIMELINE_UPDATE_BOARDLIST_TRIGGER`
-AFTER update ON `BOARD_LIST`
+CREATE TRIGGER `TIMELINE_UPDATE_KANBANLIST_TRIGGER`
+AFTER update ON `KANBAN_LIST`
 FOR EACH ROW 
 BEGIN
 	DECLARE board_name varchar(50);
     DECLARE team_no1 int;
-    
 	select `NAME`, `team_no` into board_name, team_no1
-	  from `BOARD_LIST` b
+	  from `KANBAN_LIST` k
 	  join `ALL_BOARD_LIST` a
-		on b.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
-	 where b.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
-	   and `BOARD_NO` = OLD.`BOARD_NO`;
+		on k.`ALL_BOARD_LIST_NO` = a.`ALL_BOARD_LIST_NO`
+	 where k.`ALL_BOARD_LIST_NO` = OLD.`ALL_BOARD_LIST_NO`
+	   and `KANBAN_LIST_NO` = OLD.`KANBAN_LIST_NO`;
 	INSERT INTO `TIMELINE`
 	SET
+    	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
-		`COLUMN_NO` = NEW.`BOARD_NO`,
-        `OLD_HISTORY` = OLD.`TITLE`,
-		`HISTORY` = NEW.`TITLE`,
+		`COLUMN_NO` = NEW.`KANBAN_LIST_NO`,
+        `OLD_HISTORY` = OLD.`LIST_TITLE`,
+		`HISTORY` = NEW.`LIST_TITLE`,
 		`DML_KIND` = 'update',
         `HISTORY_TIME` = now(),
 		`TEAM_NO` = team_no1,
@@ -359,6 +358,189 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- ------------------- KANBAN_CARD
+-- 칸반보드카드 insert시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_KANBANCARD_TRIGGER`
+AFTER INSERT ON `KANBAN_CARD`
+FOR EACH ROW 
+BEGIN
+	DECLARE kanban_list_name varchar(50);
+    DECLARE team_no1 int;
+    DECLARE id1 varchar(50);
+	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+	  from `KANBAN_CARD` c
+	  join `KANBAN_LIST` l
+		on c.`kanban_list_no` = l.`kanban_list_no`
+	  join `all_board_list` a
+		on l.`all_board_list_no` = a.`all_board_list_no`
+	 where `card_no` = new.`card_no`;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'KANBAN_CARD',
+		`COLUMN_NAME` = kanban_list_name,
+		`COLUMN_NO` = NEW.`CARD_NO`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = id1;
+END $$
+DELIMITER ;
+
+-- 칸반보드카드 update시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_KANBANCARD_TRIGGER`
+AFTER update ON `KANBAN_CARD`
+FOR EACH ROW 
+BEGIN
+	DECLARE kanban_list_name varchar(50);
+    DECLARE team_no1 int;
+	DECLARE id1 varchar(50);
+	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+	  from `KANBAN_CARD` c
+	  join `KANBAN_LIST` l
+		on c.`kanban_list_no` = l.`kanban_list_no`
+	  join `all_board_list` a
+		on l.`all_board_list_no` = a.`all_board_list_no`
+	 where `card_no` = old.`card_no`;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'KANBAN_CARD',
+		`COLUMN_NAME` = kanban_list_name,
+		`COLUMN_NO` = NEW.`CARD_NO`,
+        `OLD_HISTORY` = OLD.`TITLE`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = id1;
+END $$
+DELIMITER ;
+
+-- 칸반보드카드 delete시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_KANBANCARD_TRIGGER`
+before delete ON `KANBAN_CARD`
+FOR EACH ROW 
+BEGIN
+	DECLARE kanban_list_name varchar(50);
+    DECLARE team_no1 int;
+	DECLARE id1 varchar(50);
+	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+	  from `KANBAN_CARD` c
+	  join `KANBAN_LIST` l
+		on c.`kanban_list_no` = l.`kanban_list_no`
+	  join `all_board_list` a
+		on l.`all_board_list_no` = a.`all_board_list_no`
+	 where `card_no` = old.`card_no`;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'KANBAN_CARD',
+		`COLUMN_NAME` = kanban_list_name,
+		`COLUMN_NO` = OLD.`KANBAN_LIST_NO`,
+		`HISTORY` = OLD.`TITLE`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = id1;
+END $$
+DELIMITER ;
+
+-- ---------------------- BOARD_COMMENT
+-- 댓글 추가시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_BOARDCOMMENT_TRIGGER`
+AFTER INSERT ON `BOARD_COMMENT`
+FOR EACH ROW 
+BEGIN
+	DECLARE titl1 varchar(50);
+    DECLARE board_card_no1 int;
+    DECLARE team_no1 int;
+	SELECT IF(b.board_no is null, kc.title, bl.title) AS title, IF(b.board_no is null, b.card_no, b.board_no) AS board_card_no, 
+		   IF(b.board_no is null, abl2.team_no, abl.team_no) AS team_no into titl1, board_card_no1, team_no1
+	  FROM board_comment b
+	  LEFT JOIN board_list AS bl ON (b.board_no is not null AND b.board_no = bl.board_no)
+	  LEFT JOIN kanban_card AS kc ON (b.board_no is null AND b.card_no = kc.card_no)
+	  LEFT JOIN all_board_list AS abl ON (b.board_no is not null AND bl.all_board_list_no = abl.all_board_list_no)
+	  LEFT JOIN kanban_list AS kl ON (b.board_no is null AND kc.kanban_list_no = kl.kanban_list_no)
+	  LEFT JOIN all_board_list AS abl2 ON (b.board_no is null AND kl.all_board_list_no = abl2.all_board_list_no)
+	 where comment_no = new.comment_no;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'BOARD_COMMENT',
+		`COLUMN_NAME` = titl1,
+		`COLUMN_NO` = NEW.`COMMENT_NO`,
+		`HISTORY` = NEW.`CONTENT`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- 일반게시판 게시물 수정시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_BOARDCOMMENT_TRIGGER`
+AFTER update ON `BOARD_COMMENT`
+FOR EACH ROW 
+BEGIN
+	DECLARE titl1 varchar(50);
+    DECLARE board_card_no1 int;
+    DECLARE team_no1 int;
+	SELECT IF(b.board_no is null, kc.title, bl.title) AS title, IF(b.board_no is null, b.card_no, b.board_no) AS board_card_no, 
+		   IF(b.board_no is null, abl2.team_no, abl.team_no) AS team_no into titl1, board_card_no1, team_no1
+	  FROM board_comment b
+	  LEFT JOIN board_list AS bl ON (b.board_no is not null AND b.board_no = bl.board_no)
+	  LEFT JOIN kanban_card AS kc ON (b.board_no is null AND b.card_no = kc.card_no)
+	  LEFT JOIN all_board_list AS abl ON (b.board_no is not null AND bl.all_board_list_no = abl.all_board_list_no)
+	  LEFT JOIN kanban_list AS kl ON (b.board_no is null AND kc.kanban_list_no = kl.kanban_list_no)
+	  LEFT JOIN all_board_list AS abl2 ON (b.board_no is null AND kl.all_board_list_no = abl2.all_board_list_no)
+	 where comment_no = old.comment_no;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'BOARD_COMMENT',
+		`COLUMN_NAME` = titl1,
+		`COLUMN_NO` = NEW.`COMMENT_NO`,
+        `OLD_HISTORY` = OLD.`CONTENT`,
+		`HISTORY` = NEW.`CONTENT`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- 일반게시판 게시물 삭제시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_BOARDCOMMENT_TRIGGER`
+before delete ON `BOARD_COMMENT`
+FOR EACH ROW 
+BEGIN
+	DECLARE titl1 varchar(50);
+    DECLARE board_card_no1 int;
+    DECLARE team_no1 int;
+	SELECT IF(b.board_no is null, kc.title, bl.title) AS title, IF(b.board_no is null, b.card_no, b.board_no) AS board_card_no, 
+		   IF(b.board_no is null, abl2.team_no, abl.team_no) AS team_no into titl1, board_card_no1, team_no1
+	  FROM board_comment b
+	  LEFT JOIN board_list AS bl ON (b.board_no is not null AND b.board_no = bl.board_no)
+	  LEFT JOIN kanban_card AS kc ON (b.board_no is null AND b.card_no = kc.card_no)
+	  LEFT JOIN all_board_list AS abl ON (b.board_no is not null AND bl.all_board_list_no = abl.all_board_list_no)
+	  LEFT JOIN kanban_list AS kl ON (b.board_no is null AND kc.kanban_list_no = kl.kanban_list_no)
+	  LEFT JOIN all_board_list AS abl2 ON (b.board_no is null AND kl.all_board_list_no = abl2.all_board_list_no)
+	 where comment_no = old.comment_no;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'BOARD_COMMENT',
+		`COLUMN_NAME` = titl1,
+		`COLUMN_NO` = OLD.`COMMENT_NO`,
+		`HISTORY` = OLD.`CONTENT`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
 
 
 -- 트리거가 만들어졌는지 확인
