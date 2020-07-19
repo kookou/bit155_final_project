@@ -140,4 +140,8 @@ update `all_board_list`
  where `all_board_list_no` = 1
    and `team_no` = 1;
    
-   insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'jinwon', 1)
+   insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'jinwon', 1);
+   
+delete from team_member where id='a@3004.com' and team_no=1;
+delete from group_team where id='a@3004.com' and team_no=1;
+select * from `group_team`;

@@ -52,3 +52,25 @@
        </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 팀리더 넘겨주는 모달 -->
+<div id="passLeaderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <h5 class="text-warning">Team Leader 권한을<br>넘겨줄 팀원을 선택하세요</h5>
+                    <div class="card">
+						<div class="card-body text-left">
+                            <div class="custom-control custom-radio" th:each="member: ${teamMember}" th:if="${member.id != session.currentUser.id}">
+                                <input type="radio" th:id="${member.id}" name="passLeader" th:value="${member.id}" class="custom-control-input">
+                                <label class="custom-control-label" th:for="${member.id}" th:text="${member.id}"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="passLeaderOkBtn">OK</button>
+               </div>
+           </div>
+       </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

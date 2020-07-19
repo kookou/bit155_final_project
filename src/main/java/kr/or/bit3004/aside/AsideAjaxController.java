@@ -1,6 +1,8 @@
 package kr.or.bit3004.aside;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,16 @@ public class AsideAjaxController {
 	
 	@RequestMapping("teamOut.do")
 	public void deleteTeamMember(GroupAndTeam groupAndTeam) {
+		service.deleteTeamMember(groupAndTeam);
+		service.deleteGroupTeam(groupAndTeam);
+	}
+	
+	@RequestMapping("leaderTeamOut.do")
+	public void updateNewLeader(GroupAndTeam groupAndTeam, String newLeader) {
+		Map<String, Object> newLeaderAndTeamNo = new HashMap<>();
+		newLeaderAndTeamNo.put("newLeader", newLeader);
+		newLeaderAndTeamNo.put("teamNo", groupAndTeam.getTeamNo());
+		service.updateNewLeader(newLeaderAndTeamNo);
 		service.deleteTeamMember(groupAndTeam);
 		service.deleteGroupTeam(groupAndTeam);
 	}
