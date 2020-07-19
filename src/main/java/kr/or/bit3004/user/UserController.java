@@ -5,10 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit3004.aside.AsideService;
 
@@ -31,17 +33,17 @@ public class UserController {
 	}
 	
 //	//이거 안먹음 
-//	@RequestMapping("/login/oauth2/code/naver")
-//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session) {
-//		
-//		
-//		System.out.println("여기는 naver callback");
-//		OAuth2AccessToken oauthToken;
-//		oauthToken = customOAuth2Service.getAccessToken();
-//		System.out.println(oauthToken.getScopes());
-//		
-//		return "user/signIn";
-//	}
+	@RequestMapping("/login/oauth2/code/naver")
+	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session,  HttpServletRequest request) {
+		
+		
+		System.out.println("여기는 naver callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = customOAuth2Service.getAccessToken();
+		System.out.println(oauthToken.getScopes());
+		
+		return "user/signIn";
+	}
 	
 	
 	// 가입 폼
@@ -105,6 +107,16 @@ public class UserController {
 	public String deleteUser(String id) {
 		service.deleteUser(id);
 		return "redirect:signin";
+	}
+	
+	
+	
+	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다
+	@RequestMapping(value="/login/oauth2/code/naver", method=RequestMethod.GET)
+	public void callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+	         HttpServletRequest request) {
+		System.out.println("code" + code);
+		System.out.println("state"+state);
 	}
 
 	

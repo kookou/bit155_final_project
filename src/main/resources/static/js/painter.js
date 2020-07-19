@@ -1,3 +1,9 @@
+
+
+
+
+///////////////////////////////////////////기존 painter.js
+//구현을 위한 재료들 도형, 컬러 등..
 var cvs;
 var canvas;
 
@@ -94,7 +100,7 @@ var paintMouseMoveAction = {
 
 var pos = {
   isDraw: false,
-  color: "red",
+  color: "black",
   colorIdx: 0,
   drawMode: 0,
   filled: false,

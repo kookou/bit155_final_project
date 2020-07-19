@@ -17,9 +17,10 @@ public interface KanbanDao {
 	public void updateKanbanListTitle(KanbanList kanbanlist);
 	
 	public int getANewKanbanListNo();
+	
 	public int getANewCardNo();
 	
-	public List<Map> kanbanCardList();
+	public List<KanbanCard> kanbanCardList();
 
 	public List<Map> kanbanListJoinCard(int allBoardListNo);
 
@@ -30,6 +31,17 @@ public interface KanbanDao {
 	
 	//get A KanbanList By KanbanListNo
 	public KanbanList getAKanbanListByKanbanListNo(int kanbanListNo);
+	
+	//update Kanban List Index
+	public void updateKanbanListIndex(int kanbanListNo, int endListIDX);
+	
+	//resort Kanban List Index(S to B)
+	public void resortKanbanListIndexSTB(int kanbanListNo, int startListIDX, int endListIDX);
+	
+	//resort Kanban List Index(B to S)
+	public void resortKanbanListIndexBTS(int kanbanListNo, int startListIDX, int endListIDX);
+	
+	
 
 	public void deleteKanbanList(String listTitle);
 	public int insertCardTitle(String title ,  int cardIndex, int kanbanListNo);
@@ -38,6 +50,28 @@ public interface KanbanDao {
 	public KanbanCard kanbanCardContent(int cardNo);
 
 	public void updateCardDescrioption(String content,int cardNo);
+	
+	
+	//update a Kanban Card Index
+	public void updateKanbanCardIndex(int kanbanCardNo, int endCardIDX);
+	
+	//resort Kanban Cards Index(S to B)
+	public void resortKanbanCardIndexSTB(int endListNo, int kanbanCardNo, int startCardIDX, int endCardIDX);
+	
+	//resort Kanban Cards Index(B to S)
+	public void resortKanbanCardIndexBTS(int endListNo, int kanbanCardNo, int startCardIDX, int endCardIDX);
+	
+	//update a Kanban Card Index Between Lists
+	public void updateKanbanCardIndexBL(int kanbanCardNo, int endListNo, int endCardIDX);
+
+	//resort Start Point Kanban Cards Index
+	public void resortStartKanbanCardIndex(int startListNo,int startCardIDX);
+		
+	//resort End Point Kanban Cards Index
+	public void resortEndKanbanCardIndex(int endListNo, int endCardIDX, int kanbanCardNo);
+
+	
+	
 	public int insertCardReply(String content, int cardNo, String id);
 
 	
@@ -60,5 +94,7 @@ public interface KanbanDao {
 	
 	//delete a Kanban Card File
 	public void deleteKanbanCardFile(int fileNo);
+	
+	public void dragCardUpdate(int cardNo , int cardIndex, int kanbanListNo);
 
 }

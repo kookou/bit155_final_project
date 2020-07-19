@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +27,8 @@ public class KanbanServiceImpl implements KanbanService {
 	
 	@Override
 	public int insertListTitle(KanbanList kanbanlist, Principal principal) {
+		System.out.println(kanbanlist);
+		
 		int newKanbanListNo = 0;
 		kanbanlist.setId(principal.getName());
 		
@@ -52,7 +55,7 @@ public class KanbanServiceImpl implements KanbanService {
 
 	
 	@Override
-	public List<Map> kanbanCardList(){
+	public List<KanbanCard> kanbanCardList(){
 		return dao.kanbanCardList();
 	}
 	
@@ -251,5 +254,83 @@ public class KanbanServiceImpl implements KanbanService {
 		fileList = dao.getKanbanCardFiles(cardNo);
 		return fileList;
 	}
+	
+	//드래그앤 드랍 카드 업데이트 (스타트 리스트)
+	@Override
+	public void dragCard(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		Map<Integer, Integer> cardnomap = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> cardindexmap = new HashMap<Integer, Integer>();
+		for(int i = 0 ; i < cardNo.length; i++) {
+			cardnomap.put(i, cardNo[i]);
+			System.out.println(cardnomap.get(i));
+		}
+		for(int i = 0; i < cardIndex.length; i ++ ) {
+			cardindexmap.put(i, cardIndex[i]);
+			
+		}
+		for(int i = 0; i < cardNo.length; i ++) {
+			dao.dragCardUpdate(cardnomap.get(i), cardindexmap.get(i), kanbanListNo);
+			System.out.println(cardnomap.get(i));
+			System.out.println(cardnomap.get(i));
+		}
+		
+	}
+
+	@Override
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("ServiceImpl resortKanbanList");
+		dao.updateKanbanListIndex(kanbanListNo, endListIDX);
+		
+		int difference = Math.abs(endListIDX-startListIDX);
+		System.out.println(difference);
+		
+		if(endListIDX-startListIDX > 0) {
+			System.out.println("큰 index로 이동");
+			// 중간 index들 -1
+			dao.resortKanbanListIndexSTB(kanbanListNo, startListIDX, endListIDX);
+
+		}else if(endListIDX-startListIDX < 0) {
+			System.out.println("작은 index로 이동");
+			// 중간 index들 +1
+			dao.resortKanbanListIndexBTS(kanbanListNo, startListIDX, endListIDX);
+		}	
+	}
+
+
+	@Override
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
+		System.out.println("ServiceImpl resortKanbanCard");
+		System.out.println("kanbanCardNo : "+kanbanCardNo);
+		System.out.println(endListNo +"/"+ kanbanCardNo +"/"+ startCardIDX +"/"+ endCardIDX);
+				
+		int difference = Math.abs(endCardIDX-startCardIDX);
+		System.out.println(difference);
+		
+		if(startListNo == endListNo) { // 같은 리스트 내에서 카드 이동
+			//업데이트
+			dao.updateKanbanCardIndex(kanbanCardNo, endCardIDX);
+			
+			if(endCardIDX-startCardIDX > 0) {
+				System.out.println("큰 index로 이동");
+				// 중간 index들 -1
+				dao.resortKanbanCardIndexSTB(endListNo, kanbanCardNo, startCardIDX, endCardIDX);
+			}else{
+				System.out.println("작은 index로 이동");
+				// 중간 index들 +1
+				dao.resortKanbanCardIndexBTS(endListNo, kanbanCardNo, startCardIDX, endCardIDX);
+			}
+			
+		}else { // 다른 리스트간 카드 이동	
+			//업데이트
+			dao.updateKanbanCardIndexBL(kanbanCardNo, endListNo, endCardIDX);
+			
+			//정렬
+			dao.resortStartKanbanCardIndex(startListNo, startCardIDX);
+			dao.resortEndKanbanCardIndex(endListNo, endCardIDX, kanbanCardNo);
+			
+		}
+		
+	}
+
 
 }

@@ -33,11 +33,12 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo,int allBoardListNo) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo) {
 		service.updateReadCount(boardNo);
 		model.addAttribute("teamNo", teamNo);
 		//model.addAttribute("boardNo", boardNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
+		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
 		//model.addAttribute("refer",refer);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
@@ -57,12 +58,13 @@ public class BoardController {
 		return "board/insert";
 	}
 	
-	//게시판 글쓰기
+	//게시판 글쓰기, 업로드
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
 	public String insertBoardService(Board board , int teamNo , MultipartHttpServletRequest request){
-		System.out.println(board);
+		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
+		
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	

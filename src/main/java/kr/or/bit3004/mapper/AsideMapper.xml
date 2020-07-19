@@ -57,5 +57,25 @@
 	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
 		select image, nickname, id from `user` where id=#{id}
 	</select>
+	
+	<!-- aside의 board name 수정 -->
+	<update id="updateAsideBoardName" parameterType="kr.or.bit3004.aside.AllBoardList">
+		update `all_board_list`
+		   set `name` = #{name}, `id` = #{id}
+		 where `all_board_list_no` = #{allBoardListNo}
+		   and `team_no` = #{teamNo}
+	</update>
+	
+	<!-- aside의 board 삭제 -->
+	<delete id="deleteAsideBoard" parameterType="kr.or.bit3004.aside.AllBoardList">
+		delete from `all_board_list` 
+		 where `all_board_list_no` = #{allBoardListNo}
+		   and `team_no` = #{teamNo}
+	</delete>
+	
+	<!-- Team name 수정 -->
+	<update id="updateTeamName" parameterType="kr.or.bit3004.groupAndTeam.Team">
+		update `team` set `team_name` = #{teamName} where `team_no` = #{teamNo}
+	</update>
 </mapper>
 

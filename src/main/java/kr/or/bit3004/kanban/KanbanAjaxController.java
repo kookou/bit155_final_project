@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +43,14 @@ public class KanbanAjaxController {
 		System.out.println(kanbanlist);
 		return service.updateKanbanListTitle(kanbanlist, principal);
 	}
+	
+	
+	@RequestMapping("resortKanbanList.ajax")
+	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+		System.out.println("Controller resortKanbanList");
+		service.resortKanbanList(allBoardListNo, kanbanListNo, startListIDX, endListIDX);
+	}
+	
 		
 	@RequestMapping("InsertKanbanCard.ajax")
 	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo) {
@@ -83,6 +93,13 @@ public class KanbanAjaxController {
 		service.deleteKanbanCard(cardNo);
 	}
 	
+	@RequestMapping("resortKanbanCard.ajax")
+	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
+		System.out.println("Controller resortKanbanCard");
+		service.resortKanbanCard(allBoardListNo, kanbanCardNo, startListNo, endListNo, startCardIDX, endCardIDX);
+	}
+	
+	
 	@RequestMapping("CardReplySelect.ajax")
 	public List<KanbanComment> getKanbanCommentList(int cardNo){
 		return service.getKanbanCommentList(cardNo);		
@@ -108,7 +125,7 @@ public class KanbanAjaxController {
 	//카드 파일 목록 가져오기
 	@RequestMapping("cardFilesSelect.ajax")
 	public List<KanbanUpload> getKanbanCardFiles(int cardNo) {
-		System.out.println(" rest controller ");		
+		System.out.println(" rest controller ");
 		return service.getKanbanCardFiles(cardNo);
 	}
 	
@@ -119,6 +136,9 @@ public class KanbanAjaxController {
 		return service.deleteKanbanCardFile(fileNo, cardNo, teamNo);
 	}
 	
-	
+	@RequestMapping("StartDragCardUpdate.ajax")
+	public void dragCard(int[]cardNo , int[] cardIndex, int kanbanListNo) {
+		service.dragCard(cardNo, cardIndex, kanbanListNo);
+	}
 }
  
