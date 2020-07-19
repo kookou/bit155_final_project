@@ -192,12 +192,12 @@
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
-						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name"th:text="${team.teamName}"></h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
 									<li class="breadcrumb-item"><i class="fab fa-trello"
-										style="margin-right: 8px;"></i><span>Kanban</span></li>
+										style="margin-right: 8px;"></i><span class="boardName">Kanban</span></li>
 								</ol>
 							</nav>
 						</div>
@@ -302,6 +302,12 @@
 	var teamNo = [[${team.teamNo}]];
 	var teamMember = [[${teamMember}]];
     /*]]>*/
+    
+   	 var boardname;
+    $(document).on('click', '.board-name', function() {
+      console.log($(this));
+ 
+   });
     </script>
 
 
