@@ -81,7 +81,6 @@ public class UserController {
 			   model.addAttribute("allBoardList", asideService.getAllBoardList(intTeamNo));
 		}
 
-		
 		return "user/editUser";
 	}
 	
