@@ -23,7 +23,7 @@ public class UserController {
 	@Autowired
 	private MailService mailService;
 	
-	
+	@Autowired	
 	private AsideService asideService;
 	
 	//로그인 폼
@@ -67,9 +67,11 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(int teamNo, Model model) {	
+	public String editUserInfo(int teamNo, Model model) {
+		System.out.println("editUserInfo");
 		System.out.println("teamNo : "+teamNo);
 		   model.addAttribute("teamNo", teamNo);
+		   System.out.println("team : "+ asideService.getTeam(teamNo));
 		   model.addAttribute("team", asideService.getTeam(teamNo));
 		   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		   model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
