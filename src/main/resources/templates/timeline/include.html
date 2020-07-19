@@ -12,7 +12,6 @@
     <title>Bit 155 Final Project</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
-    <link href="css/kanban.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
@@ -24,11 +23,10 @@
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
-     <th:block th:replace="common/header :: header"></th:block>
-     <th:block th:replace="common/aside :: aside"></th:block>
-     <th:block th:replace="common/addAllBoardModal"></th:block>
-     <th:block th:replace="common/chat"></th:block>
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	<th:block th:replace="common/header :: header"></th:block>
+	<th:block th:replace="common/aside :: aside"></th:block>
+	<th:block th:replace="common/addAllBoardModal"></th:block>
+	<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 	<div class="page-wrapper">
 	    <!-- ============================================================== -->
 	    <!-- Container fluid  -->
@@ -97,7 +95,7 @@
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];
 			if(bgColor != 'ffffff') {
-				$('.page-wrapper').css("background", "#"+bgColor);
+				$('.card-body').css("background", "#"+bgColor);
 			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];

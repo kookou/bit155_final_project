@@ -1,8 +1,17 @@
+//개인페이지에서는 채팅버튼 숨기기
+if(window.location.pathname == '/teamMain.do') {
+	$("#fixedBtn").hide();
+} else {
+	$("#fixedBtn").show();
+}
+
+//팝오버 띄우기
 $("#fixedBtn").popover({
 /*  title: "Notifiche",*/
 	html: true,
 	sanitize: false,
 	placement: "bottom",
+	container: "body",
 	content: function() {
 	  return $("#alert_list").html();
 	}
