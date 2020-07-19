@@ -59,7 +59,6 @@
 	    <th:block th:replace="common/header :: header"></th:block>
 	    <th:block th:replace="common/aside :: aside"></th:block>
 	    <th:block th:replace="common/addAllBoardModal"></th:block>
-	    <th:block th:replace="common/chat"></th:block>
 	    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 	    <div class="page-wrapper">
 		    <div class="container-fluid">
@@ -338,13 +337,15 @@
 	    }
 	    
 	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
-	 /*   	if(currUser != id){
+	 	/*   	
+	 	if(currUser != id){
 	   		$('#editBtn').hide();
 	   		$('#deleteBtn').hide();
 	   	} else if(currUser == id){
 	   		$('#editBtn').show();
 	   		$('#deleteBtn').show();
-	   	} */
+	   	} 
+	   	*/
 	   	
 	   	//다운로드 창
 	   	$("#downLoadBtn").popover({
