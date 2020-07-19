@@ -75,15 +75,15 @@
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" th:href="@{calender.do(teamNo=${team.teamNo})}" aria-expanded="false"> 
+						<a class="sidebar-link sidebar-link" th:href="@{calendar.do(teamNo=${team.teamNo})}" aria-expanded="false"> 
 							<i class="fas fa-calendar-check"></i> 
-							<span class="hide-menu">Calender </span>
+							<span class="hide-menu">Calendar </span>
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link sidebar-link" href="javascript:void(0)" aria-expanded="false" > 
+						<a class="sidebar-link sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
 							<i class="fas fa-paint-brush"></i> 
-							<span th:href="@{paint.do(teamNo=${team.teamNo})}">
+							<span >
 							Canvas
 							</span>
 						</a>

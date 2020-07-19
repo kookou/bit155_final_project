@@ -26,26 +26,35 @@
 </head>
 
 <body>
- 	<!-- <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div> -->
+<div th:replace="common/scriptA :: scriptA"></div> 
+ 		<div class="drag-container"></div>
+	
+		<!-- <input type=text id="teamNo" th:value="${param.teamNo}" hidden/> -->
+
+	<div class="preloader">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
-     <th:block th:replace="common/header :: header"></th:block>
-     <th:block th:replace="common/aside :: aside"></th:block>
+    	 <th:block th:replace="common/header :: header"></th:block>
+		<th:block th:replace="common/aside :: aside"></th:block>
+		<th:block th:replace="common/addAllBoardModal"></th:block>
+		<th:block th:replace="common/chat"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
         
        <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
+            
+            
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-7 align-self-center">
@@ -80,99 +89,99 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="">
-                                <div class="row">
-                                    <div class="col-lg-3 border-right pr-0">
-                                        <div class="card-body border-bottom">
-                                            <h4 class="card-title mt-2">Drag & Drop Event</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="calendar-events" class="">
-                                                        <div class="calendar-events mb-3" data-class="bg-info"><i
-                                                                class="fa fa-circle text-info mr-2"></i>Event One</div>
-                                                        <div class="calendar-events mb-3" data-class="bg-success"><i
-                                                                class="fa fa-circle text-success mr-2"></i> Event Two
-                                                        </div>
-                                                        <div class="calendar-events mb-3" data-class="bg-danger"><i
-                                                                class="fa fa-circle text-danger mr-2"></i>Event Three
-                                                        </div>
-                                                        <div class="calendar-events mb-3" data-class="bg-warning"><i
-                                                                class="fa fa-circle text-warning mr-2"></i>Event Four
-                                                        </div>
-                                                    </div>
-                                                    <!-- checkbox -->
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="drop-remove">
-                                                        <label class="custom-control-label" for="drop-remove">Remove
-                                                            after drop</label>
-                                                    </div>
-                                                     <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                  				      data-target="#centermodal">Add plan</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-12">
                                         <div class="card-body b-l calender-sidebar">
                                             <div id="calendar"> 
                                            </div>
                                         </div>
                                     </div>
+                                    
                                <!-- 모달..? -->
-                                  <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                			<div class="modal-header modal-colored-header bg-primary">
-                                          <h4 class="modal-title" id="success-header-modalLabel">Add plan </h4>
-                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                 <form class="pl-3 pr-3"  id="calendarData" name="calendarData">
+         <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
 
-                                                    <div class="form-group">
-                                                        <label for="title">Title</label>
-                                                        <input class="form-control" type="text" id="title" name="title"
-                                                            required="" placeholder="Title">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="startDate">Start</label>
-                                                        <input class="form-control" type="date" id="startDate" name="startDate"
-                                                            required="" placeholder="Start date">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="endDate">End</label>
-                                                        <input class="form-control" type="date" required="" name="endDate"
-                                                            id="endDate" placeholder="End date">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="color">Color</label>
-                                                        <input class="form-control" type="color" required="" name="color"
-                                                            id="color" placeholder="Color" value="ddddzjffj">
-                       <select><option>보라색</option><option>초록색</option><option>빨간색</option><option>노란색</option></select>
-                                                    </div>
-            										<div class="form-group">
-                                                        <label for="description">Description</label>
-                                                        <input class="form-control" type="text" required="" name="description"
-                                                            id="description" placeholder="Description">
-                                                    </div>
-
-                                                </form>
-                                            </div>
-                                              <div class="modal-footer">
-                                              <div class="form-group text-center">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                                                <button type="button" id="plan-add" class="btn btn-primary">Add</button>
-                                                <p class="showCalendar" id="showCalendar" th:text=${showCalendar} hidden></p>
-                                              </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                                </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-allDay">하루종일</label>
+                                <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-title">일정명</label>
+                                <input class="inputModal" type="text" name="edit-title" id="edit-title"
+                                    required="required" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-start">시작</label>
+                                <input class="inputModal" type="text" name="edit-start" id="edit-start" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-end">끝</label>
+                                <input class="inputModal" type="text" name="edit-end" id="edit-end" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-type">구분</label>
+                                <select class="inputModal" type="text" name="edit-type" id="edit-type">
+                                    <option value="카테고리1">카테고리1</option>
+                                    <option value="카테고리2">카테고리2</option>
+                                    <option value="카테고리3">카테고리3</option>
+                                    <option value="카테고리4">카테고리4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-color">색상</label>
+                                <select class="inputModal" name="color" id="edit-color">
+                                    <option value="#D25565" style="color:#D25565;">빨간색</option>
+                                    <option value="#9775fa" style="color:#9775fa;">보라색</option>
+                                    <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+                                    <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+                                    <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                    <option value="#63e6be" style="color:#63e6be;">연두색</option>
+                                    <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+                                    <option value="#4d638c" style="color:#4d638c;">남색</option>
+                                    <option value="#495057" style="color:#495057;">검정색</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-desc">설명</label>
+                                <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+                                    id="edit-desc"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer modalBtnContainer-addEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="save-event">저장</button>
+                    </div>
+                    <div class="modal-footer modalBtnContainer-modifyEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+                        <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+                             
+                           
                         </div>
                     </div>
                 </div>
@@ -190,75 +199,47 @@
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <!-- <div th:replace="common/script :: script"></div> -->
+    
     <!-- 저는 개인 script를 이용하겠습니다..-서폰지밥- -->
-    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+<!--     <script src="assets/libs/jquery/dist/jquery.min.js"></script> -->
     <script src="assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
-    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script> -->
+<!--     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script> -->
     <!-- apps -->
-      <script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script>
     <script src="js/app-style-switcher.js"></script>
-    <script src="js/feather.min.js"></script>
-    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="js/sidebarmenu.js"></script>
+<!--     <script src="js/feather.min.js"></script> -->
+ <!--    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script> -->
+<!--     <script src="js/sidebarmenu.js"></script> -->
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!--This page JavaScript -->
+    <script src="js/pages/calendar/addEvent.js"></script>
     <script src="js/pages/calendar/arraylist.js"></script>
     <script src="assets/libs/moment/min/moment.min.js"></script>
     <script src="assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="js/pages/calendar/cal-init.js"></script>
     <script src="js/pages/calendar/calendarByme.js"></script>
     <script>
-    	/* var calendar = new FullCalendar.Calendar(calendarEl,{
+    	var calendar = new FullCalendar.Calendar(calendarEl,{
     		plugins:['interaction']
-    	}); */
-    </script>    
-    
-	<script>
-/* <%
-	List<Calendar> list = (ArrayList<Calendar>)request.getAttribute("showCalendar");
-%>
- 	var list = document.getElementById("showCalendar");
-	var calendarEl = document.getElementById("calendar");
-	var calendar = new FullCalendar.Calendar(calendarEl,{
-		plugins: ['interaction','dayGrid','timeGrid','list'],
-		locale : "ko",
-		editable : true,
-		evnets:[
-				for(int i=0;i<list.size();i++){
-					Calendar dto = (Calendar)list.get(i);
-					console.log("달력내용"+list.get(i));
-				{
-					title : '<%= dto.getTitle() %>',
-					start : '<%= dto.getStartDate() %>',
-					end	: '<%= dto.getEndDate() %>'
-				},
-					}
-				{
-					title: 'default',
-					start : "2020-07-07",
-					end : "2020-07-08"
-				}
-		]
-	});
-	console.log()
-	calendar.render();
- */
+    	}); 
+
     </script>
     
-    <script th:inline="javascript">
+    <div th:replace="common/scriptB :: scriptB"></div> 
+	<script th:inline="javascript">
     /*<![CDATA[*/
-	var teamNo = /*[[ ${teamNo} ]]*/;
-	/*]]*/
-    $(document).ready(function(){
-		alert("팀 번호는: "+teamNo);
-    });
-	</script>
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${team.teamNo}]];
+	var teamMember = [[${teamMember}]];
+    /*]]>*/
+    
 
-
+    </script>
 
 </body>
 </html>
