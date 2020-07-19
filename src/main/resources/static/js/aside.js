@@ -275,6 +275,11 @@ $("#InviteMember").on("shown.bs.modal", function() {
 	$("#searchUser").autocomplete("option", "appendTo", "#InviteMember") 
 });
 
+//동적 생성된 태그에 툴팁 적용하기
+$("body").tooltip({
+    selector: '[data-toggle="tooltip"]'
+});
+
 $('#sendInvitationBtn').click(function() {
 	if($("#searchUser").val() == "") {
 		Swal.fire('초대할 Email을 입력하세요.');

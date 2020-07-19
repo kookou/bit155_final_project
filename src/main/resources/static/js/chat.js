@@ -11,6 +11,7 @@ $("#fixedBtn").popover({
 	html: true,
 	sanitize: false,
 	placement: "bottom",
+	container: "body",
 	content: function() {
 	  return $("#alert_list").html();
 	}
