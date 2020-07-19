@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TIKA</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/index/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index/owl.carousel.min.css">
+    <!-- <link rel="stylesheet" href="css/magnific-popup.css"> -->
+    <link rel="stylesheet" href="css/index/font-awesome.min.css">
+    <link rel="stylesheet" href="css/index/themify-icons.css">
+    <!-- <link rel="stylesheet" href="css/nice-select.css"> -->
+    <!-- <link rel="stylesheet" href="css/flaticon.css"> -->
+    <!-- <link rel="stylesheet" href="css/gijgo.css"> -->
+    <link rel="stylesheet" href="css/index/animate.css">
+    <link rel="stylesheet" href="css/index/slick.css">
+    <link rel="stylesheet" href="css/index/slicknav.css">
+    <link rel="stylesheet" href="css/index/style.css">
+    <link rel="stylesheet" href="css/index/responsive.css">
+</head>
+
+<body>
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            
+            <div id="sticky-header" class="main-header-area">
+                <div class="container">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <div class="col-xl-3 col-lg-2">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img src="img/logo.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                           
+                            <div class="col-xl-9 col-lg-3 d-none d-lg-block">
+                                <div class="Appointment">
+                                    
+                                    <div class="book_btn d-none d-lg-block">
+                                        <a class="popup-with-form" href="/signin">Login</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    <!-- slider_area_start -->
+    <div class="slider_area">
+        <div class="slider_active owl-carousel">
+            <div class="single_slider  d-flex align-items-center slider_bg_2 overlay2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="slider_text ">
+                                <h3>나만의 팀을 만들고<br>
+                                    팀원을 꾸려보세요</h3>
+                                <p>함께 이루고 싶은 목표가 있나요?<br>
+                                    팀을 만들어 사람들을 초대하고 목표를 향한 첫 발걸음을 딛으세요 </p>
+                                <div class="video_service_btn">
+                                    <a class="boxed-btn3" th:href="@{teamMain.do(id=${session.currentUser.id})}">지금 시작하기</a>
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single_slider  d-flex align-items-center slider_bg_1 overlay2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="slider_text ">
+                                <h3>팀원들과 일정을 공유하고 <br>
+                                    소통하세요!</h3>
+                                <p>Nam libero tempore, cum soluta nobis est eligendi optio <br>
+                                    cumque nihil impedit quo minus.</p>
+                                <div class="video_service_btn">
+                                    <a class="boxed-btn3" th:href="@{teamMain.do(id=${session.currentUser.id})}">지금 시작하세요</a>
+                                   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single_slider  d-flex align-items-center slider_bg_3 overlay2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="slider_text ">
+                                <h3> Grow Big with <br>
+                                    Musicol Business </h3>
+                                <p>Nam libero tempore, cum soluta nobis est eligendi optio <br>
+                                    cumque nihil impedit quo minus.</p>
+                                <div class="video_service_btn">
+                                    <a class="boxed-btn3" th:href="@{teamMain.do(id=${session.currentUser.id})}">지금 시작하세요</a>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider_area_end -->
+
+    <!-- service_area_start -->
+    <div class="service_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section_title text-center mb-50">
+                        <h3>TIKA Our Solutions</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-4">
+                    <div class="single_service service_bg_1">
+                        <div class="service_hover">
+                            <img src="img/svg_icon/legal-paper.svg" alt="">
+                            <h3>Board</h3>
+                            <div class="hover_content">
+                                <div class="hover_content_inner">
+                                    <h4>Board</h4>
+                                    <p>일반게시판과 칸반게시판을<br> 선택하여 생성할 수 있습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4">
+                    <div class="single_service service_bg_2">
+                        <div class="service_hover">
+                            <img src="img/svg_icon/case.svg" alt="">
+                            <h3>Communication</h3>
+                            <div class="hover_content">
+                                    <div class="hover_content_inner">
+                                        <h4>Communication</h4>
+                                        <p>
+                                            항상 열려있는 채팅으로 팀원과 소통하고 당신이 생각하는 Idea를 시각화하여 그림판으로 공유하세요!</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4">
+                    <div class="single_service service_bg_3">
+                        <div class="service_hover">
+                            <img src="img/svg_icon/survey.svg" alt="">
+                            <h3>Schedule</h3>
+                            <div class="hover_content">
+                                    <div class="hover_content_inner">
+                                        <h4>Schedule</h4>
+                                        <p>한 눈에 들어오는 캘린더와 Todo-List로 일정을 관리하세요!</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- service_area_end -->
+
+
+
+
+    <!-- about wrap  -->
+    <div class="about_wrap_area about_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-lg-4">
+                    <div class="single_service_wrap text-center">
+                        <img src="img/svg_icon/controls.svg" alt="">
+                        <h3>Unlimited Control</h3>
+                        <p>These cases are perfectly simple and easy to </p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4">
+                    <div class="single_service_wrap text-center">
+                        <img src="img/svg_icon/bar-chart.svg" alt="">
+                        <h3>Rapidly Growth</h3>
+                        <p>These cases are perfectly simple and easy to </p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4">
+                    <div class="single_service_wrap text-center">
+                        <img src="img/svg_icon/puzzle.svg" alt="">
+                        <h3>Problem Solving</h3>
+                        <p>These cases are perfectly simple and easy to </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ about wrap  -->
+
+
+  
+
+  
+    <!-- footer start -->
+    <footer class="footer">
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="copy_right text-center">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Site is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">TIKA</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/ footer end  -->
+
+    <!-- link that opens popup -->
+
+
+    <!-- JS here -->
+    <!-- <script src="js/vendor/modernizr-3.5.0.min.js"></script> -->
+    <script src="js/index/vendor/jquery-1.12.4.min.js"></script>
+    <!-- <script src="js/popper.min.js"></script> -->
+    <script src="js/index/bootstrap.min.js"></script>
+    <script src="js/index/owl.carousel.min.js"></script>
+    <!-- <script src="js/isotope.pkgd.min.js"></script> -->
+    <!-- <script src="js/ajax-form.js"></script> -->
+    <!-- <script src="js/waypoints.min.js"></script> -->
+    <!-- <script src="js/jquery.counterup.min.js"></script> -->
+    <script src="js/index/imagesloaded.pkgd.min.js"></script>
+    <!-- <script src="js/scrollIt.js"></script> -->
+    <!-- <script src="js/jquery.scrollUp.min.js"></script> -->
+    <!-- <script src="js/wow.min.js"></script> -->
+    <!-- <script src="js/nice-select.min.js"></script> -->
+    <script src="js/index/jquery.slicknav.min.js"></script>
+    <!-- <script src="js/jquery.magnific-popup.min.js"></script> -->
+    <!-- <script src="js/plugins.js"></script>
+    <script src="js/gijgo.min.js"></script> -->
+    <script src="js/index/slick.min.js"></script>
+    <!--contact js-->
+    <!-- <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script> -->
+
+    <script src="js/index/main.js"></script>
+</body>
+
+</html>

@@ -32,7 +32,19 @@ public class UserController {
 	public String signIn() {
 		return "user/signIn";
 	}
-
+	
+//	//이거 안먹음 
+//	@RequestMapping("/login/oauth2/code/naver")
+//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session,  HttpServletRequest request) {
+//		
+//		
+//		System.out.println("여기는 naver callback");
+//		OAuth2AccessToken oauthToken;
+//		oauthToken = customOAuth2Service.getAccessToken();
+//		System.out.println(oauthToken.getScopes());
+//		
+//		return "user/signIn";
+//	}
 	
 	
 	// 가입 폼
