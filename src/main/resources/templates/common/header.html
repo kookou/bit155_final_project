@@ -49,13 +49,7 @@
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded="false" style="line-height: 40px; margin-bottom: 10px;">
 							<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">
-								<div  th:if="${session.currentUser.image == null}" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-									<span>
-										<img src="assets/images/users/4.jpg" alt="user" href="javascript:void(0)"
-											style="width: auto; height: 40px; transform: translate(-50%, -50%); display:block">
-									</span>
-								</div>
-								<div th:unless="${session.currentUser.image == null}" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+								<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 									<span>
 										<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
 											href="javascript:void(0)" style="width: auto; height: 40px; transform: translate(-50%, -50%); display:block">
@@ -68,7 +62,14 @@
 						</span>
 					</a>
 						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-							<a class="dropdown-item" href="/edituser"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Profile</a>	
+							
+							<!-- 이렇게 나눠주지 않으면 여기서 param.teamNo로 접근하는게 안된다... 분명 한줄로 끝낼 수 있는게 있을 것 같은데-->
+							<span th:if="${param.teamNo == null}">
+								<a class="dropdown-item" href="/edituser"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Profile</a>		
+							</span>
+							<span th:unless="${param.teamNo == null}">  
+								<a class="dropdown-item" th:href="@{/edituser(teamNo=${param.teamNo})}"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Profile</a>
+							</span>
 							<a class="dropdown-item" href="/logout"> <i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
 						</div>
 					</li>

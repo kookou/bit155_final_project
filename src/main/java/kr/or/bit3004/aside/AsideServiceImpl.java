@@ -20,6 +20,7 @@ public class AsideServiceImpl implements AsideService {
 	
 	@Override
 	public Team getTeam(int teamNo) {
+		System.out.println("AsideServiceImpl");
 		return dao.getTeam(teamNo);
 	}
 	
