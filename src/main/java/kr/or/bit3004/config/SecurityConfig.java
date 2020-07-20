@@ -179,10 +179,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			OAuth2ClientProperties.Registration registration = clientProperties.getRegistration().get("google"); 
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client) 
 					.clientId(registration.getClientId()) 
-					.clientSecret(registration.getClientSecret()) 
+					.clientSecret(registration.getClientSecret())
+					.redirectUriTemplate("{baseUrl}/signin/oauth2/code/{registrationId}")
 					.scope("email", "profile") 
 					.build(); 
 			} 
+		
 		if("facebook".equals(client)) { 
 			OAuth2ClientProperties.Registration registration = clientProperties.getRegistration().get("facebook"); 
 			return CommonOAuth2Provider.FACEBOOK.getBuilder(client) 

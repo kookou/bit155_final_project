@@ -9,6 +9,7 @@ import lombok.ToString;
 @ToString
 public class Timeline {
 	private int timelineNo;
+	private String tableName;
 	private String columnName;
 	private String columnNo;
 	private int teamNo;

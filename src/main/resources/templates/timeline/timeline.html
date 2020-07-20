@@ -40,32 +40,32 @@
 	                <div class="card">
 	                    <div class="card-body">
 	                    
-	                        <div class="alert alert-primary bg-white text-primary row" role="alert" th:each="timeline :  ${timelineList}">
+	                        <div class="alert row" role="alert" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
 	                            <div class="col-md-1">
 	                                <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle" width="50">
 	                            </div>
 	                            <div class="col-md-10" th:switch="${timeline.dmlKind}">
 	                                <div th:case=" 'insert' ">
 		                                <h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><u><a href="javascript:void(0);" th:text="${timeline.columnName}"></a></u></b>에
-	                                	<b><u><a href="javascript:void(0);" th:text="${timeline.history}"></a></u></b>을(를) 추가했습니다.
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>을(를) 추가했습니다.
 	                                </div>
-	                                <div th:case=" 'update' ">
+	                                <div th:case=" 'update' " >
 	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><u><a href="javascript:void(0);" th:text="${timeline.columnName}"></a></u></b>의
-	                                	<b><u th:text="${timeline.oldHistory}"></u></b><span th:if="${timeline.oldHistory}">을(를)</span>
-	                                	<b><u><a href="javascript:void(0);" th:text="${timeline.history}"></a></u></b>(으)로 수정했습니다.
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>의
+	                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>(으)로 수정했습니다.
 	                                </div>
 	                                <div th:case=" 'delete' ">
 	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><u><a href="javascript:void(0);" th:text="${timeline.columnName}"></a></u></b>에
-	                                	<b><u th:text="${timeline.history}"></u></b>을(를) 삭제했습니다.
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
 	                                </div>
 	                                <div th:case=" 'join team' ">
-	                                	<b><u th:text="${timeline.history}"></u></b>님이 팀에 들어왔습니다.
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에 들어왔습니다.
 	                                </div>
 	                                <div th:case=" 'wthdr team' ">
-	                                	<b><u th:text="${timeline.history}"></u></b>님이 팀에서 나갔습니다.
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
 	                                </div>
 	                            </div>
 	                            <div class="col-md-1">
@@ -95,7 +95,22 @@
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];
 			if(bgColor != 'ffffff') {
-				$('.card-body').css("background", "#"+bgColor);
+				$('.alert').css("background", "#"+bgColor);
+			}
+			if(bgColor == 'd0e1f5') {
+				$('.alert').attr('class', 'alert row alert-primary text-primary');
+			}
+			if(bgColor == 'c0e4da') {
+				$('.alert').attr('class', 'alert row alert-success');
+			}
+			if(bgColor == 'fee993') {
+				$('.alert').attr('class', 'alert row alert-warning');
+			}
+			if(bgColor == 'fac8bf') {
+				$('.alert').attr('class', 'alert row alert-danger');
+			}
+			if(bgColor == 'fedcc1') {
+				$('.alert').attr('class', 'alert row alert-warning');
 			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];

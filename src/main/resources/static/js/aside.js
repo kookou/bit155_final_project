@@ -312,7 +312,7 @@ $('#sendInvitationBtn').click(function() {
 	});
 });
 
-//팀 탈퇴하기
+//팀원이 팀 탈퇴하기
 $('#teamOut').click(function() {
 	Swal.fire({
 		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
@@ -328,6 +328,44 @@ $('#teamOut').click(function() {
 				data: {
 					teamNo: teamNo,
 					id: currUser
+				},
+				success: function() {
+					Swal.fire({
+						title: '"' + teamName + '"',
+						text: 'Team에서 탈퇴되었습니다.',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.value) {
+							location.href = 'teamMain.do?id='+currUser;
+						}
+					});
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		}
+	});
+});
+
+//팀장이 팀 탈퇴하기
+$('#passLeaderOkBtn').click(function() {
+	Swal.fire({
+		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
+		text: "초대를 통해서 다시 들어올 수 있습니다.",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		cancelButtonText: 'No, keep it'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: "leaderTeamOut.do",
+				data: {
+					teamNo: teamNo,
+					id: currUser,
+					newLeader: $('input[name="passLeader"]:checked').val()
 				},
 				success: function() {
 					Swal.fire({
