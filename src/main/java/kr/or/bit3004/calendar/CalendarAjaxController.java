@@ -17,12 +17,12 @@ public class CalendarAjaxController {
 	@Autowired
 	private CalendarService service;
 
-	@ResponseBody
-	@RequestMapping(value = "addPlan.ajax", method = RequestMethod.POST)
-	public Map<Object, Object> addPlan(@RequestBody Calendar dto) throws Exception {
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		service.addPlan(dto);
-		return map;
+
+	@RequestMapping("addPlan.ajax")
+	public void addPlan(Calendar calendar){
+		System.out.println("타니????");
+		service.addPlan(calendar);
+		
 	}
 
 	

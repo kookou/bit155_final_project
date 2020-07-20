@@ -1,37 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://wwww.thymeleaf.org">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Tell the browser to be responsive to screen width -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="assets/images/favicon.png">
-<title>Bit 155 Final Project</title>
-<!-- Custom CSS -->
-<!-- Custom CSS -->
-<link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet" />
-<link href="assets/libs/fullcalendar/dist/fullcalendar.min.css"
-	rel="stylesheet" />
-<link href="css/style.min.css" rel="stylesheet">
-<link href="css/calendar.css" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FullCalendar Example</title>
+    <link rel=" shortcut icon" href="image/favicon.ico">
+
+   <!--  <link rel="stylesheet" href="js/pages/calendar/vendor/css/fullcalendar.min.css" /> -->
+    <link rel="stylesheet" href="js/pages/calendar/vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href='js/pages/calendar/vendor/css/select2.min.css' />
+    <link rel="stylesheet" href='js/pages/calendar/vendor/css/bootstrap-datetimepicker.min.css' />
+    <link href="assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="js/pages/calendar/main.css">
+ <!--    <link href="css/style.min.css" rel="stylesheet"> -->
 
 </head>
 
 <body>
-	<div th:replace="common/scriptA :: scriptA"></div>
-	<div class="drag-container"></div>
+<div th:replace="common/scriptA :: scriptA"></div> 
+ 		<div class="drag-container"></div>
 	
-	<!-- <input type=text id="teamNo" th:value="${param.teamNo}" hidden/> -->
+		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
 
 	<div class="preloader">
 		<div class="lds-ripple">
@@ -39,36 +32,21 @@
 			<div class="lds-pos"></div>
 		</div>
 	</div>
-	<!-- ============================================================== -->
-	<!-- Main wrapper - style you can find in pages.scss -->
-	<!-- ============================================================== -->
-	<div id="main-wrapper" data-theme="light" data-layout="vertical"
-		data-navbarbg="skin6" data-sidebartype="full"
-		data-sidebar-position="fixed" data-header-position="fixed"
-		data-boxed-layout="full">
-
-		<th:block th:replace="common/header :: header"></th:block>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">       
+    	 <th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<th:block th:replace="common/addAllBoardModal"></th:block>
 		<th:block th:replace="common/chat"></th:block>
-		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+        
+       <div class="page-wrapper">
+    <div class="container">
 
-		<div class="page-wrapper">
-			<!-- ============================================================== -->
-			<!-- Bread crumb and right sidebar toggle -->
-			<!-- ============================================================== -->
-
-
-			<div class="container">
-
-				<div id="wrapper">
-					<div id="loading"></div>
-					<div id="calendar"></div>
-				</div>
-
-
-				
-                             <!-- 일자 클릭시 메뉴오픈 -->
+        <!-- 일자 클릭시 메뉴오픈 -->
         <div id="contextMenu" class="dropdown clearfix">
             <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
                 style="display:block;position:static;margin-bottom:5px;">
@@ -172,62 +150,33 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <div class="panel panel-default">
 
+            <div class="panel-heading">
+                <h3 class="panel-title">필터</h3>
+            </div>
 
-			</div>
-			<!-- /.container -->
-		</div>
-		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-	</div>
-	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-	<!-- <div th:replace="common/script :: script"></div> -->
-
-	<!-- 저는 개인 script를 이용하겠습니다..-서폰지밥- -->
-	<!--     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-<!--     <script src="assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
-    <script src="assets/extra-libs/taskboard/js/jquery-ui.min.js"></script> -->
-	<!--     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script> -->
-	<!--     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script> -->
-	<!-- apps -->
-	<!--     <script src="assets/extra-libs/c3/d3.min.js"></script>
-    <script src="assets/extra-libs/c3/c3.min.js"></script> -->
-	<!--     <script src="js/app-style-switcher.js"></script> -->
-	<!--     <script src="js/feather.min.js"></script> -->
-	<!--    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script> -->
-	<!--     <script src="js/sidebarmenu.js"></script> -->
-	<!--Custom JavaScript -->
-	<!--  <script src="js/custom.min.js"></script> -->
-	<!--This page JavaScript -->
-	<script src="js/pages/calendar/main.js"></script>
+        </div>
+        <!-- /.filter panel -->
+    </div>
+    <!-- /.container -->
+          </div>   
+        
+        
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+<!-- 	    <script src="js/pages/calendar/cal-init.js"></script> -->
+<!--     <script src="js/pages/calendar/vendor/js/jquery.min.js"></script> -->
+<!--     <script src="js/pages/calendar/vendor/js/bootstrap.min.js"></script> -->
+    <script src="js/pages/calendar/vendor/js/moment.min.js"></script>
+    <script src="js/pages/calendar/vendor/js/fullcalendar.min.js"></script>
+<!--     <script src="js/pages/calendar/vendor/js/ko.js"></script> -->
+    <script src="js/pages/calendar/vendor/js/select2.min.js"></script>
+    <!-- <script src="js/pages/calendar/vendor/js/bootstrap-datetimepicker.min.js"></script> -->
+    <script src="js/pages/calendar/main.js"></script>
     <script src="js/pages/calendar/etcSetting.js"></script>
- 	<script src="js/pages/calendar/addEvent.js"></script>
-	<script src="js/pages/calendar/editEvent.js"></script>
-	<script src="js/pages/calendar/arraylist.js"></script>
-	<script src="assets/libs/moment/min/moment.min.js"></script>
-	<script src="assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-	<script src="js/pages/calendar/cal-init.js"></script>
-	<script src="js/pages/calendar/calendarByme.js"></script>
-	<script>
-  /*  var calendar = new FullCalendar.Calendar(calendarEl,{
-    		plugins:['interaction'],
-    		selectable: true,
-    		
-    	});    */
-
-    </script>
-
-	<div th:replace="common/scriptB :: scriptB"></div>
-	<script th:inline="javascript">
-    /*<![CDATA[*/
-  	 var currUserId = [[${session.currentUser.id}]];
-   	var currUserNickname = [[${session.currentUser.nickname}]];
-	var currUserImage = [[${session.currentUser.image}]];
-	var teamNo = [[${team.teamNo}]];
-	var teamMember = [[${teamMember}]];
-    /*]]>*/
-    
-
-    </script>
-
+    <script src="js/pages/calendar/addEvent.js"></script>
+    <script src="js/pages/calendar/editEvent.js"></script>
 </body>
+
 </html>

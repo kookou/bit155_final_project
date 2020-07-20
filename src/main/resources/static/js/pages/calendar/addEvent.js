@@ -18,7 +18,7 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
  * ************** */
 var newEvent = function (start, end, eventType) {
 
-    $("#contextMenu").hide(); //메뉴 숨김
+//    $("#contextMenu").hide(); //메뉴 숨김
 
     modalTitle.html('새로운 일정');
     editType.val(eventType).prop('selected', true);
@@ -80,17 +80,17 @@ var newEvent = function (start, end, eventType) {
         eventModal.modal('hide');
 
         //새로운 일정 저장
-        $.ajax({
-            type: "get",
-            url: "",
-            data: {
-                //.....
-            },
-            success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
-            }
-        });
+//        $.ajax({
+//            type: "get",
+//            url: "",
+//            data: {
+//                //.....
+//            },
+//            success: function (response) {
+//                //DB연동시 중복이벤트 방지를 위한
+//                //$('#calendar').fullCalendar('removeEvents');
+//                //$('#calendar').fullCalendar('refetchEvents');
+//            }
+//        });
     });
 };

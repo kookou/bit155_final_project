@@ -19,7 +19,7 @@ public class CalendarServiceImpl implements CalendarService{
 	}
 	
 	@Override
-	public void addPlan(Calendar dto) throws Exception {
-		dao.addPlan(dto);
+	public void addPlan(Calendar calendar){
+		dao.addPlan(calendar);
 	}
 }

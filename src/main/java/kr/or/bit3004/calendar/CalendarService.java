@@ -6,7 +6,7 @@ public interface CalendarService {
 
 	public List<Calendar> showCalendar() throws Exception;
 	
-	public void addPlan(Calendar dto) throws Exception;
+	public void addPlan(Calendar calendar);
 	
 	
 }

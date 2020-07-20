@@ -1,21 +1,23 @@
+
 ! function($) {
     "use strict";
-
+    var teamNo = $('#teamNo').val()
+    console.log(teamNo)
     var CalendarApp = function() {
-        this.$body = $("body"),
-        this.$modal = $('#my-event'),
-        this.$event = ('#calendar-events div.calendar-events'),
-        this.$calendar = $('#calendar'),
-        this.$saveCategoryBtn = $('.save-category'),
-        this.$categoryForm = $('#add-new-event form'),
-        this.$extEvents = $('#calendar-events'),
-        this.$calendarObj = null
-    };
+    	 this.$body = $("body")
+         this.$calendar = $('#calendar'),
+         this.$event = ('#calendar-events div.calendar-events'),
+         this.$categoryForm = $('#add-new-event form'),
+         this.$extEvents = $('#calendar-events'),
+         this.$modal = $('#my-event'),
+         this.$saveCategoryBtn = $('.save-category'),
+         this.$calendarObj = null
+    }; 
 
 
     /* on drop */
     CalendarApp.prototype.onDrop = function(eventObj, date) {
-            var $this = this;
+            var $this = $(this);
             // retrieve the dropped element's stored Event Object
             var originalEventObject = eventObj.data('eventObject');
             var $categoryClass = eventObj.attr('data-class');
@@ -53,9 +55,9 @@
         }
         
     /* on select */
-   /* CalendarApp.prototype.onSelect = function (start, end, allDay) {
-        var $this = this;
-            $this.$modal.modal({
+   CalendarApp.prototype.select = function (start, end, allDay) {
+        var $this = $(this);
+        	$this.$modal.modal({
                 backdrop: 'static'
             });
             var form = $("<form></form>");
@@ -69,7 +71,7 @@
                 .append("<option value='bg-black' name='categorie'>{{$categorie->title}}</option>")
                 //@endforeach
                 .append("</div></div>");
-            $this.$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
+            $(this).$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
                 form.submit();
             });
             $this.$modal.find('form').on('submit', function () {
@@ -111,7 +113,7 @@
 
             $this.$calendarObj.fullCalendar('unselect');
     }
-    */
+    
         
     /* Initializing */
     CalendarApp.prototype.init = function() {
@@ -165,14 +167,21 @@
             ];
 
             var $this = this;
-            $this.$calendarObj = $this.$calendar.fullCalendar({
+            $('#calendar').fullCalendar({
+
+            	
+//            	 dayClick: function() {
+////            		 var calendarData = $(this).find(".fc-time").val()
+//            			console.log("일단찍힘");
+////            		
+//            		  },
                 slotDuration: '00:15:00',
                 /* If we want to split day time each 15minutes */
                 minTime: '08:00:00',
                 maxTime: '19:00:00',
                 defaultView: 'month',
                 handleWindowResize: true,
-
+                selectable: true,
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -184,21 +193,71 @@
                 eventLimit: false, // allow "more" link when too many events
                 selectable: true,
                 drop: function(date) { $this.onDrop($(this), date); },
-                select: function(start, end, allDay) { $this.onSelect(start, end, allDay); },
-                eventClick: function(calEvent, jsEvent, view) { $this.onEventClick(calEvent, jsEvent, view); }
+                
+                select: function (startDate, endDate, jsEvent, view) {
+                	console.log(teamNo);
+                	 var modal = $('#eventModal
+                	 modal.modal({
+                         backdrop: 'static'
+                        
+                     });
+//                	 $('.delete-event').hide()         
+//                     $(this).$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
+//                         form.submit();
+//                     });
+                     modal.find('.save-event').on('click', function () {
+                    	 console.log("설마너니?")
+                         var title = form.find("input[name='title']").val();
+                         var beginning = form.find("input[name='beginning']").val();
+                         var ending = form.find("input[name='ending']").val();
+                         var categoryClass = form.find("select[name='category'] option:checked").val();
+                         var description = form.find("input[name='description']").val();
+                         var id = "gkdl";
+                         console.log(teamNo)
+                         
+                        	 $.ajax({
+                            	 url: "addPlan.ajax",
+                                     data:{ 
+                                    	 name:title,
+                                    	 description : description,
+                                    	 start : beginning,
+                                    	 end : ending,
+                                    	 color :categoryClass,
+//                                    	 id : id,
+                                     	 teamNo:teamNo
+                                     },
+                                    
+                                     success:function(){
+                                         alert("succes ajout");
+                                     },error:function(){ 
+                                         alert("erreur!!!!");
+                                     }
+                                 });
+                         
+                        
+                         
+
+
+                     });
+
+
+
+
+                  },
+
 
             });
             
             //추가함 ㅠ
-            this.$saveCategoryBtn.on('click', function(){
-                var categoryName = $this.$categoryForm.find("input[name='category-name']").val();
-                var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
-                if (categoryName !== null && categoryName.length != 0) {
-                    $this.$extEvents.append('<div class="external-event bg-' + categoryColor + '" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="mdi mdi-checkbox-blank-circle m-r-10 vertical-middle"></i>' + categoryName + '</div>')
-
-                }
-
-            });
+//            this.$saveCategoryBtn.on('click', function(){
+//                var categoryName = $this.$categoryForm.find("input[name='category-name']").val();
+//                var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
+//                if (categoryName !== null && categoryName.length != 0) {
+//                    $this.$extEvents.append('<div class="external-event bg-' + categoryColor + '" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="mdi mdi-checkbox-blank-circle m-r-10 vertical-middle"></i>' + categoryName + '</div>')
+//
+//                }
+//
+//            });
             
         },
 
