@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +70,8 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(String teamNo, Model model) {
+	public String editUserInfo(String teamNo, Model model) {		
+		
 		System.out.println("editUserInfo");
 		
 		if(teamNo != null) {
@@ -101,31 +104,8 @@ public class UserController {
 	@RequestMapping(value="/deleteuser", method=RequestMethod.GET)
 	public String deleteUser(String id, HttpSession session) {
 		service.deleteUser(id, session);
-		return "redirect:signin"; // 왜 바로 redirect페이지로 이동하지 않고 에러페이지가 떴다가 새고하면 이동하는거지?
+		return "redirect:signin"; 
 	}
-	
-	
-//	
-//	@RequestMapping(value="/signin/oauth2/code/naver")
-//	public void naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-//	         HttpServletRequest request) {
-//		System.out.println("code : " + code);
-//		System.out.println("state : "+state);
-//	}
-//	
-//	@RequestMapping(value="/signin/oauth2/code/kakao")
-//	public void kakaoCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-//	         HttpServletRequest request) {
-//		System.out.println("code : " + code);
-//		System.out.println("state : "+state);
-//	}
-//	
-//	@RequestMapping(value="/login/oauth2/code/google") // 작동 안함
-//	public void googleCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-//	         HttpServletRequest request) {
-//		System.out.println("code : " + code);
-//		System.out.println("state : "+state);
-//	}
 
 	
 }

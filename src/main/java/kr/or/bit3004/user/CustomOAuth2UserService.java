@@ -1,6 +1,4 @@
 package kr.or.bit3004.user;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference; 
 import org.springframework.core.convert.converter.Converter; 
 import org.springframework.http.RequestEntity; 
@@ -19,19 +17,14 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User; 
 import org.springframework.security.oauth2.core.user.OAuth2User; 
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert; 
 import org.springframework.util.StringUtils; 
 import org.springframework.web.client.RestClientException; 
 import org.springframework.web.client.RestOperations; 
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import kr.or.bit3004.dao.UserDao;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedHashMap; 
 import java.util.LinkedHashSet; 
@@ -60,8 +53,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	
 	
-	public CustomOAuth2UserService(UserDao userDao, HttpSession session) {  // 생성자 내용 아직 공부 안함		
-		this.session= session; // session만들기
+	public CustomOAuth2UserService(UserDao userDao, HttpSession session) {
+		this.session= session;
 		this.userDao = userDao;
 		RestTemplate restTemplate = new RestTemplate(); 
 		restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler()); 
@@ -134,8 +127,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		
 		//여기서 해당 email이 우리 db에 있는지 확인하고, 있다면 session에 값을 저장하고 role 부여.
 		//없다면 DB에 정보 등록(email 정보가 없다면 email 인증 페이지로 이동)
-		User user = saveOrUpdate(userAttributes); // DB에 정보등록.
-		session.setAttribute("currentUser", new SessionUser(user));
+		
+		User user = saveOrUpdate(userAttributes); // 등록 여부 확인 및 DB에 정보등록.
+		session.setAttribute("currentUser", new SessionUser(user)); // session에 등록
 		
 		
 		Set<GrantedAuthority> authorities = new LinkedHashSet<>(); 
@@ -149,6 +143,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		} 
 		
 		System.out.println("authorities : "+ authorities.toString());
+		System.out.println("userAttributes : "+userAttributes);
+		System.out.println("userNameAttributeName : "+userNameAttributeName);
 		
 		return new DefaultOAuth2User(authorities, userAttributes, userNameAttributeName); 
 		
@@ -158,12 +154,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	// 네이버는 HTTP response body에 response 안에 id 값을 포함한 유저정보를 넣어주므로 유저정보를 빼내기 위한 작업을 함
 	private Map<String, Object> getUserAttributes(ResponseEntity<Map<String, Object>> response) { 
-		System.out.println("네이버 getUserAttributes");
+		System.out.println("getUserAttributes");
 		
 		Map<String, Object> userAttributes = response.getBody(); 
-		
-		//토큰으로 받아온 유저정보를 콘솔에 출력
-		System.out.println(userAttributes.toString());
 		
 		if(userAttributes.containsKey("response")) { 
 			LinkedHashMap responseData = (LinkedHashMap)userAttributes.get("response"); 
@@ -179,9 +172,24 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	
     private User saveOrUpdate(Map<String, Object> userAttributes) {
-    	String email = (String)userAttributes.get("email");
-    	String nickname = (String)userAttributes.get("name");
-    	String pwd = (String)userAttributes.get("sub");
+    	
+    	String email = (String)userAttributes.get("email"); // G,F,N 공통
+    	
+    	String naverTypeId = (String)userAttributes.get("nickname"); //G,F>> name   naver >> nickname
+    	String nickname = (naverTypeId != null) ? naverTypeId : (String)userAttributes.get("name"); 
+    	
+    	String googleTypeId = (String)userAttributes.get("sub"); // G
+    	String otherTypeId = (String)userAttributes.get("id");  // F,N
+
+    	// 사용자 고유id값을 암호화하여 pwd로 사용할 예정
+    	String pwd = (googleTypeId != null) ? googleTypeId : otherTypeId; 
+    	
+    	System.out.println("email :"+email);
+    	System.out.println("pwd : "+pwd);
+    	System.out.println("nickname : "+nickname);
+
+    	
+    	
     	User user = new User();
     	
     	if(email == null) {
