@@ -12,9 +12,9 @@ public class TodoListAjaxController {
 	@Autowired
 	private TodoListService service;
 	
-	@RequestMapping("todoList2.do")
-	public List<TodoList> todoList2(int teamNo) {
-		return service.selectTodoList(teamNo);
+	@RequestMapping("getTodoContent.do")
+	public List<TodoList> todoList(TodoList todoList) {
+		return service.selectTodoList(todoList);
 	}
 	
 	@RequestMapping("getTodoTitle.do")

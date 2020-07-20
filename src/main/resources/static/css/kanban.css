@@ -192,17 +192,7 @@
     padding: 10px 30px;
     
 }
-.team-title{
-    font-size: 25px;
-    word-wrap: break-word;
-    
-}
-#profile-group{
-    padding: 10px 0;
-    margin-left: 12px;
-    margin-top: 10px;
-    
-}
+
 .kanban-container{
     height: 100%;
     display: flex;
@@ -219,14 +209,7 @@
     display: none;
 }
  */
-#teaminfo-nav{
-    padding: 12px 30px;
-}
 
-.invite-button{
-    padding: 10px 0;
-    clear: both;
-}
 div {
     display: block;
 }
@@ -746,7 +729,7 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 
 .divForDragNDrop {
 	min-height:15px;
-	max-height: 740px;
+	max-height: 700px;
 	overflow-y: auto;
 	grid-template-rows: auto minmax(auto, 1fr) auto;
 	

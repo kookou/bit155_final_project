@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Bit 155 Final Project</title>
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+	<div th:replace="common/scriptA :: scriptA"></div> 
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        
+	<th:block th:replace="common/header :: header"></th:block>
+	<th:block th:replace="common/aside :: aside"></th:block>
+	<th:block th:replace="common/addAllBoardModal"></th:block>
+	<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	<div class="page-wrapper">
+	    <!-- ============================================================== -->
+	    <!-- Container fluid  -->
+	    <!-- ============================================================== -->
+	    <div class="container-fluid">
+	        <!-- ============================================================== -->
+	        <!-- Start Page Content -->
+	        <!-- ============================================================== -->
+	        <div class="row">
+	            <div class="col-md-12">
+	                <div class="card">
+	                    <div class="card-body">
+	                    
+	                        <div class="alert row" role="alert" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
+	                            <div class="col-md-1">
+	                                <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle" width="50">
+	                            </div>
+	                            <div class="col-md-10" th:switch="${timeline.dmlKind}">
+	                                <div th:case=" 'insert' ">
+		                                <h3><b th:text="${timeline.nickname}"></b></h3>
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>을(를) 추가했습니다.
+	                                </div>
+	                                <div th:case=" 'update' " >
+	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>의
+	                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>(으)로 수정했습니다.
+	                                </div>
+	                                <div th:case=" 'delete' ">
+	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
+	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
+	                                </div>
+	                                <div th:case=" 'join team' ">
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에 들어왔습니다.
+	                                </div>
+	                                <div th:case=" 'wthdr team' ">
+	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
+	                                </div>
+	                            </div>
+	                            <div class="col-md-1">
+	                                <p class="text-muted font-10 mb-2 mt-3" th:text="${timeline.historyTime}"></p>
+	                               <!--  ${#temporals.format(timeline.historyTime, 'dd/MM/yyyy')} -->
+	                            </div>
+	                        </div>
+	
+	                    </div> <!-- end card-body-->
+	                </div> <!-- end card-->
+	            </div> <!-- end col-->
+	
+	        </div>
+	        <!-- end row -->
+	        <!-- ============================================================== -->
+	        <!-- End PAge Content -->
+	        <!-- ============================================================== -->
+	    </div>
+	    <!-- ============================================================== -->
+	    <!-- End Container fluid  -->
+	    <!-- ============================================================== -->
+	</div>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+	<div th:replace="common/scriptB :: scriptB"></div> 
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			var bgColor = [[${team.backgroundColor}]];
+			if(bgColor != 'ffffff') {
+				$('.alert').css("background", "#"+bgColor);
+			}
+			if(bgColor == 'd0e1f5') {
+				$('.alert').attr('class', 'alert row alert-primary text-primary');
+			}
+			if(bgColor == 'c0e4da') {
+				$('.alert').attr('class', 'alert row alert-success');
+			}
+			if(bgColor == 'fee993') {
+				$('.alert').attr('class', 'alert row alert-warning');
+			}
+			if(bgColor == 'fac8bf') {
+				$('.alert').attr('class', 'alert row alert-danger');
+			}
+			if(bgColor == 'fedcc1') {
+				$('.alert').attr('class', 'alert row alert-warning');
+			}
+			var currUserNickname = [[${session.currentUser.nickname}]];
+			var currUserImage = [[${session.currentUser.image}]];
+			var teamNo = [[${team.teamNo}]];
+			var teamMember = [[${teamMember}]];
+		/*]]>*/
+	</script>
+</body>
+</html>

@@ -68,22 +68,30 @@
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Components</span></li>
 
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
 							<i class="fas fa-cloud-download-alt"></i> 
 							<span class="hide-menu">Cloud</span>
 						</a>
+					</li> -->
+					<li class="sidebar-item">
+						<a class="sidebar-link" th:href="@{todoList.do(teamNo=${team.teamNo})}" aria-expanded="false">
+							<i class="far fa-edit"></i>
+							<span class="hide-menu">Todo-List</span>
+						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
+						<a class="sidebar-link" th:href="@{calendar.do(teamNo=${team.teamNo})}" aria-expanded="false"> 
 							<i class="fas fa-calendar-check"></i> 
-							<span class="hide-menu">Calender</span>
+							<span class="hide-menu">Calendar </span>
 						</a>
 					</li>
 					<li class="sidebar-item">
 						<a class="sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
 							<i class="fas fa-paint-brush"></i> 
-							<span class="hide-menu">Canvas</span>
+							<span >
+							Canvas
+							</span>
 						</a>
 					</li>
 					<li class="sidebar-item text-right" th:if="${#lists.size(teamMember) == 1}">

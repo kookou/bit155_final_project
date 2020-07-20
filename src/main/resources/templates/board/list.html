@@ -73,6 +73,7 @@
 	</script> 
 </head>
 <body>
+	<div th:replace="common/scriptA :: scriptA"></div> 
  	<!-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
@@ -149,29 +150,7 @@
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     
-    <!-- <div th:replace="common/script :: script"></div> -->
-    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!-- datatable -->
-	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
-	<!-- apps -->
-	<script src="js/app-style-switcher.js"></script>
-	<script src="js/feather.min.js"></script>
-	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-	<script src="js/sidebarmenu.js"></script>
-	
-	<!--Custom JavaScript -->
-	<script src="js/custom.min.js"></script>
-	<script src="js/kanban.js"></script>
-	<script src="js/groupAndTeam.js"></script>
-	<script src="js/aside.js"></script>
-	
-	<!--This page JavaScript -->
-	<script src="js/pages/dashboards/dashboard1.min.js"></script>
+    <div th:replace="common/scriptB :: scriptB"></div> 
 	
    	<!-- datatable -->
 	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script> 
@@ -179,6 +158,6 @@
   	<script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script>
     <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    
+
 </body>
 </html>
