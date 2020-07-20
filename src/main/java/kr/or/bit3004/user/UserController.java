@@ -5,13 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.bit3004.aside.AsideService;
 
@@ -32,19 +29,7 @@ public class UserController {
 	public String signIn() {
 		return "user/signIn";
 	}
-	
-//	//이거 안먹음 
-//	@RequestMapping("/login/oauth2/code/naver")
-//	public String oauth2Callback(Model model, @RequestParam String state, HttpSession session,  HttpServletRequest request) {
-//		
-//		
-//		System.out.println("여기는 naver callback");
-//		OAuth2AccessToken oauthToken;
-//		oauthToken = customOAuth2Service.getAccessToken();
-//		System.out.println(oauthToken.getScopes());
-//		
-//		return "user/signIn";
-//	}
+
 	
 	
 	// 가입 폼
@@ -80,17 +65,20 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(String teamNo, Model model) {
+	public String editUserInfo(HttpSession session, Model model) {		
+		
 		System.out.println("editUserInfo");
 		
-		if(teamNo != null) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+		int teamNo = currentUser.getTeamNo();
+		
+		if(teamNo > 0) {
 			System.out.println("teamNo : "+teamNo);
-			int intTeamNo = Integer.parseInt(teamNo);
 			   model.addAttribute("teamNo", teamNo);
-			   System.out.println("team : "+ asideService.getTeam(intTeamNo));
-			   model.addAttribute("team", asideService.getTeam(intTeamNo));
-			   model.addAttribute("teamMember", asideService.getTeamMember(intTeamNo));
-			   model.addAttribute("allBoardList", asideService.getAllBoardList(intTeamNo));
+			   System.out.println("team : "+ asideService.getTeam(teamNo));
+			   model.addAttribute("team", asideService.getTeam(teamNo));
+			   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
+			   model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		}
 
 		return "user/editUser";
@@ -113,23 +101,7 @@ public class UserController {
 	@RequestMapping(value="/deleteuser", method=RequestMethod.GET)
 	public String deleteUser(String id, HttpSession session) {
 		service.deleteUser(id, session);
-		return "redirect:signin"; // 왜 바로 redirect페이지로 이동하지 않고 에러페이지가 떴다가 새고하면 이동하는거지?
-	}
-	
-	
-	
-	@RequestMapping(value="/signin/oauth2/code/naver")
-	public void naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-	         HttpServletRequest request) {
-		System.out.println("code : " + code);
-		System.out.println("state : "+state);
-	}
-	
-	@RequestMapping(value="/login/oauth2/code/google")
-	public void googleCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-	         HttpServletRequest request) {
-		System.out.println("code : " + code);
-		System.out.println("state : "+state);
+		return "redirect:signin"; 
 	}
 
 	

@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
-		select m.team_no, m.id, leader, nickname, image
+		select m.team_no, m.id, leader, nickname, IFNULL(IMAGE, 'user.png') AS IMAGE
 		  from `team_member` m
 		  join `user` u
 		    on m.id = u.id
@@ -55,7 +55,7 @@
 	</insert>
 	
 	<select id="selectInvitedMemberInfo" resultType="kr.or.bit3004.user.User">
-		select image, nickname, id from `user` where id=#{id}
+		select  IFNULL(IMAGE, 'user.png') AS IMAGE, nickname, id from `user` where id=#{id}
 	</select>
 	
 	<!-- 팀탈퇴 -->
@@ -90,5 +90,12 @@
 	<update id="updateTeamName" parameterType="kr.or.bit3004.groupAndTeam.Team">
 		update `team` set `team_name` = #{teamName} where `team_no` = #{teamNo}
 	</update>
+	
+	<!-- id로 한사람의 TeamMember 정보 가져오기 -->
+	<select id="isTeamLeader" resultType="String">
+		SELECT LEADER
+		FROM TEAM_MEMBER
+		WHERE ID = #{id} AND TEAM_NO = #{teamNo}
+	</select>
 </mapper>
 

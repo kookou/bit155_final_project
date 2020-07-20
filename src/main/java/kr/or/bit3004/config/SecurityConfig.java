@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,16 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import kr.or.bit3004.dao.UserDao;
 import kr.or.bit3004.handler.LoginFailureHandler;
 import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
 import kr.or.bit3004.user.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	
@@ -54,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private AuthenticationFailureHandler loginFailureHandler;
+	
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	
 	
@@ -67,7 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", 
+								   "/images/**", "/css/**", "/images/**", "/js/**", 
+								   "/console/**", "/favicon.ico/**", "/assets/**", 
+								   "/dist/**", "/error**");
 	}
 	
 	@Override
@@ -89,9 +99,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		try {
 			
 			http.authorizeRequests()
-						.antMatchers("/user/**", "/test", "/resetpassword") 
+						.antMatchers("/user/**", "/resetpassword") 
 								.hasAnyRole("ADMIN", "USER")
-						.antMatchers("/login/**", "/signin/**", "/signup/**", "/css/**", "/images/**", "/js/**", "/console/**", "/favicon.ico/**", "/assets/**", "/dist/**", "/error**")
+						.antMatchers("/login/**", "/signin/**", "/signup/**", "/oauth2/**",
+									 "/loginSuccess", "/loginFailure")
 								.permitAll()
 						.anyRequest().authenticated();
 			
@@ -113,10 +124,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 							.invalidateHttpSession(true)
 							.deleteCookies("SESSION");
 			
-			http.oauth2Login().userInfoEndpoint()
-				.userService(new CustomOAuth2UserService()) // 네이버 USER INFO의 응답을 처리하기 위한 설정 
+			http.oauth2Login()
+				.userInfoEndpoint()
+				.userService(customOAuth2UserService) // 네이버 USER INFO의 응답을 처리하기 위한 설정 
 				.and() 
-				.defaultSuccessUrl("/loginSuccess") 
+				.defaultSuccessUrl("/") 
 				.failureUrl("/loginFailure") 
 				.and() 
 				.exceptionHandling() 
@@ -133,10 +145,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean 
 	public ClientRegistrationRepository clientRegistrationRepository( 
 			OAuth2ClientProperties oAuth2ClientProperties, 
-			@Value("${custom.oauth2.kakao.client-id}") 
-			String kakaoClientId, 
-			@Value("${custom.oauth2.kakao.client-secret}") 
-			String kakaoClientSecret, 
+//			@Value("${custom.oauth2.kakao.client-id}") 
+//			String kakaoClientId, 
+//			@Value("${custom.oauth2.kakao.client-secret}") 
+//			String kakaoClientSecret, 
 			@Value("${custom.oauth2.naver.client-id}") 
 			String naverClientId, 
 			@Value("${custom.oauth2.naver.client-secret}") 
@@ -146,11 +158,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.map(client -> getRegistration(oAuth2ClientProperties, client)) 
 				.filter(Objects::nonNull) .collect(Collectors.toList()); 
 		
-		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao") 
-				.clientId(kakaoClientId) 
-				.clientSecret(kakaoClientSecret) 
-				.jwkSetUri("temp") 
-				.build()); 
+//		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao") 
+//				.clientId(kakaoClientId) 
+//				.clientSecret(kakaoClientSecret) 
+//				.jwkSetUri("temp") 
+//				.build()); 
 		
 		registrations.add(CustomOAuth2Provider.NAVER.getBuilder("naver") 
 				.clientId(naverClientId) 
@@ -168,7 +180,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client) 
 					.clientId(registration.getClientId()) 
 					.clientSecret(registration.getClientSecret())
-					.redirectUriTemplate("{baseUrl}/signin/oauth2/code/{registrationId}")
+					.redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
 					.scope("email", "profile") 
 					.build(); 
 			} 
@@ -178,7 +190,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			return CommonOAuth2Provider.FACEBOOK.getBuilder(client) 
 					.clientId(registration.getClientId()) 
 					.clientSecret(registration.getClientSecret()) 
-					.userInfoUri("https://graph.facebook.com/me?fields=id,name,email,link") 
+					.userInfoUri("https://graph.facebook.com/me?fields=id,name,email,link,picture") 
 					.scope("email") 
 					.build(); 
 			} return null; 
