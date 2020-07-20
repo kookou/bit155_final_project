@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,16 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import kr.or.bit3004.dao.UserDao;
 import kr.or.bit3004.handler.LoginFailureHandler;
 import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
 import kr.or.bit3004.user.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	
@@ -54,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private AuthenticationFailureHandler loginFailureHandler;
+	
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	
 	
@@ -67,7 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", 
+								   "/images/**", "/css/**", "/images/**", "/js/**", 
+								   "/console/**", "/favicon.ico/**", "/assets/**", 
+								   "/dist/**", "/error**");
 	}
 	
 	@Override
@@ -89,9 +99,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		try {
 			
 			http.authorizeRequests()
-						.antMatchers("/user/**", "/test", "/resetpassword") 
+						.antMatchers("/user/**", "/resetpassword") 
 								.hasAnyRole("ADMIN", "USER")
-						.antMatchers("/login/**", "/signin/**", "/signup/**", "/css/**", "/images/**", "/js/**", "/console/**", "/favicon.ico/**", "/assets/**", "/dist/**", "/error**")
+						.antMatchers("/login/**", "/signin/**", "/signup/**", "oauth2/**")
 								.permitAll()
 						.anyRequest().authenticated();
 			
@@ -113,8 +123,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 							.invalidateHttpSession(true)
 							.deleteCookies("SESSION");
 			
-			http.oauth2Login().userInfoEndpoint()
-				.userService(new CustomOAuth2UserService()) // 네이버 USER INFO의 응답을 처리하기 위한 설정 
+			http.oauth2Login()
+				.userInfoEndpoint()
+				.userService(customOAuth2UserService) // 네이버 USER INFO의 응답을 처리하기 위한 설정 
 				.and() 
 				.defaultSuccessUrl("/loginSuccess") 
 				.failureUrl("/loginFailure") 

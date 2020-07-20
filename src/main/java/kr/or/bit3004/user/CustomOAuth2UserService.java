@@ -1,10 +1,13 @@
 package kr.or.bit3004.user;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference; 
 import org.springframework.core.convert.converter.Converter; 
 import org.springframework.http.RequestEntity; 
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.core.GrantedAuthority; 
-import org.springframework.security.core.authority.SimpleGrantedAuthority; 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler; 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService; 
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest; 
@@ -17,21 +20,33 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User; 
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert; 
 import org.springframework.util.StringUtils; 
 import org.springframework.web.client.RestClientException; 
 import org.springframework.web.client.RestOperations; 
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import kr.or.bit3004.dao.UserDao;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedHashMap; 
 import java.util.LinkedHashSet; 
 import java.util.Map; 
-import java.util.Set; 
+import java.util.Set;
+
+import javax.servlet.http.HttpSession; 
 
 
+@Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService { 
+	
+	private final UserDao userDao;
+	private final HttpSession session;
+	
 	private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri"; 
 	private static final String MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE = "missing_user_name_attribute"; 
 	private static final String INVALID_USER_INFO_RESPONSE_ERROR_CODE = "invalid_user_info_response"; 
@@ -40,18 +55,27 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			
 	private Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter = new OAuth2UserRequestEntityConverter(); 
 	private RestOperations restOperations; 
+
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	
-	public CustomOAuth2UserService() { 
+	
+	public CustomOAuth2UserService(UserDao userDao, HttpSession session) {  // 생성자 내용 아직 공부 안함		
+		this.session= session; // session만들기
+		this.userDao = userDao;
 		RestTemplate restTemplate = new RestTemplate(); 
 		restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler()); 
-		this.restOperations = restTemplate; 
+		this.restOperations = restTemplate;
+		this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		
 	} 
 	
 	@Override 
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException { 
+		System.out.println("loadUser");
+		
 		Assert.notNull(userRequest, "userRequest cannot be null"); 
+		
 		if (!StringUtils.hasText(userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri())) { 
 			OAuth2Error oauth2Error = new OAuth2Error( MISSING_USER_INFO_URI_ERROR_CODE, 
 					"Missing required UserInfo Uri in UserInfoEndpoint for Client Registration: " 
@@ -59,15 +83,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString()); 
 			} 
 		
-		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails() .getUserInfoEndpoint().getUserNameAttributeName(); 
+		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails() .getUserInfoEndpoint().getUserNameAttributeName();
+		
+//		System.out.println("CustomOAuth2UserService loadUser");
+//		System.out.println("userNameAttributeName : " + userNameAttributeName.toString());
+		
 		if (!StringUtils.hasText(userNameAttributeName)) { 
 			OAuth2Error oauth2Error = new OAuth2Error( MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE, 
 					"Missing required \"user name\" attribute name in UserInfoEndpoint for Client Registration: " 
 					+ userRequest.getClientRegistration().getRegistrationId(), null ); 
 			throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString()); 	
 			} 
+		
 		RequestEntity<?> request = this.requestEntityConverter.convert(userRequest); 
 		ResponseEntity<Map<String, Object>> response; 
+		
 		try { 
 			response = this.restOperations.exchange(request, PARAMETERIZED_RESPONSE_TYPE); 
 			
@@ -97,8 +127,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		} 
 		
 		Map<String, Object> userAttributes = getUserAttributes(response); 
+		
+		System.out.println("userAttributes : "+userAttributes.toString()); // 여기여기 !! 여기가 user정보 !!!
+		System.out.println(userAttributes.get("email"));
+		
+		
+		//여기서 해당 email이 우리 db에 있는지 확인하고, 있다면 session에 값을 저장하고 role 부여.
+		//없다면 DB에 정보 등록(email 정보가 없다면 email 인증 페이지로 이동)
+		User user = saveOrUpdate(userAttributes); // DB에 정보등록.
+		session.setAttribute("currentUser", new SessionUser(user));
+		
+		
 		Set<GrantedAuthority> authorities = new LinkedHashSet<>(); 
-		authorities.add(new OAuth2UserAuthority(userAttributes)); 
+		authorities.add(new OAuth2UserAuthority(userAttributes));  //OAuth2UserAuthority가 role_user권한을 부여.
 		OAuth2AccessToken token = userRequest.getAccessToken(); 
 		System.out.println(token.getScopes());
 		
@@ -106,6 +147,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		for (String authority : token.getScopes()) { 
 			authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority)); 	
 		} 
+		
+		System.out.println("authorities : "+ authorities.toString());
 		
 		return new DefaultOAuth2User(authorities, userAttributes, userNameAttributeName); 
 		
@@ -115,6 +158,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	// 네이버는 HTTP response body에 response 안에 id 값을 포함한 유저정보를 넣어주므로 유저정보를 빼내기 위한 작업을 함
 	private Map<String, Object> getUserAttributes(ResponseEntity<Map<String, Object>> response) { 
+		System.out.println("네이버 getUserAttributes");
+		
 		Map<String, Object> userAttributes = response.getBody(); 
 		
 		//토큰으로 받아온 유저정보를 콘솔에 출력
@@ -133,4 +178,46 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	}
 	
 	
+    private User saveOrUpdate(Map<String, Object> userAttributes) {
+    	String email = (String)userAttributes.get("email");
+    	String nickname = (String)userAttributes.get("name");
+    	String pwd = (String)userAttributes.get("sub");
+    	User user = new User();
+    	
+    	if(email == null) {
+    		System.out.println("email 인증 페이지로 이동해야합니다");
+    	}else {    	
+    		System.out.println("email : "+email);
+    			int result = userDao.idCheck(email);
+            
+    		if(result > 0) {
+    			user = userDao.getUser(email);
+    			
+    			System.out.println("user : "+user.toString());
+    			System.out.println("등록된 사용자입니다");
+    			
+    		}else {
+    			System.out.println("등록되지 않은 사용자입니다");
+    			user.setEnable(1);
+    			user.setId(email);
+    			user.setNickname(nickname);
+    			user.setPwd(bCryptPasswordEncoder.encode(pwd));
+    			
+    			result = userDao.insertUser(user);
+    			System.out.println(result);
+    			
+    			if(result == 1) {
+    				System.out.println("사용자 등록이 완료되었습니다.");
+    			}
+
+    			user = userDao.getUser(email);
+    		}
+    	}
+    	
+    	return user;
+    	
+
+       
+    }
+    
 }

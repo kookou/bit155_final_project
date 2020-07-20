@@ -11,10 +11,10 @@ public class Oauth2Controller {
 		return "home";
 	}
 	
-	@GetMapping({"/login"})
-	public String login() {
-		return "login";
-	}
+//	@GetMapping({"/login"})
+//	public String login() {
+//		return "login";
+//	}
 	
 	@GetMapping({"/loginSuccess", "/hello"})
 	public String loginSuccess() { // 이거 지금 소용없음

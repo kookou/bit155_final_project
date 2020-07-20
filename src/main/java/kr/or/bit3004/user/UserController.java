@@ -105,20 +105,27 @@ public class UserController {
 	}
 	
 	
-	
-	@RequestMapping(value="/signin/oauth2/code/naver")
-	public void naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-	         HttpServletRequest request) {
-		System.out.println("code : " + code);
-		System.out.println("state : "+state);
-	}
-	
-	@RequestMapping(value="/login/oauth2/code/google")
-	public void googleCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-	         HttpServletRequest request) {
-		System.out.println("code : " + code);
-		System.out.println("state : "+state);
-	}
+//	
+//	@RequestMapping(value="/signin/oauth2/code/naver")
+//	public void naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+//	         HttpServletRequest request) {
+//		System.out.println("code : " + code);
+//		System.out.println("state : "+state);
+//	}
+//	
+//	@RequestMapping(value="/signin/oauth2/code/kakao")
+//	public void kakaoCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+//	         HttpServletRequest request) {
+//		System.out.println("code : " + code);
+//		System.out.println("state : "+state);
+//	}
+//	
+//	@RequestMapping(value="/login/oauth2/code/google") // 작동 안함
+//	public void googleCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+//	         HttpServletRequest request) {
+//		System.out.println("code : " + code);
+//		System.out.println("state : "+state);
+//	}
 
 	
 }
