@@ -17,7 +17,7 @@ public class TodoListController {
 	
 	@RequestMapping("todoList.do")
 	public String todoList(int teamNo, Model model) {
-		model.addAttribute("todoList", service.selectTodoList(teamNo));
+//		model.addAttribute("todoList", service.selectTodoList(todoList));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
