@@ -23,4 +23,7 @@ public interface AsideService {
 	public void updateAsideBoardName(AllBoardList allBoardList);
 	public void deleteAsideBoard(AllBoardList allBoardList);
 	public void updateTeamName(Team team);
+	
+	// id와 teamNo로 팀리더 여부 가져오기
+	public String isTeamLeader(String id, int teamNo);
 }

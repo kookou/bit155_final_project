@@ -90,5 +90,12 @@
 	<update id="updateTeamName" parameterType="kr.or.bit3004.groupAndTeam.Team">
 		update `team` set `team_name` = #{teamName} where `team_no` = #{teamNo}
 	</update>
+	
+	<!-- id로 한사람의 TeamMember 정보 가져오기 -->
+	<select id="isTeamLeader" resultType="String">
+		SELECT LEADER
+		FROM TEAM_MEMBER
+		WHERE ID = #{id} AND TEAM_NO = #{teamNo}
+	</select>
 </mapper>
 
