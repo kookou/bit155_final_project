@@ -60,11 +60,10 @@
                         <div class="form-group">
                         <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
                            	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                            	<span>
-                                	<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
-                            	</span>
-                            	 
-
+                               	<img th:src="${#strings.startsWith(session.currentUser.image, 'https')} 
+                               				? ${session.currentUser.image} : @{assets/images/userImage/}+${session.currentUser.image} " 
+                               			alt="userImagePreview"  id="userImagePreview" 
+                               			style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">                       	 
                            	</div>
                         </div>
 						</div>
@@ -72,7 +71,10 @@
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${session.currentUser.image == 'user.png'} ? '' : ${session.currentUser.image}"></label>
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" 
+                                	   th:text="${(session.currentUser.image == 'user.png') 
+                                				|| #strings.startsWith(session.currentUser.image, 'https')} 
+                                				? '' : ${session.currentUser.image}"></label>
                             </div>
                         </div> 
 
