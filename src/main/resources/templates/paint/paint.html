@@ -77,6 +77,7 @@
   </head>
 
   <body>
+  <div th:replace="common/scriptA :: scriptA"></div> 
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
@@ -204,7 +205,7 @@
     </div>
     </div>
     </div>
-    <div th:replace="common/script :: script"></div>
+<div th:replace="common/scriptB :: scriptB"></div> 
     <script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
     <!-- 컬러피커 -->
@@ -251,7 +252,6 @@
           			console.log("이걸탔따 으헝");
           			ctx.fillStyle=pos.color;
           			ctx.fill();	
-          		
           		}
             	//selectTool('circle');
           },
