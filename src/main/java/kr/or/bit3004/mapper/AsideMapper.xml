@@ -66,6 +66,11 @@
 		delete from group_team where id=#{id} and team_no=#{teamNo}
 	</delete>
 	
+	<!-- 팀장 팀 탈퇴시 새로운 리더 넣어주기 -->
+	<update id="updateNewLeader" parameterType="hashMap">
+		update team_member set  `leader` = 'Y' where id = #{newLeader} and team_no = #{teamNo}
+	</update>
+	
 	<!-- aside의 board name 수정 -->
 	<update id="updateAsideBoardName" parameterType="kr.or.bit3004.aside.AllBoardList">
 		update `all_board_list`

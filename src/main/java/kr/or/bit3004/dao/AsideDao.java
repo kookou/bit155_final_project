@@ -1,6 +1,7 @@
 package kr.or.bit3004.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.bit3004.aside.AllBoardList;
 import kr.or.bit3004.groupAndTeam.GroupAndTeam;
@@ -20,6 +21,7 @@ public interface AsideDao {
 	public void insertGroupTeam(GroupAndTeam groupAndTeam);
 	public void deleteTeamMember(GroupAndTeam groupAndTeam);
 	public void deleteGroupTeam(GroupAndTeam groupAndTeam);
+	public void updateNewLeader(Map<String, Object> newLeaderAndTeamNo);
 	public User selectInvitedMemberInfo(String id);
 	public void updateAsideBoardName(AllBoardList allBoardList);
 	public void deleteAsideBoard(AllBoardList allBoardList);

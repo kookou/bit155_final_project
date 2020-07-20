@@ -40,7 +40,7 @@
 	                <div class="card">
 	                    <div class="card-body">
 	                    
-	                        <div class="alert alert-primary bg-white text-primary row" role="alert" th:each="timeline :  ${timelineList}">
+	                        <div class="alert row" role="alert" th:each="timeline :  ${timelineList}">
 	                            <div class="col-md-1">
 	                                <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle" width="50">
 	                            </div>
@@ -95,7 +95,22 @@
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];
 			if(bgColor != 'ffffff') {
-				$('.card-body').css("background", "#"+bgColor);
+				$('.alert').css("background", "#"+bgColor);
+			}
+			if(bgColor == 'd0e1f5') {
+				$('.alert').attr('class', 'alert row alert-primary text-primary');
+			}
+			if(bgColor == 'c0e4da') {
+				$('.alert').attr('class', 'alert row alert-success');
+			}
+			if(bgColor == 'fee993') {
+				$('.alert').attr('class', 'alert row alert-warning');
+			}
+			if(bgColor == 'fac8bf') {
+				$('.alert').attr('class', 'alert row alert-danger');
+			}
+			if(bgColor == 'fedcc1') {
+				$('.alert').attr('class', 'alert row alert-warning');
 			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];

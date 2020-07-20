@@ -301,6 +301,7 @@ ALTER TABLE `PLAN` modify `NO` INT auto_increment;
 -- 타임라인
 CREATE TABLE `TIMELINE` (
 	`TIMELINE_NO`  INT          NOT NULL, -- 타임라인식별번호
+    `TABLE_NAME`   VARCHAR(100) NOT NULL, -- 해당테이블 이름
 	`COLUMN_NAME`  VARCHAR(100) NOT NULL, -- 해당테이블의 기본키 컬럼명
 	`COLUMN_NO`    INT          NOT NULL, -- 해당테이블의 식별번호
     `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용

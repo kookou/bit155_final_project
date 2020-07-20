@@ -86,17 +86,29 @@
 							<span class="hide-menu">Canvas</span>
 						</a>
 					</li>
-					<br>
-					<li class="sidebar-item text-right">
-						<a class="sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
-							<span class="hide-menu">팀나가기 <i class="fas fa-share-square"></i></span>
-						</a>
+					<li class="sidebar-item text-right" th:if="${#lists.size(teamMember) == 1}">
+						<!-- 팀장이지만 팀원이 혼자면 바로 탈퇴진행하기 -->
+						<span>
+								<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" id="teamOut" > 
+									<span class="hide-menu"><i class="fas fa-share-square"></i> 팀나가기</span>
+								</a>
+						</span>
+					</li>
+					<li class="sidebar-item text-right" th:if="${#lists.size(teamMember) > 1}" th:each="member: ${teamMember}">
+						<!-- 팀장일경우 리더권한 넘겨줄 모달 띄우기 -->
+						<span th:if="${member.nickname == session.currentUser.nickname && member.leader.equals('Y')}">
+								<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" id="" data-toggle="modal" data-target="#passLeaderModal" > 
+									<span class="hide-menu"><i class="fas fa-share-square"></i> 팀나가기</span>
+								</a>
+						</span>
+						<!-- 팀원일경우 바로 탈퇴진행하기 -->
+						<span th:if="${member.nickname == session.currentUser.nickname && member.leader.equals('N')}">
+								<a class="sidebar-link" href="javascript:void(0);" aria-expanded="false" id="teamOut" > 
+									<span class="hide-menu"><i class="fas fa-share-square"></i> 팀나가기</span>
+								</a>
+						</span>
 					</li>
 				</ul>
-				<br>
-				<div class="text-right" style="padding-right:20px;">
-					<a href="javascript:void(0);" style="color:#818181;" id="teamOut">팀나가기 <i class="fas fa-share-square"></i></a>
-				</div>
 			</nav>
 			<!-- End Sidebar navigation -->
 		</div>
