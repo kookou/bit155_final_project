@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import kr.or.bit3004.dao.UserDao;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap; 
 import java.util.LinkedHashSet; 
 import java.util.Map; 
@@ -172,31 +173,77 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	
 	
     private User saveOrUpdate(Map<String, Object> userAttributes) {
-    	
-    	String email = (String)userAttributes.get("email"); // G,F,N 공통
-    	
-    	String naverTypeId = (String)userAttributes.get("nickname"); //G,F>> name   naver >> nickname
-    	String nickname = (naverTypeId != null) ? naverTypeId : (String)userAttributes.get("name"); 
-    	
-    	String googleTypeId = (String)userAttributes.get("sub"); // G
-    	String otherTypeId = (String)userAttributes.get("id");  // F,N
-
-    	// 사용자 고유id값을 암호화하여 pwd로 사용할 예정
-    	String pwd = (googleTypeId != null) ? googleTypeId : otherTypeId; 
-    	
-    	System.out.println("email :"+email);
-    	System.out.println("pwd : "+pwd);
-    	System.out.println("nickname : "+nickname);
 
     	
+    	String emailKey = "email";
+    	String idKey = "id";
+    	String nicknameKey = "name";
+    	String imageKey = "";
     	
+    	String email = "";
+    	String pwd = "";
+    	String nickname = "";
+    	String image = "";
+    	
+    	
+    	boolean isFB = false;
+    	
+    	
+    	if(userAttributes.get("sub") != null) { // 구글 소셜로그인
+    		System.out.println("google");
+    		idKey = "sub";
+    		imageKey = "picture";
+    		
+    	}else if(userAttributes.get("nickname") != null) { // 네이버 소셜로그인
+    		System.out.println("naver");
+    		nicknameKey = "nickname";
+    		imageKey = "profile_image";
+    		
+    	}else { // 페이스북 소셜로그인
+    		System.out.println("FB");
+    		isFB = true;
+    	}
+    	
+    	email = (String)userAttributes.get(emailKey);
+    	pwd = (String)userAttributes.get(idKey);
+    	nickname = (String)userAttributes.get(nicknameKey);
+    	image = (String)userAttributes.get(imageKey); // null 이 출력되면 null값이 들어갈까?
+    	
+
+    	if(isFB && ((userAttributes.get("picture")) != null)) {
+    		System.out.println("isFB TRUE");
+    		image = "https://graph.facebook.com/"
+    				+ pwd
+    				+"/picture?type=normal&redirect=true&width=300&height=300";
+    	}
+    	
+    	
+//    	
+//    	String googleTypeId = (String)userAttributes.get("sub"); // G
+//    	String otherTypeId = (String)userAttributes.get("id");  // F,N    	
+//    	String naverTypeNickname = (String)userAttributes.get("nickname"); //G,F>> name   naver >> nickname
+//    	
+//    	
+//    	String email = (String)userAttributes.get("email"); // G,F,N 공통
+//    	String nickname = (naverTypeNickname != null) ? naverTypeNickname : (String)userAttributes.get("name"); 
+//    	String image = (String)userAttributes.get("picture"); // naver :profile_image / google : picture  / facebook : 
+//    	
+//    	// 사용자 고유id값을 암호화하여 pwd로 사용할 예정
+//    	String pwd = (googleTypeId != null) ? googleTypeId : otherTypeId; 
+//    	
+//    	System.out.println("email :"+email);
+//    	System.out.println("pwd : "+pwd);
+//    	System.out.println("nickname : "+nickname);
+
     	User user = new User();
     	
-    	if(email == null) {
-    		System.out.println("email 인증 페이지로 이동해야합니다");
-    	}else {    	
+   	
     		System.out.println("email : "+email);
-    			int result = userDao.idCheck(email);
+    		System.out.println("pwd : "+pwd);    		
+    		System.out.println("nickname : "+nickname);
+    		System.out.println("image : "+image);   // 이미지 있는경우 로컬에 저장해야함  		
+    		
+    		int result = userDao.idCheck(email);
             
     		if(result > 0) {
     			user = userDao.getUser(email);
@@ -211,6 +258,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     			user.setNickname(nickname);
     			user.setPwd(bCryptPasswordEncoder.encode(pwd));
     			
+    			if(image != null) {
+    				System.out.println("이미지 있음");
+    				user.setImage(image);
+    			}
+    			
     			result = userDao.insertUser(user);
     			System.out.println(result);
     			
@@ -220,7 +272,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     			user = userDao.getUser(email);
     		}
-    	}
+    	
     	
     	return user;
     	

@@ -180,7 +180,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			return CommonOAuth2Provider.GOOGLE.getBuilder(client) 
 					.clientId(registration.getClientId()) 
 					.clientSecret(registration.getClientSecret())
-					.redirectUriTemplate("{baseUrl}/signin/oauth2/code/{registrationId}")
+					.redirectUriTemplate("{baseUrl}/login/oauth2/code/{registrationId}")
 					.scope("email", "profile") 
 					.build(); 
 			} 
@@ -190,7 +190,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			return CommonOAuth2Provider.FACEBOOK.getBuilder(client) 
 					.clientId(registration.getClientId()) 
 					.clientSecret(registration.getClientSecret()) 
-					.userInfoUri("https://graph.facebook.com/me?fields=id,name,email,link") 
+					.userInfoUri("https://graph.facebook.com/me?fields=id,name,email,link,picture") 
 					.scope("email") 
 					.build(); 
 			} return null; 
