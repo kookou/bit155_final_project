@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
+import kr.or.bit3004.user.User;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -33,8 +37,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//게시판 조회수 증가
-	public void updateReadCount(int boardNo) {
-		dao.updateReadCount(boardNo);
+	public void updateReadCount(int boardNo, HttpServletRequest request) {
+		Board board = dao.selectBoardByNo(boardNo); //작성자 id 얻어오기
+		String writer = board.getId();
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("currentUser");
+		String sessionId = user.getId(); //현재 접속한 사람 id 얻어오기
+		
+		if(!sessionId.equals(writer)) {
+			dao.updateReadCount(boardNo);
+		}
 	}
 
 	//게시판 글쓰기
