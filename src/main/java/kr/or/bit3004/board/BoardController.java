@@ -1,7 +1,6 @@
 package kr.or.bit3004.board;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.aside.AsideService;
-import kr.or.bit3004.user.User;
 
 @Controller
 //@RequestMapping
@@ -37,30 +35,11 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo, HttpServletRequest request) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo, String id, HttpServletRequest request) {
 		model.addAttribute("teamNo", teamNo);
-		//model.addAttribute("boardNo", boardNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
-		//model.addAttribute("refer",refer);
-		
-		Board board = service.selectBoardByBoardNo(boardNo);
-		String writer = board.getId(); //작성자 id 얻어오기
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("currentUser");
-		String sessionId = user.getId(); //현재 접속한 사람 id 얻어오기
-		
-		//if문을 왜 안 먹지? service의 힘이 강력한가?
-		if(sessionId != writer) {
-			service.updateReadCount(boardNo);
-		}
-		
-		System.out.println("board : " + board);
-		System.out.println("writer : " + writer);
-		System.out.println("session : " + session);
-		System.out.println("user : " + user);
-		System.out.println("sessionId : " + sessionId);
-		
+		service.updateReadCount(boardNo, request);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -85,7 +64,6 @@ public class BoardController {
 		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
-		
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	
@@ -138,8 +116,7 @@ public class BoardController {
 	@RequestMapping("deleteBoard.do")
 	public String deleteBoardService(int boardNo,int allBoardListNo,int teamNo) {
 		service.deleteBoard(boardNo);
-		/* return "redirect:boardList.do?allBoardListNo=1&teamNo=1"; */
-		 return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
+		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
 	
 }
