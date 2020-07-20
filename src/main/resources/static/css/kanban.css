@@ -6,10 +6,18 @@
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
-  
     min-height:50px;
+   /* 
+    -ms-overflow-style: scrollbar; */
 
 }
+
+/* .kanban-list-wrapper ::-webkit-scrollbar {
+	
+    display: inline-block;
+} */
+
+
 .kanban-list-content{
     background-color: #ebecf0;
     border-radius: 3px;
@@ -21,9 +29,9 @@
     white-space: normal;
     
 }
-.kanban-list-scroll{
+/* .kanban-list-scroll{
     display: flex;
-}
+} */
 .kanban-list-add-wrapper{
     width: 272px;
     margin: 0 4px;
@@ -203,8 +211,14 @@
     position: relative;
     transition: margin .1s ease-in;
     min-height: 100%;
-    
+   /*  scrollbar-width: none;
+    -ms-overflow-style: none; */
 }
+
+/* .kanban-container ::-webkit-scrollbar {
+    display: none;
+}
+ */
 #teaminfo-nav{
     padding: 12px 30px;
 }
@@ -217,6 +231,7 @@ div {
     display: block;
 }
 #kanban{
+	
     -webkit-user-select: none;
     user-select: none;
     white-space: nowrap;
@@ -731,8 +746,8 @@ textarea.modal-textarea-description-edit, textarea.modal-textarea-description-ed
 
 .divForDragNDrop {
 	min-height:15px;
+	max-height: 740px;
 	overflow-y: auto;
-	/* max-height: calc(100vh - 11.8rem); */
 	grid-template-rows: auto minmax(auto, 1fr) auto;
 	
 }

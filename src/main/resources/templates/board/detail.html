@@ -53,98 +53,101 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-        
-    <th:block th:replace="common/header :: header"></th:block>
-    <th:block th:replace="common/aside :: aside"></th:block>
-    <th:block th:replace="common/addAllBoardModal"></th:block>
-    <th:block th:replace="common/chat"></th:block>
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-    <div class="page-wrapper">
-	    <div class="container-fluid">
-	        <div class="row">
-	            <div class="col-12">
-	                <div class="card">
-	                    <div class="card-body">
-                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <!-- 본문 내용 -->
-                                        <div id="content-outer">
-                                        	<input type="hidden" name="id" th:value="${session.currentUser.id}">
-                                            <input type="hidden" name="teamNo" th:value="${teamNo}">
-                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
-                                            <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
-                                            <h2><a th:text="${selectBoard.title}"></a></h2>
-                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
-                                            <div style="float: left; margin-bottom: 15px;">
-                                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
-                                                <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
-                                            </div>
-                                            <div style="float: right;">
-                                                <span th:text="${selectBoard.writeDate}"></span>
-                                               	조회수 <span th:text="${selectBoard.views}"></span>
-                                            </div>
-                                            <div style="clear: both;">
-                                                <hr>
-                                                <div id="main-content" style="min-height: 250px;">
-                                                	<a href="javascript:void(0);" id="downLoadBtn" class="btn" style="float:right;" th:if="${#lists.size(selectBoardDownloadFile) > 0}">
-                                                		<i class="far fa-folder" style="cursor: pointer;"></i>
-                                                		<span th:text="${#lists.size(selectBoardDownloadFile)}"></span>
-                                                	</a>
-                                                    <p class="lead" id="summernote" style="clear:both"></p>
-                                                </div>
-                                                <hr class="my-4">
-                                                <!-- 댓글 -->
-                                                <div id="comment-area">
-                                                    <h4>Comment</h4>
-                                                    <div id="comment-list"></div>
-                                                    <div id="comment-writeForm" style="border: 1px solid silver;">
-                                                        <div style="padding: 10px 10px 0px 15px;"></div>
-                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
-                                                        <div style="padding: 0px 10px 10px 10px;">
-                                                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm" id="commWrite">등록</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-							
-                                    </div>
-                                </div>
-                      		</div>
-                            <div class="form-actions">
-                                <div style="float: left;">
-                                <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
-                                <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">수정</a>
-                                    <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo},allBoardListNo=${allBoardListNo}, teamNo=${teamNo})}">삭제</a>
-                                </div>
-                                <div style="float: right;">
-                                    <!-- <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=${allBoardListNo}&teamNo=${teamNo}">목록</a> -->
-                                    <a class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}">목록</a>
-                                    <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
-                                </div>
-                            </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	
-	<!-- 다운로드 popover창 -->
-	<div style="display:none;" id="download_list">
-		<div th:each="boardFile:${selectBoardDownloadFile}">
-			<a href="javascript:void(0);" download th:text="${boardFile.originFileName}" class="boardFileName"></a>
-			<input type="hidden" th:value="${boardFile.fileName}">
+    <div th:replace="common/scriptA :: scriptA"></div> 
+	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" 
+	data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+	    <th:block th:replace="common/header :: header"></th:block>
+	    <th:block th:replace="common/aside :: aside"></th:block>
+	    <th:block th:replace="common/addAllBoardModal"></th:block>
+	    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	    <div class="page-wrapper">
+		    <div class="container-fluid">
+		        <div class="row">
+		            <div class="col-12">
+		                <div class="card">
+		                    <div class="card-body">
+	                            <div class="form-body">
+	                                <div class="row">
+	                                    <div class="col-lg-12">
+	                                        <!-- 본문 내용 -->
+	                                        <div id="content-outer">
+	                                        	<input type="hidden" name="id" th:value="${session.currentUser.id}">
+	                                            <input type="hidden" name="teamNo" th:value="${teamNo}">
+	                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
+	                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
+	                                            <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
+	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
+	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
+	                                            <div style="float: left; margin-bottom: 15px;">
+	                                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+	                                                <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
+	                                            </div>
+	                                            <div style="float: right;">
+	                                                <span th:text="${selectBoard.writeDate}"></span>
+	                                               	조회수 <span th:text="${selectBoard.views}"></span>
+	                                            </div>
+	                                            <div style="clear: both;">
+	                                                <hr>
+	                                                <div id="main-content" style="min-height: 250px;">
+	                                                	<a href="javascript:void(0);" id="downLoadBtn" class="btn" style="float:right;" th:if="${#lists.size(selectBoardDownloadFile) > 0}">
+	                                                		<i class="far fa-folder" style="cursor: pointer;"></i>
+	                                                		<span th:text="${#lists.size(selectBoardDownloadFile)}"></span>
+	                                                	</a>
+	                                                    <p class="lead" id="summernote" style="clear:both"></p>
+	                                                </div>
+	                                                <hr class="my-4">
+	                                                <!-- 댓글 -->
+	                                                <div id="comment-area">
+	                                                    <h4>Comment</h4>
+	                                                    <div id="comment-list"></div>
+	                                                    <div id="comment-writeForm" style="border: 1px solid silver;">
+	                                                        <div style="padding: 10px 10px 0px 15px;"></div>
+	                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
+	                                                        <div style="padding: 0px 10px 10px 10px;">
+	                                                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm" id="commWrite">등록</button>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+								
+	                                    </div>
+	                                </div>
+	                      		</div>
+	                            <div class="form-actions">
+	                                <div style="float: left;">
+	                                <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+	                                <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
+	                                <span th:each="member: ${teamMember}" th:if="${member.id == session.currentUser.id}">
+	                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:if="${session.currentUser.id == selectBoard.id || member.leader.equals('Y')}"
+	                                    	th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">수정</a>
+	                                    <a class="btn btn-light btn-sm" style="color: black" id="deleteBtn" th:if="${session.currentUser.id == selectBoard.id || member.leader.equals('Y')}"
+	                                    	th:href="@{deleteBoard.do(boardNo=${selectBoard.boardNo},allBoardListNo=${allBoardListNo},teamNo=${teamNo})}">삭제</a>
+	                                </span>
+	                                </div>
+	                                <div style="float: right;">
+	                                    <!-- <a type="button" class="btn btn-light btn-sm" href="boardList.do?allBoardListNo=${allBoardListNo}&teamNo=${teamNo}">목록</a> -->
+	                                    <a class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}">목록</a>
+	                                    <a class="btn btn-light btn-sm" href="#"><i class="fas fa-angle-up"></i> TOP</a>
+	                                </div>
+	                            </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
-	</div>
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+		
+		<!-- 다운로드 popover창 -->
+		<div style="display:none;" id="download_list">
+			<div th:each="boardFile:${selectBoardDownloadFile}">
+				<a href="javascript:void(0);" download th:text="${boardFile.originFileName}" class="boardFileName" style="padding:15px; text-decoration: underline;"></a>
+				<input type="hidden" th:value="${boardFile.fileName}">
+			</div>
+		</div>
+    	<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <div th:replace="common/script :: script"></div>
+    <div th:replace="common/scriptB :: scriptB"></div>
     
     <!-- 여기서부터 java script -->
     <script>
@@ -153,9 +156,8 @@
 	    	var id = '[[${selectBoard.id}]]';
 	    	var boardContent = '[[${selectBoard.content}]]';
 	    	var fileName = '[[${selectBoardDownloadFile}]]';
+	    	var teamMember = '[[${teamMember}]]';
 		/*]]*/
-		
-		console.log(fileName);
 		
 		boardContent = boardContent.replace(/&lt;/gi, "<");
 		boardContent = boardContent.replace(/&gt;/gi, ">");
@@ -218,7 +220,7 @@
 			
 				//클릭한 a태그의 class를 cancelUpdate로 바꾸고 아이콘바꾸기
 				$(this).attr('class', 'cancleUpdate');
-				$(this).html("<i class='fas fa-times-circle'></i>")
+				$(this).html("<i class='fas fa-times-circle'></i>&nbsp;&nbsp;&nbsp;")
 				
 				//this(a태그)의 부모태그(div class="comment-content"태그)를 parentTag변수에 담기
 				var parentTag = $(this).parent();
@@ -335,13 +337,15 @@
 	    }
 	    
 	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
-	   	if(currUser != id){
+	 	/*   	
+	 	if(currUser != id){
 	   		$('#editBtn').hide();
 	   		$('#deleteBtn').hide();
 	   	} else if(currUser == id){
 	   		$('#editBtn').show();
 	   		$('#deleteBtn').show();
-	   	}
+	   	} 
+	   	*/
 	   	
 	   	//다운로드 창
 	   	$("#downLoadBtn").popover({
@@ -356,6 +360,7 @@
 	   	
 	   	//파일 경로 찾아서 다운로드
 	   	$('#download_list .boardFileName').each(function() {
+	   		console.log('cloud/'+teamNo+'/'+$(this).next().val());
 	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
     </script>

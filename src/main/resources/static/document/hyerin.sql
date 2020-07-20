@@ -135,14 +135,13 @@ update `group_team` gt
  where `team_no` = 1
    and g.id = 'a@a.aa';
    
-select *
-  from `team_member`
- where team_no =1
-   and id='hrin@3004.com';
+update `all_board_list`
+   set `name` = '수정된이름'
+ where `all_board_list_no` = 1
+   and `team_no` = 1;
    
-
-select * 
-  from timeline t
-  join `user` u
-    on t.id = u.id
- where team_no = 1;
+   insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'jinwon', 1);
+   
+delete from team_member where id='a@3004.com' and team_no=1;
+delete from group_team where id='a@3004.com' and team_no=1;
+select * from `group_team`;

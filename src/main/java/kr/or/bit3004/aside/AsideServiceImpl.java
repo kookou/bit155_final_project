@@ -1,6 +1,7 @@
 package kr.or.bit3004.aside;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class AsideServiceImpl implements AsideService {
 	
 	@Override
 	public Team getTeam(int teamNo) {
+		System.out.println("AsideServiceImpl");
 		return dao.getTeam(teamNo);
 	}
 	
@@ -53,6 +55,21 @@ public class AsideServiceImpl implements AsideService {
 		int groupNo = dao.searchPersonalNo(groupAndTeam.getId());
 		groupAndTeam.setGroupNo(groupNo);
 		dao.insertGroupTeam(groupAndTeam);
+	}
+	
+	@Override
+	public void deleteTeamMember(GroupAndTeam groupAndTeam) {
+		dao.deleteTeamMember(groupAndTeam);
+	}
+	
+	@Override
+	public void deleteGroupTeam(GroupAndTeam groupAndTeam) {
+		dao.deleteGroupTeam(groupAndTeam);
+	}
+	
+	@Override
+	public void updateNewLeader(Map<String, Object> newLeaderAndTeamNo) {
+		dao.updateNewLeader(newLeaderAndTeamNo);
 	}
 	
 	@Override

@@ -122,16 +122,16 @@ $('#allBoardList').on('click', '.delBoard', function() {
 				},
 				success: function() {
 					deleteBoard.remove();
+					Swal.fire(
+							'Deleted!',
+							'"' + boardName + '" Board가 삭제되었습니다.',
+							'success'
+					)
 				},
 				error: function(e) {
 					console.log(e);
 				}
 			});
-			Swal.fire(
-	    		'Deleted!',
-	    		'"' + boardName + '" Board가 삭제되었습니다.',
-	    		'success'
-	    	)
 		}
 	});
 	
@@ -275,6 +275,11 @@ $("#InviteMember").on("shown.bs.modal", function() {
 	$("#searchUser").autocomplete("option", "appendTo", "#InviteMember") 
 });
 
+//동적 생성된 태그에 툴팁 적용하기
+$("body").tooltip({
+    selector: '[data-toggle="tooltip"]'
+});
+
 $('#sendInvitationBtn').click(function() {
 	if($("#searchUser").val() == "") {
 		Swal.fire('초대할 Email을 입력하세요.');
@@ -307,9 +312,84 @@ $('#sendInvitationBtn').click(function() {
 	});
 });
 
-//////////////////////////////////////////////////////////////////////////////////////// 페이지 이동
+//팀원이 팀 탈퇴하기
+$('#teamOut').click(function() {
+	Swal.fire({
+		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
+		text: "초대를 통해서 다시 들어올 수 있습니다.",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		cancelButtonText: 'No, keep it'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: "teamOut.do",
+				data: {
+					teamNo: teamNo,
+					id: currUser
+				},
+				success: function() {
+					Swal.fire({
+						title: '"' + teamName + '"',
+						text: 'Team에서 탈퇴되었습니다.',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.value) {
+							location.href = 'teamMain.do?id='+currUser;
+						}
+					});
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		}
+	});
+});
+
+//팀장이 팀 탈퇴하기
+$('#passLeaderOkBtn').click(function() {
+	Swal.fire({
+		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
+		text: "초대를 통해서 다시 들어올 수 있습니다.",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		cancelButtonText: 'No, keep it'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: "leaderTeamOut.do",
+				data: {
+					teamNo: teamNo,
+					id: currUser,
+					newLeader: $('input[name="passLeader"]:checked').val()
+				},
+				success: function() {
+					Swal.fire({
+						title: '"' + teamName + '"',
+						text: 'Team에서 탈퇴되었습니다.',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.value) {
+							location.href = 'teamMain.do?id='+currUser;
+						}
+					});
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		}
+	});
+});
+
+////////////////////////////////////////////////////////////////////////////////////////페이지 이동
 $('#allBoardList').on('click', '.redirectBoard', function() {
-//	console.log($(this).find('.hiddenAllBoardListNo').val());
+	//console.log($(this).find('.hiddenAllBoardListNo').val());
 	console.log($(this).find('i').attr('class'));
 	if($(this).find('i').attr('class') == 'fas fa-table') {
 		location.href = 'boardList.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
@@ -318,13 +398,7 @@ $('#allBoardList').on('click', '.redirectBoard', function() {
 	}
 });
 
-
-
 /*$('#canvas').on('click',function(){
-	console.log('hi');
-	location.href = 'paint.do?teamNo=' + teamNo;
+console.log('hi');
+location.href = 'paint.do?teamNo=' + teamNo;
 });*/
-
-
-
-

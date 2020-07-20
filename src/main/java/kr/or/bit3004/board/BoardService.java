@@ -13,10 +13,11 @@ public interface BoardService {
 	
 	//게시판 조회수 증가
 	public void updateReadCount(int boardNo);
-	
+
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
+	//boardNo 가져오기
 	public int getBoardNo();
 	
 	//파일 업로드

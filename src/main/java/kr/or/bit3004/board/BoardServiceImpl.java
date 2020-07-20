@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 	public void updateReadCount(int boardNo) {
 		dao.updateReadCount(boardNo);
 	}
-	
+
 	//게시판 글쓰기
 	@Override
 	public void insertBoard(Board board) {

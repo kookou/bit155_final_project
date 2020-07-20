@@ -58,6 +58,19 @@
 		select image, nickname, id from `user` where id=#{id}
 	</select>
 	
+	<!-- 팀탈퇴 -->
+	<delete id="deleteTeamMember" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		delete from team_member where id=#{id} and team_no=#{teamNo}
+	</delete>
+	<delete id="deleteGroupTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		delete from group_team where id=#{id} and team_no=#{teamNo}
+	</delete>
+	
+	<!-- 팀장 팀 탈퇴시 새로운 리더 넣어주기 -->
+	<update id="updateNewLeader" parameterType="hashMap">
+		update team_member set  `leader` = 'Y' where id = #{newLeader} and team_no = #{teamNo}
+	</update>
+	
 	<!-- aside의 board name 수정 -->
 	<update id="updateAsideBoardName" parameterType="kr.or.bit3004.aside.AllBoardList">
 		update `all_board_list`

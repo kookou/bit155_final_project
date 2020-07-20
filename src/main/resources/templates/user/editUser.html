@@ -17,6 +17,7 @@
 </head>
 
 <body>
+   <div th:replace="common/scriptA :: scriptA"></div> 
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -24,7 +25,9 @@
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
      <th:block th:replace="common/header :: header"></th:block>
+     <span th:if="${param.teamNo != null}" >
      <th:block th:replace="common/aside :: aside"></th:block>
+     </span>
      <th:block th:replace="common/addAllBoardModal"></th:block>
      <th:block th:replace="common/chat"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
@@ -57,10 +60,7 @@
                         <div class="form-group">
                         <div class="user-img rounded-circle" style="background-color: white; overflow: hidden; height:200px; width:200px; margin:10px auto;">
                            	<div class="text-center" style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-                            	<span th:if="${session.currentUser.image == null}">
-                                	<img src="assets/images/users/4.jpg" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
-                            	</span>
-                            	<span th:unless="${session.currentUser.image == null}">
+                            	<span>
                                 	<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="userImagePreview"  id="userImagePreview" style="width :auto; height: 200px; transform: translate(-50%, -50%); display: block;">
                             	</span>
                             	 
@@ -72,7 +72,7 @@
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${session.currentUser.image}"></label>
+                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" th:text="${session.currentUser.image == 'user.png'} ? '' : ${session.currentUser.image}"></label>
                             </div>
                         </div> 
 
@@ -105,7 +105,7 @@
 
                         </div>
                         <div class="col-lg-12 text-center mt-5 mb-2">
-                            Don't want our service anymore? <a href="#" id="delAccount" class="text-muted">Delete account</a>
+                            Don't want our service anymore? <a href="" id="delAccount" class="text-muted">Delete account</a>
                         </div>
                     </form>
                 </div>
@@ -117,7 +117,7 @@
     
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
-    <div th:replace="common/script :: script"></div>
+    <div th:replace="common/scriptB :: scriptB"></div>
     
     
     <!-- ============================================================== -->
@@ -126,18 +126,19 @@
     <script src="assets/libs/popper.js/dist/umd/popper.min.js "></script>
     <!--파일 선택시 파일 경로 표시하기 아래 3개 모두 필요-->
     <!--Custom JavaScript -->
-    <script src="dist/js/feather.min.js"></script>
+    <script src="js/feather.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js "></script>
-    <script src="dist/js/custom.js "></script>
+    <script src="js/custom.js "></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
+    //이거 들어있으면 js 작동안함...
     /*<![CDATA[*/
-    var currUserNickname = [[${session.currentUser.nickname}]];
-    var currUserImage = [[${session.currentUser.image}]];
-    var teamNo = [[${teamNo}]];
+   // var currUserNickname = [[${session.currentUser.nickname}]];
+    //var currUserImage = [[${session.currentUser.image}]];
+    //var teamNo = [[${teamNo}]];
  	/*]]>*/
 
     
@@ -146,6 +147,7 @@
         //파일 미리보기
         var file = document.querySelector('#userImage');
         file.onchange = function() {
+        	console.log("=file.onchange=")
             var fileList = file.files;
             // 읽기
             var reader = new FileReader();
@@ -157,7 +159,7 @@
         };
         
         $(function() {
-            // console.log("jquery start");
+             console.log("jquery start");
             var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
             var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
@@ -233,6 +235,12 @@
                //let idOk = $('#id').hasClass('is-valid');
                let pwdOk = $('#pwd').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
+               
+               console.log("===");
+               console.log(nickOk);
+               console.log(pwdOk);
+               console.log(pwdChckOk);
+               
                if(nickOk && pwdOk && pwdChckOk){
                    console.log("if");
                    $('#submit').removeAttr('disabled');
@@ -247,13 +255,21 @@
                 $('input').removeClass('is-invalid');
                 $('input').removeClass('is-valid');
             });
+            
+            //회원 탈퇴
             console.log($('delAccount'));
             $('#delAccount').on('click', function() {
                 console.log("여기");
-               let result = confirm("정말 탈퇴하시겠습니까?"); 
+                $(this).removeAttr("href"); // 여기서 href 속성을 없애줘야 controller에서 redirect가 제대로 먹는다
+               let result = confirm("정말 탈퇴하시겠습니까? \n지금까지의 모든 활동 기록이 사라집니다."); 
                if(result){
-                   console.log("탈퇴진행");                 
+                   console.log("탈퇴진행"); 
+                   location.replace('deleteuser?id='+$('#id').val());
+               }else{
+            	   $(this).attr("href", "");
                }
+               
+               
             });
         });
         
