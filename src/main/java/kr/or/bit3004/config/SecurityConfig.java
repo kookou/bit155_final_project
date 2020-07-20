@@ -145,10 +145,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean 
 	public ClientRegistrationRepository clientRegistrationRepository( 
 			OAuth2ClientProperties oAuth2ClientProperties, 
-			@Value("${custom.oauth2.kakao.client-id}") 
-			String kakaoClientId, 
-			@Value("${custom.oauth2.kakao.client-secret}") 
-			String kakaoClientSecret, 
+//			@Value("${custom.oauth2.kakao.client-id}") 
+//			String kakaoClientId, 
+//			@Value("${custom.oauth2.kakao.client-secret}") 
+//			String kakaoClientSecret, 
 			@Value("${custom.oauth2.naver.client-id}") 
 			String naverClientId, 
 			@Value("${custom.oauth2.naver.client-secret}") 
@@ -158,11 +158,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.map(client -> getRegistration(oAuth2ClientProperties, client)) 
 				.filter(Objects::nonNull) .collect(Collectors.toList()); 
 		
-		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao") 
-				.clientId(kakaoClientId) 
-				.clientSecret(kakaoClientSecret) 
-				.jwkSetUri("temp") 
-				.build()); 
+//		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao") 
+//				.clientId(kakaoClientId) 
+//				.clientSecret(kakaoClientSecret) 
+//				.jwkSetUri("temp") 
+//				.build()); 
 		
 		registrations.add(CustomOAuth2Provider.NAVER.getBuilder("naver") 
 				.clientId(naverClientId) 
