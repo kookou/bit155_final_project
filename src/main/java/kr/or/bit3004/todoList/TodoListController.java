@@ -21,7 +21,7 @@ public class TodoListController {
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
-		return "todoList/include";
+		return "todoList/todoList";
 	}
 	
 }
