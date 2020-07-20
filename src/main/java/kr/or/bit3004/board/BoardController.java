@@ -1,7 +1,6 @@
 package kr.or.bit3004.board;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.aside.AsideService;
-import kr.or.bit3004.user.User;
 
 @Controller
 //@RequestMapping
@@ -39,7 +37,6 @@ public class BoardController {
 	@RequestMapping("selectBoard.do")
 	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo, String id, HttpServletRequest request) {
 		model.addAttribute("teamNo", teamNo);
-		//model.addAttribute("boardNo", boardNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
 		service.updateReadCount(boardNo, request);
@@ -67,7 +64,6 @@ public class BoardController {
 		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
-		
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
 	}
 	
@@ -120,8 +116,7 @@ public class BoardController {
 	@RequestMapping("deleteBoard.do")
 	public String deleteBoardService(int boardNo,int allBoardListNo,int teamNo) {
 		service.deleteBoard(boardNo);
-		/* return "redirect:boardList.do?allBoardListNo=1&teamNo=1"; */
-		 return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
+		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
 	
 }

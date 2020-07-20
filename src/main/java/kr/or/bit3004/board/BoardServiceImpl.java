@@ -38,6 +38,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 조회수 증가
 	public void updateReadCount(int boardNo, HttpServletRequest request) {
+		//게시판 글쓴이가 본일일 경우 조회수가 올라가지 않게 막는 기능
 		Board board = dao.selectBoardByNo(boardNo); //작성자 id 얻어오기
 		String writer = board.getId();
 		HttpSession session = request.getSession();
@@ -91,8 +92,8 @@ public class BoardServiceImpl implements BoardService{
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				System.out.println(path);
-				//폴더가 없을경우 폴더 생성하기
-				//왜 나는 폴더가 안 만들어지지?;;;;
+				
+				//teamNo 폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
 						folder.mkdir();
