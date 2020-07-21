@@ -52,7 +52,4 @@ public interface BoardDao {
 	
 	public void updateStep(Board board);
 	//////////////////////////////////////////////////////////////////////////////////
-	
-	//칸반카드
-	public void dragCardUpdateStart(int kanbanListNo , int cardIndex);
 }
