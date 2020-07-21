@@ -64,7 +64,7 @@
 	                                        <div class="col-sm-12 col-md-6">
 	                                            <div class="form-group">
 	                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
-	                                            	<input type="hidden" name="teamNo" th:value="${teamNo}">
+	                                            	<input type="hidden" name="teamNo" th:value="${session.currentUser.teamNo}">
 	                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
 	                                            	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
 	                                            	<input type = "checkbox" name="boardNoti" th:value = "Y">

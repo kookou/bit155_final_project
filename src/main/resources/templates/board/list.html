@@ -123,7 +123,7 @@
 		                                         <td style="width:55%;">
 	                                   				<!-- <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
 		                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
-		                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
+		                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
 		                                         	<!-- comment cnt가 존재하는 경우 -->
 		                                         	<a th:if="${board.commentCount }" th:text="|[${board.commentCount}]|"></a>
 		                                         	<!-- 업로드한 파일이 존재하는 경우  -->
@@ -139,7 +139,7 @@
 	                                </table>
 	                            </div>
 	                            <div class="form-actions text-right">
-	                            	<a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
+	                            	<a th:href="@{insertBoard.do(teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
 	                            		<i class="fas fa-pencil-alt"></i> 글쓰기
 	                            	</a>
 	                            </div>
