@@ -241,7 +241,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     		System.out.println("email : "+email);
     		System.out.println("pwd : "+pwd);    		
     		System.out.println("nickname : "+nickname);
-    		System.out.println("image : "+image);   // 이미지 있는경우 로컬에 저장해야함  		
+    		System.out.println("image : "+image);  	
     		
     		int result = userDao.idCheck(email);
             
