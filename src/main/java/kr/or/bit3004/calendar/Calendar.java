@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class Calendar {
 	private int no;
-	private String name;
+	private String title;
 	private String start;
 	private String end;
 	private String color;

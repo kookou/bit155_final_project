@@ -2,43 +2,43 @@ var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
 function getDisplayEventDate(event) {
-//	console.log("너는 언제오니?")
-//	console.log(event)
+// console.log("너는 언제오니?")
+// console.log(event)
   var displayEventDate;
 
   if (event.allDay == false) {
     var startTimeEventInfo = moment(event.start).format('HH:mm');
     var endTimeEventInfo = moment(event.end).format('HH:mm');
     displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
-    
   } else {
     displayEventDate = "하루종일";
+    console.log("와우")
   }
-
   return displayEventDate;
+ 
 }
 
-//function filtering(event) {
-//  var show_username = true;
-//  var show_type = true;
+// function filtering(event) {
+// var show_username = true;
+// var show_type = true;
 //
-//  var username = $('input:checkbox.filter:checked').map(function () {
-//    return $(this).val();
-//  }).get();
-//  var types = $('#type_filter').val();
+// var username = $('input:checkbox.filter:checked').map(function () {
+// return $(this).val();
+// }).get();
+// var types = $('#type_filter').val();
 //
-//  show_username = username.indexOf(event.username) >= 0;
+// show_username = username.indexOf(event.username) >= 0;
 //
-//  if (types && types.length > 0) {
-//    if (types[0] == "all") {
-//      show_type = true;
-//    } else {
-//      show_type = types.indexOf(event.type) >= 0;
-//    }
-//  }
+// if (types && types.length > 0) {
+// if (types[0] == "all") {
+// show_type = true;
+// } else {
+// show_type = types.indexOf(event.type) >= 0;
+// }
+// }
 //
-//  return show_username && show_type;
-//}
+// return show_username && show_type;
+// }
 
 function calDateWhenResize(event) {
 
@@ -59,6 +59,7 @@ function calDateWhenResize(event) {
 }
 
 function calDateWhenDragnDrop(event) {
+	console.log(event)
   // 드랍시 수정된 날짜반영
   var newDates = {
     startDate: '',
@@ -67,34 +68,42 @@ function calDateWhenDragnDrop(event) {
 
   // 날짜 & 시간이 모두 같은 경우
   if(!event.end) {
+	  console.log('날짜 & 시간이 모두 같은 경우')
     event.end = event.start;
   }
 
   // 하루짜리 all day
   if (event.allDay && event.end === event.start) {
-    console.log('1111')
+    console.log('하루짜리 all day')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = newDates.startDate;
   }
 
   // 2일이상 all day
   else if (event.allDay && event.end !== null) {
+	  console.log('2일이상 all day')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
   }
 
   // all day가 아님
   else if (!event.allDay) {
+	  console.log(' all day가 아님')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
     newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
   }
 
   return newDates;
 }
+
+
+
+
+
 ! function($) {
     "use strict";
 var CalendarApp = function() {
-	 this.$body = $("body")
+	this.$body = $("body")
     this.$calendar = $('#calendar'),
     this.$event = ('#calendar-events div.calendar-events'),
     this.$categoryForm = $('#add-new-event form'),
@@ -105,41 +114,45 @@ var CalendarApp = function() {
 }; 
 
 CalendarApp.prototype.init = function() {
+	
+	
 var calendar = $('#calendar').fullCalendar({
-  selectable: true,
-  eventRender: function (event, element, view) {
-//	  console.log("이벤트 누구야")
-//	  console.log(event)
-	  if(getDisplayEventDate(event) == "하루종일"){
-		  console.log("하루종일 탈거니?111")
-		  element.find(".fc-time").text(event.name)
-		    // 일정에 hover시 요약
-	  }
-	 
-    element.popover({
-      title: $('<div />', {
-        class: 'bs-popover-top',
-        text: event.name
-      }).css({
-        'background': event.color,
-       
-      }),
-      content: $('<div />', {
-          class: 'popoverInfoCalendar'
-        }).append('<p><strong>등록자:</strong> ' + event.id + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong></strong> ' + event.description + '</div>'),
-      delay: {
-        show: "800",
-        hide: "50"
-      },
-      trigger: 'hover',
-      placement: 'top',
-      html: true,
-      container: 'body'
-    });
+	
 
-  },
+//  eventRender: function (event, element, view) {
+//	  console.log("팝오버")
+//	  console.log(event)
+//// console.log("이벤트 누구야")
+//// console.log(event)
+//// if(getDisplayEventDate(event) == "하루종일"){
+//// console.log("하루종일 탈거니?111")
+//// element.find(".fc-time").text(event.name)
+//// // 일정에 hover시 요약
+//// }
+////	 
+//    element.popover({
+//    	 title: $('<div />', {
+//    	    class: 'popoverTitleCalendar',
+//    	    text: event.title
+//    	   }).css({
+//        'background-color': event.color
+//      }),
+//      content: $('<div />', {
+//          class: 'popoverInfoCalendar'
+//        }).append('<p><strong>등록자:</strong> ' + event.id + '</p>')
+//        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+//        .append('<div class="popoverDescCalendar"><strong></strong> ' + event.description + '</div>'),
+//      delay: {
+//        show: "800",
+//        hide: "50"
+//      },
+//      trigger: 'hover',
+//      placement: 'top',
+//      html: true,
+//      container: 'body'
+//    });
+//
+//  },
   
 
   header: {
@@ -169,21 +182,26 @@ var calendar = $('#calendar').fullCalendar({
 	 * 일정 받아옴 **************
 	 */
   events: function (start, end, timezone, callback) {
+	  
     $.ajax({
       type: "get",
       url: "showCalendar.ajax",
       data: {
-    	  teamNo :teamNo
+    	  teamNo : teamNo
       },
       success: function (response) {
     	  console.log("잘 받아오나?")
           var fixedDate = response.map(function (array) {
-            if (array.allDay && array.start !== array.end) {
-              // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-              array.end = moment(array.end).add(1, 'days');
-            }
+//            if (array.allDay && array.start !== array.end) {
+//              // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+////              array.end = moment(array.end).add(1, 'days');
+//            }
+        	  
+            console.log("array")
+            console.log(array)
             return array;
           })
+          console.log("fixedDate")
           console.log(fixedDate)
           callback(fixedDate);
         }
@@ -197,50 +215,71 @@ var calendar = $('#calendar').fullCalendar({
     }
   },
 
-  // 일정 리사이즈
-  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
-    $('.popover.fade.top').remove();
-
-    /**
-	 * 리사이즈시 수정된 날짜반영 하루를 빼야 정상적으로 반영됨.
-	 */
-    var newDates = calDateWhenResize(event);
-
-    // 리사이즈한 일정 업데이트
-    $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        // id: event._id,
-        // ....
-      },
-      success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-      }
-    });
-
-  },
+  // 일정 리사이즈 왜안되냐 ㅅ	ㅂ
+//  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+//	  
+//	  console.log("일정 리사이즈")
+//	
+//    $('.popover.fade.top').remove();
+//
+//    /**
+//	 * 리사이즈시 수정된 날짜반영 하루를 빼야 정상적으로 반영됨.
+//	 */
+//    var newDates = calDateWhenResize(event);
+//
+//    // 리사이즈한 일정 업데이트
+//    $.ajax({
+//     	 url: "updatePlan.ajax",
+//		         data:{ 
+//		        	 title : event.title,
+//		           	 description :event.description,
+//		           	 start : event.start,
+//		           	 end: event.end,
+//		           	 color :event.backgroundColor,
+//		           	 id : currUserId,
+//		           	 teamNo : teamNo,
+//		           	 allDay : event.allDay,
+//		           	 no : event.no
+//		           	 
+//		            },
+//             
+//              success:function(response){
+//                alert("일정이 수정되었습니다.");
+//                //DB연동시 중복이벤트 방지를 위한
+//                $('#calendar').fullCalendar('removeEvents');
+//                $('#calendar').fullCalendar('refetchEvents');
+//              },error:function(){ 
+//                  alert("일정수정에 실패하였습니다.");
+//              }
+//          });
+//
+//  },
 
   eventDragStart: function (event, jsEvent, ui, view) {
-    draggedEventIsAllDay = event.allDay;
+	  console.log(event.allDay)
+//	  console.log(jsEvent)
+	  draggedEventIsAllDay = event.allDay;
+// console.log("ui")
+// console.log(ui)
   },
 
   // 일정 드래그앤드롭
   eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
     $('.popover.fade.top').remove();
+console.log(event)
 
-    // 주,일 view일때 종일 <-> 시간 변경불가
-    if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
-      if (draggedEventIsAllDay !== event.allDay) {
-        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
-        location.reload();
-        return false;
-      }
-    }
+//    // 주,일 view일때 종일 <-> 시간 변경불가
+//    if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
+//      if (draggedEventIsAllDay !== event.allDay) {
+//        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
+//        location.reload();
+//        return false;
+//      }
+//    }
 
     // 드랍시 수정된 날짜반영
     var newDates = calDateWhenDragnDrop(event);
-    console.log(newDates.startDate)
+    console.log(newDates)
     // 드롭한 일정 업데이트
     $.ajax({
     
@@ -258,18 +297,18 @@ var calendar = $('#calendar').fullCalendar({
   },
 
   select: function (startDate, endDate, jsEvent, view) {
-	
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
 
      
-      newEvent(startDate, endDate,jsEvent)
-        
+      newEvent(startDate, endDate, jsEvent)
       return true;
     });
+    
     var today = moment();
 
     if (view.name == "month") {
+    	console.log("select 먼")
       startDate.set({
         hours: today.hours(),
         minute: today.minutes()
@@ -286,7 +325,7 @@ var calendar = $('#calendar').fullCalendar({
       startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
       endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
     }
-
+    console.log(today.hours())
 
 
   },
@@ -325,7 +364,9 @@ var calendar = $('#calendar').fullCalendar({
   dayPopoverFormat: 'MM/DD dddd',
   longPressDelay: 0,
   eventLongPressDelay: 0,
-  selectLongPressDelay: 0
+  selectLongPressDelay: 0,
+  defaultView: 'month',
+  droppable: true,
 });
 },
 $.CalendarApp = new CalendarApp, $.CalendarApp.Constructor = CalendarApp

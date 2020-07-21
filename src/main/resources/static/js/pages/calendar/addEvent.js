@@ -40,7 +40,7 @@ var newEvent = function (start, end, eventType) {
     	 
         var eventData = {
             id: currUserId,
-            name: editTitle.val(),
+            title: editTitle.val(),
             start: editStart.val(),
             end: editEnd.val(),
             description: editDesc.val(),
@@ -54,7 +54,7 @@ var newEvent = function (start, end, eventType) {
             return false;
         }
 
-        if (eventData.name === '') {
+        if (eventData.title === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
@@ -79,11 +79,12 @@ var newEvent = function (start, end, eventType) {
         editAllDay.prop('checked', true);
         eventModal.modal('hide');
         console.log(eventData.allDay)
+        
         //새로운 일정 저장
         $.ajax({
        	 url: "addPlan.ajax",
 		         data:{ 
-		           	 name : eventData.name,
+		        	 title : eventData.title,
 		           	 description :eventData.description,
 		           	 start : eventData.start,
 		           	 end: eventData.end,
@@ -98,12 +99,13 @@ var newEvent = function (start, end, eventType) {
                 	
                   alert("일정이 등록되었습니다.");
                   //DB연동시 중복이벤트 방지를 위한
-                  $('#calendar').fullCalendar('removeEvents');
-                  $('#calendar').fullCalendar('refetchEvents');
+//                  $('#calendar').fullCalendar('removeEvents');
+//                  $('#calendar').fullCalendar('refetchEvents');
                 },error:function(){ 
                     alert("일정등록에 실패하였습니다.");
                 }
             });
+        
 
     });
 };

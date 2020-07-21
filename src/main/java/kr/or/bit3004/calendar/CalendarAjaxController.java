@@ -22,11 +22,9 @@ public class CalendarAjaxController {
 
 	@RequestMapping("addPlan.ajax")
 	public void addPlan(Calendar calendar){
-		System.out.println("타니????");
+		System.out.println("인서트 완료");
 		service.addPlan(calendar);
-		
 	}
-	
 	@RequestMapping("showCalendar.ajax")
 	 public List<Calendar> schedule(Model model, int teamNo){
 		System.out.println("캘린더 리스트");
@@ -36,14 +34,17 @@ public class CalendarAjaxController {
   }
 	@RequestMapping("updatePlanDrag.ajax")
 	public void updatePlanDrag(Calendar calendar) {
+		System.out.println("드래그 업데이트 완료");
 		service.updatePlanDrag(calendar);
 	}
 	@RequestMapping("updatePlan.ajax")
 	public void updatePlan(Calendar calendar) {
+		System.out.println("업데이트 완료");
 		service.updatePlan(calendar);
 	}
 	 @RequestMapping("deletePlan.ajax")
 	 public void deletePlan(Calendar calendar) {
+		 System.out.println("삭제완료");
 		 service.deletePlan(calendar);
 	 }
 

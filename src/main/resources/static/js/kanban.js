@@ -1,5 +1,4 @@
 
-
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard'>"
@@ -276,7 +275,6 @@ $(document).on('click', '#addlist', function() {
 	       	 let currentListNo = ui.item.children().data('listno');
 	       	 
 	       	 if(!(startListIDX == endListIDX)){
-	       		 
 	       		
 	       		 $.ajax({
 	       				url: "resortKanbanList.ajax",

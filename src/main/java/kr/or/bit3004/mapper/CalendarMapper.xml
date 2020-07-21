@@ -4,14 +4,14 @@
 <mapper namespace="kr.or.bit3004.dao.CalendarDao">
 	<select id="showCalendar" resultType="kr.or.bit3004.calendar.Calendar">
 		SELECT
-			no,name,start,end,color,description,id
+			no,title,start,end,color,description,id,allDay
 		FROM
 			plan where team_no = #{teamNo}
 	</select>
 	
 	<insert id="addPlan" parameterType="kr.or.bit3004.calendar.Calendar">
 		INSERT INTO PLAN (
-				NAME,
+				title,
 				START,
 				END,
 				COLOR,
@@ -21,12 +21,12 @@
 				ALLDAY
 				)
 		VALUES
-			(#{name},#{start},#{end},#{color},#{description},#{teamNo},#{id},#{allDay})
+			(#{title},#{start},#{end},#{color},#{description},#{teamNo},#{id},#{allDay})
 		
 	</insert>
 	<update id="updatePlan" parameterType="kr.or.bit3004.calendar.Calendar">
 			update  PLAN set
-				NAME = #{name},
+				title = #{title},
 				START =#{start},
 				END = #{end},
 				COLOR = #{color},

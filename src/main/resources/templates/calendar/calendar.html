@@ -14,16 +14,14 @@
 <!-- Custom CSS -->
 <!-- Custom CSS -->
 <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet" />
-<link href="assets/libs/fullcalendar/dist/fullcalendar.min.css"
-	rel="stylesheet" />
+<link href="assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/css/bootstrap-material-datetimepicker.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="js/pages/calendar/calendar.css"/>
 <link href="css/style.min.css" rel="stylesheet">
+
 <!-- <link href="css/calendar.css" rel="stylesheet"> -->
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -83,6 +81,7 @@
         </div> -->
 
         <div id="wrapper">
+        
             <div id="loading"></div>
             <div id="calendar"></div>
         </div>
@@ -124,12 +123,12 @@
                         
                        <div class="form-group">
                                 <label class="col-xs-4" for="edit-start">일정 시작 일시</label>
-                                <input type="datetime-local" class="form-control" id="edit-start">
-                          
+                                <input type="text" class="form-control" name="edit-start" id="edit-start">
                         </div>
+                        
                         <div class="form-group">
                                 <label class="col-xs-4" for="edit-end">일정 마감 일시</label>
-                                <input type="datetime-local" class="form-control" id="edit-end">
+                                <input type="text" class="form-control" name ="edit-end" id="edit-end">
                         </div>
                        
                         <div class="form-group mb-4">
@@ -173,29 +172,29 @@
 	<!-- <div th:replace="common/script :: script"></div> -->
 
 	<!-- 저는 개인 script를 이용하겠습니다..-서폰지밥- -->
-	<!--     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
 <!--     <script src="assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="assets/extra-libs/taskboard/js/jquery-ui.min.js"></script> -->
-	<!--     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script> -->
-	<!--     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script> -->
 	<!-- apps -->
-	 <script src="assets/extra-libs/c3/d3.min.js"></script>
+	<script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script> 
-	<!--     <script src="js/app-style-switcher.js"></script> -->
 	<script src="js/feather.min.js"></script> -
-	<!--    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script> -->
-	<!--     <script src="js/sidebarmenu.js"></script> -->
-	<!--Custom JavaScript -->
-	<!--  <script src="js/custom.min.js"></script> -->
+
 	<!--This page JavaScript -->
+<!-- 	<script src="js/pages/calendar/datepicker/jquery-ui-timepicker-addon.js"></script>
+	<script src="js/pages/calendar/datepicker/jquery-ui-timepicker-addon.css"></script> -->
+	
+<!-- 	<script src="js/pages/calendar/vendor/bootstrap-datetimepicker.min.js"></script>
+	<script src="js/pages/calendar/vendor/bootstrap-datetimepicker.min.css"></script> -->
+	
 	<script src="js/pages/calendar/main.js"></script>
-    <script src="js/pages/calendar/etcSetting.js"></script>
  	<script src="js/pages/calendar/addEvent.js"></script>
 	<script src="js/pages/calendar/editEvent.js"></script>
 	<script src="js/pages/calendar/arraylist.js"></script>
 	<script src="js/pages/calendar/vendor/js/select2.min.js"></script>
 	<script src="assets/libs/moment/min/moment.min.js"></script>
 	<script src="assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
+	<script src="js/pages/calendar/etcSetting.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
 	<!-- <script src="js/pages/calendar/cal-init.js"></script> -->
 	<!-- <script src="js/pages/calendar/calendarByme.js"></script> -->
 	<script>
