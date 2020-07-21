@@ -18,6 +18,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
+import kr.or.bit3004.user.SessionUser;
 import kr.or.bit3004.user.User;
 import kr.or.bit3004.user.UserServiceImpl;
 
@@ -68,12 +69,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 //    	System.out.println("saveCurrentUsertoSession");
 //    	System.out.println("cUserId : " + authentication.getName());
     	
-    	User currentUser = service.getUser(authentication.getName());
-//    	System.out.println("currentUser : " + currentUser );
+    	SessionUser currentUser = new SessionUser(service.getUser(authentication.getName()));
     	
         HttpSession session = request.getSession(true);
         session.setAttribute("currentUser", currentUser);
-        session.setMaxInactiveInterval(60*60*3); // 3시간
+        session.setMaxInactiveInterval(60*60*1); // 1시간
     }
     
     
