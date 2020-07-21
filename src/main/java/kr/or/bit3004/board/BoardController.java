@@ -1,6 +1,7 @@
 package kr.or.bit3004.board;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.aside.AsideService;
+import kr.or.bit3004.user.SessionUser;
 
 @Controller
 //@RequestMapping
@@ -23,7 +25,13 @@ public class BoardController {
 	
 	//게시판 목록보기
 	@RequestMapping("boardList.do")
-	public String selectBoardListService(Model model, int allBoardListNo, int teamNo) {
+	public String selectBoardListService(Model model, int allBoardListNo, int teamNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
@@ -35,7 +43,13 @@ public class BoardController {
 	
 	//게시판 상세보기
 	@RequestMapping("selectBoard.do")
-	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo, String id, HttpServletRequest request) {
+	public String selectBoardByBoardNoService(Model model, int boardNo, int teamNo, int allBoardListNo, String id, HttpServletRequest request, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
@@ -49,7 +63,13 @@ public class BoardController {
 	
 	//게시판 글쓰기(Form)
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.GET)
-	public String insertBoardService(Model model, int teamNo, int allBoardListNo) {
+	public String insertBoardService(Model model, int teamNo, int allBoardListNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("team", asideService.getTeam(teamNo));
@@ -60,7 +80,13 @@ public class BoardController {
 	
 	//게시판 글쓰기, 업로드
 	@RequestMapping(value = "insertBoard.do" , method = RequestMethod.POST)
-	public String insertBoardService(Board board , int teamNo , MultipartHttpServletRequest request){
+	public String insertBoardService(Board board , int teamNo , MultipartHttpServletRequest request, HttpSession session){
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
 		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
@@ -70,11 +96,13 @@ public class BoardController {
 	//게시판 답글쓰기(Form)
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.GET)
 	//public String insertReboardService(Model model,int boardNo, int teamNo,int allBoardListNo) {
-	public String insertReboardService(Model model, int teamNo,int allBoardListNo,int boardNo) {
-		/*
-		 * System.out.println("보드넘"+boardNo); model.addAttribute("boardNo", boardNo);
-		 * //삭제각
-		 */	
+	public String insertReboardService(Model model, int teamNo, int allBoardListNo, int boardNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
@@ -86,7 +114,13 @@ public class BoardController {
 	
 	//게시판 답글쓰기
 	@RequestMapping(value = "insertReboard.do" , method = RequestMethod.POST)
-	public String insertReboardService(Board board, int teamNo){
+	public String insertReboardService(Board board, int teamNo, HttpSession session){
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		System.out.println(board);
 		service.insertReboard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
@@ -94,7 +128,13 @@ public class BoardController {
 	
 	//게시판 수정하기(Form)
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.GET)
-	public String updateBoardService(Model model, int boardNo, int teamNo, int allBoardListNo) {
+	public String updateBoardService(Model model, int boardNo, int teamNo, int allBoardListNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -107,14 +147,26 @@ public class BoardController {
 	
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
-	public String updateBoardService(Board board,int allBoardListNo,int teamNo) {
+	public String updateBoardService(Board board, int allBoardListNo, int teamNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
 		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
 	
 	//게시판 삭제하기
 	@RequestMapping("deleteBoard.do")
-	public String deleteBoardService(int boardNo,int allBoardListNo,int teamNo) {
+	public String deleteBoardService(int boardNo, int allBoardListNo, int teamNo, HttpSession session) {
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
+        currentUser.setTeamNo(teamNo);
+	    currentUser.setIsTeamLeader(
+		asideService.isTeamLeader(currentUser.getId(), teamNo));
+		
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}

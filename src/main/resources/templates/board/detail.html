@@ -72,7 +72,7 @@
 	                                        <!-- 본문 내용 -->
 	                                        <div id="content-outer">
 	                                        	<input type="hidden" name="id" th:value="${session.currentUser.id}">
-	                                            <input type="hidden" name="teamNo" th:value="${teamNo}">
+	                                            <input type="hidden" name="teamNo" th:value=" ${session.currentUser.teamNo}">
 	                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
 	                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
 	                                            <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
@@ -110,7 +110,6 @@
 	                                                </div>
 	                                            </div>
 	                                        </div>
-								
 	                                    </div>
 	                                </div>
 	                      		</div>

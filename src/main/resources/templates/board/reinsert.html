@@ -57,7 +57,7 @@
                         <div class="card-body">
                             <form method="post" th:action="@{insertReboard.do}">
                             <input type="hidden" name="id" th:value="${session.currentUser.id}">
-                            <input type="hidden" name="teamNo" th:value="${teamNo}">
+                            <input type="hidden" name="teamNo" th:value="${session.currentUser.teamNo}">
                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
                             <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
                             <!-- @{selectBoard.do(boardNo=${board.boardNo},teamNo=1)} -->
@@ -86,7 +86,7 @@
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-info">등록</button>
                                         <button type="reset" class="btn btn-dark">초기화</button>
-                                        <a type="reset" class="btn btn-dark" th:href="@{boardList.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">목록으로</a>
+                                        <a type="reset" class="btn btn-dark" th:href="@{boardList.do(teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}">목록으로</a>
                                     </div>
                                 </div>
                             </form>
