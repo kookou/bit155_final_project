@@ -2,6 +2,8 @@ var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
 function getDisplayEventDate(event) {
+	console.log("getDisplayEventDate")
+	console.log(event)
 // console.log("너는 언제오니?")
 // console.log(event)
   var displayEventDate;
@@ -41,7 +43,7 @@ function getDisplayEventDate(event) {
 // }
 
 function calDateWhenResize(event) {
-
+console.log(event)
   var newDates = {
     startDate: '',
     endDate: ''
@@ -59,6 +61,7 @@ function calDateWhenResize(event) {
 }
 
 function calDateWhenDragnDrop(event) {
+	console.log("DND")
 	console.log(event)
   // 드랍시 수정된 날짜반영
   var newDates = {
@@ -184,7 +187,7 @@ var calendar = $('#calendar').fullCalendar({
   events: function (start, end, timezone, callback) {
 	  
     $.ajax({
-      type: "get",
+   
       url: "showCalendar.ajax",
       data: {
     	  teamNo : teamNo
