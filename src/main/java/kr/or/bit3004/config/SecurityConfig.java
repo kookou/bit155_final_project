@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private BCryptPasswordEncoder bCrypPasswordEncoder;
 	
+//	@Autowired
+//	private LoginSuccessHandler customLoginSucessHandler; 
 
 	
 	@Autowired
@@ -111,7 +111,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.csrf().disable();
 			
 			http.rememberMe()
-						.key("uniqueAndSecret");
+						.key("tika")
+						.tokenRepository(tokenRepository()) // DB연동
+						.rememberMeCookieName("TIKA_KNOWS") // 쿠키 이름 커스터마이징
+						.rememberMeParameter("remember-me") 
+						.authenticationSuccessHandler(loginSuccessHandler);
+						
+//						이 방식은 쿠키를 쓰는 방식(제일 간단함. 작동됨)
+//						.key("uniqueAndSecret")
+//						.tokenValiditySeconds(60*60*24*7)// 쿠키 일주일 유지
+//						.authenticationSuccessHandler(loginSuccessHandler); // 자동로그인 후에도 Handler를 태워줘야한다
 			
 			http.formLogin()
 							.loginPage("/signin")
@@ -127,7 +136,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 							.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 							.logoutSuccessUrl("/")
 							.invalidateHttpSession(true)
-							.deleteCookies("JSESSION");
+							.deleteCookies("JSESSIONID");
 			
 			http.oauth2Login()
 				.userInfoEndpoint()
@@ -146,6 +155,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			e.getMessage();
 		}
 	}
+	
+	
+	@Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
 
 	
 	
@@ -195,11 +212,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 	}
 	
-    public PersistentTokenRepository tokenRepository() {
-        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dataSource);
-        return jdbcTokenRepository;
-    }
+
 
 	
 	
