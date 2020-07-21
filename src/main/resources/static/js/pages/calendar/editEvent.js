@@ -2,8 +2,9 @@
  *  일정 편집
  * ************** */
 var editEvent = function (event, element, view) {
-
-    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
+	console.log("대체뭔이벤트여")
+	console.log(event)
+    $('#deleteEvent').data('elementid', event._id); //클릭한 이벤트 ID
 
     $('.popover.fade.top').remove();
     $(element).popover("hide");
@@ -25,11 +26,13 @@ var editEvent = function (event, element, view) {
     }
 
     modalTitle.html('일정 수정');
-    editTitle.val(event.title);
+    
+    editTitle.val(event.name);
     editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
-    editType.val(event.type);
+    editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
+//    editType.val(event.type);
     editDesc.val(event.description);
-    editColor.val(event.backgroundColor).css('color', event.backgroundColor);
+    editColor.val(event.color).css('color', event.color);
 
     addBtnContainer.hide();
     modifyBtnContainer.show();
@@ -61,8 +64,8 @@ var editEvent = function (event, element, view) {
             displayDate = moment(editEnd.val()).add(1, 'days').format('YYYY-MM-DD');
         } else {
             statusAllDay = false;
-            startDate = editStart.val();
-            endDate = editEnd.val();
+            startDate = editStart
+            endDate = editEnd
             displayDate = endDate;
         }
 
@@ -80,36 +83,54 @@ var editEvent = function (event, element, view) {
 
         //일정 업데이트
         $.ajax({
-            type: "get",
-            url: "",
-            data: {
-                //...
-            },
-            success: function (response) {
-                alert('수정되었습니다.')
-            }
-        });
+          	 url: "updatePlan.ajax",
+   		         data:{ 
+   		           	 name : event.title,
+   		           	 description :event.description,
+   		           	 start : event.start,
+   		           	 end: event.end,
+   		           	 color :event.backgroundColor,
+   		           	 id : currUserId,
+   		           	 teamNo : teamNo,
+   		           	 allDay : event.allDay,
+   		           	 no : event.no
+   		           	 
+   		            },
+                  
+                   success:function(response){
+                   	
+                     alert("일정이 수정되었습니다.");
+                     //DB연동시 중복이벤트 방지를 위한
+                     $('#calendar').fullCalendar('removeEvents');
+                     $('#calendar').fullCalendar('refetchEvents');
+                   },error:function(){ 
+                       alert("일정수정에 실패하였습니다.");
+                   }
+               });
 
     });
+ 
 };
 
-// 삭제버튼
+//삭제버튼
 $('#deleteEvent').on('click', function () {
     
     $('#deleteEvent').unbind();
-    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
+    $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
     eventModal.modal('hide');
-
+    
     //삭제시
     $.ajax({
-        type: "get",
-        url: "",
+        url: "deletePlan.ajax",
         data: {
-            //...
+        	 no : event.no
         },
         success: function (response) {
-            alert('삭제되었습니다.');
+            alert('일정이 삭제되었습니다.');
+        },error:function(){ 
+            alert("일정삭제에 실패하였습니다.");
         }
     });
 
 });
+

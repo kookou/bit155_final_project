@@ -19,7 +19,7 @@ public class CalendarController {
 	@RequestMapping("calendar.do")
 	public String calendar(int teamNo,Model model) {
 		System.out.println("컨트롤러 타니??");
-		
+		model.addAttribute("showCalendar",service.showCalendar(teamNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));

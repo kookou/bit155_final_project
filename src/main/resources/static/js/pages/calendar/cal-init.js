@@ -1,8 +1,7 @@
 
 ! function($) {
     "use strict";
-    var teamNo = $('#teamNo').val()
-    console.log(teamNo)
+    
     var CalendarApp = function() {
     	 this.$body = $("body")
          this.$calendar = $('#calendar'),
@@ -13,6 +12,7 @@
          this.$saveCategoryBtn = $('.save-category'),
          this.$calendarObj = null
     }; 
+   
 
 
     /* on drop */
@@ -55,68 +55,173 @@
         }
         
     /* on select */
-   CalendarApp.prototype.select = function (start, end, allDay) {
-        var $this = $(this);
-        	$this.$modal.modal({
-                backdrop: 'static'
-            });
-            var form = $("<form></form>");
-            form.append("<div class='row'></div>");
-            form.find(".row")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>")
-                .append("<input name='_token' type='hidden' value='{{csrf_token()}}'>")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>")
-                .find("select[name='category']")
-               // @foreach($categories as $categorie)
-                .append("<option value='bg-black' name='categorie'>{{$categorie->title}}</option>")
-                //@endforeach
-                .append("</div></div>");
-            $(this).$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
-                form.submit();
-            });
-            $this.$modal.find('form').on('submit', function () {
-                var title = form.find("input[name='title']").val();
-                var beginning = form.find("input[name='beginning']").val();
-                var ending = form.find("input[name='ending']").val();
-                var categoryClass = form.find("select[name='category'] option:checked").val();
-                $.ajax({
-                        url: "{{ URL::to('calendar/store') }}",
-                        type: 'post',
-                        data:{ title:form.find("input[name='title']").val(),start:start.format("YYYY-MM-DD"),end:end.format("YYYY-MM-DD")},
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        success:function(){
-                            alert("succes ajout");
-                        },error:function(){ 
-                            alert("erreur!!!!");
-                        }
-                    });
-                if (title !== null && title.length != 0) {
-                    $this.$calendarObj.fullCalendar('renderEvent', {
-                        title: title,
-                        start:start,
-                        end: end,
-                        allDay: false,
-                        className: categoryClass
-                    }, true);  
-                    $this.$modal.modal('hide');
+   CalendarApp.prototype.select = function (startDate, endDate, jsEvent, view) {
 
-                }
-                else{
-                    alert('Veuillez donner un titre à votre événement');
-                }
-                return false;
+		    var eventModal = $('#eventModal');
+		    var modalTitle = $('.modal-title');
+		    var editAllDay = $('#edit-allDay');
+		    var editTitle = $('#edit-title');
+		    var editStart = $('#edit-start');
+		    var editEnd = $('#edit-end');
+		    var editType = $('#edit-type');
+		    var editColor = $('#edit-color');
+		    var editDesc = $('#edit-desc');
 
-            });
+		    var addBtnContainer = $('.modalBtnContainer-addEvent');
+		    var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 
+	    $(".fc-body").unbind('click');
+	    $(".fc-body").on('click', 'td', function (e) {
+	    	console.log("너니??")
+	    	 	modalTitle.html('새로운 일정');
+	    	    editType.val(editType).prop('selected', true);
+//	    	    editTitle.val('');
+//	    	    editStart.val(startDate);
+//	    	    editEnd.val(endDate);
+//	    	    editDesc.val('');
+	    	    
+	    	    addBtnContainer.show();
+	    	    modifyBtnContainer.hide();
+	    	    eventModal.modal('show');
 
-            $this.$calendarObj.fullCalendar('unselect');
-    }
-    
+	    	    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+	    	    var eventId = 1 + Math.floor(Math.random() * 1000);
+	    	    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+
+	    	    //새로운 일정 저장버튼 클릭
+	    	    $('#save-event').unbind();
+	    	    $('#save-event').on('click', function () {
+	    	    	 console.log("타길..")
+	    	    	 
+	    	        var eventData = {
+	    	            id: eventId,
+	    	            title: editTitle.val(),
+	    	            start: editStart.val(),
+	    	            end: editEnd.val(),
+	    	            description: editDesc.val(),
+	    	           
+	    	            backgroundColor: editColor.val(),
+	    	           
+	    	            allDay: false
+	    	        };
+	    	    	 console.log(eventData)
+	    	        if (eventData.start > eventData.end) {
+	    	            alert('끝나는 날짜가 앞설 수 없습니다.');
+	    	            return false;
+	    	        }
+
+	    	        if (eventData.title === '') {
+	    	            alert('일정명은 필수입니다.');
+	    	            return false;
+	    	        }
+
+	    	        var realEndDay;
+
+	    	        if (editAllDay.is(':checked')) {
+	    	            eventData.start = moment(eventData.start).format('YYYY-MM-DD');
+	    	            //render시 날짜표기수정
+	    	            eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
+	    	            //DB에 넣을때(선택)
+//	    	            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+
+	    	            eventData.allDay = true;
+	    	        }
+
+	    	        $("#calendar").fullCalendar('renderEvent', eventData, true);
+	    	        eventModal.find('input, textarea').val('');
+	    	        editAllDay.prop('checked', false);
+	    	        eventModal.modal('hide');
+
+	    	        //새로운 일정 저장
+	    	        $.ajax({
+	    	       	 url: "addPlan.ajax",
+	    	                data:{ 
+	    	               	 name:eventData.title,
+	    	               	 description :eventData.description,
+	    	               	 start : eventData.start,
+	    	               	 end: eventData.end,
+	    	               	 color :eventData.backgroundColor,
+	    	               	 id : currUserId,
+	    	               	 teamNo:teamNo
+	    	                },
+	    	               
+	    	                success:function(response){
+	    	                    alert("succes ajout");
+	    	                  //DB연동시 중복이벤트 방지를 위한
+	    	                  $('#calendar').fullCalendar('removeEvents');
+	    	                  $('#calendar').fullCalendar('refetchEvents');
+	    	                },error:function(){ 
+	    	                    alert("erreur!!!!");
+	    	                }
+	    	            });
+
+	    	    });
+	    });
+
+	    var today = moment();
+
+	    if (view.name == "month") {
+	      startDate.set({
+	        hours: today.hours(),
+	        minute: today.minutes()
+	      });
+	      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+	      endDate = moment(endDate).subtract(1, 'days');
+
+	      endDate.set({
+	        hours: today.hours() + 1,
+	        minute: today.minutes()
+	      });
+	      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+	    } else {
+	      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+	      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+	    }
+
+	  }
+		
+   function getDisplayEventDate(event) {
+
+	   var displayEventDate;
+
+	   if (event.allDay == false) {
+	     var startTimeEventInfo = moment(event.start).format('HH:mm');
+	     var endTimeEventInfo = moment(event.end).format('HH:mm');
+	     displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
+	   } else {
+	     displayEventDate = "하루종일";
+	   }
+
+	   return displayEventDate;
+	 }
+   
+   function filtering(event) {
+	   var show_username = true;
+	   var show_type = true;
+
+	   var username = $('input:checkbox.filter:checked').map(function () {
+	     return $(this).val();
+	   }).get();
+	   var types = $('#type_filter').val();
+
+	   show_username = username.indexOf(event.username) >= 0;
+
+	   if (types && types.length > 0) {
+	     if (types[0] == "all") {
+	       show_type = true;
+	     } else {
+	       show_type = types.indexOf(event.type) >= 0;
+	     }
+	   }
+
+	   return show_username && show_type;
+	 }
+
         
     /* Initializing */
     CalendarApp.prototype.init = function() {
+    	
+    	
             this.enableDrag();
             /*  Initialize the calendar  */
             var date = new Date();
@@ -165,86 +270,183 @@
                     className: 'bg-success'
                 }
             ];
+        
 
             var $this = this;
-            $('#calendar').fullCalendar({
+            
+            var calendar =$('#calendar').fullCalendar({
+            		selectable: true,
+            		eventRender: function (event, element, view) {
+            		
+            		    //일정에 hover시 요약
+            		    element.popover({
+            		      title: $('<div />', {
+            		        class: 'popoverTitleCalendar',
+            		        text: event.title
+            		      }).css({
+            		        'background': event.backgroundColor,
+            		        'color': event.textColor
+            		      }),
+            		      content: $('<div />', {
+            		          class: 'popoverInfoCalendar'
+            		        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
+            		        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
+            		        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+            		        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
+            		      delay: {
+            		        show: "800",
+            		        hide: "50"
+            		      },
+            		      trigger: 'hover',
+            		      placement: 'top',
+            		      html: true,
+            		      container: 'body'
+            		    });
 
-            	
-//            	 dayClick: function() {
-////            		 var calendarData = $(this).find(".fc-time").val()
-//            			console.log("일단찍힘");
-////            		
-//            		  },
-                slotDuration: '00:15:00',
-                /* If we want to split day time each 15minutes */
-                minTime: '08:00:00',
-                maxTime: '19:00:00',
-                defaultView: 'month',
-                handleWindowResize: true,
-                selectable: true,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                events: defaultEvents,
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar !!!
-                eventLimit: false, // allow "more" link when too many events
-                selectable: true,
-                drop: function(date) { $this.onDrop($(this), date); },
-                
-                select: function (startDate, endDate, jsEvent, view) {
-                	console.log(teamNo);
-                	 var modal = $('#eventModal
-                	 modal.modal({
-                         backdrop: 'static'
-                        
-                     });
-//                	 $('.delete-event').hide()         
-//                     $(this).$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
-//                         form.submit();
-//                     });
-                     modal.find('.save-event').on('click', function () {
-                    	 console.log("설마너니?")
-                         var title = form.find("input[name='title']").val();
-                         var beginning = form.find("input[name='beginning']").val();
-                         var ending = form.find("input[name='ending']").val();
-                         var categoryClass = form.find("select[name='category'] option:checked").val();
-                         var description = form.find("input[name='description']").val();
-                         var id = "gkdl";
-                         console.log(teamNo)
-                         
-                        	 $.ajax({
-                            	 url: "addPlan.ajax",
-                                     data:{ 
-                                    	 name:title,
-                                    	 description : description,
-                                    	 start : beginning,
-                                    	 end : ending,
-                                    	 color :categoryClass,
-//                                    	 id : id,
-                                     	 teamNo:teamNo
-                                     },
-                                    
-                                     success:function(){
-                                         alert("succes ajout");
-                                     },error:function(){ 
-                                         alert("erreur!!!!");
-                                     }
-                                 });
-                         
-                        
-                         
+            		    return event;
 
+            		  },
 
-                     });
+            		  header: {
+            			  left: 'prev,next today',
+                          center: 'title',
+                          right: 'month,agendaWeek,agendaDay'
+            		  },
+            		  views: {
+            		    month: {
+            		      columnFormat: 'dddd'
+            		    },
+            		    agendaWeek: {
+            		      columnFormat: 'M/D ddd',
+            		      titleFormat: 'YYYY년 M월 D일',
+            		      eventLimit: false
+            		    },
+            		    agendaDay: {
+            		      columnFormat: 'dddd',
+            		      eventLimit: false
+            		    },
+            		    listWeek: {
+            		      columnFormat: ''
+            		    }
+            		  },
 
+            		  /* ****************
+            		   *  일정 받아옴 
+            		   * ************** */
+            		  events: function (start, end, timezone, callback) {
+            			 
+            		    $.ajax({
+            		      datatype: "get",
+            		      url: "showCalendar.do",
+            		      data: {
+            		        // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
+            		      },
+            		      success: function (response) {
+            		    	console.log(response)
+            		        callback(response);
+            		      }
+            		    });
+            		  },
 
+            		  eventAfterAllRender: function (view) {
+            		    if (view.name == "month") {
+            		      $(".fc-content").css('height', 'auto');
+            		    }
+            		  },
 
+            		  //일정 리사이즈
+            		  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+            		    $('.popover.fade.top').remove();
 
-                  },
+            		    /** 리사이즈시 수정된 날짜반영
+            		     * 하루를 빼야 정상적으로 반영됨. */
+            		    var newDates = calDateWhenResize(event);
 
+            		    //리사이즈한 일정 업데이트
+            		    $.ajax({
+            		      type: "get",
+            		      url: "",
+            		      data: {
+            		        //id: event._id,
+            		        //....
+            		      },
+            		      success: function (response) {
+            		        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+            		      }
+            		    });
+
+            		  },
+
+            		  eventDragStart: function (event, jsEvent, ui, view) {
+            		    draggedEventIsAllDay = event.allDay;
+            		  },
+
+            		  //일정 드래그앤드롭
+            		  eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
+            		    $('.popover.fade.top').remove();
+
+            		    //주,일 view일때 종일 <-> 시간 변경불가
+            		    if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
+            		      if (draggedEventIsAllDay !== event.allDay) {
+            		        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
+            		        location.reload();
+            		        return false;
+            		      }
+            		    }
+
+            		    // 드랍시 수정된 날짜반영
+            		    var newDates = calDateWhenDragnDrop(event);
+
+            		    //드롭한 일정 업데이트
+            		    $.ajax({
+            		      type: "get",
+            		      url: "",
+            		      data: {
+            		        //...
+            		      },
+            		      success: function (response) {
+            		        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+            		      }
+            		    });
+
+            		  },
+
+            		  //이벤트 클릭시 수정이벤트
+            		  eventClick: function (event, jsEvent, view) {
+            		    editEvent(event);
+            		  },
+
+            		  locale: 'ko',
+            		  timezone: "local",
+            		  nextDayThreshold: "09:00:00",
+            		  allDaySlot: true,
+            		  displayEventTime: true,
+            		  displayEventEnd: true,
+            		  firstDay: 0, //월요일이 먼저 오게 하려면 1
+            		  weekNumbers: false,
+            		  selectable: true,
+            		  weekNumberCalculation: "ISO",
+            		  eventLimit: true,
+            		  views: {
+            		    month: {
+            		      eventLimit: 12
+            		    }
+            		  },
+            		  eventLimitClick: 'week', //popover
+            		  navLinks: true,
+            		//  defaultDate: moment('2019-05'), //실제 사용시 삭제
+            		  timeFormat: 'HH:mm',
+            		  defaultTimedEventDuration: '01:00:00',
+            		  editable: true,
+            		  minTime: '00:00:00',
+            		  maxTime: '24:00:00',
+            		  slotLabelFormat: 'HH:mm',
+            		  weekends: true,
+            		  nowIndicator: true,
+            		  dayPopoverFormat: 'MM/DD dddd',
+            		  longPressDelay: 0,
+            		  eventLongPressDelay: 0,
+            		  selectLongPressDelay: 0
 
             });
             

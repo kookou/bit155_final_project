@@ -1,9 +1,11 @@
 package kr.or.bit3004.calendar;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,18 +26,25 @@ public class CalendarAjaxController {
 		service.addPlan(calendar);
 		
 	}
-
 	
-	  @RequestMapping("showCalendar.do")
-	  public String schedule(Model model)throws Exception{
-		  model.addAttribute("showCalendar",service.showCalendar());
-		  return "calendar.do";
-	  }
-	 
-		/*
-		 * @RequestMapping("addPlan.ajax") public String addPlan(Calendar dto)throws
-		 * Exception { service.addPlan(dto); System.out.println(dto.getTitle()); return
-		 * "calendar/calendar"; }
-		 */
+	@RequestMapping("showCalendar.ajax")
+	 public List<Calendar> schedule(Model model, int teamNo){
+		System.out.println("캘린더 리스트");
+		  System.out.println(service.showCalendar(teamNo));
+//		  model.addAttribute("showCalendar",service.showCalendar());
+		  return service.showCalendar(teamNo);
+  }
+	@RequestMapping("updatePlanDrag.ajax")
+	public void updatePlanDrag(Calendar calendar) {
+		service.updatePlanDrag(calendar);
+	}
+	@RequestMapping("updatePlan.ajax")
+	public void updatePlan(Calendar calendar) {
+		service.updatePlan(calendar);
+	}
+	 @RequestMapping("deletePlan.ajax")
+	 public void deletePlan(Calendar calendar) {
+		 service.deletePlan(calendar);
+	 }
 
 }
