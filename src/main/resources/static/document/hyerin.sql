@@ -145,3 +145,11 @@ update `all_board_list`
 delete from team_member where id='a@3004.com' and team_no=1;
 delete from group_team where id='a@3004.com' and team_no=1;
 select * from `group_team`;
+
+select c.todo_content_no, c.content, done, c.`no`, c.id, l.title, l.TEAM_NO
+  from `todo_content` c
+ right outer join `todo_list` l
+	on c.no = l.no
+ where l.TEAM_NO = 1 and l.no = 2;
+ 
+ select * from todo_list;
