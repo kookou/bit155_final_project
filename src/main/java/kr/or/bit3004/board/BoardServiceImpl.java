@@ -57,6 +57,7 @@ public class BoardServiceImpl implements BoardService{
 	    //dao.updateRefer(board);
 		int maxRefer = dao.getMaxRefer();
 		int refer = maxRefer + 1;
+		
 		board.setRefer(refer);
 		dao.insertBoard(board);
 	}
