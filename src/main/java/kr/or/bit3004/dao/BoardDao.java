@@ -32,11 +32,10 @@ public interface BoardDao {
 	//게시판 수정하기
 	public void updateBoard(Board board);
 	
-	
 	//게시판 삭제하기
 	public int deleteBoard(int boardNo);
 	
-	//게시판 답글쓰기
+	////////////////////////////////게시판 답글쓰기//////////////////////////////////////////
 	public void insertReboard(Board board);
 	
 	public void updateRefer(Board board);
@@ -52,6 +51,8 @@ public interface BoardDao {
 	public int getMaxStep (int refer);
 	
 	public void updateStep(Board board);
+	//////////////////////////////////////////////////////////////////////////////////
 	
+	//칸반카드
 	public void dragCardUpdateStart(int kanbanListNo , int cardIndex);
 }
