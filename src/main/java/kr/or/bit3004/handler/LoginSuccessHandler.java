@@ -19,7 +19,6 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import kr.or.bit3004.user.SessionUser;
-import kr.or.bit3004.user.User;
 import kr.or.bit3004.user.UserServiceImpl;
 
 @Component
@@ -39,7 +38,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		 clearAuthenticationAttributes(request);
 		 resultRedirectStrategy(request, response, authentication);
 		 
-		System.out.println("onAuthenticationSuccess");
+		System.out.println("customLoginSucessHandler : onAuthenticationSuccess");
 		 
 	}
 	
@@ -73,7 +72,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     	
         HttpSession session = request.getSession(true);
         session.setAttribute("currentUser", currentUser);
-        session.setMaxInactiveInterval(60*60*1); // 1시간
+        session.setMaxInactiveInterval(60*30); // 30분
     }
     
     
