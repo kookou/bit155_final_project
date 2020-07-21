@@ -39,7 +39,6 @@ var newEvent = function (start, end, eventType) {
     	 console.log(currUserId)
     	 
         var eventData = {
-    		 _id: eventId,
             id: currUserId,
             title: editTitle.val(),
             start: editStart.val(),
@@ -47,7 +46,7 @@ var newEvent = function (start, end, eventType) {
             description: editDesc.val(),
             teamNo:teamNo,
             backgroundColor: editColor.val(),
-            allDay: false
+            allDay: true
         };
 
         if (eventData.start > eventData.end) {
