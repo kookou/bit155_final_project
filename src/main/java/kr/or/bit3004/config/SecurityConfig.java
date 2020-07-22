@@ -28,12 +28,8 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import kr.or.bit3004.dao.UserDao;
-import kr.or.bit3004.handler.LoginFailureHandler;
-import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
-import kr.or.bit3004.user.CustomOAuth2UserService;
-import kr.or.bit3004.user.UserService;
+import kr.or.bit3004.oauth2.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -51,9 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private BCryptPasswordEncoder bCrypPasswordEncoder;
-	
-//	@Autowired
-//	private LoginSuccessHandler customLoginSucessHandler; 
 
 	
 	@Autowired
@@ -104,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.authorizeRequests()
 						.antMatchers("/user/**", "/resetpassword") 
 								.hasAnyRole("ADMIN", "USER")
-						.antMatchers("/login/**", "/signin/**", "/signup/**", "/oauth2/**")
+						.antMatchers("/", "/login/**", "/signin/**", "/signup/**", "/oauth2/**")
 								.permitAll()
 						.anyRequest().authenticated();
 			
@@ -141,8 +134,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.oauth2Login()
 				.userInfoEndpoint()
 				.userService(customOAuth2UserService) // 네이버 USER INFO의 응답을 처리하기 위한 설정 
-//				.and()
-//				.successHandler(successHandler) // 대박 이게 있었어.... 근데 자동적용 되고 있는거 아닌가.. 일단 보류
 				.and() 
 				.defaultSuccessUrl("/") // 이걸로 구분해 줄 수 도 있었을 것 같네... 근데 이걸로 타고가면 token값을 쓸 수 있나?
 				.failureUrl("/signin?error=true") 

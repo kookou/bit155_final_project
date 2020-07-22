@@ -65,14 +65,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     }
     
     protected void saveCurrentUserToSession(HttpServletRequest request, Authentication authentication) {
-//    	System.out.println("saveCurrentUsertoSession");
-//    	System.out.println("cUserId : " + authentication.getName());
     	
     	SessionUser currentUser = new SessionUser(service.getUser(authentication.getName()));
     	
         HttpSession session = request.getSession(true);
         session.setAttribute("currentUser", currentUser);
-        session.setMaxInactiveInterval(60*30); // 30분
+        session.setMaxInactiveInterval(60*30); // session 30분 유지
     }
     
     
