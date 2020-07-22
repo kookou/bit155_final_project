@@ -47,7 +47,14 @@
 	    </div>
 	</div>
 		
-	<script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		var currUserNickname = [[${session.currentUser.nickname}]];
+		var currUserImage = [[${session.currentUser.image}]];
+		var teamNo = [[${session.currentUser.teamNo}]];
+		var teamMember = [[${teamMember}]];
+	/*]]>*/
+	
 	    var todoListComponent = {
 	    		template: `
 		            <div class="col-xl-4">
@@ -101,21 +108,21 @@
 	            };
 	        },
 	        created() {
-	        	console.log("Ddd");
-	        	axios.get('getTodoTitle.do?teamNo=1')
+	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
 	            	for(var index in response.data) {
 	            		var i = 0;
 		            	this.$root.$children[index].title = response.data[index].title;
 		            	this.$root.$children[index].isStatusOn = false;
 		                this.$root.$children[index].isStatusOff = true;
-		            	axios.get('getTodoContent.do?teamNo=1')
+		            	axios.get('getTodoContent.do?teamNo='+teamNo)
 			            .then((response2) => {
+		                	console.log(response2.data);
 			                for(var index2 in response2.data) {
 				                if(response.data[i].no == response2.data[index2].no) {
 				                	this.$root.$children[i].todoList.push({
 					                    content: response2.data[index2].content,
-					                    state: 'active'
+					                    state: response2.data[index2].state
 					                });
 				                }
 			                }
@@ -184,7 +191,7 @@
 	            }
 	        },
 	        created() {
-	        	axios.get('getTodoTitle.do?teamNo=1')
+	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
 	            	for(var index in response.data) {
 		            	this.todoLists.push('todoList');
@@ -194,7 +201,6 @@
 	        components: {
 	            'todoList': todoListComponent
 	        }
-	        /* store : store */
 	    });
 		
 	</script>

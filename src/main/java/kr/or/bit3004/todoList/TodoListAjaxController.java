@@ -14,7 +14,7 @@ public class TodoListAjaxController {
 	
 	@RequestMapping("getTodoContent.do")
 	public List<TodoList> todoList(int teamNo) {
-		return service.selectTodoList(teamNo);
+		return service.selectTodoContent(teamNo);
 	}
 	
 	@RequestMapping("getTodoTitle.do")
