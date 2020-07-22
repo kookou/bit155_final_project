@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.dao.BoardDao;
+import kr.or.bit3004.user.User;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -33,8 +37,17 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//게시판 조회수 증가
-	public void updateReadCount(int boardNo) {
-		dao.updateReadCount(boardNo);
+	public void updateReadCount(int boardNo, HttpServletRequest request) {
+		//게시판 글쓴이가 본일일 경우 조회수가 올라가지 않게 막는 기능
+		Board board = dao.selectBoardByNo(boardNo); //작성자 id 얻어오기
+		String writer = board.getId();
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("currentUser");
+		String sessionId = user.getId(); //현재 접속한 사람 id 얻어오기
+		
+		if(!sessionId.equals(writer)) {
+			dao.updateReadCount(boardNo);
+		}
 	}
 
 	//게시판 글쓰기
@@ -44,6 +57,7 @@ public class BoardServiceImpl implements BoardService{
 	    //dao.updateRefer(board);
 		int maxRefer = dao.getMaxRefer();
 		int refer = maxRefer + 1;
+		
 		board.setRefer(refer);
 		dao.insertBoard(board);
 	}
@@ -79,8 +93,8 @@ public class BoardServiceImpl implements BoardService{
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				System.out.println(path);
-				//폴더가 없을경우 폴더 생성하기
-				//왜 나는 폴더가 안 만들어지지?;;;;
+				
+				//teamNo 폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
 						folder.mkdir();

@@ -61,18 +61,20 @@
 	
 	                                <div class="form-body">
 	                                    <div class="row">
-	                                        <div class="col-sm-12 col-md-6">
-	                                            <div class="form-group">
-	                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
-	                                            	<input type="hidden" name="teamNo" th:value="${teamNo}">
-	                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-	                                            	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
-	                                            </div>
-	                                            <div class="custom-file col-md-12">
+                                            <div class="form-group col-lg-6">
+                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
+                                            	<input type="hidden" name="teamNo" th:value="${session.currentUser.teamNo}">
+                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
+                                           		<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
+                                            </div>
+                                          		<div class="col-lg-6" style="margin-top:8px;">
+	                                            	<input type="checkbox" name="boardNoti" th:value="Y" id="notice">
+	                                            	<label for="notice">공지사항</label>
+	                                        	</div>
+	                                            <div class="custom-file col-lg-6" style="margin-left:14px;">
 	                                                <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
 	                                                <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
 	                                            </div>
-	                                        </div>
 	                                        <div class="col-md-12">
 	                                            <h4 class="card-title"></h4>
 	                                            <div class="form-group">
