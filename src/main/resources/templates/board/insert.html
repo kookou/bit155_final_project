@@ -115,7 +115,7 @@
 	       	lang : "ko-KR",               		 // 한글 설정
 	       	placeholder : '내용을 입력하세요.',   	 // placeholder 설정
 	       	callbacks : {						 //여기 부분이 이미지를 첨부하는 부분
-       			onImageUpload : function(files) {
+     			onImageUpload : function(files) {
     				uploadSummernoteImageFile(files[0],this);
 				}
 			} 
@@ -137,7 +137,7 @@
  				}
  			});
  		}
- 		
+ 		 
  		//이미지 첨부 드래그 앤 드랍
  		$("div.note-editable").on('drop',function(e){
         	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){

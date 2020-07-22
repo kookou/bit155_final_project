@@ -184,7 +184,7 @@ public class BoardController {
 	}
 	
 	//썸머노트 이미지 업로드
-	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+ 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	@ResponseBody
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
@@ -208,5 +208,8 @@ public class BoardController {
 		}
 		return jsonObject;
 	}
+	
+	
+	
 }
  
