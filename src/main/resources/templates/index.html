@@ -49,7 +49,12 @@
                                 <div class="Appointment">
                                     
                                     <div class="book_btn d-none d-lg-block">
-                                        <a class="popup-with-form" href="/signin">Login</a>
+                                    	<span th:if="${session.currentUser == null}">
+                                        	<a class="popup-with-form" href="/signin">Login</a>
+                                        </span>
+                                        <span th:unless="${session.currentUser == null}">
+                                        	<a class="popup-with-form" href="/logout">Logout</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
