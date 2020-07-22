@@ -17,6 +17,15 @@
 	</select>
 	
 	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.todoList.TodoList">
-		insert into `TODO_LIST`(`title`, `TEAM_NO`, `id`) values(#{title}, 1, #{id})
+		insert into `TODO_LIST`(`title`, `team_no`, `id`) values(#{title}, #{teamNo}, #{id})
 	</insert>
+	
+	<select id="getCurrNo" resultType="int">
+		select max(`no`) from `TODO_LIST`
+	</select>
+	
+	<insert id="insertTodoContent" parameterType="kr.or.bit3004.todoList.TodoList">
+		insert into `TODO_CONTENT`(`content`, `no`, `id`) values(#{content}, #{no}, #{id})
+	</insert>
+	
 </mapper>

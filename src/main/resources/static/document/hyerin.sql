@@ -155,3 +155,5 @@ select c.todo_content_no, c.content, state, c.`no`, c.id, l.title, l.TEAM_NO
  right outer join `todo_list` l
 	on c.no = l.no
  where l.TEAM_NO = 1;
+
+select max(`no`) from `TODO_LIST`;

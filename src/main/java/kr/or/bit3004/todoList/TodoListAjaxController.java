@@ -23,9 +23,14 @@ public class TodoListAjaxController {
 	}
 	
 	@RequestMapping("insertTodoTitle.do")
-	public void insertTodoTitle(TodoList todoList) {
-		System.out.println(todoList);
-		//service.insertTodoTitle(todoList);
+	public int insertTodoTitle(TodoList todoList) {
+		service.insertTodoTitle(todoList);
+		return service.getCurrNo();
+	}
+	
+	@RequestMapping("insertTodoContent.do")
+	public void insertTodoContent(TodoList todoList) {
+		service.insertTodoContent(todoList);
 	}
 	
 }

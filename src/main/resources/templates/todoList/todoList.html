@@ -51,6 +51,7 @@
 	/*<![CDATA[*/
 		var currUserNickname = [[${session.currentUser.nickname}]];
 		var currUserImage = [[${session.currentUser.image}]];
+		var currUserId = [[${session.currentUser.id}]];
 		var teamNo = [[${session.currentUser.teamNo}]];
 		var teamMember = [[${teamMember}]];
 	/*]]>*/
@@ -61,6 +62,7 @@
 		                <div class="card">
 		                    <div class="card-body">
 		                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
+		                        <input type="hidden" v-model="todoNo">
 		                        <div v-if="isStatusOff">
 		                            <h4 class="card-title mb-3">{{ title }}</h4>
 		                            <div style="width: 100%;">
@@ -104,7 +106,8 @@
 	                todoList: [],
 	                currentState: 'all', //출력할 상태값을 가질 변수
 	                isStatusOn: true,
-	                isStatusOff: false
+	                isStatusOff: false,
+	                todoNo: ''
 	            };
 	        },
 	        created() {
@@ -113,11 +116,11 @@
 	            	for(var index in response.data) {
 	            		var i = 0;
 		            	this.$root.$children[index].title = response.data[index].title;
+		            	this.$root.$children[index].todoNo = response.data[index].no;
 		            	this.$root.$children[index].isStatusOn = false;
 		                this.$root.$children[index].isStatusOff = true;
 		            	axios.get('getTodoContent.do?teamNo='+teamNo)
 			            .then((response2) => {
-		                	console.log(response2.data);
 			                for(var index2 in response2.data) {
 				                if(response.data[i].no == response2.data[index2].no) {
 				                	this.$root.$children[i].todoList.push({
@@ -141,6 +144,17 @@
 	                    content: this.userInput,
 	                    state: 'active' //완료하지 않은 항목
 	                });
+	              	//axios통신으로 todoList Content DB에 insert하기
+		            var params = new URLSearchParams();
+		            params.append('content', this.userInput);
+		            params.append('no', this.todoNo);
+		            params.append('id', currUserId);
+		            axios.post('insertTodoContent.do', params
+		    	    ).then(response => {
+		                //console.log("투두 컨텐츠 넣기 성공~!");
+		            }).catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
 	                this.userInput = '';
 	            },
 	            toggleTodoState(todo) { // 클릭시 상태값을 변경할 함수 //todo parameter는 클릭한 항목을 받을 parameter
@@ -151,18 +165,17 @@
 	                this.isStatusOn = false;
 	                this.isStatusOff = true;
 	                this.$root.addListBtnisStatusOn = true;
-	
 	                //axios통신으로 todoList Title DB에 insert하기
-		            /* var params = new URLSearchParams();
+		            var params = new URLSearchParams();
 		            params.append('title', this.title);
-		            params.append('teamNo', 1);
-		            params.append('id', 'hyerin');
+		            params.append('teamNo', teamNo);
+		            params.append('id', currUserId);
 		            axios.post('insertTodoTitle.do', params
 		    	    ).then(response => {
-		                console.log(response);
+		                this.todoNo = response.data;
 		            }).catch((ex) => {
 		                console.log("ERROR!!!!! : ",ex);
-		            }); */
+		            });
 	            }
 	        },
 	        // computed에 선언해놓은 것은 내부변수처럼 불러서 사용할 수 있기 때문에 activeTodoList() 이렇게 부르는 것이 아니라 activeTodoList일케 부름..

@@ -6,4 +6,6 @@ public interface TodoListService {
 	public List<TodoList> selectTodoContent(int teamNo);
 	public List<TodoList> selectTodoTitle(int teamNo);
 	public void insertTodoTitle(TodoList todoList);
+	public int getCurrNo();
+	public void insertTodoContent(TodoList todoList);
 }
