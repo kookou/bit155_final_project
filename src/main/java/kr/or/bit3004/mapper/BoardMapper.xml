@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.BoardDao">
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.board.Board">
-		select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, nickname, team_no, board_noti,
+		select b.board_no, title, content, views, date_format(write_date, '%Y-%m-%d') as write_date, refer, depth, step, b.all_board_list_no, b.id, nickname, team_no, board_noti,
 			   (select count(*) from board_comment where board_no=b.board_no) as comment_count,
 			   (select count(*) from board_file where board_no=b.board_no) as file_count
 		  from (select * from board_list) b
