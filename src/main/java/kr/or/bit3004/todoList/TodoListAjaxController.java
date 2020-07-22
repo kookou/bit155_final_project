@@ -38,5 +38,10 @@ public class TodoListAjaxController {
 	public void toggleState(TodoList todoList) {
 		service.toggleState(todoList);
 	}
+
+	@RequestMapping("deleteTodoContent.do")
+	public void deleteTodoContent(int todoContentNo) {
+		service.deleteTodoContent(todoContentNo);
+	}
 	
 }

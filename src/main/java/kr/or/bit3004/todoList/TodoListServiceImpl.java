@@ -47,4 +47,9 @@ public class TodoListServiceImpl implements TodoListService {
 	public void toggleState(TodoList todoList) {
 		dao.toggleState(todoList);
 	}
+	
+	@Override
+	public void deleteTodoContent(int todoContentNo) {
+		dao.deleteTodoContent(todoContentNo);
+	}
 }

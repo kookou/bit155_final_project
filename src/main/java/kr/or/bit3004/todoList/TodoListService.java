@@ -10,4 +10,5 @@ public interface TodoListService {
 	public void insertTodoContent(TodoList todoList);
 	public int getCurrContentNo();
 	public void toggleState(TodoList todoList);
+	public void deleteTodoContent(int todoContentNo);
 }

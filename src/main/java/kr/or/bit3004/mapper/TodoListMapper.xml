@@ -36,4 +36,8 @@
 		update todo_content set state = #{state} where todo_content_no = #{todoContentNo}
 	</update>
 	
+	<delete id="deleteTodoContent" parameterType="int">
+		delete from todo_content where todo_content_no = #{todoContentNo}
+	</delete>
+	
 </mapper>

@@ -88,8 +88,8 @@
 		                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
 		                                            </div>
 		                                            <div style="float: right;">
-		                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
-		                                                <a href="#"><i class="fas fa-trash-alt iconStyle"></i></a>
+		                                                <a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
+		                                                <a href="javascript:void(0);" @click="deleteContent(todo)"><i class="fas fa-trash-alt iconStyle"></i></a>
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -164,7 +164,6 @@
 	            toggleTodoState(todo) { // 클릭시 상태값을 변경할 함수 //todo parameter는 클릭한 항목을 받을 parameter
 	                //parameter로 받은 todo의 state를 done과 active로 번갈아가며 설정할 수 있도록 함
 	                todo.state = todo.state === 'active' ? 'done' : 'active';
-	            	console.log(todo.contentNo);
 	              	//axios통신으로 todoList Content 상태값 update
 		            var params = new URLSearchParams();
 		            params.append('state', todo.state);
@@ -191,6 +190,17 @@
 		            }).catch((ex) => {
 		                console.log("ERROR!!!!! : ",ex);
 		            });
+	            },
+	            deleteContent(todo) {
+	            	//axios통신으로 todoList Content 삭제하기
+		            var params = new URLSearchParams();
+		            params.append('todoContentNo', todo.contentNo);
+		            axios.post('deleteTodoContent.do', params
+		    	    ).then(response => {})
+		    	    .catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
+	            	this.todoList.splice(this.todoList.indexOf(todo), 1);
 	            }
 	        },
 	        // computed에 선언해놓은 것은 내부변수처럼 불러서 사용할 수 있기 때문에 activeTodoList() 이렇게 부르는 것이 아니라 activeTodoList일케 부름..
