@@ -5,7 +5,6 @@ var activeInactiveWeekends = true;
 
 function getDisplayEventDate(event) {
 	console.log("getDisplayEventDate")
-	console.log(event)
   var displayEventDate;
 
   if (event.allDay == false) {
@@ -105,7 +104,6 @@ var calendar = $('#calendar').fullCalendar({
 
   eventRender: function (event, element, view) {
 	  console.log("eventRender")
-	  console.log(event)
     //일정에 hover시 요약
     element.popover({
       title: $('<div />', {
@@ -182,15 +180,17 @@ var calendar = $('#calendar').fullCalendar({
       },
       success: function (response) {
         var fixedDate = response.map(function (array) {
-          if (array.allDay && array.start !== array.end) {
+        	if(array.allDay == "true"){
+        		console.log("트루 타니???")
+        		array.allDay = true;
+        	}
+        	if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
-
-          }
+        	}
           return array;
         })
         console.log("잘 받아오나?")
-        console.log(fixedDate)
         callback(fixedDate);
       }
     });
@@ -211,39 +211,29 @@ var calendar = $('#calendar').fullCalendar({
     var newDates = calDateWhenResize(event);
 
     //리사이즈한 일정 업데이트
-    $.ajax({
-     	 url: "updatePlan.ajax",
-		         data:{ 
-		        	title : event.title,
-		           	 description :event.description,
-		           	 start : event.start,
-		           	 end: event.end,
-		           	 color :event.backgroundColor,
-		           	 id : currUserId,
-		           	 teamNo : teamNo,
-		           	 allDay : event.allDay,
-		           	 no : event.no
-		           	 
-		            },
-             
-              success:function(response){
-                alert("일정이 수정되었습니다.");
-                //DB연동시 중복이벤트 방지를 위한
-                $('#calendar').fullCalendar('removeEvents');
-                $('#calendar').fullCalendar('refetchEvents');
-              },error:function(){ 
-                  alert("일정수정에 실패하였습니다.");
-              }
-          });
+ $.ajax({
+        
+        url: "updatePlanDrag.ajax",
+        data: {
+          no : event.no,
+          start : newDates.startDate,
+          end : newDates.endDate
+        },
+        success: function (response) {
+          alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+        }
+      });
 
   },
 
   eventDragStart: function (event, jsEvent, ui, view) {
+	  console.log(event)
     draggedEventIsAllDay = event.allDay;
   },
 
   //일정 드래그앤드롭
   eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
+	  console.log(event)
     $('.popover.fade.top').remove();
 
     //주,일 view일때 종일 <-> 시간 변경불가
@@ -276,7 +266,7 @@ var calendar = $('#calendar').fullCalendar({
   },
 
   select: function (startDate, endDate, jsEvent, view) {
-
+	  console.log(event)
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
     	newEvent(startDate, endDate)
@@ -567,7 +557,6 @@ var editEvent = function (event, element, view) {
   		           	 teamNo : teamNo,
   		           	 allDay : event.allDay,
   		           	 no : event.no
-  		           	 
   		            },
                  
                   success:function(response){
@@ -579,7 +568,6 @@ var editEvent = function (event, element, view) {
                       alert("일정수정에 실패하였습니다.");
                   }
               });
-
     });
  // 삭제버튼
     $('#deleteEvent').on('click', function () {
