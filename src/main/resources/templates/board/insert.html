@@ -121,6 +121,14 @@
 			} 
 	  	});
  		
+ 		//이미지 첨부 드래그 앤 드랍
+ 		$("div.note-editable").on('drop',function(e){
+        	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+   	 			uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+        	}
+        	e.preventDefault();
+	    });
+ 		
  		//callback에서 사용하는 onImageUpload.ajax 함수
  		function uploadSummernoteImageFile(file, editor){
  			data = new FormData();
@@ -138,13 +146,6 @@
  			});
  		}
  		 
- 		//이미지 첨부 드래그 앤 드랍
- 		$("div.note-editable").on('drop',function(e){
-        	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
-   	 			uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
-        	}
-        	e.preventDefault();
-	    });
  		
  		//제목안쓰면 게시글 못쓰게 막기
  		$('#submitBtn').click(function(){
