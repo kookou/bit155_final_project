@@ -52,4 +52,10 @@ public class TodoListServiceImpl implements TodoListService {
 	public void deleteTodoContent(int todoContentNo) {
 		dao.deleteTodoContent(todoContentNo);
 	}
+	
+	@Override
+	public void deleteTodoTitle(int no) {
+		dao.deleteTodoTitle(no);
+	}
+	
 }

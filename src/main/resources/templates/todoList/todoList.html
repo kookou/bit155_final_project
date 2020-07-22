@@ -64,7 +64,11 @@
 		                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
 		                        <input type="hidden" v-model="todoNo">
 		                        <div v-if="isStatusOff">
-		                            <h4 class="card-title mb-3">{{ title }}</h4>
+		                            <h4 class="card-title mb-3" style="float: left;">{{ title }}</h4>
+			                        <div style="float: right;">
+		                                <a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
+		                                <a href="javascript:void(0);" @click="deleteTitle()"><i class="fas fa-trash-alt iconStyle"></i></a>
+		                            </div>
 		                            <div style="width: 100%;">
 		                                <input type="text" class="form-control" placeholder="할 일을 입력하세요" v-model="userInput" @keyup.enter="addNewTodo"/>
 		                            </div>
@@ -108,16 +112,19 @@
 	                currentState: 'all', //출력할 상태값을 가질 변수
 	                isStatusOn: true,
 	                isStatusOff: false,
-	                todoNo: ''
+	                todoNo: '',
+	                todoListIndex: 0
 	            };
 	        },
 	        created() {
 	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
+	           		this.todoListIndex = 0;
 	            	for(var index in response.data) {
 	            		var i = 0;
 		            	this.$root.$children[index].title = response.data[index].title;
 		            	this.$root.$children[index].todoNo = response.data[index].no;
+		            	this.$root.$children[index].todoListIndex = this.todoListIndex++;
 		            	this.$root.$children[index].isStatusOn = false;
 		                this.$root.$children[index].isStatusOff = true;
 		            	axios.get('getTodoContent.do?teamNo='+teamNo)
@@ -178,6 +185,7 @@
 	            addTodoList() {
 	                this.isStatusOn = false;
 	                this.isStatusOff = true;
+	                this.todoListIndex = this.todoListIndex++;
 	                this.$root.addListBtnisStatusOn = true;
 	                //axios통신으로 todoList Title DB에 insert하기
 		            var params = new URLSearchParams();
@@ -192,7 +200,7 @@
 		            });
 	            },
 	            deleteContent(todo) {
-	            	//axios통신으로 todoList Content 삭제하기
+	            	//todoList Content 삭제하기
 		            var params = new URLSearchParams();
 		            params.append('todoContentNo', todo.contentNo);
 		            axios.post('deleteTodoContent.do', params
@@ -201,6 +209,34 @@
 		                console.log("ERROR!!!!! : ",ex);
 		            });
 	            	this.todoList.splice(this.todoList.indexOf(todo), 1);
+	            },
+	            deleteTitle() {
+	            	Swal.fire({
+	            		title: '"' + this.title + '" ToDo-List를<br>정말 삭제하시겠습니까?',
+	            		text: "삭제되면 데이터를 복구할 수 없습니다!",
+	            		icon: 'warning',
+	            		showCancelButton: true,
+	            		confirmButtonText: 'Yes, delete it!',
+	            		cancelButtonText: 'No, keep it'
+	            	}).then((result) => {
+	            		if (result.value) {
+	            			//todoList Title 삭제하기
+	    		            var params = new URLSearchParams();
+	    		            params.append('no', this.todoNo);
+	    		            axios.post('deleteTodoTitle.do', params
+	    		    	    ).then(response => {})
+	    		    	    .catch((ex) => {
+	    		                console.log("ERROR!!!!! : ",ex);
+	    		            });
+	    		            console.log(this.todoListIndex);
+	    	            	this.$root.todoLists.splice(this.todoListIndex, 1);
+	            			Swal.fire(
+    							'Deleted!',
+    							'"' + this.title + '" ToDo-List가 삭제되었습니다.',
+    							'success'
+	    					)
+	            		}
+	            	});
 	            }
 	        },
 	        // computed에 선언해놓은 것은 내부변수처럼 불러서 사용할 수 있기 때문에 activeTodoList() 이렇게 부르는 것이 아니라 activeTodoList일케 부름..

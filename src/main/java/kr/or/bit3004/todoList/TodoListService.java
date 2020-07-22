@@ -11,4 +11,5 @@ public interface TodoListService {
 	public int getCurrContentNo();
 	public void toggleState(TodoList todoList);
 	public void deleteTodoContent(int todoContentNo);
+	public void deleteTodoTitle(int no);
 }

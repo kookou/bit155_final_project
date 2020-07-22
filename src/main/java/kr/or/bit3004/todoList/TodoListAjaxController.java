@@ -44,4 +44,9 @@ public class TodoListAjaxController {
 		service.deleteTodoContent(todoContentNo);
 	}
 	
+	@RequestMapping("deleteTodoTitle.do")
+	public void deleteTodoTitle(int no) {
+		service.deleteTodoTitle(no);
+	}
+	
 }
