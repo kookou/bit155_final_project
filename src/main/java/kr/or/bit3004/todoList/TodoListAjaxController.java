@@ -13,8 +13,8 @@ public class TodoListAjaxController {
 	private TodoListService service;
 	
 	@RequestMapping("getTodoContent.do")
-	public List<TodoList> todoList(TodoList todoList) {
-		return service.selectTodoList(todoList);
+	public List<TodoList> todoList(int teamNo) {
+		return service.selectTodoList(teamNo);
 	}
 	
 	@RequestMapping("getTodoTitle.do")
