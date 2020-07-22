@@ -108,13 +108,43 @@
  		
         //summernote
 	  	$('#summernote').summernote({
-	       	height: 300,                 		// 에디터 높이
-	       	minHeight: null,             		// 최소 높이
-	       	maxHeight: null,             		// 최대 높이
-	       	focus: true,                  		// 에디터 로딩후 포커스를 맞출지 여부
-	       	lang: "ko-KR",               		// 한글 설정
-	       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
+	       	height : 300,                 		 // 에디터 높이
+	       	minHeight : null,             		 // 최소 높이
+	       	maxHeight : null,             		 // 최대 높이
+	       	focus : true,                  		 // 에디터 로딩후 포커스를 맞출지 여부
+	       	lang : "ko-KR",               		 // 한글 설정
+	       	placeholder : '내용을 입력하세요.',   	 // placeholder 설정
+	       	callbacks : {						 //여기 부분이 이미지를 첨부하는 부분
+       			onImageUpload : function(files) {
+    				uploadSummernoteImageFile(files[0],this);
+				}
+			} 
 	  	});
+ 		
+ 		//callback에서 사용하는 onImageUpload.ajax 함수
+ 		function uploadSummernoteImageFile(file, editor){
+ 			data = new FormData();
+ 			data.append("file", file);
+ 			$.ajax({
+ 				data : data,
+ 				type : "POST",
+ 				url : "/uploadSummernoteImageFile",
+ 				contentType : false,
+ 				processData : false,
+ 				success : function(data){
+ 					//항상 업로드된 파일의 url이 있어야 한다.
+ 					$(editor).summernote('insertImage', data.url);
+ 				}
+ 			});
+ 		}
+ 		
+ 		//이미지 첨부 드래그 앤 드랍
+ 		$("div.note-editable").on('drop',function(e){
+        	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+   	 			uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+        	}
+        	e.preventDefault();
+	    });
  		
  		//제목안쓰면 게시글 못쓰게 막기
  		$('#submitBtn').click(function(){
