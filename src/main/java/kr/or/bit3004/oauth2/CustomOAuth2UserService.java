@@ -1,4 +1,4 @@
-package kr.or.bit3004.user;
+package kr.or.bit3004.oauth2;
 import org.springframework.core.ParameterizedTypeReference; 
 import org.springframework.core.convert.converter.Converter; 
 import org.springframework.http.RequestEntity; 
@@ -25,6 +25,8 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
 import kr.or.bit3004.dao.UserDao;
+import kr.or.bit3004.user.SessionUser;
+import kr.or.bit3004.user.User;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap; 
@@ -79,8 +81,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		
 		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails() .getUserInfoEndpoint().getUserNameAttributeName();
 		
-//		System.out.println("CustomOAuth2UserService loadUser");
-//		System.out.println("userNameAttributeName : " + userNameAttributeName.toString());
 		
 		if (!StringUtils.hasText(userNameAttributeName)) { 
 			OAuth2Error oauth2Error = new OAuth2Error( MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE, 
@@ -122,14 +122,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		
 		Map<String, Object> userAttributes = getUserAttributes(response); 
 		
-		System.out.println("userAttributes : "+userAttributes.toString()); // 여기여기 !! 여기가 user정보 !!!
-		System.out.println(userAttributes.get("email"));
-		
-		
+//		System.out.println("userAttributes : "+userAttributes.toString()); // 여기여기 !! 여기가 user정보 !!!
+//		System.out.println(userAttributes.get("email"));
+				
 		//여기서 해당 email이 우리 db에 있는지 확인하고, 있다면 session에 값을 저장하고 role 부여.
 		//없다면 DB에 정보 등록(email 정보가 없다면 email 인증 페이지로 이동)
 		
 		User user = saveOrUpdate(userAttributes); // 등록 여부 확인 및 DB에 정보등록.
+		
 		session.setAttribute("currentUser", new SessionUser(user)); // session에 등록
 		
 		
@@ -216,24 +216,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     				+ pwd
     				+"/picture?type=normal&redirect=true&width=300&height=300";
     	}
-    	
-    	
-//    	
-//    	String googleTypeId = (String)userAttributes.get("sub"); // G
-//    	String otherTypeId = (String)userAttributes.get("id");  // F,N    	
-//    	String naverTypeNickname = (String)userAttributes.get("nickname"); //G,F>> name   naver >> nickname
-//    	
-//    	
-//    	String email = (String)userAttributes.get("email"); // G,F,N 공통
-//    	String nickname = (naverTypeNickname != null) ? naverTypeNickname : (String)userAttributes.get("name"); 
-//    	String image = (String)userAttributes.get("picture"); // naver :profile_image / google : picture  / facebook : 
-//    	
-//    	// 사용자 고유id값을 암호화하여 pwd로 사용할 예정
-//    	String pwd = (googleTypeId != null) ? googleTypeId : otherTypeId; 
-//    	
-//    	System.out.println("email :"+email);
-//    	System.out.println("pwd : "+pwd);
-//    	System.out.println("nickname : "+nickname);
 
     	User user = new User();
     	
