@@ -37,4 +37,14 @@ public class TodoListServiceImpl implements TodoListService {
 	public void insertTodoContent(TodoList todoList) {
 		dao.insertTodoContent(todoList);
 	}
+	
+	@Override
+	public int getCurrContentNo() {
+		return dao.getCurrContentNo();
+	}
+	
+	@Override
+	public void toggleState(TodoList todoList) {
+		dao.toggleState(todoList);
+	}
 }

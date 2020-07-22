@@ -28,4 +28,12 @@
 		insert into `TODO_CONTENT`(`content`, `no`, `id`) values(#{content}, #{no}, #{id})
 	</insert>
 	
+	<select id="getCurrContentNo" resultType="int">
+		select max(`todo_content_no`) from `TODO_CONTENT`
+	</select>
+	
+	<update id="toggleState" parameterType="kr.or.bit3004.todoList.TodoList">
+		update todo_content set state = #{state} where todo_content_no = #{todoContentNo}
+	</update>
+	
 </mapper>

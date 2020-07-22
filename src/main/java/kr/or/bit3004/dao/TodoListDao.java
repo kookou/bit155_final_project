@@ -10,4 +10,6 @@ public interface TodoListDao {
 	public void insertTodoTitle(TodoList todoList);
 	public int getCurrNo();
 	public void insertTodoContent(TodoList todoList);
+	public int getCurrContentNo();
+	public void toggleState(TodoList todoList);
 }

@@ -82,6 +82,7 @@
 		                                    <div class="tab-pane show active">
 		                                        <div class="custom-control custom-checkbox">
 		                                            <div style="float: left;">
+		                                            	<input type="hidden" :value="todo.contentNo">
 		                                                <input type="checkbox" class="custom-control-input" :id="todo.content" :value="todo.content" 
 		                                                    @click="toggleTodoState(todo)" :checked="todo.state == 'done' ? true : false">
 		                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
@@ -125,7 +126,8 @@
 				                if(response.data[i].no == response2.data[index2].no) {
 				                	this.$root.$children[i].todoList.push({
 					                    content: response2.data[index2].content,
-					                    state: response2.data[index2].state
+					                    state: response2.data[index2].state,
+					                    contentNo: response2.data[index2].todoContentNo
 					                });
 				                }
 			                }
@@ -140,10 +142,7 @@
 	                this.currentState = state;
 	            },
 	            addNewTodo() {
-	                this.todoList.push({
-	                    content: this.userInput,
-	                    state: 'active' //완료하지 않은 항목
-	                });
+	            	var content = this.userInput;
 	              	//axios통신으로 todoList Content DB에 insert하기
 		            var params = new URLSearchParams();
 		            params.append('content', this.userInput);
@@ -151,7 +150,12 @@
 		            params.append('id', currUserId);
 		            axios.post('insertTodoContent.do', params
 		    	    ).then(response => {
-		                //console.log("투두 컨텐츠 넣기 성공~!");
+		    	    	console.log(response.data);
+		    	    	this.todoList.push({
+		                    content: content,
+		                    state: 'active', //완료하지 않은 항목
+		                    contentNo: response.data
+		                });
 		            }).catch((ex) => {
 		                console.log("ERROR!!!!! : ",ex);
 		            });
@@ -160,6 +164,17 @@
 	            toggleTodoState(todo) { // 클릭시 상태값을 변경할 함수 //todo parameter는 클릭한 항목을 받을 parameter
 	                //parameter로 받은 todo의 state를 done과 active로 번갈아가며 설정할 수 있도록 함
 	                todo.state = todo.state === 'active' ? 'done' : 'active';
+	            	console.log(todo.contentNo);
+	              	//axios통신으로 todoList Content 상태값 update
+		            var params = new URLSearchParams();
+		            params.append('state', todo.state);
+		            params.append('todoContentNo', todo.contentNo);
+		            axios.post('toggleState.do', params
+		    	    ).then(response => {
+		                //console.log("투두 컨텐츠 넣기 성공~!");
+		            }).catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
 	            },
 	            addTodoList() {
 	                this.isStatusOn = false;

@@ -29,8 +29,14 @@ public class TodoListAjaxController {
 	}
 	
 	@RequestMapping("insertTodoContent.do")
-	public void insertTodoContent(TodoList todoList) {
+	public int insertTodoContent(TodoList todoList) {
 		service.insertTodoContent(todoList);
+		return service.getCurrContentNo();
+	}
+	
+	@RequestMapping("toggleState.do")
+	public void toggleState(TodoList todoList) {
+		service.toggleState(todoList);
 	}
 	
 }
