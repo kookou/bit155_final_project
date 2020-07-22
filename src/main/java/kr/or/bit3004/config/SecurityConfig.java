@@ -28,12 +28,8 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import kr.or.bit3004.dao.UserDao;
-import kr.or.bit3004.handler.LoginFailureHandler;
-import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
 import kr.or.bit3004.oauth2.CustomOAuth2UserService;
-import kr.or.bit3004.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
