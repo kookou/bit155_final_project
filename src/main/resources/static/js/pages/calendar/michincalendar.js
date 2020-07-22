@@ -18,29 +18,29 @@ function getDisplayEventDate(event) {
   return displayEventDate;
 }
 
-function filtering(event) {
-	console.log("filtering")
-	console.log(event)
-  var show_username = true;
-  var show_type = true;
-
-  var username = $('input:checkbox.filter:checked').map(function () {
-    return $(this).val();
-  }).get();
-  var types = $('#type_filter').val();
-
-  show_username = username.indexOf(event.username) >= 0;
-
-  if (types && types.length > 0) {
-    if (types[0] == "all") {
-      show_type = true;
-    } else {
-      show_type = types.indexOf(event.type) >= 0;
-    }
-  }
-
-  return false;
-}
+//function filtering(event) {
+//	console.log("filtering")
+//	console.log(event)
+//  var show_username = true;
+//  var show_type = true;
+//
+//  var username = $('input:checkbox.filter:checked').map(function () {
+//    return $(this).val();
+//  }).get();
+//  var types = $('#type_filter').val();
+//
+//  show_username = username.indexOf(event.username) >= 0;
+//
+//  if (types && types.length > 0) {
+//    if (types[0] == "all") {
+//      show_type = true;
+//    } else {
+//      show_type = types.indexOf(event.type) >= 0;
+//    }
+//  }
+//
+//  return false;
+//}
 
 function calDateWhenResize(event) {
 	console.log("calDateWhenResize")
@@ -103,7 +103,8 @@ function calDateWhenDragnDrop(event) {
 var calendar = $('#calendar').fullCalendar({
 
   eventRender: function (event, element, view) {
-	  console.log("eventRender")
+//	  console.log("eventRender")
+//	  console.log(event)
     //일정에 hover시 요약
     element.popover({
       title: $('<div />', {
@@ -227,7 +228,7 @@ var calendar = $('#calendar').fullCalendar({
   },
 
   eventDragStart: function (event, jsEvent, ui, view) {
-	  console.log(event)
+	console.log(event)
     draggedEventIsAllDay = event.allDay;
   },
 
@@ -341,7 +342,7 @@ var calendar = $('#calendar').fullCalendar({
   defaultTimedEventDuration: '01:00:00',
   editable: true,
   minTime: '00:00:00',
-  maxTime: '24:00:00',
+  maxTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   weekends: true,
   nowIndicator: true,
@@ -356,7 +357,7 @@ var calendar = $('#calendar').fullCalendar({
 var eventModal = $('#eventModal');
 
 var modalTitle = $('.modal-title');
-var editAllDay = $('#edit-allDay');
+var editAllDay = $('#customCheck2');
 var editTitle = $('#edit-title');
 var editStart = $('#edit-start');
 var editEnd = $('#edit-end');
@@ -388,16 +389,11 @@ var newEvent = function (start, end, eventType) {
     modifyBtnContainer.hide();
     eventModal.modal('show');
 
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-//    var eventId = 1 + Math.floor(Math.random() * 1000);
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
     $('#save-event').on('click', function () {
 
     	  var eventData = {
-    			
     	            id: currUserId,
     	            title: editTitle.val(),
     	            start: editStart.val(),
@@ -425,12 +421,15 @@ var newEvent = function (start, end, eventType) {
             //render시 날짜표기수정
             eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
             //DB에 넣을때(선택)
-            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+//            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
 
             eventData.allDay = true;
         }
 
         $("#calendar").fullCalendar('renderEvent', eventData, true);
+        
+        console.log("eventData");
+        console.log(eventData);
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
@@ -470,7 +469,7 @@ var newEvent = function (start, end, eventType) {
 var editEvent = function (event, element, view) {
 
     $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
-
+    console.log(event._id)
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -542,8 +541,10 @@ var editEvent = function (event, element, view) {
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
 
-        $("#calendar").fullCalendar('updateEvent', event);
-
+//        $("#calendar").fullCalendar('updateEvent', event);
+//        
+        console.log("updateEvent")
+        console.log(event)
         //일정 업데이트
         $.ajax({
          	 url: "updatePlan.ajax",
