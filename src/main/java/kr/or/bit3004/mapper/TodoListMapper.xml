@@ -3,16 +3,17 @@
 
 <mapper namespace="kr.or.bit3004.dao.TodoListDao">
 	<select id="getTodoList" resultType="kr.or.bit3004.todoList.TodoList">
-		select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
+		select c.todo_content_no, c.content, done, c.`no`, c.id, l.title, l.TEAM_NO
 		  from `todo_content` c
 		 right outer join `todo_list` l
 		    on c.no = l.no
-		 where l.TEAM_NO = #{l.TEAM_NO}
+		 where l.team_no = #{teamNo}
 	</select>
 	
 	<select id="getTodoTitle" resultType="kr.or.bit3004.todoList.TodoList">
-		select title, team_no, id
+		select no, title, team_no, id
   		  from todo_list
+  		 where team_no = #{teamNo}
 	</select>
 	
 	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.todoList.TodoList">

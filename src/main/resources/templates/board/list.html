@@ -67,13 +67,14 @@
 			    "lengthMenu": [ 10, 20, 30, 40, 50 ],
 			    "displayLength": 10,
 			    "stateSave": true,*/
-			     language: lang_kor 
-			           
+			     language: lang_kor ,
+			     ordering: false
 			}); 
 		}); 
 	</script> 
 </head>
 <body>
+	<div th:replace="common/scriptA :: scriptA"></div> 
  	<!-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
@@ -83,96 +84,82 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    	data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-    <th:block th:replace="common/header :: header"></th:block>
-    <th:block th:replace="common/aside :: aside"></th:block>
-    <th:block th:replace="common/addAllBoardModal"></th:block>
-    <th:block th:replace="common/chat"></th:block>
-    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-	<div class="page-wrapper">
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-7 align-self-center">
-                    <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
-                </div>
-               
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                               <!--  <table class="table" id="table"> -->
-                               <input type="hidden">
-                                <table class="table table-bordered" id="table">
-                                    <thead class="bg-primary text-white">
-                                    	<tr>
-                                         <th style="width:15%; text-align: center;">작성자</th>
-                                         <th style="width:55%; text-align: center;">제목</th>
-                                         <th style="width:20%; text-align: center;">작성일시</th>
-                                         <th style="width:10%; text-align: center;">조회수</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	 <!-- <input type="text" th:value="${boardList}"> -->
-                                         <tr th:each="board:${boardList}">
-	                                         <td style="width:15%; text-align: center;" th:text="${board.nickname}"></td>
-	                                         <td style="width:55%;">
-                                   				<!-- <div th:each="${#numbers.sequence(1,2)}">&nbsp;&nbsp;&nbsp;</div> -->
-	                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
-	                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
-	                                         	<!-- boardFile이 존재하는 경우에는 이미지를 붙여준다 -->
-	                                         	<i class="fas fa-paperclip" th:if="${!empty board.boardFile}"></i>
-	                                         	<!-- comment cnt가 존재하는 경우 -->
-	                                         	<a th:if="${board.commentCount }" th:text="|[${board.commentCount}]|"></a>
-	                                         	<!-- 업로드한 파일이 존재하는 경우  -->
-	                                         </td>
-	                                         <td style="width:20%; text-align: center;" th:text="${board.writeDate}"></td>
-	                                         <td style="width:10%; text-align: center;" th:text="${board.views}"></td>
-                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="form-actions text-right">
-                            	<a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
-                            		<i class="fas fa-pencil-alt"></i> 글쓰기
-                            	</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
+	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" 
+	data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+	    <th:block th:replace="common/header :: header"></th:block>
+	    <th:block th:replace="common/aside :: aside"></th:block>
+	    <th:block th:replace="common/addAllBoardModal"></th:block>
+	    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+		<div class="page-wrapper">
+	        <div class="page-breadcrumb">
+	            <div class="row">
+	                <div class="col-7 align-self-center">
+	                    <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
+	                </div>
+	               
+	            </div>
+	        </div>
+	        <div class="container-fluid">
+	            <div class="row">
+	                <div class="col-lg-12">
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <div class="table-responsive" style="overflow-x:hidden">
+	                               <!--  <table class="table" id="table"> -->
+	                               <input type="hidden">
+	                               <span th:text="${selectBoardDownloadFile}"></span>
+	                                <table class="table table-bordered" id="table">
+	                                    <thead class="bg-primary text-white">
+	                                    	<tr>
+	                                    		<th style="width:15%; text-align: center;">제목</th>
+                                        		<th style="width:55%; text-align: center;">작성자</th>
+                                        		<th style="width:20%; text-align: center;">작성일시</th>
+                                        		<th style="width:10%; text-align: center;">조회</th>
+                                        	</tr>
+	                                    </thead>
+	                                    <tbody>
+	                                         <tr th:each="board:${boardList}">
+		                                         <!-- 게시글 제목부분 -->
+		                                         <td style="width:70%;">
+		                                         	<!-- 답글부분 -->
+		                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
+		                                         	<!-- 글이 공지사항일 경우 -->
+		                                         	<span  th:if="${board.boardNoti} != null" class="badge badge-danger">공지사항</span>
+		                                         	<!-- 게시글 제목 -->
+		                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
+		                                         	<!-- comment cnt가 존재하는 경우 -->
+		                                         	<a th:if="${board.commentCount}" th:text="|[${board.commentCount}]|"></a>
+		                                         	<!-- 업로드한 파일이 존재하는 경우  -->
+		                                         	<span th:if="${board.fileCount} > 0">
+	                                         			<i class="fas fa-paperclip"></i>
+		                                         	</span>
+		                                         	<!-- 첨부한 이미지가 존재하는경우 -->
+		                                         </td>
+		                                         <!-- 작성자 -->
+		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
+		                                         <!-- 작성일시 -->
+		                                         <td style="width:15%; text-align: center;" th:text="${board.writeDate}"></td>
+		                                         <!-- 조회 -->
+		                                         <td style="width:5%; text-align: center;" th:text="${board.views}"></td>
+	                                         </tr>
+	                                    </tbody>
+	                                </table>
+	                            </div>
+	                            <div class="form-actions text-right">
+	                            	<a th:href="@{insertBoard.do(teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
+	                            		<i class="fas fa-pencil-alt"></i> 글쓰기
+	                            	</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div> 
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     
-    <!-- <div th:replace="common/script :: script"></div> -->
-    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!-- datatable -->
-	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
-	<!-- apps -->
-	<script src="js/app-style-switcher.js"></script>
-	<script src="js/feather.min.js"></script>
-	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-	<script src="js/sidebarmenu.js"></script>
-	
-	<!--Custom JavaScript -->
-	<script src="js/custom.min.js"></script>
-	<script src="js/kanban.js"></script>
-	<script src="js/groupAndTeam.js"></script>
-	<script src="js/aside.js"></script>
-	
-	<!--This page JavaScript -->
-	<script src="js/pages/dashboards/dashboard1.min.js"></script>
+    <div th:replace="common/scriptB :: scriptB"></div> 
 	
    	<!-- datatable -->
 	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script> 

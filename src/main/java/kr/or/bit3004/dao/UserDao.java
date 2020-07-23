@@ -4,8 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import kr.or.bit3004.user.User;
 
+@Component
 public interface UserDao {
 	public int insertUser(User user);
 	public int idCheck(String id);
@@ -18,8 +22,7 @@ public interface UserDao {
 	public User getUser(String id);
 	public List<User> getUserList();
 	
-	public int deleteUser(String id);	
-
+	public void deleteUser(String id);	
 	
 	
 }

@@ -12,8 +12,8 @@ public class TodoListAjaxController {
 	@Autowired
 	private TodoListService service;
 	
-	@RequestMapping("todoList2.do")
-	public List<TodoList> todoList2(int teamNo) {
+	@RequestMapping("getTodoContent.do")
+	public List<TodoList> todoList(int teamNo) {
 		return service.selectTodoList(teamNo);
 	}
 	

@@ -1,19 +1,24 @@
 package kr.or.bit3004.user;
 
 import java.io.FileOutputStream;
+import java.util.Collection;
 import java.util.List;
 
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit3004.dao.UserDao;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService{
 	
 	@Autowired
 	private UserDao dao;
@@ -113,10 +118,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteUser(String id) {
-		System.out.println("dao");
+	public void deleteUser(String id, HttpSession session) {
+		System.out.println("dao deleteUser");
 		dao.deleteUser(id);
+		session.invalidate();
 		
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

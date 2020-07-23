@@ -4,34 +4,16 @@
 <mapper namespace="kr.or.bit3004.dao.BoardDao">
 	<!-- 게시판 목록 출력 -->
 	<select id="getBoardList" resultType="kr.or.bit3004.board.Board">
-
-		<!-- select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, NICKNAME, team_no, file_name,
-		   (select count(*) from board_comment where board_no=b.board_no) as comment_count
-		  from ( 
-		   SELECT * 
-		     FROM board_list
-		   ) b
-			inner join `user` u
-		      on u.id = b.id
-			inner join all_board_list a
-		      on a.all_board_list_no = b.all_board_list_no
-			left outer join board_file f
-		      on f.board_no = b.board_no
-		  where a.all_board_list_no = #{allBoardListNo}
-		  ORDER BY refer DESC, step asc --> 
-  
-	  select b.board_no, title, content, views, write_date, refer, depth, step, b.all_board_list_no, b.id, nickname, team_no,
-	 (select count(*) from board_comment where board_no=b.board_no) as comment_count
-	    from ( 
-	     select * 
-	       from board_list
-	    ) b
-	  inner join `user` u
-         on u.id = b.id
-	  inner join all_board_list a
-         on a.all_board_list_no = b.all_board_list_no
-	  where a.all_board_list_no = #{allBoardListNo}
-	  order by refer desc, step asc
+		select b.board_no, title, content, views, date_format(write_date, '%Y-%m-%d') as write_date, refer, depth, step, b.all_board_list_no, b.id, nickname, team_no, board_noti,
+			   (select count(*) from board_comment where board_no=b.board_no) as comment_count,
+			   (select count(*) from board_file where board_no=b.board_no) as file_count
+		  from (select * from board_list) b
+		 inner join `user` u
+    		on u.id = b.id
+		 inner join all_board_list a
+    		on a.all_board_list_no = b.all_board_list_no
+		 where a.all_board_list_no = #{allBoardListNo}
+		 order by board_noti desc, refer desc, step asc
 	</select>
 	 
 	<!-- 조회수 증가 -->
@@ -54,8 +36,8 @@
 	
 	<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="kr.or.bit3004.board.Board">
-		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`,`step`,`depth`,`refer`) 
-		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id},0,0,#{refer})
+		insert into board_list(`title`, `content`, `write_date`, `all_board_list_no`, `id`, board_noti, `step`,`depth`,`refer`) 
+		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id}, #{boardNoti}, 0, 0, #{refer})
 	</insert>
 	
 	<!-- 게시판 답글 -->
@@ -64,6 +46,7 @@
 		 where refer=#{refer} and step &gt; #{step}
 	</update>
 	
+	<!-- refer값 -->
 	<select id="getMaxRefer" resultType="int">
 		select ifnull(max(refer),0) 
 		  from board_list
@@ -83,28 +66,25 @@
 		 where refer=#{refer} and step &gt; #{step} and depth &lt;= #{depth}
 	</select>
 	
+	<!-- Step값 -->
 	<select id="getMaxStep" resultType="int">
 		select max(step)+1 maxStep
 		  from board_list
 		 where refer=#{refer}
 	</select>
 	
+	<!-- step -->
 	<update id="updateStep" parameterType="kr.or.bit3004.board.Board">
 		update board_list
 		   set step=step+1
 		 where refer=#{refer} and step &gt;= #{step}
 	</update>
 	
+	<!-- 답글 등록하기 -->
 	<insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
 		insert into board_list(`all_board_list_no`,`title`, `content`, `write_date`,`id`,`refer`,`depth`,`step`)
 		values(#{allBoardListNo}, #{title}, #{content}, now(), #{id}, #{refer}, #{depth}, #{step})
 	</insert>
-	
-<!-- 	<select id="selectBoardByRefer" resultType="kr.or.bit3004.board.Board">
-		select refer
-		from board_list
-		where board_no=#{boardNo}
-	</select> -->
 	<!-- 게시판 답글 END -->
 	
 	<!-- 업로드 게시판 번호 가져오기 -->
@@ -112,7 +92,6 @@
 		select max(`board_no`) 
 		  from `board_list`
 	</select>
-	
 
 	<!-- 게시판 업로드 -->
 	<insert id="insertBoardUploadFile" parameterType="kr.or.bit3004.board.BoardUpload">

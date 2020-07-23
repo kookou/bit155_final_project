@@ -2,12 +2,6 @@
 insert into `role`(`AUTHORITY`, `DESCRIPTION`) values('ROLE_ADMIN', '관리자');
 insert into `role`(`AUTHORITY`, `DESCRIPTION`) values('ROLE_USER', '일반 사용자');
 
--- 타임라인 타입
-insert into `TIMELINE_TYPE`(`DML_NAME`) values('insert');
-insert into `TIMELINE_TYPE`(`DML_NAME`) values('update');
-insert into `TIMELINE_TYPE`(`DML_NAME`) values('delete');
-select * from TIMELINE_TYPE;
-
 -- 게시판 종류
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('common board');
 insert into `BOARD_TYPE`(`BOARD_TYPE_NAME`) values('kanban board');
@@ -49,13 +43,13 @@ insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, 
 insert into `BOARD_LIST`(`TITLE`, `CONTENT`, `WRITE_DATE`, `all_board_list_no`, `ID`) values('월요일좋아*^^*', '월요일좋아~~ 최고로좋아~~ ', now(), 5, 'seoyoung');
 
 -- 투두리스트 목록
-insert into `TODO_LIST`(`title`, `team_no`, `id`) values('팀원 혜린의 투두리스트', 1, 'hyerin');
-insert into `TODO_LIST`(`title`, `team_no`, `id`) values('오늘 할 일', 1, 'hyerin');
+insert into `TODO_LIST`(`title`, `team_no`, `id`) values('팀원 혜린의 투두리스트', 1, 'hrin@3004.com');
+insert into `TODO_LIST`(`title`, `team_no`, `id`) values('오늘 할 일', 1, 'hrin@3004.com');
 
 -- 투두리스트 내용
-insert into `TODO_CONTENT`(`content`, `no`, `id`) values('회원가입 UI 구현하기', 1, 'hyerin');
-insert into `TODO_CONTENT`(`content`, `no`, `id`) values('회원가입 기능 구현하기', 1, 'hyerin');
-insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 UI 구현하기', 1, 'hyerin');
-insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 기능 구현하기', 1, 'hyerin');
-insert into `TODO_CONTENT`(`content`, `no`, `id`) values('타임라인 UI 구현하기', 1, 'hyerin');
-insert into `TODO_CONTENT`(`content`, `no`, `id`, `done`) values('타임라인 기능 구현하기', 1, 'hyerin', 'Y');
+insert into `TODO_CONTENT`(`content`, `no`, `id`) values('회원가입 UI 구현하기', 2, 'hrin@3004.com');
+insert into `TODO_CONTENT`(`content`, `no`, `id`) values('회원가입 기능 구현하기', 2, 'hrin@3004.com');
+insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 UI 구현하기', 2, 'hrin@3004.com');
+insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 기능 구현하기', 2, 'hrin@3004.com');
+insert into `TODO_CONTENT`(`content`, `no`, `id`) values('타임라인 UI 구현하기', 2, 'hrin@3004.com');
+insert into `TODO_CONTENT`(`content`, `no`, `id`, `done`) values('타임라인 기능 구현하기', 2, 'hrin@3004.com', 'Y');

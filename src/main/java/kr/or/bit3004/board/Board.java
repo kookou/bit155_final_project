@@ -21,14 +21,6 @@ public class Board {
 	private String id;
 	private String nickname;
 	private String name;
-
-	
-	
-	//BOARD_FILE 테이블 변수명
-	/*
-	private List<CommonsMultipartFile> files;
-	private int fileNo;
-	private String fileName;
-	private int fileSize;
-	*/
+	private String fileCount;
+	private String boardNoti;
 }
