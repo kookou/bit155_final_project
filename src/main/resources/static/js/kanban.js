@@ -1,5 +1,4 @@
 
-
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard'>"
@@ -7,6 +6,7 @@ var addcardbtn =
     + "<span class='kanban-card-add-text'>Add Card</span>"
  + "</a>"
 + "</div>"
+
 
 var addlistTag = 
   "<div class='kanban-list-wrapper'>"
@@ -23,6 +23,7 @@ var addlistTag =
         + "</div>"
     + "</div>"
 + "</div>";
+
 
 var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
@@ -276,7 +277,6 @@ $(document).on('click', '#addlist', function() {
 	       	 let currentListNo = ui.item.children().data('listno');
 	       	 
 	       	 if(!(startListIDX == endListIDX)){
-	       		 
 	       		
 	       		 $.ajax({
 	       				url: "resortKanbanList.ajax",
@@ -909,7 +909,7 @@ function makereply(resData) {
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/userimage/"+obj.image+"' alt='user' href='javascript:void(0)'"
+				        + "<img src='assets/images/userImage/"+currUserImage+"' alt='user' href='javascript:void(0)'"
 				                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		

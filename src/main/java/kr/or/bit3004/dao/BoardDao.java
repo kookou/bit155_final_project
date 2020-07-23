@@ -51,5 +51,5 @@ public interface BoardDao {
 	public int getMaxStep (int refer);
 	
 	public void updateStep(Board board);
-	//////////////////////////////////////////////////////////////////////////////////
+
 }

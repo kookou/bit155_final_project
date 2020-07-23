@@ -6,8 +6,11 @@ import kr.or.bit3004.calendar.Calendar;
 
 public interface CalendarDao {
 	
-	public List<Calendar> showCalendar();
-	public void addPlan(Calendar dto);
+	public List<Calendar> showCalendar(int teamNo);
+	public void addPlan(Calendar calendar);
+	public void updatePlanDrag(Calendar calendar);
+	public void updatePlan(Calendar calendar);
+	public void deletePlan(Calendar calendar);
 	
 }
 /*
