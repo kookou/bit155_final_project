@@ -29,6 +29,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import kr.or.bit3004.handler.LoginFailureHandler;
 import kr.or.bit3004.handler.LoginSuccessHandler;
 import kr.or.bit3004.oauth2.CustomOAuth2Provider;
+import kr.or.bit3004.user.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
