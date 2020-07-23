@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!-- <link rel="stylesheet" href="js/pages/calendar/calendar.css"/> -->
 <link href="css/style.min.css" rel="stylesheet">
+<link href="css/style.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
 <link rel="stylesheet" href="js/pages/calendar/vendor/css/select2.min.css"/>
 
@@ -127,14 +128,14 @@
                         </div>
                        
                     </div>
-                    <div class="modal-footer modalBtnContainer-addEvent">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary" id="save-event">저장</button>
-                    </div>
-                    <div class="modal-footer modalBtnContainer-modifyEvent">
+                      <div class="modal-footer modalBtnContainer-modifyEvent">
                         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                         <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
                         <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+                    </div>
+                    <div class="modal-footer modalBtnContainer-addEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="save-event">저장</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -142,6 +143,79 @@
         
         
         
+        
+        
+<!--                 일정 수정 MODAL
+        <div class="modal fade" tabindex="-1" role="dialog" id="editModal" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                        
+                    </div>
+                    <div class="modal-body" style="padding:20px;">
+
+                        <div class="text-center mt-2 mb-4">
+                                  <h3 class="modal-title"></h3>
+                        </div>
+                        <div class="form-group">
+						<span for="allday">하루종일</span>
+                              <div class="custom-control custom-checkbox">
+                                  <input type="checkbox" class="custom-control-input edit-allDay" id="customCheck2">
+                                  <label class="custom-control-label" for="customCheck2"></label>
+                              </div>
+                              </div>
+                       	<div class="form-group">
+                                <label class="col-xs-4" for="edit-title">일정명</label>
+                                <input class="form-control" type="text" name="edit-title" id="edit-title"
+                                    required="required" placeholder="일정명을 입력해 주세요" />
+                        </div>
+                        
+                          <div class="form-group">
+                                <label class="col-xs-4" for="edit-desc">일정 상세</label>
+                                <textarea rows="4" cols="50" class="inputModal form-control" name="edit-desc"
+                                    id="edit-desc"></textarea>
+                          </div>
+                     
+                        
+                       <div class="form-group">
+                                <label class="col-xs-4" for="edit-start">일정 시작 일시</label>
+                                <input type="text" class="form-control" name="edit-start" id="edit-start">
+                        </div>
+                        
+                        <div class="form-group">
+                                <label class="col-xs-4" for="edit-end">일정 마감 일시</label>
+                                <input type="text" class="form-control" name ="edit-end" id="edit-end">
+                        </div>
+                       
+                        <div class="form-group mb-4">
+                                <label class="col-xs-4" for="edit-color">색상 선택</label>
+                                <select class="inputModal form-control" name="color" id="edit-color">
+                                    <option value="#D25565" style="color:#D25565;">빨간색</option>
+                                    <option value="#9775fa" style="color:#9775fa;">보라색</option>
+                                    <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+                                    <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+                                    <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                    <option value="#63e6be" style="color:#63e6be;">연두색</option>
+                                    <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+                                    <option value="#4d638c" style="color:#4d638c;">남색</option>
+                                    <option value="#495057" style="color:#495057;">검정색</option>
+                                </select>
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer modalBtnContainer-modifyEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+                        <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+                    </div>
+                </div>/.modal-content
+            </div>/.modal-dialog
+        </div>/.modal -->
+        
+        
+        <!-- 
 
         <div class="panel panel-default">
 
@@ -165,7 +239,7 @@
 
             </div>
         </div>
-        <!-- /.filter panel -->
+        /.filter panel -->
     </div>
     <!-- /.container -->
 

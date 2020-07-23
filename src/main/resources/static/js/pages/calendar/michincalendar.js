@@ -111,14 +111,13 @@ var calendar = $('#calendar').fullCalendar({
         class: 'popoverTitleCalendar',
         text: event.title
       }).css({
-        'background': event.backgroundColor,
-        'color': event.textColor
+        'background': event.color,
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
-        }).append('<p><strong>등록자:</strong> ' + event.id + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
+        }).append('<p><strong>등록자 : </strong> ' + event.id + '</p>')
+        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<div class="popoverDescCalendar"><strong>일정 설 : </strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
@@ -187,7 +186,7 @@ var calendar = $('#calendar').fullCalendar({
         	}
         	if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-            array.end = moment(array.end).add(1, 'days');
+//            array.end = moment(array.end).add(1, 'days');
         	}
           return array;
         })
@@ -222,6 +221,8 @@ var calendar = $('#calendar').fullCalendar({
         },
         success: function (response) {
           alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+          $('#calendar').fullCalendar('removeEvents');
+          $('#calendar').fullCalendar('refetchEvents');
         }
       });
 
@@ -260,6 +261,8 @@ var calendar = $('#calendar').fullCalendar({
         },
         success: function (response) {
           alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+          $('#calendar').fullCalendar('removeEvents');
+          $('#calendar').fullCalendar('refetchEvents');
         }
       });
 
@@ -284,7 +287,7 @@ var calendar = $('#calendar').fullCalendar({
       endDate = moment(endDate).subtract(1, 'days');
 
       endDate.set({
-        hours: today.hours() + 1,
+        hours: today.hours() +1,
         minute: today.minutes()
       });
       endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
@@ -317,6 +320,9 @@ var calendar = $('#calendar').fullCalendar({
 
   //이벤트 클릭시 수정이벤트
   eventClick: function (event, jsEvent, view) {
+	  console.log("이벤트 수정")
+	  console.log(event)
+	   $(".fc-body").unbind('click');
     editEvent(event);
   },
 
@@ -342,7 +348,7 @@ var calendar = $('#calendar').fullCalendar({
   defaultTimedEventDuration: '01:00:00',
   editable: true,
   minTime: '00:00:00',
-  maxTime: '23:59:59',
+  maxTime: '24:00:00',
   slotLabelFormat: 'HH:mm',
   weekends: true,
   nowIndicator: true,
@@ -354,9 +360,11 @@ var calendar = $('#calendar').fullCalendar({
 
 
 
-var eventModal = $('#eventModal');
+var addModal = $('#eventModal');
+var editModal = $('#eventModal');
 
 var modalTitle = $('.modal-title');
+
 var editAllDay = $('#customCheck2');
 var editTitle = $('#edit-title');
 var editStart = $('#edit-start');
@@ -374,7 +382,7 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
  * ************** */
 var newEvent = function (start, end, eventType) {
 
-    $("#contextMenu").hide(); //메뉴 숨김
+//    $("#contextMenu").hide(); //메뉴 숨김
 
     modalTitle.html('새로운 일정');
 //    editType.val(eventType).prop('selected', true);
@@ -387,7 +395,7 @@ var newEvent = function (start, end, eventType) {
     
     addBtnContainer.show();
     modifyBtnContainer.hide();
-    eventModal.modal('show');
+    addModal.modal('show');
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
@@ -421,18 +429,23 @@ var newEvent = function (start, end, eventType) {
             //render시 날짜표기수정
             eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
             //DB에 넣을때(선택)
-//            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
 
             eventData.allDay = true;
+        }else{
+        	realEndDay = eventData.end
         }
-
-        $("#calendar").fullCalendar('renderEvent', eventData, true);
+        
+        
+//        $("#calendar").fullCalendar('renderEvent', eventData, true);
         
         console.log("eventData");
         console.log(eventData);
-        eventModal.find('input, textarea').val('');
+        
+        addModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
-        eventModal.modal('hide');
+        addModal.modal('hide');
+      
 
         //새로운 일정 저장
         $.ajax({
@@ -441,16 +454,15 @@ var newEvent = function (start, end, eventType) {
    		        	 title : eventData.title,
    		           	 description :eventData.description,
    		           	 start : eventData.start,
-   		           	 end: eventData.end,
+   		           	 end: realEndDay,
    		           	 color :eventData.backgroundColor,
    		           	 id : currUserId,
    		           	 teamNo : teamNo,
    		           	 allDay : eventData.allDay
    		           	 
    		            },
-                  
+                   
                    success:function(response){
-                   	
                      alert("일정이 등록되었습니다.");
                      //DB연동시 중복이벤트 방지를 위한
                      $('#calendar').fullCalendar('removeEvents');
@@ -492,13 +504,12 @@ var editEvent = function (event, element, view) {
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
     editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
-//    editType.val(event.type);
     editDesc.val(event.description);
-    editColor.val(event.backgroundColor).css('color', event.backgroundColor);
+    editColor.val(event.color).css('color', event.color);
 
     addBtnContainer.hide();
-    modifyBtnContainer.show();
-    eventModal.modal('show');
+    modifyBtnContainer.show();                     
+    editModal.modal('show');
 
     //업데이트 버튼 클릭시
     $('#updateEvent').unbind();
@@ -531,7 +542,7 @@ var editEvent = function (event, element, view) {
             displayDate = endDate;
         }
 
-        eventModal.modal('hide');
+        editModal.modal('hide');
 
         event.allDay = statusAllDay;
         event.title = editTitle.val();
@@ -575,7 +586,8 @@ var editEvent = function (event, element, view) {
         
         $('#deleteEvent').unbind();
         $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
-        eventModal.modal('hide');
+        
+        editModal.modal('hide');
         
         //삭제시
         $.ajax({
