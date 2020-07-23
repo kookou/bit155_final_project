@@ -5,7 +5,7 @@
 	<select id="getTodoContent" resultType="kr.or.bit3004.todoList.TodoList" parameterType="kr.or.bit3004.todoList.TodoList">
 		select c.todo_content_no, c.content, state, c.`no`, c.id, l.title, l.TEAM_NO
 		  from `todo_content` c
-		 right outer join `todo_list` l
+		  left outer join `todo_list` l
 		    on c.no = l.no
 		 where l.team_no = #{teamNo}
 		    and l.no = #{no}
