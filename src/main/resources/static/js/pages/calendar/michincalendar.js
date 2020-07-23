@@ -71,7 +71,7 @@ function calDateWhenDragnDrop(event) {
 
 //캘린더 그리기
 var calendar = $('#calendar').fullCalendar({
-
+	
  //이벤트가 랜더링 될떄의 옵션?
   eventRender: function (event, element, view) {
 // console.log("eventRender")
@@ -79,17 +79,27 @@ var calendar = $('#calendar').fullCalendar({
 	  
     // 일정에 hover시 요약
     element.popover({
-      title: $('<div />', {
-        class: 'popoverTitleCalendar',
-        text: event.title
-      }).css({
-        'background': event.color,
-      }),
-      content: $('<div />', {
-          class: 'popoverInfoCalendar'
-        }).append('<p><strong>등록자 : </strong> ' + event.id + '</p>')
-        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>일정 설명: </strong> ' + event.description + '</div>'),
+//      title: $('<div />', {
+//        class: 'popoverTitleCalendar',
+//        text: event.title
+//      }).css({
+//        'background': event.color,
+//      }),
+//      content: $('<div />', {
+//          class: 'popoverInfoCalendar'
+//        }).append('<p><strong>등록자 : </strong> ' + event.id + '</p>')
+//        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventDate(event) + '</p>')
+//        .append('<div class="popoverDescCalendar"><strong>일정 설명: </strong> ' + event.description + '</div>'),
+    	 '<div class="popover fade bs-popover-top show" role="tooltip" id="popover381977"'
+          +'style="position: absolute; width: 250x; transform: translate3d(56px, 348px, 0px); top: 0px; left: 0px; will-change: transform; " x-placement="top">'
+             +'<div class="arrow" style="left: 130px; line-height: 1.2"></div>'
+             +'<h3 class="popover-header" style="color:white;">병원가기</h3>'
+            +' <div class="popover-body"><strong>작성자 : </strong>'+event.id+'<br>'
+                 +'<strong>일정 시간 : </strong>'+getDisplayEventDate(event)+'<br>'
+                +' <strong>일정 내용 : </strong>'+ event.description
+             +'</div>'
+             +'</div>',
+    	
       delay: {
         show: "800",
         hide: "50"
@@ -309,7 +319,8 @@ var calendar = $('#calendar').fullCalendar({
   eventLongPressDelay: 0,
   selectLongPressDelay: 0,
   droppable: true,
-  handleWindowResize : true
+  handleWindowResize : true,
+ 
 });
 
 
@@ -423,6 +434,7 @@ var newEvent = function (start, end, eventType) {
                      // DB연동시 중복이벤트 방지를 위한
                      $('#calendar').fullCalendar('removeEvents');
                      $('#calendar').fullCalendar('refetchEvents');
+                     $('#calendar').fullCalendar('option', 'contentHeight', 600);
                    },error:function(){ 
                        alert("일정등록에 실패하였습니다.");
                    }
@@ -531,6 +543,7 @@ var editEvent = function (event, element, view) {
                     // DB연동시 중복이벤트 방지를 위한
                     $('#calendar').fullCalendar('removeEvents');
                     $('#calendar').fullCalendar('refetchEvents');
+                    $('#calendar').fullCalendar('option', 'contentHeight', 600);
                   },error:function(){ 
                       alert("일정수정에 실패하였습니다.");
                   }
@@ -554,6 +567,7 @@ var editEvent = function (event, element, view) {
                 alert('일정이 삭제되었습니다.');
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('refetchEvents');
+                $('#calendar').fullCalendar('option', 'contentHeight', 600);
             },error:function(){ 
                 alert("일정삭제에 실패하였습니다.");
             }
@@ -575,10 +589,10 @@ $('#edit-color').change(function () {
 // $('#calendar').fullCalendar('rerenderEvents');
 // });
 
-$("#type_filter").select2({
-    placeholder: "선택..",
-    allowClear: true
-});
+//$("#type_filter").select2({
+//    placeholder: "선택..",
+//    allowClear: true
+//});
 
 // datetimepicker
 $("#edit-start, #edit-end").bootstrapMaterialDatePicker({

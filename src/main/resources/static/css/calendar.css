@@ -1,7 +1,9 @@
-#wrapper{
-	margin-bottom : 30px;
+#calendar{
+	padding-bottom: 30px;
+}/* 
+.dropNewEvent {
+  font-size: 13px;
 }
-
 
 .popoverTitleCalendar {
   width: 100%;
@@ -32,17 +34,32 @@
   -webkit-box-orient: vertical;
 }
 
-/* .popover-title {
+.popover-title {
   background: transparent;
   font-weight: 600;
   padding: 0 !important;
   border: none;
-} */
+}
 
 .popover-content {
   padding: 15px 15px;
   font-size: 13px;
 }
+
+ 
+
+.opacityWeekend {
+  background-color: #f4f4fb !important;
+}
+
+
+
+
+.fc-unthemed .fc-day-grid td:not(.fc-axis).fc-event-container {
+  padding: 0.2rem 0.5rem;
+}
+
+
 
 .popover {
   background: #fff !important;
@@ -51,13 +68,15 @@
   margin-bottom: 10px;
 }
 
-
+popover header
 .popover-title {
   background: #F7F7FC;
   font-weight: 600;
   padding: 15px 15px 11px;
   border: none;
 }
+
+popover arrows
 .popover.top .arrow:after {
   border-top-color: #fff;
 }
@@ -77,10 +96,35 @@
 .popover.bottom .arrow:after {
   border-bottom-color: #fff;
 }
-.fc-day-grid-event .fc-time {
-    font-weight: 400;
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  Preferred icon size
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  Support for all WebKit browsers.
+  -webkit-font-smoothing: antialiased;
+  Support for Safari and Chrome.
+  text-rendering: optimizeLegibility;
+
+  Support for Firefox.
+  -moz-osx-font-smoothing: grayscale;
+
+  Support for IE.
+  -webkit-font-feature-settings: 'liga';
+          font-feature-settings: 'liga';
 }
-/* 
-.fc-widget-content{
-	min-height : 86px;
-} */
+ */
+#add-color,
+#edit-color {
+  color: #d25565;
+}

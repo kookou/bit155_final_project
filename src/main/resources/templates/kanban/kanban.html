@@ -297,6 +297,7 @@
 	<div th:replace="common/scriptB :: scriptB"></div> 
 	<script th:inline="javascript">
     /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
    	var currUserNickname = [[${session.currentUser.nickname}]];
 	var currUserImage = [[${session.currentUser.image}]];
 	var teamNo = [[${session.currentUser.teamNo}]];
