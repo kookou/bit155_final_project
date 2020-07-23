@@ -113,17 +113,14 @@
 	                isStatusOn: true,
 	                isStatusOff: false,
 	                todoNo: '',
-	                todoListIndex: 0
 	            };
 	        },
 	        created() {
 	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
-	           		this.todoListIndex = 0;
 	            	for(var index in response.data) {
 		            	this.$root.$children[index].title = response.data[index].title;
 		            	this.$root.$children[index].todoNo = response.data[index].no;
-		            	this.$root.$children[index].todoListIndex = this.todoListIndex++;
 		            	this.$root.$children[index].isStatusOn = false;
 		                this.$root.$children[index].isStatusOff = true;
 	            	}
@@ -181,7 +178,6 @@
 	            addTodoList() {
 	                this.isStatusOn = false;
 	                this.isStatusOff = true;
-	                this.todoListIndex = this.todoListIndex++;
 	                this.$root.addListBtnisStatusOn = true;
 	                //axios통신으로 todoList Title DB에 insert하기
 		            var params = new URLSearchParams();
@@ -224,13 +220,19 @@
 	    		    	    .catch((ex) => {
 	    		                console.log("ERROR!!!!! : ",ex);
 	    		            });
-	    		            console.log(this.todoListIndex);
-	    	            	this.$root.todoLists.splice(this.todoListIndex, 1);
-	            			Swal.fire(
+	            			/* Swal.fire(
     							'Deleted!',
     							'"' + this.title + '" ToDo-List가 삭제되었습니다.',
     							'success'
-	    					)
+	    					) */
+	    					Swal.fire({
+	    	            		title: '"' + this.title + '"',
+	    	            		text: "ToDo-List가 삭제되었습니다.",
+	    	            		icon: 'success',
+	    	            		confirmButtonText: 'OK',
+	    	            	}).then((result) => {
+	    	            		window.location.reload();
+	    	            	});
 	            		}
 	            	});
 	            }
@@ -258,7 +260,17 @@
 	            addTodoTitle() {
 	                this.todoLists.push('todoList');
 	                this.addListBtnisStatusOn = false;
-	            }
+	            },
+	            /* deleteTitle(todoNo) {
+	            	for(var index in this.$children) {
+	            		if(todoNo == this.$children[index].todoNo) {
+	            			console.log("todoNo: " + todoNo + " / children[index].todoNo : " + this.$children[index].todoNo);
+	            			console.log(index);
+	            			console.log(this.todoLists)
+	            			this.todoLists.splice(1, 1);
+	            		}
+	            	}
+	            } */
 	        },
 	        created() {
 	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
