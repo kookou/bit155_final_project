@@ -33,7 +33,7 @@
 	    <!-- ============================================================== -->
 	    <!-- Container fluid  -->
 	    <!-- ============================================================== -->
-	    <div class="container-fluid">
+	    <div class="container-fluid pt-3">
 	        <!-- ============================================================== -->
 	        <!-- Start Page Content -->
 	        <!-- ============================================================== -->
@@ -111,61 +111,44 @@
 
                 <div class="row">
 
-                <!-- column -->
-                <div class="col-lg-4 col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Total Sales</h4>
-                            <h4 class="card-title">회원별 활동 비율</h4>
-                            <div id="campaign-v2" class="mt-2" style="height:200px; width:100%;"></div>
-                            <!-- 
-                            <ul class="list-style-none mb-0">
-                                <li>
-                                    <i class="fas fa-circle text-primary font-10 mr-2"></i>
-                                    <span class="text-muted">Direct Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2346</span>
-                                </li>
-                                <li class="mt-3">
-                                    <i class="fas fa-circle text-danger font-10 mr-2"></i>
-                                    <span class="text-muted">Referral Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2108</span>
-                                </li>
-                                <li class="mt-3">
-                                    <i class="fas fa-circle text-cyan font-10 mr-2"></i>
-                                    <span class="text-muted">Affiliate Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$1204</span>
-                                </li>
-                            </ul>
-							 -->
-                           
-                        </div>
-                    </div>
-                </div>
-                <!-- column -->
-
-
-                    <!-- column morris -->
+					
+					<!-- column morris -->
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Donute Chart</h4>
-                                <h4 class="card-title">당일 신규 게시물 수</h4>
-                                <div id="morris-donut-chart"  style="height:200px; width:100%;"></div>
+                                <h4 class="card-title">회원별 활동 비율</h4>
+                                <div id="morris-donut-chart1" class="timeline-chart-size"></div>
                             </div>
                         </div>
                     </div>
                     <!-- column -->
+					
+
+
                     <!-- column knob -->
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Angle offset, readonly</h4>
                                 <h4 class="card-title">프로젝트 진행률</h4>
-                                <div class="text-center pt-3" style="height:200px; width:100%;">
-                                    <input data-plugin="knob" data-width="170" data-height="170" data-angleOffset="0"
+                                <div class="text-center pt-3 timeline-chart-size">
+                                    <input data-plugin="knob" data-width="140" data-height="140" data-angleOffset="0"
                                         data-linecap="round" data-fgColor="#6edef4" value="56" 
                                         data-readOnly=true data-thickness=".3" />
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                    
+                    <!-- column morris -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Donute Chart</h4>
+                                <h4 class="card-title">당일 신규 게시물 수</h4>
+                                <div id="morris-donut-chart2" class="timeline-chart-size"></div>
                             </div>
                         </div>
                     </div>
@@ -283,11 +266,27 @@
         $(function () {
             // knob
             $('[data-plugin="knob"]').knob();
+            
+            var chartData = [                    
+            	{ label: '2008', value: 20 },
+                { label: '2009', value: 10 },
+                { label: '2010', value: 5 },
+                { label: '2011', value: 5 },
+                { label: '2012', value: 20 }
+                ];
+            
+            // Morris donut chart 
+            Morris.Donut({
+                element: 'morris-donut-chart1',
+                data: chartData,
+                resize: true,
+                colors:['#5f76e8', '#01caf1', '#8fa0f3']
+            });
 
 
              // Morris donut chart 
             Morris.Donut({
-                element: 'morris-donut-chart',
+                element: 'morris-donut-chart2',
                 data: [{
                     label: "칸반",
                     value: 12,
@@ -302,7 +301,55 @@
                 resize: true,
                 colors:['#5f76e8', '#01caf1', '#8fa0f3']
             });
+             
+             
+            // ==============================================================
+            // Campaign
+            // ==============================================================
 
+            var chartData = {
+            		1:50,
+            		2:40,
+            		3:30,
+            		4:20
+            };
+            	
+            	
+            	
+            var chart1 = c3.generate({
+                bindto: '#memberActivityRate',
+                data: {
+                    json: [chartData],
+                    keys: {
+                    	value: Object.keys(chartData),
+                    },
+                    type: 'donut',
+                    tooltip: {
+                        show: true
+                    }
+                },
+                donut: {
+                    label: {
+                        show: false
+                    },
+                    title: '회원별 활동 비율',
+                    width: 25 // 원 두께 조절하는 부분
+                },
+                legend: {
+                    hide: true
+                },
+                color: {
+                    pattern: [ // 색상은 이름 가나다 순으로 위에서부터 적용됨
+                    	
+                        '#01caf1', //하늘색
+                        '#ff4f70', //분홍색
+                        '#5f76e8', //보라색
+                        '#edf2f6'  //현재 흰색
+                    ]
+                }
+            });
+
+            d3.select('#memberActivityRate .c3-chart-arcs-title').style('font-family', 'Rubik');
         });
 		
 	</script>
