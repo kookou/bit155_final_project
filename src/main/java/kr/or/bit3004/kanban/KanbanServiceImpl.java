@@ -151,12 +151,18 @@ public class KanbanServiceImpl implements KanbanService {
 				UUID uuid = UUID.randomUUID();				
 				String fileName = uuid.toString() + originFileName;
 				
-				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
+				String path = System.getProperty("user.dir") + "/src/main/resources/static/cloud/" + teamNo; 
+				
+				System.out.println(path);
+				
 				File folder = new File(path);
+				
+			System.out.println(folder.exists());
 				
 				//폴더가 없을경우 폴더 생성하기
 				if(!folder.exists()) {
 					try {
+						System.out.println("폴더 생성하기");
 						folder.mkdir();
 						
 					} catch (Exception e) {
@@ -167,7 +173,7 @@ public class KanbanServiceImpl implements KanbanService {
 				}
 				
 				
-				String filePath = path + "\\" + fileName;
+				String filePath = path + "/" + fileName;
 				KanbanUpload kanbanUpload = new KanbanUpload();
 				
 				if((!fileName.equals("")) && (multiFile.getSize() > 0)) { // 파일 업로드					
@@ -183,7 +189,7 @@ public class KanbanServiceImpl implements KanbanService {
 						e.getMessage();
 					}finally {
 						try {
-							fs.close();
+							if(fs != null) fs.close();
 						} catch (IOException e) {
 							System.out.println("fs close error");
 							e.getMessage();

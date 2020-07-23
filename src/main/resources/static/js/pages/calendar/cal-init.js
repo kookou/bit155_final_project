@@ -2,13 +2,13 @@
     "use strict";
 
     var CalendarApp = function() {
-        this.$body = $("body"),
-        this.$modal = $('#my-event'),
-        this.$event = ('#calendar-events div.calendar-events'),
+        this.$body = $("body")
         this.$calendar = $('#calendar'),
-        this.$saveCategoryBtn = $('.save-category'),
+        this.$event = ('#calendar-events div.calendar-events'),
         this.$categoryForm = $('#add-new-event form'),
         this.$extEvents = $('#calendar-events'),
+        this.$modal = $('#my-event'),
+        this.$saveCategoryBtn = $('.save-category'),
         this.$calendarObj = null
     };
 
@@ -39,7 +39,7 @@
                 // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
                 // it doesn't need to have a start or end
                 var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
+                    title: $.trim($(this).text()) // use the element's text as the event title/
                 };
                 // store the Event Object in the DOM element so we can get to it later
                 $(this).data('eventObject', eventObject);
@@ -51,68 +51,6 @@
                 });
             });
         }
-        
-    /* on select */
-   /* CalendarApp.prototype.onSelect = function (start, end, allDay) {
-        var $this = this;
-            $this.$modal.modal({
-                backdrop: 'static'
-            });
-            var form = $("<form></form>");
-            form.append("<div class='row'></div>");
-            form.find(".row")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>")
-                .append("<input name='_token' type='hidden' value='{{csrf_token()}}'>")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>")
-                .find("select[name='category']")
-               // @foreach($categories as $categorie)
-                .append("<option value='bg-black' name='categorie'>{{$categorie->title}}</option>")
-                //@endforeach
-                .append("</div></div>");
-            $this.$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function () {
-                form.submit();
-            });
-            $this.$modal.find('form').on('submit', function () {
-                var title = form.find("input[name='title']").val();
-                var beginning = form.find("input[name='beginning']").val();
-                var ending = form.find("input[name='ending']").val();
-                var categoryClass = form.find("select[name='category'] option:checked").val();
-                $.ajax({
-                        url: "{{ URL::to('calendar/store') }}",
-                        type: 'post',
-                        data:{ title:form.find("input[name='title']").val(),start:start.format("YYYY-MM-DD"),end:end.format("YYYY-MM-DD")},
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        success:function(){
-                            alert("succes ajout");
-                        },error:function(){ 
-                            alert("erreur!!!!");
-                        }
-                    });
-                if (title !== null && title.length != 0) {
-                    $this.$calendarObj.fullCalendar('renderEvent', {
-                        title: title,
-                        start:start,
-                        end: end,
-                        allDay: false,
-                        className: categoryClass
-                    }, true);  
-                    $this.$modal.modal('hide');
-
-                }
-                else{
-                    alert('Veuillez donner un titre à votre événement');
-                }
-                return false;
-
-            });
-
-
-            $this.$calendarObj.fullCalendar('unselect');
-    }
-    */
-        
     /* Initializing */
     CalendarApp.prototype.init = function() {
             this.enableDrag();
@@ -181,22 +119,11 @@
                 events: defaultEvents,
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar !!!
-                eventLimit: false, // allow "more" link when too many events
+                eventLimit: true, // allow "more" link when too many events
                 selectable: true,
                 drop: function(date) { $this.onDrop($(this), date); },
                 select: function(start, end, allDay) { $this.onSelect(start, end, allDay); },
                 eventClick: function(calEvent, jsEvent, view) { $this.onEventClick(calEvent, jsEvent, view); }
-
-            });
-            
-            //추가함 ㅠ
-            this.$saveCategoryBtn.on('click', function(){
-                var categoryName = $this.$categoryForm.find("input[name='category-name']").val();
-                var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
-                if (categoryName !== null && categoryName.length != 0) {
-                    $this.$extEvents.append('<div class="external-event bg-' + categoryColor + '" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="mdi mdi-checkbox-blank-circle m-r-10 vertical-middle"></i>' + categoryName + '</div>')
-
-                }
 
             });
             

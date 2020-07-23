@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Bit 155 Final Project</title>
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/kanban.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+<div th:replace="common/scriptA :: scriptA"></div> 
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+       
+       	<div class="preloader">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
+	
+     <th:block th:replace="common/header :: header"></th:block>
+     <th:block th:replace="common/aside :: aside"></th:block>
+     <th:block th:replace="common/addAllBoardModal"></th:block>
+     <th:block th:replace="common/chat"></th:block>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	<div class="page-wrapper">
+	    <!-- ============================================================== -->
+	    <!-- Container fluid  -->
+	    <!-- ============================================================== -->
+	    <div class="container-fluid">
+	        <!-- ============================================================== -->
+	        <!-- Start Page Content -->
+	        <!-- ============================================================== -->
+	        <div class="row">
+	            <div class="col-md-12">
+	                <div class="card">
+	                    <div class="card-body">
+	                    
+	                        <div class="alert alert-primary bg-white text-primary row" role="alert" th:each="timeline :  ${timelineList}">
+	                            <div class="col-md-1">
+	                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="50">
+	                            </div>
+	                            <div class="col-md-10">
+	                                <h3><b th:text="${timeline.nickname}"></b></h3>
+	                                <b><u><a href="javascript:void(0);" th:text="${timeline.columnName}"></a></u></b>에 
+	                                <b><u><a href="javascript:void(0);" th:text="${timeline.history}"></a></u></b>를 추가했습니다.
+	                            </div>
+	                            <div class="col-md-1">
+	                                <p class="text-muted font-10 mb-2 mt-3">
+	                                    1시간 전
+	                                </p>
+	                            </div>
+	                        </div>
+	
+	                    </div> <!-- end card-body-->
+	                </div> <!-- end card-->
+	            </div> <!-- end col-->
+	
+	        </div>
+	        <!-- end row -->
+	        <!-- ============================================================== -->
+	        <!-- End PAge Content -->
+	        <!-- ============================================================== -->
+	    </div>
+	    <!-- ============================================================== -->
+	    <!-- End Container fluid  -->
+	    <!-- ============================================================== -->
+	</div>
+    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+    </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+<div th:replace="common/scriptB :: scriptB"></div> 
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			var bgColor = [[${team.backgroundColor}]];
+			if(bgColor != 'ffffff') {
+				$('.page-wrapper').css("background", "#"+bgColor);
+			}
+			var currUserNickname = [[${session.currentUser.nickname}]];
+			var currUserImage = [[${session.currentUser.image}]];
+			var teamNo = [[${team.teamNo}]];
+			var teamMember = [[${teamMember}]];
+		/*]]>*/
+	</script>
+</body>
+</html>

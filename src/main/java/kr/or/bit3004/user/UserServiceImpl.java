@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		//사진 설정을 한 경우 
 		if(user.getFile().getSize() > 0) {
 
-			String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\userImage";
+			String path = System.getProperty("user.dir") + "/src/main/resources/static/assets/images/userImage";
 			
-			String fpath = path + "\\" + fileName;
+			String fpath = path + "/" + fileName;
 			System.out.println(fpath);
 			
 			FileOutputStream fs = null;
@@ -92,8 +92,13 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			dao.updateUserExceptImage(user);
 			
 		}
+		
+		SessionUser beforeEdit = (SessionUser)session.getAttribute("currentUser");
 
-		User currentUser = dao.getUser(user.getId());
+
+		SessionUser currentUser = new SessionUser(dao.getUser(user.getId()));
+		currentUser.setTeamNo(beforeEdit.getTeamNo());
+		currentUser.setIsTeamLeader(beforeEdit.getIsTeamLeader());
 		
 		session.setAttribute("currentUser", currentUser);
 		

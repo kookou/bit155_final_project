@@ -4,25 +4,48 @@
 <mapper namespace="kr.or.bit3004.dao.CalendarDao">
 	<select id="showCalendar" resultType="kr.or.bit3004.calendar.Calendar">
 		SELECT
-			name,start,end,color,description
+			no,title,start,end,color,description,id,allDay
 		FROM
-			plan
-	<!-- 	ORDER BY
-			num
-		DESC -->
+			plan where team_no = #{teamNo}
 	</select>
+	
 	<insert id="addPlan" parameterType="kr.or.bit3004.calendar.Calendar">
 		INSERT INTO PLAN (
-				NAME,
+				title,
 				START,
 				END,
 				COLOR,
 				DESCRIPTION,
 				TEAM_NO,
-				ID
+				ID,
+				ALLDAY
 				)
 		VALUES
-			(#{title},'2020-07-21 10:53:00.0','2020-07-22 10:53:00.0',#{color},#{description},2,'z@z.com')
+			(#{title},#{start},#{end},#{color},#{description},#{teamNo},#{id},#{allDay})
 		
 	</insert>
+	<update id="updatePlan" parameterType="kr.or.bit3004.calendar.Calendar">
+			update  PLAN set
+				title = #{title},
+				START =#{start},
+				END = #{end},
+				COLOR = #{color},
+				DESCRIPTION = #{description},
+				TEAM_NO = #{teamNo},
+				ID = #{id},
+				ALLDAY = #{allDay}
+				where no = #{no}
+	</update>
+	
+	<update id="updatePlanDrag" parameterType="kr.or.bit3004.calendar.Calendar">
+			update  PLAN set
+				START =#{start},
+				END = #{end}
+				where no = #{no}
+	</update>
+	<delete id="deletePlan">
+		DELETE
+		FROM PLAN
+		WHERE NO = #{no}
+	</delete>
 </mapper>
