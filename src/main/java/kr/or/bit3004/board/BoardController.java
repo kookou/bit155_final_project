@@ -98,8 +98,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-	    
-		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
@@ -114,7 +112,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
@@ -132,7 +129,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		System.out.println(board);
 		service.insertReboard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
@@ -146,7 +142,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -165,7 +160,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-	    
 		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
@@ -178,7 +172,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}

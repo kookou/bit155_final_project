@@ -134,6 +134,9 @@
 	                                         			<i class="fas fa-paperclip"></i>
 		                                         	</span>
 		                                         	<!-- 첨부한 이미지가 존재하는경우 -->
+		                                         	<span th:if="${board.content.contains('img src')}">
+	                                         			<i class="far fa-file-image"></i>
+		                                         	</span>
 		                                         </td>
 		                                         <!-- 작성자 -->
 		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
