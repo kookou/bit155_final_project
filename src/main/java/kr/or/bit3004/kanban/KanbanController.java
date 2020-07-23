@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import kr.or.bit3004.aside.AsideService;
+import kr.or.bit3004.user.SessionUser;
 
 @Controller
 public class KanbanController {
@@ -24,7 +26,11 @@ public class KanbanController {
 	private AsideService asideService;
 	
 	@RequestMapping("/kanban.do")
-	public String kanbanList(int teamNo ,int allBoardListNo, Model model) {
+	public String kanbanList(HttpSession session, int allBoardListNo, Model model) {
+		
+		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+		int teamNo = currentUser.getTeamNo();		
+		
 		List<KanbanCard> kanbancardlist = new ArrayList<>();
 		List<KanbanList> kanbanlist = new ArrayList<>();
 
