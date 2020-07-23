@@ -65,9 +65,14 @@ public class UserController {
 	
 	//회원 수정 폼
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
-	public String editUserInfo(HttpSession session, Model model) {		
+	public String editUserInfo(HttpSession session, Model model) {
+
+		System.out.println(" GET ");
 		
 		System.out.println("editUserInfo");
+		
+		System.out.println(session.getAttribute("currentUser").getClass().getName());
+		
 		
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 		int teamNo = currentUser.getTeamNo();
@@ -88,13 +93,15 @@ public class UserController {
 	//회원 수정 처리
 	@RequestMapping(value="/edituser", method=RequestMethod.POST)
 	public String editUserInfo(User user, HttpServletRequest request, HttpSession session) {
+		System.out.println(" POST ");
+		
 		System.out.println("===controller===");
 		System.out.println(user);
 		
 		service.updateUser(user, session);
 
 		
-		return "redirect:edituser?teamNo=";
+		return "redirect:edituser";
 	}
 	
 	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다

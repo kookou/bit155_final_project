@@ -92,8 +92,13 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			dao.updateUserExceptImage(user);
 			
 		}
+		
+		SessionUser beforeEdit = (SessionUser)session.getAttribute("currentUser");
 
-		User currentUser = dao.getUser(user.getId());
+
+		SessionUser currentUser = new SessionUser(dao.getUser(user.getId()));
+		currentUser.setTeamNo(beforeEdit.getTeamNo());
+		currentUser.setIsTeamLeader(beforeEdit.getIsTeamLeader());
 		
 		session.setAttribute("currentUser", currentUser);
 		
