@@ -115,8 +115,8 @@
 	       	lang : "ko-KR",               		 // 한글 설정
 	       	placeholder : '내용을 입력하세요.',   	 // placeholder 설정
 	       	callbacks : {						 //여기 부분이 이미지를 첨부하는 부분
-     			onImageUpload : function(files) {
-    				uploadSummernoteImageFile(files[0],this);
+	       		onImageUpload : function(files) {
+	       			uploadSummernoteImageFile(files[0],this);
 				}
 			} 
 	  	});
@@ -141,7 +141,12 @@
  				processData : false,
  				success : function(data){
  					//항상 업로드된 파일의 url이 있어야 한다.
+ 					console.log(data)
  					$(editor).summernote('insertImage', data.url);
+ 				},
+ 				error: function(e) {
+ 					console.log("에러");
+ 					console.log(e);
  				}
  			});
  		}

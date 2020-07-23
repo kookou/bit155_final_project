@@ -184,7 +184,7 @@ public class BoardController {
 	}
 	
 	//썸머노트 이미지 업로드
- 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+ 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json", method = RequestMethod.POST)
 	@ResponseBody
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
@@ -206,6 +206,7 @@ public class BoardController {
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
+		System.out.println("되는거니? : " + jsonObject);
 		return jsonObject;
 	}
 	
