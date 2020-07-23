@@ -27,6 +27,7 @@ CREATE TABLE `BOARD_LIST` (
 	`REFER`             INT          NULL default 0,  -- 그룹번호
 	`DEPTH`             INT          NULL default 0,  -- 들여쓰기
 	`STEP`              INT          NULL default 0,  -- 답변정렬
+    `BOARD_NOTI`        VARCHAR(2)   NULL,            -- 공지사항 여부
 	`ALL_BOARD_LIST_NO` INT          NULL,            -- 게시판식별번호
 	`ID`                VARCHAR(50)  NULL             -- 아이디
 );
@@ -241,11 +242,11 @@ ALTER TABLE `ALL_BOARD_LIST` modify `ALL_BOARD_LIST_NO` INT auto_increment;
 
 -- 투두리스트내용
 CREATE TABLE `TODO_CONTENT` (
-	`TODO_CONTENT_NO` INT         NOT NULL, -- 투두리스트내용식별번호
-	`CONTENT`         VARCHAR(50) NOT NULL, -- 투두리스트내용
-	`DONE`            VARCHAR(2)  NOT NULL default 'N', -- 완료여부
-	`NO`              INT         NOT NULL, -- 투두리스트목록식별번호
-	`ID`              VARCHAR(50) NOT NULL  -- 아이디
+	`TODO_CONTENT_NO` INT         NOT NULL,         -- 투두리스트내용식별번호
+	`CONTENT`         VARCHAR(50) NOT NULL,         -- 투두리스트내용
+	`STATE`           VARCHAR(20) default 'active', -- 완료여부
+	`NO`              INT         NOT NULL,         -- 투두리스트목록식별번호
+	`ID`              VARCHAR(50) NOT NULL          -- 아이디
 );
 
 -- 투두리스트내용
@@ -279,10 +280,11 @@ ALTER TABLE `TODO_LIST` modify `NO` INT auto_increment;
 -- 일정관리
 CREATE TABLE `PLAN` (
 	`NO`          INT           NOT NULL, -- 일정관리식별번호
-	`NAME`        VARCHAR(100)  DEFAULT NULL, -- 일정이름
+	`TITLE`       VARCHAR(100)  DEFAULT NULL, -- 일정이름
 	`DESCRIPTION` VARCHAR(1000) DEFAULT NULL,     -- 설명
-	`START`       timestamp      DEFAULT NULL, -- 시작
-	`END`         timestamp      DEFAULT NULL, -- 끝
+	`START`       timestamp     DEFAULT NULL, -- 시작
+	`END`         timestamp     DEFAULT NULL, -- 끝
+    `ALLDAY`      VARCHAR(10)   NULL, -- 끝
 	`COLOR`       VARCHAR(50)   DEFAULT NULL,     -- 글자색상
 	`TEAM_NO`     INT           NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)   NOT NULL  -- 아이디
@@ -599,11 +601,3 @@ ALTER TABLE `GROUP_TEAM`
 		REFERENCES `TEAM` ( -- 팀
 			`TEAM_NO` -- 팀식별번호
 		) ON DELETE CASCADE;
-        
-        
- -- 자동 로그인
- CREATE TABLE `PERSISTENT_LOGINS` (	
-	`USERNAME` VARCHAR(64) NOT NULL,
-    `SERIES` VARCHAR(64) PRIMARY KEY,
-    `TOKEN` VARCHAR(64) NOT NULL,
-    `LAST_USED` TIMESTAMP NOT NULL );

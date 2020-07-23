@@ -14,8 +14,8 @@ public class TodoListServiceImpl implements TodoListService {
 	private TodoListDao dao;
 	
 	@Override
-	public List<TodoList> selectTodoList(int teamNo) {
-		return dao.getTodoList(teamNo);
+	public List<TodoList> selectTodoContent(TodoList todoList) {
+		return dao.getTodoContent(todoList);
 	}
 	
 	@Override
@@ -27,4 +27,35 @@ public class TodoListServiceImpl implements TodoListService {
 	public void insertTodoTitle(TodoList todoList) {
 		dao.insertTodoTitle(todoList);
 	}
+	
+	@Override
+	public int getCurrNo() {
+		return dao.getCurrNo();
+	}
+	
+	@Override
+	public void insertTodoContent(TodoList todoList) {
+		dao.insertTodoContent(todoList);
+	}
+	
+	@Override
+	public int getCurrContentNo() {
+		return dao.getCurrContentNo();
+	}
+	
+	@Override
+	public void toggleState(TodoList todoList) {
+		dao.toggleState(todoList);
+	}
+	
+	@Override
+	public void deleteTodoContent(int todoContentNo) {
+		dao.deleteTodoContent(todoContentNo);
+	}
+	
+	@Override
+	public void deleteTodoTitle(int no) {
+		dao.deleteTodoTitle(no);
+	}
+	
 }

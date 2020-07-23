@@ -150,9 +150,15 @@ select no, title, team_no, id
   from todo_list
  where team_no = 1;
  
-select c.todo_content_no, c.content, done, c.`no`, c.id, l.title, l.TEAM_NO
+select c.todo_content_no, c.content, state, c.`no`, c.id, l.title, l.TEAM_NO
   from `todo_content` c 
  right outer join `todo_list` l
 	on c.no = l.no
  where l.TEAM_NO = 1;
- 
+
+select max(`no`) from `TODO_LIST`;
+select max(`todo_content_no`) from `TODO_CONTENT`;
+
+update todo_content set state = 'done' where todo_content_no = 8;
+delete from todo_content where todo_content_no = 15;
+delete from todo_list where `no` = 4;
