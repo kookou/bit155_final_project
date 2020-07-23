@@ -220,11 +220,6 @@
 	    		    	    .catch((ex) => {
 	    		                console.log("ERROR!!!!! : ",ex);
 	    		            });
-	            			/* Swal.fire(
-    							'Deleted!',
-    							'"' + this.title + '" ToDo-List가 삭제되었습니다.',
-    							'success'
-	    					) */
 	    					Swal.fire({
 	    	            		title: '"' + this.title + '"',
 	    	            		text: "ToDo-List가 삭제되었습니다.",
@@ -260,17 +255,7 @@
 	            addTodoTitle() {
 	                this.todoLists.push('todoList');
 	                this.addListBtnisStatusOn = false;
-	            },
-	            /* deleteTitle(todoNo) {
-	            	for(var index in this.$children) {
-	            		if(todoNo == this.$children[index].todoNo) {
-	            			console.log("todoNo: " + todoNo + " / children[index].todoNo : " + this.$children[index].todoNo);
-	            			console.log(index);
-	            			console.log(this.todoLists)
-	            			this.todoLists.splice(1, 1);
-	            		}
-	            	}
-	            } */
+	            }
 	        },
 	        created() {
 	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
