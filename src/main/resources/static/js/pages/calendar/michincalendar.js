@@ -53,7 +53,7 @@ function calDateWhenResize(event) {
 
   if (event.allDay) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
   } else {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
     newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
@@ -78,17 +78,17 @@ function calDateWhenDragnDrop(event) {
   }
 
   //하루짜리 all day
-  if (event.allDay && event.end === event.start) {
+  if (event.allDay && event.end !== null) {
     console.log('1111')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = newDates.startDate;
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
   }
 
-  //2일이상 all day
-  else if (event.allDay && event.end !== null) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
-  }
+//  //2일이상 all day
+//  else if (event.allDay && event.end !== null) {
+//    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+//    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
+//  }
 
   //all day가 아님
   else if (!event.allDay) {
@@ -429,8 +429,8 @@ var newEvent = function (start, end, eventType) {
             //render시 날짜표기수정
             eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
             //DB에 넣을때(선택)
-            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
-
+//            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+            realEndDay = eventData.end
             eventData.allDay = true;
         }else{
         	realEndDay = eventData.end
