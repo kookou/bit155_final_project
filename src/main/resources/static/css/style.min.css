@@ -10,3 +10,4 @@
 #fixedBtn{cursor:pointer;position:fixed;right:170px;top:10px;z-index:1000}
 .iconStyle{color:silver;}.iconStyle:hover{color:gray;} 
 #teaminfo-nav{padding:12px 30px;}.invite-button{padding:10px 0;clear:both;}.team-title{font-size:25px;word-wrap:break-word;}#profile-group{padding:10px 0;margin-left:12px;margin-top:10px;}
+.timeline-chart-size{height: 170px; width: 100%;}
