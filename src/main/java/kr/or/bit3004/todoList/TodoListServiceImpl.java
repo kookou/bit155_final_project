@@ -14,8 +14,8 @@ public class TodoListServiceImpl implements TodoListService {
 	private TodoListDao dao;
 	
 	@Override
-	public List<TodoList> selectTodoContent(int teamNo) {
-		return dao.getTodoContent(teamNo);
+	public List<TodoList> selectTodoContent(TodoList todoList) {
+		return dao.getTodoContent(todoList);
 	}
 	
 	@Override

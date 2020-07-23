@@ -280,10 +280,11 @@ ALTER TABLE `TODO_LIST` modify `NO` INT auto_increment;
 -- 일정관리
 CREATE TABLE `PLAN` (
 	`NO`          INT           NOT NULL, -- 일정관리식별번호
-	`NAME`        VARCHAR(100)  DEFAULT NULL, -- 일정이름
+	`TITLE`       VARCHAR(100)  DEFAULT NULL, -- 일정이름
 	`DESCRIPTION` VARCHAR(1000) DEFAULT NULL,     -- 설명
-	`START`       timestamp      DEFAULT NULL, -- 시작
-	`END`         timestamp      DEFAULT NULL, -- 끝
+	`START`       timestamp     DEFAULT NULL, -- 시작
+	`END`         timestamp     DEFAULT NULL, -- 끝
+    `ALLDAY`      VARCHAR(10)   NULL, -- 끝
 	`COLOR`       VARCHAR(50)   DEFAULT NULL,     -- 글자색상
 	`TEAM_NO`     INT           NOT NULL, -- 팀식별번호
 	`ID`          VARCHAR(50)   NOT NULL  -- 아이디

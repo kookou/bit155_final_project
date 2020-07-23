@@ -117,7 +117,7 @@
 	            };
 	        },
 	        created() {
-	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
+	        	/* axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
 	           		this.todoListIndex = 0;
 	            	for(var index in response.data) {
@@ -141,7 +141,28 @@
 			                i++;
 			            });
 	            	}
+	            }); */
+	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
+	            .then((response) => {
+	           		this.todoListIndex = 0;
+	            	for(var index in response.data) {
+		            	this.$root.$children[index].title = response.data[index].title;
+		            	this.$root.$children[index].todoNo = response.data[index].no;
+	            	}
+	            	axios.get('getTodoContent.do?teamNo='+teamNo+'&no='+this.todoNo)
+		            .then((response2) => {
+		                for(var index2 in response2.data) {
+		                	this.todoList.push({
+			                    content: response2.data[index2].content,
+			                    state: response2.data[index2].state,
+			                    contentNo: response2.data[index2].todoContentNo
+			                });
+		                }
+		            });
 	            });
+            	this.todoListIndex = this.todoListIndex++;
+            	this.isStatusOn = false;
+                this.isStatusOff = true;
 	        },
 	        methods: {
 	        	//상태값을 변경할 메소드
