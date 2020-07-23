@@ -47,15 +47,28 @@
 	    </div>
 	</div>
 		
-	<script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		var currUserNickname = [[${session.currentUser.nickname}]];
+		var currUserImage = [[${session.currentUser.image}]];
+		var currUserId = [[${session.currentUser.id}]];
+		var teamNo = [[${session.currentUser.teamNo}]];
+		var teamMember = [[${teamMember}]];
+	/*]]>*/
+	
 	    var todoListComponent = {
 	    		template: `
 		            <div class="col-xl-4">
 		                <div class="card">
 		                    <div class="card-body">
 		                        <input type="text" class="form-control" placeholder="Title 입력 후 Enter" v-model="title" @keyup.enter="addTodoList" v-if="isStatusOn"/>
+		                        <input type="hidden" v-model="todoNo">
 		                        <div v-if="isStatusOff">
-		                            <h4 class="card-title mb-3">{{ title }}</h4>
+		                            <h4 class="card-title mb-3" style="float: left;">{{ title }}</h4>
+			                        <div style="float: right;">
+		                                <a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
+		                                <a href="javascript:void(0);" @click="deleteTitle()"><i class="fas fa-trash-alt iconStyle"></i></a>
+		                            </div>
 		                            <div style="width: 100%;">
 		                                <input type="text" class="form-control" placeholder="할 일을 입력하세요" v-model="userInput" @keyup.enter="addNewTodo"/>
 		                            </div>
@@ -73,13 +86,14 @@
 		                                    <div class="tab-pane show active">
 		                                        <div class="custom-control custom-checkbox">
 		                                            <div style="float: left;">
+		                                            	<input type="hidden" :value="todo.contentNo">
 		                                                <input type="checkbox" class="custom-control-input" :id="todo.content" :value="todo.content" 
 		                                                    @click="toggleTodoState(todo)" :checked="todo.state == 'done' ? true : false">
 		                                                <label class="custom-control-label" :for="todo.content" :style="{color:todo.state == 'done' ? 'lightgray' : '#7c8798'}">{{ todo.content }}</label>
 		                                            </div>
 		                                            <div style="float: right;">
-		                                                <a href="#"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
-		                                                <a href="#"><i class="fas fa-trash-alt iconStyle"></i></a>
+		                                                <a href="javascript:void(0);"><i class="fas fa-pencil-alt iconStyle"></i></a>&nbsp;
+		                                                <a href="javascript:void(0);" @click="deleteContent(todo)"><i class="fas fa-trash-alt iconStyle"></i></a>
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -97,31 +111,32 @@
 	                todoList: [],
 	                currentState: 'all', //출력할 상태값을 가질 변수
 	                isStatusOn: true,
-	                isStatusOff: false
+	                isStatusOff: false,
+	                todoNo: '',
+	                todoListIndex: 0
 	            };
 	        },
 	        created() {
-	        	console.log("Ddd");
-	        	axios.get('getTodoTitle.do?teamNo=1')
+	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
+	           		this.todoListIndex = 0;
 	            	for(var index in response.data) {
-	            		var i = 0;
 		            	this.$root.$children[index].title = response.data[index].title;
+		            	this.$root.$children[index].todoNo = response.data[index].no;
+		            	this.$root.$children[index].todoListIndex = this.todoListIndex++;
 		            	this.$root.$children[index].isStatusOn = false;
 		                this.$root.$children[index].isStatusOff = true;
-		            	axios.get('getTodoContent.do?teamNo=1')
-			            .then((response2) => {
-			                for(var index2 in response2.data) {
-				                if(response.data[i].no == response2.data[index2].no) {
-				                	this.$root.$children[i].todoList.push({
-					                    content: response2.data[index2].content,
-					                    state: 'active'
-					                });
-				                }
-			                }
-			                i++;
-			            });
 	            	}
+	            	axios.get('getTodoContent.do?teamNo='+teamNo+'&no='+this.todoNo)
+		            .then((response2) => {
+		                for(var index2 in response2.data) {
+		                	this.todoList.push({
+			                    content: response2.data[index2].content,
+			                    state: response2.data[index2].state,
+			                    contentNo: response2.data[index2].todoContentNo
+			                });
+		                }
+		            });
 	            });
 	        },
 	        methods: {
@@ -130,32 +145,94 @@
 	                this.currentState = state;
 	            },
 	            addNewTodo() {
-	                this.todoList.push({
-	                    content: this.userInput,
-	                    state: 'active' //완료하지 않은 항목
-	                });
+	            	var content = this.userInput;
+	              	//axios통신으로 todoList Content DB에 insert하기
+		            var params = new URLSearchParams();
+		            params.append('content', this.userInput);
+		            params.append('no', this.todoNo);
+		            params.append('id', currUserId);
+		            axios.post('insertTodoContent.do', params
+		    	    ).then(response => {
+		    	    	console.log(response.data);
+		    	    	this.todoList.push({
+		                    content: content,
+		                    state: 'active', //완료하지 않은 항목
+		                    contentNo: response.data
+		                });
+		            }).catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
 	                this.userInput = '';
 	            },
 	            toggleTodoState(todo) { // 클릭시 상태값을 변경할 함수 //todo parameter는 클릭한 항목을 받을 parameter
 	                //parameter로 받은 todo의 state를 done과 active로 번갈아가며 설정할 수 있도록 함
 	                todo.state = todo.state === 'active' ? 'done' : 'active';
+	              	//axios통신으로 todoList Content 상태값 update
+		            var params = new URLSearchParams();
+		            params.append('state', todo.state);
+		            params.append('todoContentNo', todo.contentNo);
+		            axios.post('toggleState.do', params
+		    	    ).then(response => {
+		                //console.log("투두 컨텐츠 넣기 성공~!");
+		            }).catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
 	            },
 	            addTodoList() {
 	                this.isStatusOn = false;
 	                this.isStatusOff = true;
+	                this.todoListIndex = this.todoListIndex++;
 	                this.$root.addListBtnisStatusOn = true;
-	
 	                //axios통신으로 todoList Title DB에 insert하기
-		            /* var params = new URLSearchParams();
+		            var params = new URLSearchParams();
 		            params.append('title', this.title);
-		            params.append('teamNo', 1);
-		            params.append('id', 'hyerin');
+		            params.append('teamNo', teamNo);
+		            params.append('id', currUserId);
 		            axios.post('insertTodoTitle.do', params
 		    	    ).then(response => {
-		                console.log(response);
+		                this.todoNo = response.data;
 		            }).catch((ex) => {
 		                console.log("ERROR!!!!! : ",ex);
-		            }); */
+		            });
+	            },
+	            deleteContent(todo) {
+	            	//todoList Content 삭제하기
+		            var params = new URLSearchParams();
+		            params.append('todoContentNo', todo.contentNo);
+		            axios.post('deleteTodoContent.do', params
+		    	    ).then(response => {})
+		    	    .catch((ex) => {
+		                console.log("ERROR!!!!! : ",ex);
+		            });
+	            	this.todoList.splice(this.todoList.indexOf(todo), 1);
+	            },
+	            deleteTitle() {
+	            	Swal.fire({
+	            		title: '"' + this.title + '" ToDo-List를<br>정말 삭제하시겠습니까?',
+	            		text: "삭제되면 데이터를 복구할 수 없습니다!",
+	            		icon: 'warning',
+	            		showCancelButton: true,
+	            		confirmButtonText: 'Yes, delete it!',
+	            		cancelButtonText: 'No, keep it'
+	            	}).then((result) => {
+	            		if (result.value) {
+	            			//todoList Title 삭제하기
+	    		            var params = new URLSearchParams();
+	    		            params.append('no', this.todoNo);
+	    		            axios.post('deleteTodoTitle.do', params
+	    		    	    ).then(response => {})
+	    		    	    .catch((ex) => {
+	    		                console.log("ERROR!!!!! : ",ex);
+	    		            });
+	    		            console.log(this.todoListIndex);
+	    	            	this.$root.todoLists.splice(this.todoListIndex, 1);
+	            			Swal.fire(
+    							'Deleted!',
+    							'"' + this.title + '" ToDo-List가 삭제되었습니다.',
+    							'success'
+	    					)
+	            		}
+	            	});
 	            }
 	        },
 	        // computed에 선언해놓은 것은 내부변수처럼 불러서 사용할 수 있기 때문에 activeTodoList() 이렇게 부르는 것이 아니라 activeTodoList일케 부름..
@@ -184,7 +261,7 @@
 	            }
 	        },
 	        created() {
-	        	axios.get('getTodoTitle.do?teamNo=1')
+	        	axios.get('getTodoTitle.do?teamNo='+teamNo)
 	            .then((response) => {
 	            	for(var index in response.data) {
 		            	this.todoLists.push('todoList');
@@ -194,7 +271,6 @@
 	        components: {
 	            'todoList': todoListComponent
 	        }
-	        /* store : store */
 	    });
 		
 	</script>

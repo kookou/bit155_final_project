@@ -10,7 +10,7 @@ import lombok.ToString;
 public class TodoList {
 	private int todoContentNo;
 	private String content;
-	private String done;
+	private String state;
 	private int no;
 	private String id;
 	private String title;
