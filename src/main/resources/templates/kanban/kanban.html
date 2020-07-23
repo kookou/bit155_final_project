@@ -35,7 +35,7 @@
 <div th:replace="common/scriptA :: scriptA"></div> 
 	<div class="drag-container"></div>
 	
-		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
+		<input type=text id="teamNo" th:value="${session.currentUser.teamNo}" hidden/>
 		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
 
 	<div class="preloader">
@@ -299,7 +299,7 @@
     /*<![CDATA[*/
    	var currUserNickname = [[${session.currentUser.nickname}]];
 	var currUserImage = [[${session.currentUser.image}]];
-	var teamNo = [[${team.teamNo}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
 	var teamMember = [[${teamMember}]];
     /*]]>*/
     
