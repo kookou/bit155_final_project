@@ -93,7 +93,7 @@
 	                                                		<i class="far fa-folder" style="cursor: pointer;"></i>
 	                                                		<span th:text="${#lists.size(selectBoardDownloadFile)}"></span>
 	                                                	</a>
-	                                                    <p class="lead" id="summernote" style="clear:both"></p>
+	                                                    <p class="lead" style="clear:both" th:utext="${selectBoard.content}"></p>
 	                                                </div>
 	                                                <hr class="my-4">
 	                                                <!-- 댓글 -->
@@ -158,10 +158,10 @@
 	    	var teamMember = '[[${teamMember}]]';
 		/*]]*/
 		
-		boardContent = boardContent.replace(/&lt;/gi, "<");
+		/* boardContent = boardContent.replace(/&lt;/gi, "<");
 		boardContent = boardContent.replace(/&gt;/gi, ">");
 		console.log(boardContent);
-		$('#summernote').html(boardContent);
+		$('#summernote').html(boardContent); */
 		
 	    //댓글 목록보기
 		$.ajax({
@@ -362,6 +362,15 @@
 	   		console.log('cloud/'+teamNo+'/'+$(this).next().val());
 	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
+	   	
+	   	/* //상세글 내용에 이미지 출력
+	   	$('#summernote .lead').each(function() {
+	   		console.log('cloud/'+summernoteImage+'/'+$(this).next().val());
+	   		$(this).attr('cloud/'+summernoteImage+'/'+$(this).next().val());
+		}); */
+		
+		
+	   	
     </script>
 </body>
 </html>
