@@ -40,12 +40,26 @@
 		FROM `BOARD_FILE` AS BF
 			JOIN `ALL_BOARD_LIST` AS AL
 				ON BF.`ALL_BOARD_LIST_NO` = AL.`ALL_BOARD_LIST_NO`
-		WHERE AL.`TEAM_NO` = #{teamNo};
+		WHERE AL.`TEAM_NO` = #{teamNo}
 	</select>
 	
 	
-	
-	
+	<select id="countTodaysNewPosts" resultType="kr.or.bit3004.timeline.ChartData">
+		select 'Kanban Cards' AS `LABEL`, count(*) AS `VALUE`
+		from kanban_card as kc
+			join kanban_list as kl on kc.KANBAN_LIST_NO = kl.KANBAN_LIST_NO
+		    join all_board_list as al on kl.ALL_BOARD_LIST_NO = al.ALL_BOARD_LIST_NO
+		where write_date >= curdate()
+			 and team_no = #{teamNo}
+		UNION     
+		select 'Boards' AS `LABEL`, count(*) AS `VALUE`
+		from BOARD_LIST AS BL
+			JOIN ALL_BOARD_LIST AS AL
+				ON BL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
+		WHERE WRITE_DATE >= CURDATE()
+			AND TEAM_NO = #{teamNo}
+	</select>
+		
 	<select id="countTodaysNewKanbanCards" resultType="int">
 		select count(*)
 		from kanban_card as kc
@@ -62,6 +76,20 @@
 				ON BL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
 		WHERE WRITE_DATE >= CURDATE()
 			AND TEAM_NO = #{teamNo}	
+	</select>
+	
+	<select id="getTodoCountByState" resultType="kr.or.bit3004.timeline.ChartData">
+		select 'All Todo' AS `LABEL`, count(*) AS `VALUE`
+		FROM `TODO_CONTENT` AS TC
+			JOIN `TODO_LIST` AS TL
+				ON TC.NO = TL.NO
+		WHERE `TEAM_NO` = #{teamNo}
+		UNION
+		select 'Done Todo' AS `LABEL`, count(*) AS `VALUE`
+		FROM `TODO_CONTENT` AS TC
+			JOIN `TODO_LIST` AS TL
+				ON TC.NO = TL.NO
+		WHERE `STATE` = 'done' AND `TEAM_NO` = #{teamNo}
 	</select>
 	
 	

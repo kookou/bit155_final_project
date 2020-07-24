@@ -36,8 +36,8 @@ public class TimelineController {
 		chartInfo.put("totalPosts", Integer.toString(service.countTotalPosts(teamNo)));
 		chartInfo.put("totalFiles", Integer.toString(service.countTotalUploadFiles(teamNo)));
 //		chartInfo.put("activeRate", value);
-//		chartInfo.put("progress", value);
-//		chartInfo.put("todaysNew", value);
+		chartInfo.put("progress", Integer.toString(service.getProgress(teamNo)));
+		chartInfo.put("todaysNew", service.getTodaysNewPosts(teamNo));
 		
 		model.addAttribute("timelineList", service.getTimeline(teamNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));

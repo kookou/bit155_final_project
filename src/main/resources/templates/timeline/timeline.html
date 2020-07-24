@@ -112,7 +112,6 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Donute Chart</h4>
                                 <h4 class="card-title">회원별 활동 비율</h4>
                                 <div id="morris-donut-chart1" class="timeline-chart-size"></div>
                             </div>
@@ -126,11 +125,10 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Angle offset, readonly</h4>
                                 <h4 class="card-title">프로젝트 진행률</h4>
                                 <div class="text-center pt-3 timeline-chart-size">
                                     <input data-plugin="knob" data-width="140" data-height="140" data-angleOffset="0"
-                                        data-linecap="round" data-fgColor="#6edef4" value="56" 
+                                        data-linecap="round" data-fgColor="#6edef4" th:value="${chartInfo.progress}" 
                                         data-readOnly=true data-thickness=".3" />
                                 </div>
                             </div>
@@ -142,7 +140,6 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Donute Chart</h4>
                                 <h4 class="card-title">당일 신규 게시물 수</h4>
                                 <div id="morris-donut-chart2" class="timeline-chart-size"></div>
                             </div>
@@ -154,8 +151,9 @@
 
                 </div>
 
-			<!-- 값 확인용 임시 input
-	        <input type="text" th:value="${chartInfo}"> -->
+			<!-- 값 확인용 임시 input -->
+	        <input type="text" th:value="${chartInfo}">
+	        <input type="text" th:value="${teamMember}">
 	        
 	        
 	        
@@ -316,10 +314,15 @@
 			var currUserImage = [[${session.currentUser.image}]];
 			var teamNo = [[${session.currentUser.teamNo}]];
 			var teamMember = [[${teamMember}]];
+			var todaysNewData = [[${chartInfo.todaysNew}]];
 		/*]]>*/
 		
 		
         $(function () {
+        	var todaysNewJson = JSON.parse(todaysNewData);
+        	console.log(todaysNewJson);
+        	
+        	
             // knob
             $('[data-plugin="knob"]').knob();
             
@@ -343,19 +346,9 @@
              // Morris donut chart 
             Morris.Donut({
                 element: 'morris-donut-chart2',
-                data: [{
-                    label: "칸반",
-                    value: 12,
-
-                }, {
-                    label: "게시판",
-                    value: 30
-                }, {
-                    label: "to-do list",
-                    value: 20
-                }],
+                data: todaysNewJson,
                 resize: true,
-                colors:['#5f76e8', '#01caf1', '#8fa0f3']
+                colors:['#5f76e8', '#01caf1']
             });
              
              
