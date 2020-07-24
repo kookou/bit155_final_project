@@ -90,7 +90,7 @@ public class BoardServiceImpl implements BoardService{
 				String fileName = uuid.toString() + originFileName;
 				System.out.println(fileName);
 				
-				String path = System.getProperty("user.dir") + "/src/main/resources/static/cloud/" + teamNo; 
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				System.out.println(path);
 				

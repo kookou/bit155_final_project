@@ -10,6 +10,7 @@ import kr.or.bit3004.groupAndTeam.TeamMember;
 public interface TeamMainDao {
 	public List<GroupAndTeam> getGroup(String id);
 	public List<GroupAndTeam> getGroupAndTeam(String id);
+	public List<GroupAndTeam> getTeamMemberList(String id);
 	public int getCurrGroupNo();
 	public void updateGroupName(GroupAndTeam group);
 	public void insertGroup(GroupAndTeam group);
