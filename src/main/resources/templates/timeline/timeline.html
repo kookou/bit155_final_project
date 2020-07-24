@@ -167,41 +167,116 @@
 	        <div class="row">
 	            <div class="col-md-12">
 	                <div class="card">
-	                    <div class="card-body">
+	                    <div class="card-body bg-color">
 	                    
-	                        <div class="alert row" role="alert" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
-	                            <div class="col-md-1">
-	                                <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle" width="50">
-	                            </div>
-	                            <div class="col-md-10" th:switch="${timeline.dmlKind}">
-	                                <div th:case=" 'insert' ">
-		                                <h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
-	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>을(를) 추가했습니다.
-	                                </div>
-	                                <div th:case=" 'update' " >
-	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>의
-	                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
-	                                	<b><a href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a></b>(으)로 수정했습니다.
-	                                </div>
-	                                <div th:case=" 'delete' ">
-	                                	<h3><b th:text="${timeline.nickname}"></b></h3>
-	                                	<b><a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a></b>에
-	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
-	                                </div>
-	                                <div th:case=" 'join team' ">
-	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에 들어왔습니다.
-	                                </div>
-	                                <div th:case=" 'wthdr team' ">
-	                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
-	                                </div>
-	                            </div>
-	                            <div class="col-md-1">
-	                                <p class="text-muted font-10 mb-2 mt-3" th:text="${timeline.historyTime}"></p>
-	                               <!--  ${#temporals.format(timeline.historyTime, 'dd/MM/yyyy')} -->
-	                            </div>
-	                        </div>
+	                        <div class="col-md-12 activity">
+                                <div class="d-flex align-items-start border-left-line pb-3" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
+                                    <div>
+                                        <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
+                                    </div>
+                                    <div class="ml-3 mt-12" th:switch="${timeline.dmlKind}">
+                                        <div th:case=" 'insert' ">
+	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-2 text-muted">
+			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
+			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
+			                                		<span th:case=" 'BOARD_LIST' ">
+				                                		BOARD의 <a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		KANBAN LIST의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+			                                			KANBAN CARD의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+			                                			KANBAN CARD의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'TODO_CONTENT' ">
+			                                			TO-DO LIST의 <a th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'TODO_LIST' ">
+			                                			TO-DO LIST에
+			                                		</span>
+			                                		<span th:case="*">
+			                                			<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                	</b>
+			                                	<b th:switch="${timeline.tableName}">
+			                                		<a th:case=" 'BOARD_LIST' " th:href="@{selectBoard.do(boardNo=${timeline.columnNo},allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'TODO_LIST' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'TODO_CONTENT' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                	</b>을(를) 추가했습니다.
+			                                </p>
+		                                </div>
+		                                <div th:case=" 'update' " >
+	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-2 text-muted">
+			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
+			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
+			                                		<span th:case=" 'BOARD_LIST' ">
+			                                			<a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> BOARD의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		<a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> KANBAN LIST의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+				                                		<a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> KANBAN CARD의
+			                                		</span>
+			                                		<span th:case="*">
+			                                			<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                	</b>
+			                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
+			                                	<b th:switch="${timeline.tableName}">
+			                                		<a th:case=" 'BOARD_LIST' " th:href="@{selectBoard.do(boardNo=${timeline.columnNo},allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                	</b>(으)로 수정했습니다.
+			                                </p>
+		                                </div>
+		                                <div th:case=" 'delete' ">
+	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-2 text-muted">
+			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
+			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
+			                                		<span th:case=" 'BOARD_LIST' ">
+			                                			BOARD <a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		KANBAN LIST <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+				                                		KANBAN CARD <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'TODO_CONTENT' ">
+			                                			TO-DO LIST <a th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'TODO_LIST' ">
+			                                			TO-DO LIST
+			                                		</span>
+			                                		<span th:case="*">
+				                                		<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                	</b>
+			                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
+			                                </p>
+		                                </div>
+		                                <div th:case=" 'join team' ">
+		                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에 들어왔습니다.
+		                                </div>
+		                                <div th:case=" 'wthdr team' ">
+		                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
+		                                </div>
+                                    	<span class="font-weight-light font-14 text-muted text-right" th:text="${timeline.historyTime}"></span>
+                                    </div>
+                                </div>
+                            </div>
+	                        
 	
 	                    </div> <!-- end card-body-->
 	                </div> <!-- end card-->
@@ -239,22 +314,7 @@
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];
 			if(bgColor != 'ffffff') {
-				$('.alert').css("background", "#"+bgColor);
-			}
-			if(bgColor == 'd0e1f5') {
-				$('.alert').attr('class', 'alert row alert-primary text-primary');
-			}
-			if(bgColor == 'c0e4da') {
-				$('.alert').attr('class', 'alert row alert-success');
-			}
-			if(bgColor == 'fee993') {
-				$('.alert').attr('class', 'alert row alert-warning');
-			}
-			if(bgColor == 'fac8bf') {
-				$('.alert').attr('class', 'alert row alert-danger');
-			}
-			if(bgColor == 'fedcc1') {
-				$('.alert').attr('class', 'alert row alert-warning');
+				$('.bg-color').css("background", "#"+bgColor);
 			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];

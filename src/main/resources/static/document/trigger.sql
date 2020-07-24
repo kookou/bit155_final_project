@@ -213,6 +213,7 @@ BEGIN
     	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`BOARD_NO`,
+        `ALL_BOARD_NO` = NEW.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = NEW.`TITLE`,
 		`DML_KIND` = 'insert',
         `HISTORY_TIME` = now(),
@@ -239,6 +240,7 @@ BEGIN
     	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name1,
 		`COLUMN_NO` = OLD.`BOARD_NO`,
+        `ALL_BOARD_NO` = OLD.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = OLD.`TITLE`,
 		`DML_KIND` = 'delete',
         `HISTORY_TIME` = now(),
@@ -266,6 +268,7 @@ BEGIN
     	`TABLE_NAME` = 'BOARD_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`BOARD_NO`,
+        `ALL_BOARD_NO` = OLD.`ALL_BOARD_LIST_NO`,
         `OLD_HISTORY` = OLD.`TITLE`,
 		`HISTORY` = NEW.`TITLE`,
 		`DML_KIND` = 'update',
@@ -295,6 +298,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`KANBAN_LIST_NO`,
+        `ALL_BOARD_NO` = NEW.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = NEW.`LIST_TITLE`,
 		`DML_KIND` = 'insert',
         `HISTORY_TIME` = now(),
@@ -322,6 +326,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = OLD.`KANBAN_LIST_NO`,
+        `ALL_BOARD_NO` = OLD.`ALL_BOARD_LIST_NO`,
 		`HISTORY` = OLD.`LIST_TITLE`,
 		`DML_KIND` = 'delete',
         `HISTORY_TIME` = now(),
@@ -349,6 +354,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_LIST',
 		`COLUMN_NAME` = board_name,
 		`COLUMN_NO` = NEW.`KANBAN_LIST_NO`,
+        `ALL_BOARD_NO` = OLD.`ALL_BOARD_LIST_NO`,
         `OLD_HISTORY` = OLD.`LIST_TITLE`,
 		`HISTORY` = NEW.`LIST_TITLE`,
 		`DML_KIND` = 'update',
@@ -368,7 +374,8 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
     DECLARE id1 varchar(50);
-	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+    DECLARE all_board_list_no1 varchar(50);
+	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -380,6 +387,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_CARD',
 		`COLUMN_NAME` = kanban_list_name,
 		`COLUMN_NO` = NEW.`CARD_NO`,
+        `ALL_BOARD_NO` = all_board_list_no1,
 		`HISTORY` = NEW.`TITLE`,
 		`DML_KIND` = 'insert',
         `HISTORY_TIME` = now(),
@@ -397,7 +405,8 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
 	DECLARE id1 varchar(50);
-	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+    DECLARE all_board_list_no1 varchar(50);
+	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -409,6 +418,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_CARD',
 		`COLUMN_NAME` = kanban_list_name,
 		`COLUMN_NO` = NEW.`CARD_NO`,
+        `ALL_BOARD_NO` = all_board_list_no1,
         `OLD_HISTORY` = OLD.`TITLE`,
 		`HISTORY` = NEW.`TITLE`,
 		`DML_KIND` = 'update',
@@ -427,7 +437,8 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
 	DECLARE id1 varchar(50);
-	select `list_title`, `team_no`, l.`id` into kanban_list_name, team_no1, id1
+    DECLARE all_board_list_no1 varchar(50);
+	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -439,6 +450,7 @@ BEGIN
     	`TABLE_NAME` = 'KANBAN_CARD',
 		`COLUMN_NAME` = kanban_list_name,
 		`COLUMN_NO` = OLD.`KANBAN_LIST_NO`,
+        `ALL_BOARD_NO` = all_board_list_no1,
 		`HISTORY` = OLD.`TITLE`,
 		`DML_KIND` = 'delete',
         `HISTORY_TIME` = now(),
@@ -542,6 +554,117 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- ------------------- TODO_LIST
+-- 투두리스트 insert시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_TODOLIST_TRIGGER`
+AFTER INSERT ON `TODO_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'TODO_LIST',
+		`COLUMN_NAME` = NEW.`TITLE`,
+		`COLUMN_NO` = NEW.`NO`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = NEW.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- TODOLIST delete시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_TODOLIST_TRIGGER`
+before delete ON `TODO_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'TODO_LIST',
+		`COLUMN_NAME` = OLD.`TITLE`,
+		`COLUMN_NO` = OLD.`NO`,
+		`HISTORY` = OLD.`TITLE`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = OLD.`TEAM_NO`,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
+
+-- TODOLIST update시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_UPDATE_TODOLIST_TRIGGER`
+AFTER update ON `TODO_LIST`
+FOR EACH ROW 
+BEGIN
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'KANBAN_LIST',
+		`COLUMN_NAME` = NEW.`TITLE`,
+		`COLUMN_NO` = NEW.`NO`,
+        `OLD_HISTORY` = OLD.`TITLE`,
+		`HISTORY` = NEW.`TITLE`,
+		`DML_KIND` = 'update',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = NEW.`TEAM_NO`,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- ------------------- KANBAN_CARD
+-- TODOCONTENT insert시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_INSERT_TODOCONTENT_TRIGGER`
+AFTER INSERT ON `TODO_CONTENT`
+FOR EACH ROW 
+BEGIN
+	DECLARE todo_list_title varchar(50);
+    DECLARE team_no1 int;
+	select title, team_no into todo_list_title, team_no1
+	  from todo_content c
+	  join todo_list l
+		on c.no = l.no
+	 where todo_content_no = NEW.todo_content_no;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'TODO_CONTENT',
+		`COLUMN_NAME` = todo_list_title,
+		`COLUMN_NO` = NEW.`todo_content_no`,
+		`HISTORY` = NEW.`content`,
+		`DML_KIND` = 'insert',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = NEW.`ID`;
+END $$
+DELIMITER ;
+
+-- TODOCONTENT delete시 타임라인 테이블에 로그입력하기
+DELIMITER $$
+CREATE TRIGGER `TIMELINE_DELETE_TODOCONTENT_TRIGGER`
+before delete ON `TODO_CONTENT`
+FOR EACH ROW 
+BEGIN
+	DECLARE todo_list_title varchar(50);
+    DECLARE team_no1 int;
+	select title, team_no into todo_list_title, team_no1
+	  from todo_content c
+	  join todo_list l
+		on c.no = l.no
+	 where todo_content_no = OLD.todo_content_no;
+	INSERT INTO `TIMELINE`
+	SET
+    	`TABLE_NAME` = 'TODO_CONTENT',
+		`COLUMN_NAME` = todo_list_title,
+		`COLUMN_NO` = OLD.`todo_content_no`,
+		`HISTORY` = OLD.`content`,
+		`DML_KIND` = 'delete',
+        `HISTORY_TIME` = now(),
+		`TEAM_NO` = team_no1,
+		`ID` = OLD.`ID`;
+END $$
+DELIMITER ;
 
 -- 트리거가 만들어졌는지 확인
 SHOW TRIGGERS;

@@ -15,6 +15,9 @@
     <link href="css/kanban.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
+    .page-wrapper{
+    	box-shadow: none;
+    }
     	.teamBtn, .newTeamBtn {
     		cursor:pointer;
     	}
@@ -38,7 +41,7 @@
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
-	<th:block th:replace="common/header :: header"></th:block>
+	<th:block th:replace="common/header_teammain :: header_teammain"></th:block>
     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 	<div class="page-wrapper">
        	<div class="container-fluid" id="outer">

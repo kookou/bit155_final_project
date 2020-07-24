@@ -21,4 +21,5 @@ public class Timeline {
 	private String dmlName;
 	private String nickname;
 	private String image;
+	private int allBoardNo;
 }

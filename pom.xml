@@ -29,6 +29,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
+		<!-- mail -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -37,6 +39,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+		
+		
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -95,15 +100,17 @@
 			<scope>test</scope>
 		</dependency>
 
+	<!-- 클라우드  Error creating bean with name 오류날때 이거 주석.-->
 		<!-- @ConfigurationProperties 을 사용할 때는 spring-boot-configuration-processor를 
 			클래스패스에 설정하는 것을 권장 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
+		</dependency> 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
-
-		<!-- 클라우드 Error creating bean with name 오류날때 이거 주석. <dependency> <groupId>org.springframework.cloud</groupId> 
-			<artifactId>spring-cloud-gcp-starter-storage</artifactId> </dependency> -->
 
 		<!-- thymeleaf -->
 		<dependency>
@@ -134,11 +141,22 @@
     		<artifactId>commons-io</artifactId>
     		<version>2.6</version>
 		</dependency>
+		<!-- file 400error때문에넣은거 -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<version>9.0.16</version>
+		</dependency>
+		
 		
 		<!-- gson -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 	</dependencies>
 
