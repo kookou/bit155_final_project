@@ -174,10 +174,10 @@
                                     <div>
                                         <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
                                     </div>
-                                    <div class="ml-3 mt-12" th:switch="${timeline.dmlKind}">
+                                    <div class="ml-3 mt-12"  th:switch="${timeline.dmlKind}">
                                         <div th:case=" 'insert' ">
-	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-2 text-muted">
+	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-0 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -213,8 +213,8 @@
 			                                </p>
 		                                </div>
 		                                <div th:case=" 'update' " >
-	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-2 text-muted">
+	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-0 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -240,8 +240,8 @@
 			                                </p>
 		                                </div>
 		                                <div th:case=" 'delete' ">
-	                                        <h5 class="text-dark font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-2 text-muted">
+	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
+	                                        <p class="font-14 mb-0 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -272,7 +272,7 @@
 		                                <div th:case=" 'wthdr team' ">
 		                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
 		                                </div>
-                                    	<span class="font-weight-light font-14 text-muted text-right" th:text="${timeline.historyTime}"></span>
+                                    	<span class="font-weight-light font-14 text-muted timeBefore"></span>
                                     </div>
                                 </div>
                             </div>
@@ -316,12 +316,62 @@
 			if(bgColor != 'ffffff') {
 				$('.bg-color').css("background", "#"+bgColor);
 			}
+			if(bgColor == 'fdc16a' || bgColor == 'e8eaec' || bgColor == '#ffffff') {
+				$('.bg-color').css("color", 'black');
+			} else {
+				$('.bg-color').css("color", '#fff');
+			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];
 			var teamNo = [[${session.currentUser.teamNo}]];
 			var teamMember = [[${teamMember}]];
+			var timelineList = [[${timelineList}]];
 		/*]]>*/
 		
+	  //현재시간
+	  var now = new Date();
+	  var text = ',';
+	  for(let timeline in timelineList) {
+		  //글쓴 시간
+		  var writeDay = new Date(timelineList[timeline].historyTime);
+		  var minus;
+		  if (now.getFullYear() > writeDay.getFullYear()) {
+		    minus = now.getFullYear() - writeDay.getFullYear();
+		    text += minus + "년 전,";
+		  } else if (now.getMonth() > writeDay.getMonth()) {
+		    minus = now.getMonth() - writeDay.getMonth();
+		    text += minus + "달 전,";
+		  } else if (now.getDate() > writeDay.getDate()) {
+		    minus = now.getDate() - writeDay.getDate();
+		    text += minus + "일 전,";
+		  } else if (now.getDate() == writeDay.getDate()) {
+		    var nowTime = now.getTime();
+		    var writeTime = writeDay.getTime();
+		    if (nowTime > writeTime) {
+		      sec = parseInt(nowTime - writeTime) / 1000;
+		      day = parseInt(sec / 60 / 60 / 24);
+		      sec = sec - day * 60 * 60 * 24;
+		      hour = parseInt(sec / 60 / 60);
+		      sec = sec - hour * 60 * 60;
+		      min = parseInt(sec / 60);
+		      sec = parseInt(sec - min * 60);
+		      if (hour > 0) {
+		    	  text += hour + "시간 전,";
+		      } else if (min > 0) {
+		    	  text += min + "분 전,";
+		      } else if (sec > 0) {
+		    	  text += sec + "초 전,";
+		      }
+		    }
+		  }
+	  }
+		$('.timeBefore').each(function(index, ele) {
+			let timeArr = text.split(',');
+			$(this).text(timeArr[index+1]);
+			console.log(timeArr[index+1]);
+			console.log(index+1);
+		});
+		  
 		
         $(function () {
             // knob

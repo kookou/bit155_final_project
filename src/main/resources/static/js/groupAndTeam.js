@@ -4,6 +4,17 @@ $('#outer').on('click', '.teamBtn', function() {
 	location.href = 'timeLine.do?teamNo=' + $(this).attr('data-teamNo');
 });
 
+//카드 배경색에 따라 글씨색상 바꾸기
+$('.card').each(function(index, ele) {
+	let bgColor = $(this).css('backgroundColor');
+	if(bgColor == 'rgb(253, 193, 106)' || bgColor == 'rgb(232, 234, 236)' || bgColor == 'rgb(255, 255, 255)') {
+		$(this).find('h4').css('color', 'black');
+	} else {
+		$(this).find('h4').css('color', '#fff');
+	}
+});
+
+
 //그룹 만들 때 
 var inputGroupNameHtml =
 	'<div class="row" id="inputGroupNameDiv">' + 
