@@ -180,13 +180,34 @@
 	                                        <p class="font-14 mb-2 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
-			                                		<a th:case=" 'BOARD_LIST' " th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                	</b>에
+			                                		<span th:case=" 'BOARD_LIST' ">
+				                                		BOARD의 <a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		KANBAN LIST의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+			                                			KANBAN CARD의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+			                                			KANBAN CARD의 <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'TODO_CONTENT' ">
+			                                			TO-DO LIST의 <a th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                		<span th:case=" 'TODO_LIST' ">
+			                                			TO-DO LIST에
+			                                		</span>
+			                                		<span th:case="*">
+			                                			<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>에
+			                                		</span>
+			                                	</b>
 			                                	<b th:switch="${timeline.tableName}">
 			                                		<a th:case=" 'BOARD_LIST' " th:href="@{selectBoard.do(boardNo=${timeline.columnNo},allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'TODO_LIST' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'TODO_CONTENT' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                	</b>을(를) 추가했습니다.
 			                                </p>
@@ -196,14 +217,24 @@
 	                                        <p class="font-14 mb-2 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
-			                                		<a th:case=" 'BOARD_LIST' " th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                	</b>의
+			                                		<span th:case=" 'BOARD_LIST' ">
+			                                			<a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> BOARD의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		<a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> KANBAN LIST의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+				                                		<a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a> KANBAN CARD의
+			                                		</span>
+			                                		<span th:case="*">
+			                                			<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                	</b>
 			                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
 			                                	<b th:switch="${timeline.tableName}">
 			                                		<a th:case=" 'BOARD_LIST' " th:href="@{selectBoard.do(boardNo=${timeline.columnNo},allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                	</b>(으)로 수정했습니다.
 			                                </p>
@@ -213,10 +244,25 @@
 	                                        <p class="font-14 mb-2 text-muted">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
-			                                		<a th:case=" 'BOARD_LIST' " th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>
-			                                	</b>에
+			                                		<span th:case=" 'BOARD_LIST' ">
+			                                			BOARD <a th:href="@{boardList.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_LIST' ">
+				                                		KANBAN LIST <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'KANBAN_CARD' ">
+				                                		KANBAN CARD <a th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'TODO_CONTENT' ">
+			                                			TO-DO LIST <a th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                		<span th:case=" 'TODO_LIST' ">
+			                                			TO-DO LIST
+			                                		</span>
+			                                		<span th:case="*">
+				                                		<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
+			                                		</span>
+			                                	</b>
 			                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
 			                                </p>
 		                                </div>

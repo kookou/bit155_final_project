@@ -162,3 +162,7 @@ select max(`todo_content_no`) from `TODO_CONTENT`;
 update todo_content set state = 'done' where todo_content_no = 8;
 delete from todo_content where todo_content_no = 15;
 delete from todo_list where `no` = 4;
+
+select * from timeline;
+select * from board_list;
+delete from timeline;
