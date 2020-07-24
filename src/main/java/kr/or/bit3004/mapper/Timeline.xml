@@ -11,15 +11,48 @@
 		 order by `timeline_no` desc
 	</select>
 	
-	<select id="countTodaysNewKanbanCards" resultType="int">
+	<select id="countTotalTodos" resultType="int">
 		SELECT COUNT(*)
-		FROM KANBAN_CARD AS KC
-			JOIN KANBAN LIST AS KL
-				ON KC.KANBAN_LIST_NO = KL.KANBAN_LIST_NO
-			JOIN ALL_BAORD_LIST AS AL
-				ON KL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
-		WHERE WRITE_DATE >= CURDATE()
-			AND TEAM_NO = #{teamNo}	
+		FROM `TODO_CONTENT` AS TC
+			JOIN `TODO_LIST` AS TL
+				ON TC.NO = TL.NO
+		WHERE `TEAM_NO` = #{teamNo};
+	</select>
+	
+	<select id="countTotalKanbanCards" resultType="int">
+		select count(*)
+		from kanban_card as kc
+			join kanban_list as kl on kc.KANBAN_LIST_NO = kl.KANBAN_LIST_NO
+		    join all_board_list as al on kl.ALL_BOARD_LIST_NO = al.ALL_BOARD_LIST_NO
+		where team_no = #{teamNo};
+	</select>
+	
+	<select id="countTotalBoards" resultType="int">
+		SELECT COUNT(*)
+		from BOARD_LIST AS BL
+			JOIN ALL_BOARD_LIST AS AL
+				ON BL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
+		WHERE TEAM_NO = ${teamNo};
+	</select>
+	
+	<select id="countTotalUploadFiles" resultType="int">
+		SELECT COUNT(*)
+		FROM `BOARD_FILE` AS BF
+			JOIN `ALL_BOARD_LIST` AS AL
+				ON BF.`ALL_BOARD_LIST_NO` = AL.`ALL_BOARD_LIST_NO`
+		WHERE AL.`TEAM_NO` = #{teamNo};
+	</select>
+	
+	
+	
+	
+	<select id="countTodaysNewKanbanCards" resultType="int">
+		select count(*)
+		from kanban_card as kc
+			join kanban_list as kl on kc.KANBAN_LIST_NO = kl.KANBAN_LIST_NO
+		    join all_board_list as al on kl.ALL_BOARD_LIST_NO = al.ALL_BOARD_LIST_NO
+		where write_date >= curdate()
+			 and team_no = #{teamNo};
 	</select>
 	
 	<select id="countTodaysNewBoards" resultType="int">
