@@ -30,6 +30,11 @@ public class TeamMainServiceImpl implements TeamMainService {
 	}
 	
 	@Override
+	public List<GroupAndTeam> getTeamMemberList(String id) {
+		return dao.getTeamMemberList(id);
+	}
+	
+	@Override
 	public int getCurrGroupNo() {
 		return dao.getCurrGroupNo();
 	}

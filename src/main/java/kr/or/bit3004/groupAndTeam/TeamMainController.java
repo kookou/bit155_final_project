@@ -26,6 +26,7 @@ public class TeamMainController {
 		
 		model.addAttribute("groupAndTeam", service.selectGroupAndTeam(id));
 		model.addAttribute("group", service.selectGroupName(id));
+		model.addAttribute("teamMemberList", service.getTeamMemberList(id));
 		return "teamMain/groupAndTeamMain";
 	}
 	
