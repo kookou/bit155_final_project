@@ -2,6 +2,8 @@ package kr.or.bit3004.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface BoardService {
@@ -12,7 +14,7 @@ public interface BoardService {
 	public Board selectBoardByBoardNo(int boardNo);
 	
 	//게시판 조회수 증가
-	public void updateReadCount(int boardNo);
+	public void updateReadCount(int boardNo, HttpServletRequest request);
 
 	//게시판 글쓰기
 	public void insertBoard(Board board);

@@ -35,7 +35,7 @@
 <div th:replace="common/scriptA :: scriptA"></div> 
 	<div class="drag-container"></div>
 	
-		<input type=text id="teamNo" th:value="${param.teamNo}" hidden/>
+		<input type=text id="teamNo" th:value="${session.currentUser.teamNo}" hidden/>
 		<input type=text id="allBoardListNo" th:value="${param.allBoardListNo}" hidden/>
 
 	<div class="preloader">
@@ -55,7 +55,6 @@
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<th:block th:replace="common/addAllBoardModal"></th:block>
-		<th:block th:replace="common/chat"></th:block>
 		 
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
@@ -192,12 +191,12 @@
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
-						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name">3004조</h3>
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name"th:text="${team.teamName}"></h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
 									<li class="breadcrumb-item"><i class="fab fa-trello"
-										style="margin-right: 8px;"></i><span>Kanban</span></li>
+										style="margin-right: 8px;"></i><span class="boardName">Kanban</span></li>
 								</ol>
 							</nav>
 						</div>
@@ -297,11 +296,18 @@
 	<div th:replace="common/scriptB :: scriptB"></div> 
 	<script th:inline="javascript">
     /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
    	var currUserNickname = [[${session.currentUser.nickname}]];
 	var currUserImage = [[${session.currentUser.image}]];
-	var teamNo = [[${team.teamNo}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
 	var teamMember = [[${teamMember}]];
     /*]]>*/
+    
+/*    	 var boardname;
+    $(document).on('click', '.board-name', function() {
+      console.log($(this));
+ 
+   }); */
     </script>
 
 

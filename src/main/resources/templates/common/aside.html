@@ -7,7 +7,7 @@
 			<nav class="sidebar-nav">
 				<ul id="sidebarnav">
 					<li class="sidebar-item" id="teaminfo-nav">
-						<a th:href="@{timeLine.do(teamNo=${team.teamNo})}">
+						<a th:href="@{timeLine.do(teamNo=${session.currentUser.teamNo})}">
 							<span class="team-title" th:text="${team.teamName}"></span>
 							<!-- 넘어온 멤버닉네임과 현재 접속한 닉네임이 같고 리더가 Y이면 수정, 삭제 버튼 보이기 -->
 						</a>
@@ -23,8 +23,9 @@
 								style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">
 								<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 
-									<img th:src="'assets/images/userImage/' + ${member.image}" alt="user" 	
-										style="width: auto; height: 70px; transform: translate(-50%, -50%);" 
+									<img th:src="${#strings.startsWith(member.image, 'https')} 
+                               				? ${member.image} : @{assets/images/userImage/}+${member.image}" alt="user" 	
+										style="width: auto; height: 60px; transform: translate(-50%, -50%);" 
 										data-toggle="tooltip" data-placement="top" th:title="${member.id}">
 
 									<input type="hidden" class="hiddenMemberId" th:value="${member.id}">
@@ -68,22 +69,30 @@
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Components</span></li>
 
-					<li class="sidebar-item">
+ 			<li class="sidebar-item">
 						<a class="sidebar-link" th:href="@{cloud.do(teamNo=${team.teamNo})}" aria-expanded="false"> 
 							<i class="fas fa-cloud-download-alt"></i> 
 							<span class="hide-menu">Cloud</span>
 						</a>
-					</li>
+					</li> 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
-							<i class="fas fa-calendar-check"></i> 
-							<span class="hide-menu">Calender</span>
+						<a class="sidebar-link" th:href="@{todoList.do(teamNo=${session.currentUser.teamNo})}" aria-expanded="false">
+							<i class="far fa-edit"></i>
+							<span class="hide-menu">Todo-List</span>
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" th:href="@{paint.do(teamNo=${team.teamNo})}" aria-expanded="false" > 
+						<a class="sidebar-link" th:href="@{calendar.do(teamNo=${session.currentUser.teamNo})}" aria-expanded="false"> 
+							<i class="fas fa-calendar-check"></i> 
+							<span class="hide-menu">Calendar </span>
+						</a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" th:href="@{paint.do(teamNo=${session.currentUser.teamNo})}" aria-expanded="false" > 
 							<i class="fas fa-paint-brush"></i> 
-							<span class="hide-menu">Canvas</span>
+							<span >
+							Canvas
+							</span>
 						</a>
 					</li>
 					<li class="sidebar-item text-right" th:if="${#lists.size(teamMember) == 1}">
@@ -119,7 +128,7 @@
 	    	var currUser = [[${session.currentUser.id}]];
 	    	var currUserNick = [[${session.currentUser.nickname}]];
 	    	var currUserImage = [[${session.currentUser.image}]];
-	    	var teamNo = [[${team.teamNo}]];
+	    	var teamNo = [[${session.currentUser.teamNo}]];
 	    	var teamName = [[${team.teamName}]];
 	    /*]]>*/
 	    </script>

@@ -61,18 +61,20 @@
 	
 	                                <div class="form-body">
 	                                    <div class="row">
-	                                        <div class="col-sm-12 col-md-6">
-	                                            <div class="form-group">
-	                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
-	                                            	<input type="hidden" name="teamNo" th:value="${teamNo}">
-	                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
-	                                            	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
-	                                            </div>
-	                                            <div class="custom-file col-md-12">
+                                            <div class="form-group col-lg-6">
+                                            	<input type="hidden" name="id" th:value="${session.currentUser.id}">
+                                            	<input type="hidden" name="teamNo" th:value="${session.currentUser.teamNo}">
+                                            	<input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
+                                           		<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
+                                            </div>
+                                          		<div class="col-lg-6" style="margin-top:8px;">
+	                                            	<input type="checkbox" name="boardNoti" th:value="Y" id="notice">
+	                                            	<label for="notice">공지사항</label>
+	                                        	</div>
+	                                            <div class="custom-file col-lg-6" style="margin-left:14px;">
 	                                                <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
 	                                                <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
 	                                            </div>
-	                                        </div>
 	                                        <div class="col-md-12">
 	                                            <h4 class="card-title"></h4>
 	                                            <div class="form-group">
@@ -106,13 +108,61 @@
  		
         //summernote
 	  	$('#summernote').summernote({
-	       	height: 300,                 		// 에디터 높이
-	       	minHeight: null,             		// 최소 높이
-	       	maxHeight: null,             		// 최대 높이
-	       	focus: true,                  		// 에디터 로딩후 포커스를 맞출지 여부
-	       	lang: "ko-KR",               		// 한글 설정
-	       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
+	       	height : 300,                 		 // 에디터 높이
+	       	minHeight : null,             		 // 최소 높이
+	       	maxHeight : null,             		 // 최대 높이
+	       	focus : true,                  		 // 에디터 로딩후 포커스를 맞출지 여부
+	       	lang : "ko-KR",               		 // 한글 설정
+	       	placeholder : '내용을 입력하세요.',   	 // placeholder 설정
+		  	toolbar: [							 // summernote 툴바설정변경 및 글꼴추가
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+	       	callbacks : {						 //여기 부분이 이미지를 첨부하는 부분
+	       		onImageUpload : function(files) {
+	       			uploadSummernoteImageFile(files[0],this);
+				}
+			}
 	  	});
+ 		
+ 		//이미지 첨부 드래그 앤 드랍
+ 		$("div.note-editable").on('drop',function(e){
+        	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+   	 			uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+        	}
+        	e.preventDefault();
+	    });
+ 		
+ 		//callback에서 사용하는 onImageUpload.ajax 함수
+ 		function uploadSummernoteImageFile(file, editor){
+ 			data = new FormData();
+ 			data.append("file", file);
+ 			$.ajax({
+ 				data : data,
+ 				type : "POST",
+ 				url : "/uploadSummernoteImageFile",
+ 				contentType : false,
+ 				processData : false,
+ 				success : function(data){
+ 					//항상 업로드된 파일의 url이 있어야 한다.
+ 					console.log(data)
+ 					$(editor).summernote('insertImage', data.url);
+ 				},
+ 				error: function(e) {
+ 					console.log("에러");
+ 					console.log(e);
+ 				}
+ 			});
+ 		}
  		
  		//제목안쓰면 게시글 못쓰게 막기
  		$('#submitBtn').click(function(){

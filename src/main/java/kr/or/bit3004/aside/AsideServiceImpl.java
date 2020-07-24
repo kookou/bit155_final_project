@@ -91,4 +91,9 @@ public class AsideServiceImpl implements AsideService {
 	public void updateTeamName(Team team) {
 		dao.updateTeamName(team);
 	}
+
+	@Override
+	public String isTeamLeader(String id, int teamNo) {
+		return dao.isTeamLeader(id, teamNo);
+	}
 }

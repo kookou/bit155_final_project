@@ -56,6 +56,8 @@ public interface KanbanService {
 	
 	//delete a Kanban Card File
 	public List<KanbanUpload> deleteKanbanCardFile(int fileNo, int cardNo, int teamNo);
+	
+	
 //	public void dragCardUpdateCardno(int[] cardNo , int[] cardIndex,int kanbanListNo);
 //	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo);
 //	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo);

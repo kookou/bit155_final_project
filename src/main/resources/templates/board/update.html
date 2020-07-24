@@ -56,7 +56,7 @@
 		            <div class="col-12">
 		                <div class="card">
 		                    <div class="card-body">
-		                        <form method="post" th:action="@{updateBoard.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}" enctype="multipart/form-data">
+		                        <form method="post" th:action="@{updateBoard.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}" enctype="multipart/form-data">
 		                          <div class="form-body">
 		                                <div class="row">
 		                                    <div class="col-sm-12 col-md-6">
@@ -85,7 +85,7 @@
 		                                <div class="text-right">
 		                                    <button type="submit" class="btn btn-info">수정</button>
 		                                    <button type="reset" class="btn btn-dark">초기화</button>
-		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}">목록으로</a>
+		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록으로</a>
 		                                </div>
 		                            </div>
 		                        </form>

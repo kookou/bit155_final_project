@@ -2,20 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit3004.dao.TodoListDao">
-	<select id="getTodoList" resultType="kr.or.bit3004.todoList.TodoList">
-		select c.todo_content_no, c.content, done, c.no, c.id, l.title, l.TEAM_NO
+	<select id="getTodoContent" resultType="kr.or.bit3004.todoList.TodoList" parameterType="kr.or.bit3004.todoList.TodoList">
+		select c.todo_content_no, c.content, state, c.`no`, c.id, l.title, l.TEAM_NO
 		  from `todo_content` c
-		 right outer join `todo_list` l
+		  left outer join `todo_list` l
 		    on c.no = l.no
-		 where l.TEAM_NO = #{l.TEAM_NO}
+		 where l.team_no = #{teamNo}
+		    and l.no = #{no}
 	</select>
 	
 	<select id="getTodoTitle" resultType="kr.or.bit3004.todoList.TodoList">
-		select title, team_no, id
+		select no, title, team_no, id
   		  from todo_list
+  		 where team_no = #{teamNo}
 	</select>
 	
 	<insert id="insertTodoTitle" parameterType="kr.or.bit3004.todoList.TodoList">
-		insert into `TODO_LIST`(`title`, `TEAM_NO`, `id`) values(#{title}, 1, #{id})
+		insert into `TODO_LIST`(`title`, `team_no`, `id`) values(#{title}, #{teamNo}, #{id})
 	</insert>
+	
+	<select id="getCurrNo" resultType="int">
+		select max(`no`) from `TODO_LIST`
+	</select>
+	
+	<insert id="insertTodoContent" parameterType="kr.or.bit3004.todoList.TodoList">
+		insert into `TODO_CONTENT`(`content`, `no`, `id`) values(#{content}, #{no}, #{id})
+	</insert>
+	
+	<select id="getCurrContentNo" resultType="int">
+		select max(`todo_content_no`) from `TODO_CONTENT`
+	</select>
+	
+	<update id="toggleState" parameterType="kr.or.bit3004.todoList.TodoList">
+		update todo_content set state = #{state} where todo_content_no = #{todoContentNo}
+	</update>
+	
+	<delete id="deleteTodoContent" parameterType="int">
+		delete from todo_content where todo_content_no = #{todoContentNo}
+	</delete>
+	
+	<delete id="deleteTodoTitle" parameterType="int">
+		delete from todo_list where `no` = #{no}
+	</delete>
+	
 </mapper>

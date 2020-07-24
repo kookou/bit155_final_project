@@ -8,11 +8,14 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Calendar {
-
+	private int no;
 	private String title;
-	private String startDate;
-	private String endDate;
+	private String start;
+	private String end;
 	private String color;
 	private String description;
+	private String id;
+	private int teamNo;
+	private String allDay;
 	
 }

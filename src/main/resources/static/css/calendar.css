@@ -1,0 +1,130 @@
+#calendar{
+	padding-bottom: 30px;
+}/* 
+.dropNewEvent {
+  font-size: 13px;
+}
+
+.popoverTitleCalendar {
+  width: 100%;
+  height: 100%;
+  padding: 15px 15px;
+  font-size: 13px;
+  border-radius: 5px 5px 0 0;
+}
+
+.popoverInfoCalendar i {
+  font-size: 14px;
+  margin-right: 10px;
+  line-height: inherit;
+  color: #d3d4da;
+}
+
+.popoverInfoCalendar p {
+  margin-bottom: 1px;
+}
+
+.popoverDescCalendar {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #E3E3E3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.popover-title {
+  background: transparent;
+  font-weight: 600;
+  padding: 0 !important;
+  border: none;
+}
+
+.popover-content {
+  padding: 15px 15px;
+  font-size: 13px;
+}
+
+ 
+
+.opacityWeekend {
+  background-color: #f4f4fb !important;
+}
+
+
+
+
+.fc-unthemed .fc-day-grid td:not(.fc-axis).fc-event-container {
+  padding: 0.2rem 0.5rem;
+}
+
+
+
+.popover {
+  background: #fff !important;
+  color: #2E2F34;
+  border: none;
+  margin-bottom: 10px;
+}
+
+popover header
+.popover-title {
+  background: #F7F7FC;
+  font-weight: 600;
+  padding: 15px 15px 11px;
+  border: none;
+}
+
+popover arrows
+.popover.top .arrow:after {
+  border-top-color: #fff;
+}
+
+.popover.right .arrow:after {
+  border-right-color: #fff;
+}
+
+.popover.bottom .arrow:after {
+  border-bottom-color: #fff;
+}
+
+.popover.left .arrow:after {
+  border-left-color: #fff;
+}
+
+.popover.bottom .arrow:after {
+  border-bottom-color: #fff;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  Preferred icon size
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  Support for all WebKit browsers.
+  -webkit-font-smoothing: antialiased;
+  Support for Safari and Chrome.
+  text-rendering: optimizeLegibility;
+
+  Support for Firefox.
+  -moz-osx-font-smoothing: grayscale;
+
+  Support for IE.
+  -webkit-font-feature-settings: 'liga';
+          font-feature-settings: 'liga';
+}
+ */
+#add-color,
+#edit-color {
+  color: #d25565;
+}
