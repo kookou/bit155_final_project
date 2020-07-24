@@ -91,14 +91,6 @@
 	    <th:block th:replace="common/addAllBoardModal"></th:block>
 	    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 		<div class="page-wrapper">
-	        <div class="page-breadcrumb">
-	            <div class="row">
-	                <div class="col-7 align-self-center">
-	                    <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
-	                </div>
-	               
-	            </div>
-	        </div>
 	        <div class="container-fluid">
 	            <div class="row">
 	                <div class="col-lg-12">
@@ -134,6 +126,9 @@
 	                                         			<i class="fas fa-paperclip"></i>
 		                                         	</span>
 		                                         	<!-- 첨부한 이미지가 존재하는경우 -->
+		                                         	<span th:if="${board.content.contains('img src')}">
+	                                         			<i class="far fa-file-image"></i>
+		                                         	</span>
 		                                         </td>
 		                                         <!-- 작성자 -->
 		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
