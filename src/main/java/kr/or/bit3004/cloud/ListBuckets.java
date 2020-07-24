@@ -12,7 +12,7 @@ public class ListBuckets {
 		Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 		Page<Bucket> buckets = storage.list();
 		for(Bucket bucket : buckets.iterateAll()) {
-			System.out.println(bucket.getName());
+			//System.out.println(bucket.getName());
 		}
 	}
 }

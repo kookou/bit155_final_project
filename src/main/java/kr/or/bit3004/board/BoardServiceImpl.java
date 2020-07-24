@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.or.bit3004.cloud.UploadObject;
 import kr.or.bit3004.dao.BoardDao;
 import kr.or.bit3004.user.User;
 
@@ -54,7 +55,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void insertBoard(Board board) {
 		System.out.println("글쓰기임");
-	    //dao.updateRefer(board);
+	    //dao.updateRefer(board) ;
 		int maxRefer = dao.getMaxRefer();
 		int refer = maxRefer + 1;
 		
@@ -87,7 +88,7 @@ public class BoardServiceImpl implements BoardService{
 				String originFileName = multiFile.getOriginalFilename();
 				
 				UUID uuid = UUID.randomUUID();				
-				String fileName = uuid.toString() + originFileName;
+				String fileName = uuid.toString() +"_"+ originFileName;
 				System.out.println(fileName);
 				
 				String path = System.getProperty("user.dir") + "/src/main/resources/static/cloud/" + teamNo; 
@@ -139,6 +140,14 @@ public class BoardServiceImpl implements BoardService{
 				//dao 호출하여 DB에 저장하기
 				dao.insertBoardUploadFile(boardUpload);
 				fileNames.add(originFileName);
+				
+				//클라우드에 저장하기
+				//파일명예쁘게 저장하기
+				String[] name = fileName.split("_");
+				try {
+					UploadObject.uploadObject("final-project-281709", "king240",name[1],filePath); 
+				} catch (Exception e) {
+				}
 			
 			}
 		}

@@ -14,6 +14,7 @@ public class UploadObject {
 		Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 		BlobId blobId = BlobId.of(bucketName, objectName);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+		System.out.println("이걸왜못타"+filePath);
 		storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
 		System.out.println("File "+filePath+"uploaded to bucket "+bucketName+"as "+objectName);
 	}

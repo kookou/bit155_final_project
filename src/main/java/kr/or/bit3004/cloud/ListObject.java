@@ -30,7 +30,7 @@ public class ListObject {
 			list.add(file);
 		}
 		for(CloudUpload i : list) {
-		    System.out.println(i.toString());
+		 //   System.out.println(i.toString());
 		}
 
 	}
