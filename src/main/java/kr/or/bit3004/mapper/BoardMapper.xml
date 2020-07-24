@@ -25,7 +25,7 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname,b.refer
+		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname, board_noti, b.refer
 		  from board_list b
 		 inner join `user` u
 			on b.id = u.id
@@ -109,7 +109,7 @@
 	<!-- 게시판 수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">
 		update board_list
-		   set board_no=#{boardNo}, title=#{title}, content=#{content}
+		   set board_no=#{boardNo}, title=#{title}, content=#{content}, board_noti=#{boardNoti}
 		 where board_no=#{boardNo}
 	</update>
 	
