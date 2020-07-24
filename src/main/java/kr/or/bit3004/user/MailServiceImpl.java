@@ -43,62 +43,21 @@ public class MailServiceImpl implements MailService{
           confirmation = (random.nextInt(10000));
           if(confirmation <10000 && confirmation>1000){break;}
       }
-      
-      
-      
+     
       	model.addAttribute("id", mail.getTo());
       	model.addAttribute("confirmation", Integer.toString(confirmation));
-
-//        helper.addAttachment("logo.png", new ClassPathResource("memorynotfound-logo.png"));
 
         Template t = freemarkerConfig.getTemplate("email-template.ftl");
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
         helper.setTo(mail.getTo());
         helper.setText(html, true);
-        helper.setSubject("ccc : 요청하신 인증번호입니다.");
+        helper.setSubject("TIKA : 요청하신 인증번호입니다");
         helper.setFrom("3004bit@gmail.com");
 
         mailSender.send(message);
         
         return confirmation;
     }
-	
-//	@Override
-//	public int sendConfirmEmail(Mail mail) throws Exception{
-//		
-//
-//		
-//		
-//		
-//		 MimeMessage mimeMessage = mailSender.createMimeMessage();
-//		
-//		
-//		
-////        MimeMessage messagedto = mailSender.createMimeMessage();
-////        MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
-//        
-//        Random random = new Random(System.currentTimeMillis());
-//        int confirmation = 0;
-//        
-//        while(true){
-//            confirmation = (random.nextInt(10000));
-//            if(confirmation <10000 && confirmation>1000){break;}
-//        }
-////        
-////        messageHelper.setFrom("3004bit@gmail.com");       
-////        messageHelper.setTo(mail.getReceiver()); 
-////        messageHelper.setSubject("ccc : 요청하신 인증번호입니다.");
-////        messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
-//// 
-////        mailSender.send(messagedto);
-//        
-//        return confirmation;
-//    }
-	
-	
-
-	
-	
 
 }

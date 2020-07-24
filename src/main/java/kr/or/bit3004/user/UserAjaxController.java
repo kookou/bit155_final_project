@@ -30,8 +30,7 @@ public class UserAjaxController {
 		int result = 0;
 		
 		try {
-//			result = 
-					mailService.sendSimpleMessage(mail, model);
+			result = mailService.sendSimpleMessage(mail, model);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
