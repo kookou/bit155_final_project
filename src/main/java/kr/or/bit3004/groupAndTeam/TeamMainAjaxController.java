@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.bit3004.cloud.CreateBucketWithStorageClassAndLocation;
+
 @RestController
 public class TeamMainAjaxController {
 
@@ -58,6 +60,7 @@ public class TeamMainAjaxController {
 		team.setTeamNo(teamNo);
 		service.insertTeamLeader(team);
 		service.insertGroupTeam(team);
+		String teamName = team.getTeamName();
 		return teamNo;
 	}
 	
