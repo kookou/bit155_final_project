@@ -40,7 +40,7 @@
 		values(#{title}, #{content}, now(), #{allBoardListNo}, #{id}, #{boardNoti}, 0, 0, #{refer})
 	</insert>
 	
-	<!-- 게시판 답글 -->
+	<!-- //////////////////////////////////////////////게시판답글 START///////////////////////////////////////////////////////////// -->
 	<update id="updateReboardAddstep" parameterType="kr.or.bit3004.board.Board">
 		update board_list set step=step+1
 		 where refer=#{refer} and step &gt; #{step}
@@ -85,7 +85,7 @@
 		insert into board_list(`all_board_list_no`,`title`, `content`, `write_date`,`id`,`refer`,`depth`,`step`)
 		values(#{allBoardListNo}, #{title}, #{content}, now(), #{id}, #{refer}, #{depth}, #{step})
 	</insert>
-	<!-- 게시판 답글 END -->
+	<!-- //////////////////////////////////////////////게시판답글 END///////////////////////////////////////////////////////////// -->
 	
 	<!-- 업로드 게시판 번호 가져오기 -->
 	<select id="getBoardNo" resultType="int">
@@ -105,6 +105,13 @@
 		  from board_file
 		 where board_no = #{boardNo}
 	</select>
+	
+	<!-- 게시판 수정할때 업로드하기전 파일삭제 -->
+	<delete id="deleteBoardUploadFile" parameterType="int">
+		delete
+		  from board_file
+		 where board_no=#{boardNo}
+	</delete>
 	
 	<!-- 게시판 수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">
