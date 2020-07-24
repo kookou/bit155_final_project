@@ -20,6 +20,7 @@ public class TeamMainAjaxController {
 		Map<String, Object> groupAndTeam = new HashMap<>();
 		groupAndTeam.put("groupAndTeam", service.selectGroupAndTeam(id));
 		groupAndTeam.put("group", service.selectGroupName(id));
+		groupAndTeam.put("teamMemberList", service.getTeamMemberList(id));
 		return groupAndTeam;
 	}
 	

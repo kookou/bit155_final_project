@@ -62,7 +62,7 @@
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        						<span th:each="member : ${teamMemberList}" th:if="${team.teamName == member.teamName}">
 	       						<img th:src="@{assets/images/userImage/}+${member.image}" alt="user"
-											style="width: auto; height: 40px;" 
+											style="width: auto; height: 40px;" class="rounded-circle"
 											data-toggle="tooltip" data-placement="top" th:title="${member.teamMemberId}">
        						</span>
        					</div>
@@ -123,6 +123,7 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
     	var currUser = [[${session.currentUser.id}]];
+    	var currUserImage = [[${session.currentUser.image}]];
     /*]]>*/
     </script>
 
