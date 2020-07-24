@@ -48,7 +48,7 @@ public class CloudController {
 	 
 	 @RequestMapping("CloudList.ajax")
 	 public @ResponseBody List<CloudUpload> getFileList(int teamNo){
-		 System.out.println("cloudListajax탐");
+		 System.out.println("cloudListajax탐!");
 		 return cloudService.getFileList(teamNo);
 	 }
 	 @RequestMapping(value="UploadFile.ajax",method=RequestMethod.POST)
