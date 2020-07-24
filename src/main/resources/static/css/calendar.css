@@ -1,16 +1,33 @@
 #calendar{
 	padding-bottom: 30px;
-}/* 
+}
 .dropNewEvent {
   font-size: 13px;
+  
 }
-
+.popover-body{
+	min-width :180px;
+	padding: 15px;
+	overflow:hidden;
+	
+}
+.popover{
+	 box-shadow : 1px 1px 10px 1px #cbd4e0!important;
+	 border: 1px solid #d1d5d9!important;
+	 
+}
+.popover-header{
+	 padding:0px;
+	
+}
 .popoverTitleCalendar {
   width: 100%;
   height: 100%;
   padding: 15px 15px;
   font-size: 13px;
-  border-radius: 5px 5px 0 0;
+  /* border-radius: 5px 5px 0 0;
+  */
+  
 }
 
 .popoverInfoCalendar i {
@@ -18,6 +35,7 @@
   margin-right: 10px;
   line-height: inherit;
   color: #d3d4da;
+  
 }
 
 .popoverInfoCalendar p {
@@ -34,16 +52,18 @@
   -webkit-box-orient: vertical;
 }
 
-.popover-title {
+.popover-title {5
   background: transparent;
   font-weight: 600;
   padding: 0 !important;
   border: none;
+  
 }
 
 .popover-content {
   padding: 15px 15px;
   font-size: 13px;
+  
 }
 
  
@@ -56,7 +76,7 @@
 
 
 .fc-unthemed .fc-day-grid td:not(.fc-axis).fc-event-container {
-  padding: 0.2rem 0.5rem;
+  /* padding: 0.2rem 0.5rem; */
 }
 
 
@@ -66,17 +86,19 @@
   color: #2E2F34;
   border: none;
   margin-bottom: 10px;
+  background-color : #454545;
 }
 
-popover header
+/*popover header*/
 .popover-title {
   background: #F7F7FC;
   font-weight: 600;
   padding: 15px 15px 11px;
   border: none;
+  
 }
 
-popover arrows
+/*popover arrows*/
 .popover.top .arrow:after {
   border-top-color: #fff;
 }
@@ -97,7 +119,7 @@ popover arrows
   border-bottom-color: #fff;
 }
 
-.material-icons {
+/* .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -122,9 +144,10 @@ popover arrows
   Support for IE.
   -webkit-font-feature-settings: 'liga';
           font-feature-settings: 'liga';
-}
- */
+} */
+
 #add-color,
 #edit-color {
   color: #d25565;
+  
 }
