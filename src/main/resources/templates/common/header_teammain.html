@@ -1,7 +1,7 @@
 <html xmlns:th="http://wwww.thymeleaf.org">
 
-	<header th:fragment="header" class="topbar" data-navbarbg="skin6">
-		<nav class="navbar top-navbar navbar-expand-md">
+	<header th:fragment="header_teammain" class="topbar" data-navbarbg="skin6">
+		<div class=" top-navbar navbar-expand-md" >
 			<div class="navbar-header" data-logobg="skin6">
 				<!-- This is for the sidebar toggle which is visible on mobile only -->
 				<a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
@@ -10,7 +10,7 @@
 				<!-- ============================================================== -->
 				<!-- Logo -->
 				<!-- ============================================================== -->
-				<div class="navbar-brand" >
+				<div class="navbar-brand" style="height:64px; background-color:#ffffff;">
 					<!-- Logo icon -->
 					<a href="/"> 
 						<b class="logo-icon"> 
@@ -38,7 +38,7 @@
 			<!-- ============================================================== -->
 			<!-- End Logo -->
 			<!-- ============================================================== -->
-			<div class="navbar-collapse collapse" id="navbarSupportedContent">
+			<div class="navbar-collapse collapse" id="navbarSupportedContent"  style="height:65px; background-color:#ffffff; " >
 				<ul class="navbar-nav float-left mr-auto ml-3 pl-1"></ul>
 				<ul class="navbar-nav float-right">
 					<!-- ============================================================== -->
@@ -77,8 +77,7 @@
 					</li>
 				</ul>
 			</div>
-		</nav>
+		</div>
 	<th:block th:replace="common/chat"></th:block>
-	</header>
-	
+</header>
 <script src="js/chat.js"></script>
