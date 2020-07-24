@@ -100,11 +100,11 @@
 		    <artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 
-	<!-- 클라우드  Error creating bean with name 오류날때 이거 주석.
+	<!-- 클라우드  Error creating bean with name 오류날때 이거 주석.-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
-		</dependency> -->
+		</dependency> 
 		
 		<!-- thymeleaf -->
 		<dependency>
@@ -134,7 +134,12 @@
     		<artifactId>commons-io</artifactId>
     		<version>1.4</version>
 		</dependency>
-		
+		<!-- file 400error때문에넣은거 -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<version>9.0.16</version>
+		</dependency>
 		
 	</dependencies>
 

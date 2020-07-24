@@ -156,13 +156,13 @@
                  <!--  <i class="fas fa-minus" onclick="selectTool('line')"></i> -->
                 </span>
           	    </div> 
-             <!--  <div class="row">
+               <div class="row">
                  <span class="cell">
                   <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
                   <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
                 </span>
           	    </div> 
-     	        <div class="row">
+     	     <!--   <div class="row">
                  <span class="cell">
                   <i class="far fa-square"  onclick="selectTool('square')"></i>
                   <i class="fas fa-square"  onclick="selectTool('filledsquare')"></i>
@@ -248,11 +248,10 @@
 				prevY = e.offsetY;
 				console.log("추주툴",chooseTool);
           		now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
-          		if(chooseTool=="filled"){
-          			console.log("이걸탔따 으헝");
+          /* 		if(chooseTool=="filled"){
           			ctx.fillStyle=pos.color;
           			ctx.fill();	
-          		}
+          		} */
             	//selectTool('circle');
           },
           mousemove: function (e) {
@@ -312,10 +311,8 @@
 					otherCtx.fillStyle = drawData[0].color;
 	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 	            	otherCtx.closePath();
-	            	console.log("이거탓다");
 	            	return;
 				}
-				
 	            otherCtx.stroke();
 		        otherCtx.closePath();
 		    	//selectTool('circle');
