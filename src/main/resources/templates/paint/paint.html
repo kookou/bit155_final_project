@@ -77,6 +77,7 @@
   </head>
 
   <body>
+  <div th:replace="common/scriptA :: scriptA"></div> 
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
         
@@ -155,13 +156,13 @@
                  <!--  <i class="fas fa-minus" onclick="selectTool('line')"></i> -->
                 </span>
           	    </div> 
-             <!--  <div class="row">
+               <div class="row">
                  <span class="cell">
                   <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
                   <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
                 </span>
           	    </div> 
-     	        <div class="row">
+     	     <!--   <div class="row">
                  <span class="cell">
                   <i class="far fa-square"  onclick="selectTool('square')"></i>
                   <i class="fas fa-square"  onclick="selectTool('filledsquare')"></i>
@@ -175,7 +176,7 @@
               </div> -->
          	<div class="row">
                 <span class="cell">
-                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('fill')" />
+                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('filled')" />
                 </span>
               </div>
               <div class="row">
@@ -204,7 +205,7 @@
     </div>
     </div>
     </div>
-    <div th:replace="common/script :: script"></div>
+<div th:replace="common/scriptB :: scriptB"></div> 
     <script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
     <!-- 컬러피커 -->
@@ -247,12 +248,10 @@
 				prevY = e.offsetY;
 				console.log("추주툴",chooseTool);
           		now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
-          		if(chooseTool=="fill"){
-          			console.log("이걸탔따");
-          			cvs.fillStyle=pos.color;
-          			cvs.fill();	
-          		
-          		}
+          /* 		if(chooseTool=="filled"){
+          			ctx.fillStyle=pos.color;
+          			ctx.fill();	
+          		} */
             	//selectTool('circle');
           },
           mousemove: function (e) {
@@ -280,21 +279,22 @@
       });
 		paintWs.onmessage = function(evt){
 			makePaintBox(evt.data);
+			console.log("evt.data"+evt.data);
 			var c = document.querySelector("#canvas");
      	    var otherCtx = c.getContext("2d");
       		var drawData;
       		var fillData;
-      	if (evt.data.startsWith('{')) {
-      		fillData = JSON.parse(evt.data);
-		        console.log(fillData);
-	            if(fillData.mode != undefined && fillData.mode == "fill") {
+/*       	if (evt.data.startsWith('{')) {
+      			fillData = JSON.parse(evt.data);
+		        console.log("fillData: "+fillData);
+	            if(fillData.mode != undefined && fillData.mode == "filled") {
+	            	console.log("이거하니?");
 	            	otherCtx.fillStyle = fillData.color;
 	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 	            	otherCtx.closePath()
-	            	
 	            	return;
 	            }
-      	}
+      	} //안탄다.*/
       	if (evt.data.startsWith('[{"')) {
       		drawData = JSON.parse(evt.data);
 		        console.log("drawData: ",drawData);
@@ -307,19 +307,11 @@
 //					console.log(drawData[i].x, drawData[i].y);
 		            otherCtx.lineTo(drawData[i].x, drawData[i].y);
 				}
-				switch(drawData[0].mode){
-				case "pencil":
-					console.log("펜슬 ㅎㅎ");
-					break;
-				case "circle":
-					console.log("원 ㅎㅎ");
-					break;	
-				case "square":
-					console.log("네모 ㅎㅎ");
-					break;
-				case "tri":
-					console.log("세모 ㅎㅎ");
-					break;
+				if(drawData[0].mode=="filled"){
+					otherCtx.fillStyle = drawData[0].color;
+	            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
+	            	otherCtx.closePath();
+	            	return;
 				}
 	            otherCtx.stroke();
 		        otherCtx.closePath();

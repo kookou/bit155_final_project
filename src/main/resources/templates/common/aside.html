@@ -25,7 +25,7 @@
 
 									<img th:src="${#strings.startsWith(member.image, 'https')} 
                                				? ${member.image} : @{assets/images/userImage/}+${member.image}" alt="user" 	
-										style="width: auto; height: 70px; transform: translate(-50%, -50%);" 
+										style="width: auto; height: 60px; transform: translate(-50%, -50%);" 
 										data-toggle="tooltip" data-placement="top" th:title="${member.id}">
 
 									<input type="hidden" class="hiddenMemberId" th:value="${member.id}">
@@ -69,12 +69,12 @@
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Components</span></li>
 
-					<!-- <li class="sidebar-item">
-						<a class="sidebar-link" href="javascript:void(0)" aria-expanded="false"> 
+ 			<li class="sidebar-item">
+						<a class="sidebar-link" th:href="@{cloud.do(teamNo=${team.teamNo})}" aria-expanded="false"> 
 							<i class="fas fa-cloud-download-alt"></i> 
 							<span class="hide-menu">Cloud</span>
 						</a>
-					</li> -->
+					</li> 
 					<li class="sidebar-item">
 						<a class="sidebar-link" th:href="@{todoList.do(teamNo=${session.currentUser.teamNo})}" aria-expanded="false">
 							<i class="far fa-edit"></i>

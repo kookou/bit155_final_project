@@ -63,7 +63,7 @@ public class KanbanAjaxController {
 	public String kanbanCardTitleUpdate(String title , int cardNo) {
 		service.kanbanCardTitleUpdate(title, cardNo);
 		System.out.println("업데이트완료");
-		return "redirect:kanban.do?teamNo=1&allBoardListNo=1";
+		return "redirect:kanban.do?teamNo=?&allBoardListNo=?";
 	}
 	
 	@RequestMapping("CardContentSelect.ajax")
@@ -112,7 +112,6 @@ public class KanbanAjaxController {
 	@RequestMapping(value="kanbanFilesUpload.ajax", method=RequestMethod.POST)
 	public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request){
 		System.out.println("= kanbanFilesUpload.ajax =");
-		
 		return service.kanbanFilesUpload(request);
 	}
 	

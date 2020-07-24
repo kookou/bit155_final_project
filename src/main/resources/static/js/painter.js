@@ -302,10 +302,12 @@ function selectColor(choosedColor) {
 var chooseTool;
 function selectTool(choosedTool) {
   chooseTool = choosedTool;
-  console.log("선택된툴"+choosedTool);
+  console.log("선택된툴 "+choosedTool);
   if (choosedTool.indexOf("filled") != -1) {
+	console.log("이거탐");
     pos.filled = true;
   } else {
+	console.log("이거안탐");
     pos.filled = false;
   }
   pos.update(toolTable[choosedTool]);

@@ -55,7 +55,6 @@
 		<th:block th:replace="common/header :: header"></th:block>
 		<th:block th:replace="common/aside :: aside"></th:block>
 		<th:block th:replace="common/addAllBoardModal"></th:block>
-		<th:block th:replace="common/chat"></th:block>
 		 
 		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 
@@ -297,6 +296,7 @@
 	<div th:replace="common/scriptB :: scriptB"></div> 
 	<script th:inline="javascript">
     /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
    	var currUserNickname = [[${session.currentUser.nickname}]];
 	var currUserImage = [[${session.currentUser.image}]];
 	var teamNo = [[${session.currentUser.teamNo}]];
