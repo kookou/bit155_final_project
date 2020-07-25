@@ -29,7 +29,7 @@ public interface KanbanService {
 	//resort Kanban List
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX);
 	
-	public int insertCardTitle(String title , int cardIndex, int kanbanListNo);
+	public int insertCardTitle(String title , int cardIndex, int kanbanListNo, Principal principal);
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void kanbanCardTitleUpdate(String title , int cardNo);
