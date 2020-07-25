@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.or.bit3004.cloud.UploadObject;
 import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.dao.KanbanDao;
 import kr.or.bit3004.kanban.KanbanUpload;
@@ -83,9 +84,10 @@ public class KanbanServiceImpl implements KanbanService {
    
    
    @Override
-   public int insertCardTitle(String title , int cardIndex, int kanbanListNo) {
+   public int insertCardTitle(String title , int cardIndex, int kanbanListNo, Principal principal) {
       int newcardNo;
-      dao.insertCardTitle(title, cardIndex, kanbanListNo);
+      String id = principal.getName();
+      dao.insertCardTitle(title, id, cardIndex, kanbanListNo);
       
       newcardNo = dao.getANewCardNo();
       System.out.println(newcardNo);
@@ -208,6 +210,13 @@ public class KanbanServiceImpl implements KanbanService {
             
             //파일 객체 리스트를 보내도록 수정
             returnFileList.add(kanbanUpload);
+            
+          //클라우드에 저장하기
+			try {
+				UploadObject.uploadObject("final-project-281709", "king240",originFileName,filePath); 
+			} catch (Exception e) {
+			}
+		
          
          } // for end
       } // if end      

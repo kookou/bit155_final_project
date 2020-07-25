@@ -11,6 +11,7 @@ public class KanbanCard {
 	
 	//칸반 보드 카드
 	private int cardNo; //공통사항 
+	private String id; // 작성자 
 	private String title; 
 	private String content; //내용 
 	private String writeDate; //작성일 

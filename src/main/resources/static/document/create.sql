@@ -103,6 +103,7 @@ ALTER TABLE `BOARD_COMMENT` modify `COMMENT_NO` INT auto_increment;
 -- 칸반보드카드
 CREATE TABLE `KANBAN_CARD` (
 	`CARD_NO`        INT           NOT NULL,   -- 카드식별번호
+    `ID`			 VARCHAR(50)   NOT NULL,   -- 카드 작성자
 	`TITLE`          VARCHAR(100)  NOT NULL,   -- 글제목
 	`CONTENT`        VARCHAR(2000) NULL,       -- 글내용
 	`WRITE_DATE`     DATETIME      NOT NULL,   -- 작성일
@@ -118,6 +119,15 @@ ALTER TABLE `KANBAN_CARD`
 		PRIMARY KEY (
 			`CARD_NO` -- 카드식별번호
 		);
+        
+ALTER TABLE `KANBAN_CARD`
+	ADD CONSTRAINT `FK_USER_TO_KANBAN_CARD` -- 사용자 -> 게시판
+		FOREIGN KEY (
+			`ID` -- 아이디
+		)
+		REFERENCES `USER` ( -- 사용자
+			`ID` -- 아이디
+		) ON DELETE CASCADE;
         
 -- 칸반보드카드 시퀀스
 ALTER TABLE `KANBAN_CARD` modify `CARD_NO` INT auto_increment;

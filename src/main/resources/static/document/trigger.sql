@@ -373,9 +373,8 @@ FOR EACH ROW
 BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
-    DECLARE id1 varchar(50);
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -392,7 +391,7 @@ BEGIN
 		`DML_KIND` = 'insert',
         `HISTORY_TIME` = now(),
 		`TEAM_NO` = team_no1,
-		`ID` = id1;
+		`ID` = NEW.ID;
 END $$
 DELIMITER ;
 
@@ -404,9 +403,8 @@ FOR EACH ROW
 BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
-	DECLARE id1 varchar(50);
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -424,7 +422,7 @@ BEGIN
 		`DML_KIND` = 'update',
         `HISTORY_TIME` = now(),
 		`TEAM_NO` = team_no1,
-		`ID` = id1;
+		`ID` = NEW.ID;
 END $$
 DELIMITER ;
 
@@ -436,9 +434,8 @@ FOR EACH ROW
 BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
-	DECLARE id1 varchar(50);
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, id1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -455,7 +452,7 @@ BEGIN
 		`DML_KIND` = 'delete',
         `HISTORY_TIME` = now(),
 		`TEAM_NO` = team_no1,
-		`ID` = id1;
+		`ID` = OLD.`ID`;
 END $$
 DELIMITER ;
 
