@@ -21,10 +21,6 @@ public class ListObject {
 		Page<Blob> blobs = bucket.list();
 		
 		for(Blob blob : blobs.iterateAll()) {
-			System.out.println("다운로드링크 : "+blob.getMediaLink());
-			System.out.println("getName : "+blob.getName());
-			System.out.println("getSize : "+blob.getSize());
-			System.out.println("\n");
 			CloudUpload file = new CloudUpload();
 			file.setFileName(blob.getName());
 			file.setFileSize(blob.getSize());
@@ -34,7 +30,7 @@ public class ListObject {
 			list.add(file);
 		}
 		for(CloudUpload i : list) {
-		    System.out.println(i.toString());
+		 //   System.out.println(i.toString());
 		}
 
 	}

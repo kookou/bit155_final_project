@@ -51,7 +51,6 @@
 	                        <div class="card-body">
 	           					<!-- <form method="post" th:action="@{insertBoard.do}"> -->
 	                            <form method="post" th:action="@{insertBoard.do}" enctype="multipart/form-data">
-	
 	                                <div class="form-body">
 	                                    <div class="row">
                                             <div class="form-group col-lg-6">
@@ -97,11 +96,16 @@
     	//javascript에서 thymeleaf를 받아서 쓸려고 사용
     	/*<![CDATA[*/
     		var currUser = [[${session.currentUser.id}]];
+    		var currUserNickname = [[${session.currentUser.nickname}]];
+            var currUserImage = [[${session.currentUser.image}]];
+            var teamNo = [[${session.currentUser.teamNo}]];
+            var teamMember = [[${teamMember}]];
  		/*]]>*/
  		
         //summernote
 	  	$('#summernote').summernote({
-	       	height : 300,                 		 // 에디터 높이
+	       	height : 500,                 		 // 에디터 높이
+	       	disableResizeEditor: true,
 	       	minHeight : null,             		 // 최소 높이
 	       	maxHeight : null,             		 // 최대 높이
 	       	focus : true,                  		 // 에디터 로딩후 포커스를 맞출지 여부

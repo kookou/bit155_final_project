@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.or.bit3004.cloud.UploadObject;
 import kr.or.bit3004.dao.BoardDao;
 import kr.or.bit3004.user.User;
 
@@ -28,6 +29,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<Board> selectBoardList(int allBoardListNo){
 		return dao.getBoardList(allBoardListNo);
+	}
+	
+	//공지사항 목록보기
+	public List<Board> getBoardNoti(int allBoardListNo){
+		return dao.getBoardNoti(allBoardListNo);
 	}
 
 	//게시판 상세보기
@@ -54,7 +60,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void insertBoard(Board board) {
 		System.out.println("글쓰기임");
-	    //dao.updateRefer(board);
+	    //dao.updateRefer(board) ;
 		int maxRefer = dao.getMaxRefer();
 		int refer = maxRefer + 1;
 		
@@ -62,6 +68,7 @@ public class BoardServiceImpl implements BoardService{
 		dao.insertBoard(board);
 	}
 	
+	//boardNo 가져오기
 	@Override
 	public int getBoardNo() {
 		return dao.getBoardNo();
@@ -87,7 +94,7 @@ public class BoardServiceImpl implements BoardService{
 				String originFileName = multiFile.getOriginalFilename();
 				
 				UUID uuid = UUID.randomUUID();				
-				String fileName = uuid.toString() + originFileName;
+				String fileName = uuid.toString() +originFileName;
 				System.out.println(fileName);
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
@@ -139,6 +146,11 @@ public class BoardServiceImpl implements BoardService{
 				//dao 호출하여 DB에 저장하기
 				dao.insertBoardUploadFile(boardUpload);
 				fileNames.add(originFileName);
+				//클라우드에 저장하기
+				try {
+					UploadObject.uploadObject("final-project-281709", "king240",originFileName,filePath); 
+				} catch (Exception e) {
+				}
 			
 			}
 		}
@@ -149,6 +161,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardUpload> selectBoardDownloadFile(int boardNo){
 		return dao.selectBoardDownloadFile(boardNo);
+	}
+	
+	//게시판 수정할때 파일업로드를 위해 삭제하기
+	@Override
+	public int deleteBoardUploadFile(int boardNo) {
+		return dao.deleteBoardUploadFile(boardNo);
 	}
 	
 	//게시판 수정하기

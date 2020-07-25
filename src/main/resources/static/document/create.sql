@@ -320,7 +320,7 @@ CREATE TABLE `TIMELINE` (
     `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용
     `HISTORY`      VARCHAR(100) NOT NULL, -- 작업내용
     `DML_KIND`     varchar(20)  NOT NULL, -- 작업구분
-    `HISTORY_TIME` DATETIME NOT NULL,     -- 작업시간
+    `HISTORY_TIME` DATETIME     NOT NULL, -- 작업시간
 	`TEAM_NO`      INT          NOT NULL, -- 팀식별번호
 	`ID`           VARCHAR(50)  NOT NULL  -- 아이디
 );

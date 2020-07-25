@@ -20,77 +20,44 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
     <th:block th:replace="common/header :: header"></th:block>
 	<th:block th:replace="common/aside :: aside"></th:block> 
     <th:block th:replace="common/addAllBoardModal"></th:block>
-<!-- ///////////////내용넣어주세요/////////////////////// -->
-<!--  <form method="post" th:action="@{writeFile.do}" enctype="multipart/form-data">
- 	<input type="hidden" name="teamNo" th:value="${teamNo}">
- 	
- 	<label class="custom-file-label" for="file">파일을 선택하세요.</label>
-	<input type="file" name="file" id="file" class="custom-file-input"></input>
-	<button type="submit" id="submitBtn" class="btn btn-info">업로드</button>
-</form> -->
 <div class="page-wrapper">
-<!-- <form th:action="@{cloudComplete.do}" id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">-->
  	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
 	 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
 		<div class="input-group">
-			<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
-			<label for="file" class="custom-file-label">Choose file</label>
-		</div>
-		<div class="input-group-append">
-	<!-- <input type="submit" value="등록" class="btn btn-outline-secondary"></input> -->
-			<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+			<div class="custom-file">
+				<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
+				<label for="file" class="custom-file-label">Choose file</label>
+			</div>
+			<div class="input-group-append">
+				<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+			</div>
 		</div>
 		<div id="file-list"></div>
-	<!-- <table>
-	<tr>
-		<th>제목</th>
-		<th>용량</th>
-	</tr>
-	<tr th:each="list:${cloudList}">
-		<td><a th:text="${list.fileName}" th:href="${list.fileLink}" ></a></td>
-		<td th:text="${list.fileSize}+B"></td>
-	</tr>
-	</table> -->
 	</form>
 </div>
-<!-- <form id="cloudFileInput" class="mt-2 file-upload" action="" method="POST" enctype="multipart/form-data">
-	<div class="input-group">
-		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="kanbanFiles" name="kanbanFiles" multiple="multiple"> 
-				<label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-		</div>
-		<div class="input-group-append">
-			<button id="kanbanFileInputBtn" class="btn btn-outline-secondary" type="button">Upload</button>
-		</div>
-	</div>
-</form> -->
 </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
-<script>
-	/*<![CDATA[*/
-	/* var bgColor = [[${team.backgroundColor}]];
-	if(bgColor != 'ffffff') {
-		$('.page-wrapper').css("background", "#"+bgColor);
-	} */
-	var currUserNickname = '[[${session.currentUser.nickname}]]';
-	var currUserImage = '[[${session.currentUser.image}]]';
-	var teamNo = [[${team.teamNo}]];
-	var currUser = '[[${session.currentUser.id}]]';
-	/*]]>*/
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
+	var teamMember = [[${teamMember}]];
+    /*]]>*/
+</script>
+<script>
 	//파일 목록 ajax
 	$.ajax({
 		url: "CloudList.ajax",
 		data:{
-		//	teamNo: $('#teamNo').val()
 			teamNo: teamNo
 		},
 		success:function(data){
-			console.log("이것도타나");
 			makeList(data);
 		},
 		error: function(e){
-			console.log("오류당 ㅠ");
 			console.log(e);
 		}
 	});
@@ -100,7 +67,6 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 		var html="";
 			html+='<table><tr><th>제목</th><th>용량</th></tr>';
 		$.each(result, function(index,obj){
-			console.log("된다");
 			html+='<tr><td><a onClick="location.href=&quot;'+obj.fileLink+'&quot;">'+obj.fileName+'</a></td>';
 			html+='<td>'+obj.fileSize+'B</td>';
 			html+='<td><a type="button" id="delFile"><i class="fas fa-trash-alt"></i>';
@@ -112,7 +78,6 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	}
 	//파일 업로드 ajax
 	$('#upload').on('click',function(){
-		console.log("최소한 이건 타나요");
 		if($('#file').val() == ""){
 	  			swal('파일을 선택하세요');
 	  			return false;
@@ -128,18 +93,15 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 				contentType: false,
 				cache: false,
 				success:function(resData){
-					console.log("파일업로드 success 1차 완료");
 					if(resData.length>0){
-						console.log("파일크기 >0 인정");
 		 				//input label초기화
 						$('#file').siblings('.custom-file-label').text("Choose file");
 					}else{
 						console.log("업로드파일 없음");
 					}
-					//$('#file').val("");
 				},
 				error: function(e){
-					console.log("ajax 에러 발생");
+					console.log(e);
 				}
 			});
 		a.done(reloadListPromise);
@@ -147,7 +109,6 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	});
 	//파일 삭제 ajax
 	$('#file-list').on('click','#delFile',function(){
-		console.log('파일삭제ajax탔다.');
 		console.log($(this).children('input[type="hidden"]').val());
 		var a=
 			$.ajax({
@@ -160,7 +121,7 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 					console.log("삭제성공");
 				},
 				error:function(e){
-					console.log("에러발생ㅠ"); 
+					console.log("에러"); 
 				}
 			});
 		a.done(reloadListPromise);
@@ -176,13 +137,10 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
    					teamNo: teamNo
    				},
    				success:function(resData){
-   					console.log("그리는중");
    					$('#file-list').empty(); //삭제하고
    					makeList(resData); //다시그리기
-   					console.log("다그림 끝!!ㅎㅎ추카");
    				},
    				error: function(e) {
-   					console.log("prommise함수 오류임");
    					console.log(e);
    				}
    			});
@@ -191,7 +149,6 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
    	
    	//promise 에러 함수
    	function promiseError(e) {
-   		console.log("프로미스 에러..");
    		console.log(e);
    		return false;
    	}

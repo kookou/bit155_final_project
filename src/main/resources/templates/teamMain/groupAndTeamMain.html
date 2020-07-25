@@ -62,7 +62,7 @@
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        						<span th:each="member : ${teamMemberList}" th:if="${team.teamName == member.teamName}">
 	       						<img th:src="@{assets/images/userImage/}+${member.image}" alt="user"
-											style="width: auto; height: 40px;" 
+											style="width: auto; height: 40px;" class="rounded-circle"
 											data-toggle="tooltip" data-placement="top" th:title="${member.teamMemberId}">
        						</span>
        					</div>
@@ -97,17 +97,21 @@
                             <br>
                             <div class="custom-radio">
                             	<input type="radio" id="ffffff" value="ffffff" name="backColor" class="backColor" checked>
-                            	<input type="radio" id="d0e1f5" value="d0e1f5" name="backColor" class="backColor">
-                            	<input type="radio" id="c0e4da" value="c0e4da" name="backColor" class="backColor">
-                            	<input type="radio" id="fee993" value="fee993" name="backColor" class="backColor">
-                            	<input type="radio" id="fac8bf" value="fac8bf" name="backColor" class="backColor">
-                            	<input type="radio" id="fedcc1" value="fedcc1" name="backColor" class="backColor"><br>
+                            	<input type="radio" id="5f76e8" value="5f76e8" name="backColor" class="backColor">
+                            	<input type="radio" id="22ca80" value="22ca80" name="backColor" class="backColor">
+                            	<input type="radio" id="fdc16a" value="fdc16a" name="backColor" class="backColor">
+                            	<input type="radio" id="ff4f70" value="ff4f70" name="backColor" class="backColor">
+                            	<input type="radio" id="e8eaec" value="e8eaec" name="backColor" class="backColor">
+                            	<input type="radio" id="6c757d" value="6c757d" name="backColor" class="backColor">
+                            	<input type="radio" id="1c2d41" value="1c2d41" name="backColor" class="backColor"><br>
                             	<label for="ffffff"><div class="backColorBox" style="background-color: #ffffff; border: 1px solid silver;"></div></label>
-                            	<label for="d0e1f5"><div class="backColorBox" style="background-color: #d0e1f5;"></div></label>
-                            	<label for="c0e4da"><div class="backColorBox" style="background-color: #c0e4da;"></div></label>
-                            	<label for="fee993"><div class="backColorBox" style="background-color: #fee993;"></div></label>
-                            	<label for="fac8bf"><div class="backColorBox" style="background-color: #fac8bf;"></div></label>
-                            	<label for="fedcc1"><div class="backColorBox" style="background-color: #fedcc1;"></div></label>
+                            	<label for="5f76e8"><div class="backColorBox" style="background-color: #5f76e8;"></div></label>
+                            	<label for="22ca80"><div class="backColorBox" style="background-color: #22ca80;"></div></label>
+                            	<label for="fdc16a"><div class="backColorBox" style="background-color: #fdc16a;"></div></label>
+                            	<label for="ff4f70"><div class="backColorBox" style="background-color: #ff4f70;"></div></label>
+                            	<label for="e8eaec"><div class="backColorBox" style="background-color: #e8eaec;"></div></label>
+                            	<label for="6c757d"><div class="backColorBox" style="background-color: #6c757d;"></div></label>
+                            	<label for="1c2d41"><div class="backColorBox" style="background-color: #1c2d41;"></div></label>
                             </div>
                             <br>
                             <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="createTeamBtn">Create</button>
@@ -123,6 +127,7 @@
     <script th:inline="javascript">
     /*<![CDATA[*/
     	var currUser = [[${session.currentUser.id}]];
+    	var currUserImage = [[${session.currentUser.image}]];
     /*]]>*/
     </script>
 

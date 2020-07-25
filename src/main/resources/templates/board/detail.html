@@ -36,11 +36,15 @@
 		    margin-left: 35px;
 		}
 		.popover{
-		 /* height: 30px; */
-		 max-height: 1000px;
-		 /* width: 100px; */
-		 max-width: 1000px
+		 	/* height: 30px; */
+		 	max-height: 1000px;
+		 	/* width: 100px; */
+		 	max-width: 1000px
 		}
+		#boardName{
+			color:#5f76e8;
+		}
+		
 	</style>
 </head>
 <body>
@@ -75,11 +79,11 @@
 	                                            <input type="hidden" name="teamNo" th:value=" ${session.currentUser.teamNo}">
 	                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
 	                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
-	                                            <h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo})}" th:text="${selectBoard.name}"></a></h6>
+                                            	<h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}" th:text="${selectBoard.name}" name="boardName" id="boardName"></a> ></h6>
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">
-	                                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="30">
+	                                                <img src="assets/images/userImage/user.png" alt="user" class="rounded-circle" width="30">
 	                                                <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
 	                                            </div>
 	                                            <div style="float: right;">
@@ -102,7 +106,7 @@
 	                                                    <div id="comment-list"></div>
 	                                                    <div id="comment-writeForm" style="border: 1px solid silver;">
 	                                                        <div style="padding: 10px 10px 0px 15px;"></div>
-	                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden;" ></textarea>
+	                                                        <textarea class="form-control autosize" name="commentTextarea" id="commentTextarea" rows="1" placeholder="댓글을 남겨보세요" style="border: none; resize: none; overflow: hidden; box-shadow:none;" ></textarea>
 	                                                        <div style="padding: 0px 10px 10px 10px;">
 	                                                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary btn-sm" id="commWrite">등록</button>
 	                                                        </div>
@@ -149,13 +153,16 @@
     <div th:replace="common/scriptB :: scriptB"></div>
     
     <!-- 여기서부터 java script -->
-    <script>
+    <script th:inline="javascript">
 	    /*<![CDATA[*/
-			var currUser = '[[${session.currentUser.id}]]';
-	    	var id = '[[${selectBoard.id}]]';
-	    	var boardContent = '[[${selectBoard.content}]]';
-	    	var fileName = '[[${selectBoardDownloadFile}]]';
-	    	var teamMember = '[[${teamMember}]]';
+			var currUser = [[${session.currentUser.id}]];
+	    	var id = [[${selectBoard.id}]];
+	    	var boardContent = [[${selectBoard.content}]];
+	    	var fileName = [[${selectBoardDownloadFile}]];
+	    	var teamMember = [[${teamMember}]];
+	    	var currUserNickname = [[${session.currentUser.nickname}]];
+	        var currUserImage = [[${session.currentUser.image}]];
+	        var teamNo = [[${session.currentUser.teamNo}]];
 		/*]]*/
 		
 		/* boardContent = boardContent.replace(/&lt;/gi, "<");
