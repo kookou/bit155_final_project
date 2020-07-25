@@ -269,6 +269,7 @@ var appendTeam = "";
 $('.newTeamBtn').click(function() {
 	$('#ffffff').prop('checked', true);
 	$('#5f76e8').prop('checked', false);
+	$('#22ca80').prop('checked', false);
 	$('#fdc16a').prop('checked', false);
 	$('#ff4f70').prop('checked', false);
 	$('#e8eaec').prop('checked', false);
