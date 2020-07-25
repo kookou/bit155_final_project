@@ -70,19 +70,40 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	<th:block th:replace="common/aside :: aside"></th:block> 
     <th:block th:replace="common/addAllBoardModal"></th:block>
 <div class="page-wrapper">
- 	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
-	 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
-		<div class="input-group">
-			<div class="custom-file">
-				<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
-				<label for="file" class="custom-file-label">Choose file</label>
+	<div class="page-breadcrumb">
+			<div class="row">
+				<div class="col-7 align-self-center">
+					<h4 class="page-title text-dark font-weight-medium mb-1">Cloud</h4>
+				</div>
 			</div>
-			<div class="input-group-append">
-				<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+				 	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
+					 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
+						<div class="input-group">
+							<div class="custom-file">
+								<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
+								<label for="file" class="custom-file-label">Choose file</label>
+							</div>
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+							</div>
+						</div>
+					</form>
+					</div>
+						<div id="file-list"></div>
+				</div>
+			
+			
 			</div>
 		</div>
-		<div id="file-list"></div>
-	</form>
+	</div>
+	
 </div>
 </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
@@ -113,7 +134,7 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	//파일 목록 그리는 함수
 	function makeList(result){
 		var html="";
-			html+='<table id="table" class="table table-hover table-info"><thead class="bg-info text-white"><tr><th>제목</th><th>용량</th><th>삭제</th></tr></thead>';
+			html+='<table id="table" class="table table-hover"><thead><tr><th>제목</th><th>용량</th><th>삭제</th></tr></thead>';
 		$.each(result, function(index,obj){
 			html+='<tbody><tr><td><a onClick="location.href=&quot;'+obj.fileLink+'&quot;">'+obj.fileName+'</a></td>';
 			html+='<td>'+obj.fileSize+'B</td>';
@@ -124,8 +145,20 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 			html+='</table>';
 		$('#file-list').append(html);
 		//데이터테이블그리기
+		var lang_kor = {
+			"info" : "_START_ - _END_ (전체 _TOTAL_ )",
+			"infoEmpty" : "0",
+			"infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
+			"infoPostFix" : "",
+			"lengthMenu" : "_MENU_개씩 보기",
+			"search" : "검색 : ",
+			"paginate" : {
+			    "next" : "다음",
+			    "previous" : "이전"
+			},
+		}; 
 		var mytbl = $("#table").DataTable({
-		//	language: lang_kor 
+			language: lang_kor 
 		});
 		mytbl.ajax.reload;
 	}
