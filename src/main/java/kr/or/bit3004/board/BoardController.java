@@ -44,13 +44,17 @@ public class BoardController {
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo, int teamNo, HttpSession session) {
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
-		Map<String, String> boardnamelist = new HashMap<String, String>();
 	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-	    //boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
+	    
+	    //게시판 이름
+	    Map<String, String> boardnamelist = new HashMap<String, String>();
+	    boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
+	    
 		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("boardNoti", service.getBoardNoti(allBoardListNo));
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
@@ -68,8 +72,12 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
+	    Map<String, String> boardnamelist = new HashMap<String, String>();
+	    boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
 		
 		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
 		service.updateReadCount(boardNo, request);
@@ -88,8 +96,12 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
+	    Map<String, String> boardnamelist = new HashMap<String, String>();
+	    boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
 		
 		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
@@ -119,7 +131,12 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
+	    Map<String, String> boardnamelist = new HashMap<String, String>();
+	    boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
+	    
 		model.addAttribute("teamNo", teamNo);
+		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
@@ -149,7 +166,12 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
+	    
+	    Map<String, String> boardnamelist = new HashMap<String, String>();
+	    boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
+	    
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
+		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
