@@ -6,6 +6,7 @@ $('#outer').on('click', '.teamBtn', function() {
 
 //카드 배경색에 따라 글씨색상 바꾸기
 $('.card').each(function(index, ele) {
+	console.log($(this).css('backgroundColor'));
 	let bgColor = $(this).css('backgroundColor');
 	if(bgColor == 'rgb(253, 193, 106)' || bgColor == 'rgb(232, 234, 236)' || bgColor == 'rgb(255, 255, 255)') {
 		$(this).find('h4').css('color', 'black');
@@ -13,7 +14,6 @@ $('.card').each(function(index, ele) {
 		$(this).find('h4').css('color', '#fff');
 	}
 });
-
 
 //그룹 만들 때 
 var inputGroupNameHtml =
@@ -268,11 +268,12 @@ function makeListHtml(resData) {
 var appendTeam = "";
 $('.newTeamBtn').click(function() {
 	$('#ffffff').prop('checked', true);
-	$('#d0e1f5').prop('checked', false);
-	$('#c0e4da').prop('checked', false);
-	$('#fee993').prop('checked', false);
-	$('#fac8bf').prop('checked', false);
-	$('#fedcc1').prop('checked', false);
+	$('#5f76e8').prop('checked', false);
+	$('#fdc16a').prop('checked', false);
+	$('#ff4f70').prop('checked', false);
+	$('#e8eaec').prop('checked', false);
+	$('#6c757d').prop('checked', false);
+	$('#1c2d41').prop('checked', false);
 	$('#teamName').val("");
 	$('#teamName').focus();
 	$('#hiddenGroupNo').val($(this).parent().parent().parent().children().attr('data-groupno'));
@@ -280,10 +281,7 @@ $('.newTeamBtn').click(function() {
 });
 
 $('#createTeamBtn').click(function() {
-	console.log(appendTeam);
-	console.log($('#teamName').val());
-	console.log($('#hiddenGroupNo').val());
-	console.log($('input[name="backColor"]:checked').val());
+	var backColor = $('input[name="backColor"]:checked').val();
 	if($('#teamName').val() == "") {
 		Swal.fire('', 'Team Name을 입력하세요', 'warning');
 		return;
@@ -293,7 +291,7 @@ $('#createTeamBtn').click(function() {
 		url: "insertTeam.do",
 		data: {
 			teamName: $('#teamName').val(),
-			backgroundColor: $('input[name="backColor"]:checked').val(),
+			backgroundColor: backColor,
 			groupNo: $('#hiddenGroupNo').val(),
 			id: currUser
 		},
@@ -302,7 +300,11 @@ $('#createTeamBtn').click(function() {
 			html += '<div class="col-xl-3">';
 			html += 	'<div class="card" style="background-color:#'+ $('input[name="backColor"]:checked').val() +'">';
 			html += 		'<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" data-teamNo="'+ resData +'">';
-			html += 			'<h4 class="card-title">'+ $('#teamName').val() +'</h4>';
+			if(backColor == 'ffffff' || backColor == 'fdc16a' || backColor == 'e8eaec') {
+				html += 		'<h4 class="card-title" style="color:black;">'+ $('#teamName').val() +'</h4>';
+			} else {
+				html += 		'<h4 class="card-title" style="color:white;">'+ $('#teamName').val() +'</h4>';
+			}
 			html += 			'<span>';
 	       	html += 				'<img src="assets/images/userImage/'+currUserImage+'" alt="user"';
 			html += 					'style="width: auto; height: 40px;" class="rounded-circle"';

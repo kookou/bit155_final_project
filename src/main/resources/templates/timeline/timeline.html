@@ -163,7 +163,7 @@
 	                <div class="card">
 	                    <div class="card-body bg-color">
 	                    
-	                        <div class="col-md-12 activity">
+	                        <div class="col-md-12 activity font-color">
                                 <div class="d-flex align-items-start border-left-line pb-3" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
                                     <div>
                                         <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
@@ -171,7 +171,7 @@
                                     <div class="ml-3 mt-12"  th:switch="${timeline.dmlKind}">
                                         <div th:case=" 'insert' ">
 	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-0 text-muted">
+	                                        <p class="font-14 mb-0">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -208,7 +208,7 @@
 		                                </div>
 		                                <div th:case=" 'update' " >
 	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-0 text-muted">
+	                                        <p class="font-14 mb-0">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -235,7 +235,7 @@
 		                                </div>
 		                                <div th:case=" 'delete' ">
 	                                        <h5 class="font-weight-medium mb-2" th:text="${timeline.nickname}"></h5>
-	                                        <p class="font-14 mb-0 text-muted">
+	                                        <p class="font-14 mb-0">
 			                                	<b th:if="${timeline.columnName.equals('BOARD LIST')}" th:text="${timeline.columnName}" style="text-decoration:underline;"></b>
 			                                	<b th:unless="${timeline.columnName.equals('BOARD LIST')}" th:switch="${timeline.tableName}">
 			                                		<span th:case=" 'BOARD_LIST' ">
@@ -266,7 +266,7 @@
 		                                <div th:case=" 'wthdr team' ">
 		                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>님이 팀에서 나갔습니다.
 		                                </div>
-                                    	<span class="font-weight-light font-14 text-muted timeBefore"></span>
+                                    	<span class="font-weight-light font-14 timeBefore"></span>
                                     </div>
                                 </div>
                             </div>
@@ -307,13 +307,28 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 			var bgColor = [[${team.backgroundColor}]];
-			if(bgColor != 'ffffff') {
-				$('.bg-color').css("background", "#"+bgColor);
+			if(bgColor == '5f76e8') {
+				$('.bg-color').css("border", '1px solid #5f76e8');
+				$('.font-color').css("color", '#5f76e8');
 			}
-			if(bgColor == 'fdc16a' || bgColor == 'e8eaec' || bgColor == '#ffffff') {
-				$('.bg-color').css("color", 'black');
-			} else {
-				$('.bg-color').css("color", '#fff');
+			if(bgColor == 'fdc16a') {
+				$('.bg-color').css("border", '1px solid #fdc16a');
+				$('.font-color').css("color", '#fdc16a');
+			}
+			if(bgColor == 'ff4f70') {
+				$('.bg-color').css("border", '1px solid #ff4f70');
+				$('.font-color').css("color", '#ff4f70');
+			}
+			if(bgColor == 'e8eaec') {
+				$('.bg-color').css("border", '1px solid #e8eaec');
+			}
+			if(bgColor == '6c757d') {
+				$('.bg-color').css("border", '1px solid #6c757d');
+				$('.font-color').css("color", '#6c757d');
+			}
+			if(bgColor == '1c2d41') {
+				$('.bg-color').css("border", '1px solid #1c2d41');
+				$('.font-color').css("color", '#1c2d41');
 			}
 			var currUserNickname = [[${session.currentUser.nickname}]];
 			var currUserImage = [[${session.currentUser.image}]];
