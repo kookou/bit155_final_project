@@ -89,7 +89,7 @@ public class BoardServiceImpl implements BoardService{
 				String originFileName = multiFile.getOriginalFilename();
 				
 				UUID uuid = UUID.randomUUID();				
-				String fileName = uuid.toString() +"_"+ originFileName;
+				String fileName = uuid.toString() +originFileName;
 				System.out.println(fileName);
 				
 				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
@@ -141,12 +141,9 @@ public class BoardServiceImpl implements BoardService{
 				//dao 호출하여 DB에 저장하기
 				dao.insertBoardUploadFile(boardUpload);
 				fileNames.add(originFileName);
-				
 				//클라우드에 저장하기
-				//파일명예쁘게 저장하기
-				String[] name = fileName.split("_");
 				try {
-					UploadObject.uploadObject("final-project-281709", "king240",name[1],filePath); 
+					UploadObject.uploadObject("final-project-281709", "king240",originFileName,filePath); 
 				} catch (Exception e) {
 				}
 			

@@ -24,29 +24,30 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
  	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
 	 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
 		<div class="input-group">
-			<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
-			<label for="file" class="custom-file-label">Choose file</label>
-		</div>
-		<div class="input-group-append">
-			<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+			<div class="custom-file">
+				<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
+				<label for="file" class="custom-file-label">Choose file</label>
+			</div>
+			<div class="input-group-append">
+				<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+			</div>
 		</div>
 		<div id="file-list"></div>
 	</form>
 </div>
 </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
-<script>
-	/*<![CDATA[*/
-	/* var bgColor = [[${team.backgroundColor}]];
-	if(bgColor != 'ffffff') {
-		$('.page-wrapper').css("background", "#"+bgColor);
-	} */
-	var currUserNickname = '[[${session.currentUser.nickname}]]';
-	var currUserImage = '[[${session.currentUser.image}]]';
-	var teamNo = [[${team.teamNo}]];
-	var currUser = '[[${session.currentUser.id}]]';
-	/*]]>*/
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
+	var teamMember = [[${teamMember}]];
+    /*]]>*/
+</script>
+<script>
 	//파일 목록 ajax
 	$.ajax({
 		url: "CloudList.ajax",
