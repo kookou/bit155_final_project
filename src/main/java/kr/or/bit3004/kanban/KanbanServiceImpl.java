@@ -83,9 +83,10 @@ public class KanbanServiceImpl implements KanbanService {
    
    
    @Override
-   public int insertCardTitle(String title , int cardIndex, int kanbanListNo) {
+   public int insertCardTitle(String title , int cardIndex, int kanbanListNo, Principal principal) {
       int newcardNo;
-      dao.insertCardTitle(title, cardIndex, kanbanListNo);
+      String id = principal.getName();
+      dao.insertCardTitle(title, id, cardIndex, kanbanListNo);
       
       newcardNo = dao.getANewCardNo();
       System.out.println(newcardNo);

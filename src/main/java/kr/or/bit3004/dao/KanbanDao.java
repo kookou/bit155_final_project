@@ -44,7 +44,7 @@ public interface KanbanDao {
 	
 
 	public void deleteKanbanList(String listTitle);
-	public int insertCardTitle(String title ,  int cardIndex, int kanbanListNo);
+	public int insertCardTitle(String title , String id,  int cardIndex, int kanbanListNo);
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void updateCardTitle(String title , int cardNo);
 	public KanbanCard kanbanCardContent(int cardNo);
