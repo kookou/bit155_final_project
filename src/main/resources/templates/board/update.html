@@ -168,6 +168,12 @@
  				return false;
  			}
  		});
+ 		
+ 		//공지사항 check 여부
+ 		console.log($('input[name="boardNoti"]:checked').val());
+ 		$('#notice').click(function(){
+ 			$('input[name="boardNoti"]:checked').val('Y');
+ 		});
     </script>
     
 
