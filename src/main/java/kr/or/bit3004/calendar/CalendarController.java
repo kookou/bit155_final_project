@@ -30,7 +30,8 @@ public class CalendarController {
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		model.addAttribute("teamNo",teamNo);
-		System.out.println(teamNo);
+		
+		System.out.println("캘린더" +service.showCalendar(teamNo));
 		return "calendar/calendar";
 	}
 	//모델에 담더닞.. ajax를..
