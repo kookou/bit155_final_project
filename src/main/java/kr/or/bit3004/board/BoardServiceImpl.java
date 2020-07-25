@@ -29,6 +29,11 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> selectBoardList(int allBoardListNo){
 		return dao.getBoardList(allBoardListNo);
 	}
+	
+	//공지사항 목록보기
+	public List<Board> getBoardNoti(int allBoardListNo){
+		return dao.getBoardNoti(allBoardListNo);
+	}
 
 	//게시판 상세보기
 	@Override

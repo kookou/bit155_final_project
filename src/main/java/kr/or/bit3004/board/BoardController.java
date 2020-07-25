@@ -46,6 +46,7 @@ public class BoardController {
 		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
+		model.addAttribute("boardNoti", service.getBoardNoti(allBoardListNo));
 		model.addAttribute("boardList", service.selectBoardList(allBoardListNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));

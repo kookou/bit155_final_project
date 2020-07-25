@@ -57,7 +57,7 @@
 	                                        	<input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
 	                                        </div>
 	                                       	<div class="col-lg-6" style="margin-top:8px;">
-                                        		<input type="checkbox" name="boardNoti" id="notice" th:value="${board.boardNoti}" th:checked="isExist">
+                                        		<input type="checkbox" name="boardNoti" id="notice" th:value="${board.boardNoti}" th:checked="${board.boardNoti} != null">
                                           		<label for="notice">공지사항</label>
                                       		</div>
 	                                        <div class="custom-file col-lg-6" style="margin-left:14px;">
@@ -168,16 +168,6 @@
  				return false;
  			}
  		});
- 		
- 		//공지사항 수정할시 checked
- 		if(boardNoti != null){
- 			$("#boardNoti").prop('checked', true);
- 			$("#boardNoti").attr('checked', true) ;
- 		};
-
-		console.log("되는거니?" + boardNoti)
- 		console.log($('#boardNoti').is(":checked"));
-	  	
     </script>
     
 

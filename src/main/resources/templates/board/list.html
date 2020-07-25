@@ -110,13 +110,36 @@
                                         	</tr>
 	                                    </thead>
 	                                    <tbody>
+	                                         <tr th:each="board:${boardNoti}">
+		                                         <!-- 게시글 제목부분 -->
+		                                         <td style="width:70%;">
+		                                         	<!-- 글이 공지사항일 경우 -->
+		                                         	<span  th:if="${board.boardNoti} != null" class="badge badge-danger">공지사항</span>
+		                                         	<!-- 게시글 제목 -->
+		                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
+		                                         	<!-- comment cnt가 존재하는 경우 -->
+		                                         	<a th:if="${board.commentCount}" th:text="|[${board.commentCount}]|"></a>
+		                                         	<!-- 업로드한 파일이 존재하는 경우  -->
+		                                         	<span th:if="${board.fileCount} > 0">
+	                                         			<i class="fas fa-paperclip"></i>
+		                                         	</span>
+		                                         	<!-- 첨부한 이미지가 존재하는경우 -->
+		                                         	<span th:if="${board.content.contains('img src')}">
+	                                         			<i class="far fa-file-image"></i>
+		                                         	</span>
+		                                         </td>
+		                                         <!-- 작성자 -->
+		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
+		                                         <!-- 작성일시 -->
+		                                         <td style="width:15%; text-align: center;" th:text="${board.writeDate}"></td>
+		                                         <!-- 조회 -->
+		                                         <td style="width:5%; text-align: center;" th:text="${board.views}"></td>
+	                                         </tr>
 	                                         <tr th:each="board:${boardList}">
 		                                         <!-- 게시글 제목부분 -->
 		                                         <td style="width:70%;">
 		                                         	<!-- 답글부분 -->
 		                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
-		                                         	<!-- 글이 공지사항일 경우 -->
-		                                         	<span  th:if="${board.boardNoti} != null" class="badge badge-danger">공지사항</span>
 		                                         	<!-- 게시글 제목 -->
 		                                         	<a th:href="@{selectBoard.do(boardNo=${board.boardNo},teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" th:text="${board.title}"></a>
 		                                         	<!-- comment cnt가 존재하는 경우 -->
