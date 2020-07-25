@@ -102,16 +102,16 @@
 	                                <table class="table" id="table">
 	                                    <thead id="tableThead">
 	                                    	<tr>
-	                                    		<th style="width:15%; text-align: center;">제목</th>
-                                        		<th style="width:55%; text-align: center;">작성자</th>
-                                        		<th style="width:20%; text-align: center;">작성일시</th>
-                                        		<th style="width:10%; text-align: center;">조회</th>
+	                                    		<th style="width:69%; text-align: center;">제목</th>
+                                        		<th style="width:10%; text-align: center;">작성자</th>
+                                        		<th style="width:15%; text-align: center;">작성일시</th>
+                                        		<th style="width:6%; text-align: center;">조회</th>
                                         	</tr>
 	                                    </thead>
 	                                    <tbody>
 	                                         <tr th:each="board:${boardNoti}">
 		                                         <!-- 게시글 제목부분 -->
-		                                         <td style="width:70%;">
+		                                         <td style="width:69%;">
 		                                         	<!-- 글이 공지사항일 경우 -->
 		                                         	<span  th:if="${board.boardNoti} != null" class="badge badge-danger">공지사항</span>
 		                                         	<!-- 게시글 제목 -->
@@ -130,13 +130,18 @@
 		                                         <!-- 작성자 -->
 		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
 		                                         <!-- 작성일시 -->
-		                                         <td style="width:15%; text-align: center;" th:text="${board.writeDate}"></td>
+		                                         <td style="width:15%; text-align: center;" 
+		                                         	  th:if="${#dates.format(board.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+		                                         	  th:text="${#dates.format(board.writeDate, 'HH:mm:ss')}"></td>
+		                                         <td style="width:15%; text-align: center;" 
+		                                         	  th:unless="${#dates.format(board.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+		                                         	  th:text="${#dates.format(board.writeDate, 'yyyy-MM-dd')}"></td>
 		                                         <!-- 조회 -->
-		                                         <td style="width:5%; text-align: center;" th:text="${board.views}"></td>
+		                                         <td style="width:6%; text-align: center;" th:text="${board.views}"></td>
 	                                         </tr>
 	                                         <tr th:each="board:${boardList}">
 		                                         <!-- 게시글 제목부분 -->
-		                                         <td style="width:70%;">
+		                                         <td style="width:69%;">
 		                                         	<!-- 답글부분 -->
 		                                         	<i th:if="${board.depth} > 0">&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></i>
 		                                         	<!-- 게시글 제목 -->
@@ -155,9 +160,14 @@
 		                                         <!-- 작성자 -->
 		                                         <td style="width:10%; text-align: center;" th:text="${board.nickname}"></td>
 		                                         <!-- 작성일시 -->
-		                                         <td style="width:15%; text-align: center;" th:text="${board.writeDate}"></td>
+		                                         <td style="width:15%; text-align: center;" 
+		                                         	  th:if="${#dates.format(board.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+		                                         	  th:text="${#dates.format(board.writeDate, 'HH:mm:ss')}"></td>
+		                                         <td style="width:15%; text-align: center;" 
+		                                         	  th:unless="${#dates.format(board.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+		                                         	  th:text="${#dates.format(board.writeDate, 'yyyy-MM-dd')}"></td>
 		                                         <!-- 조회 -->
-		                                         <td style="width:5%; text-align: center;" th:text="${board.views}"></td>
+		                                         <td style="width:6%; text-align: center;" th:text="${board.views}"></td>
 	                                         </tr>
 	                                    </tbody>
 	                                </table>

@@ -1,5 +1,7 @@
 package kr.or.bit3004.board;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +14,7 @@ public class Board {
 	private String title;
 	private String content;
 	private int views;
-	private String writeDate;
+	private Date writeDate;
 	private int commentCount;
 	private int refer;
 	private int depth;
