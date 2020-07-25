@@ -331,6 +331,10 @@ public class KanbanServiceImpl implements KanbanService {
       }
       
    }
+   @Override
+   public Map<String, String> boardNameSelect(int allBoardListNo) {
+	   return dao.boardNameSelect(allBoardListNo);
+   }
 
 
 }

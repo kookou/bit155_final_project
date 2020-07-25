@@ -8,15 +8,15 @@
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
 <title>Bit 155 Final Project</title>
+
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
     	.paintcellborder{
 		border:1px solid grey;
     	}
-		i {
+		.canvas-icon {
 		padding-top:12px;
 		padding-right:12px;
 		padding-left:12px;
@@ -84,7 +84,6 @@
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
      <th:block th:replace="common/addAllBoardModal"></th:block>
-     <th:block th:replace="common/chat"></th:block>
      <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
    <div class="page-wrapper seo">
       
@@ -145,7 +144,7 @@
                 </span>
               </div>
               <div class="row">
-                  <span class="cell">
+                  <span class="cell canvas-icon">
                   <input id="colorPicker" type="color" class="form-control" value="#BDB3FF">
  				<!--   <i class="fas fa-eye-dropper"></i>    -->
                   </span>
@@ -157,7 +156,7 @@
                 </span>
           	    </div> 
                <div class="row">
-                 <span class="cell">
+                 <span class="cell" >
                   <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
                   <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
                 </span>
@@ -180,13 +179,13 @@
                 </span>
               </div>
               <div class="row">
-                  <span class="cell">
+                  <span class="cell canvas-icon" >
                    <i class="fas fa-angle-double-left" onclick="undo()"></i>
                    <i class="fas fa-angle-double-right" onclick="redo()"></i>
                   </span>
               </div>
                             
-          <div> <i class="fas fa-quidditch" onClick="initPage()"></i> Clear</div>
+          <div> <i class="fas fa-quidditch canvas-icon" onClick="initPage()"></i> Clear</div>
           <div class="padd"></div>
           <div>Title <input id="title" size="10" /></div>
           <div>
