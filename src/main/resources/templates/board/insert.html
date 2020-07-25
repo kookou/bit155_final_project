@@ -96,6 +96,10 @@
     	//javascript에서 thymeleaf를 받아서 쓸려고 사용
     	/*<![CDATA[*/
     		var currUser = [[${session.currentUser.id}]];
+    		var currUserNickname = [[${session.currentUser.nickname}]];
+            var currUserImage = [[${session.currentUser.image}]];
+            var teamNo = [[${session.currentUser.teamNo}]];
+            var teamMember = [[${teamMember}]];
  		/*]]>*/
  		
         //summernote

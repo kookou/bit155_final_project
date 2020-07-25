@@ -57,7 +57,7 @@
 	                                        	<input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
 	                                        </div>
 	                                       	<div class="col-lg-6" style="margin-top:8px;">
-                                          		<input type="checkbox" name="boardNoti" th:value="${board.boardNoti}" id="notice">
+                                        		<input type="checkbox" name="boardNoti" id="notice" th:value="${board.boardNoti}" th:checked="${board.boardNoti} != null">
                                           		<label for="notice">공지사항</label>
                                       		</div>
 	                                        <div class="custom-file col-lg-6" style="margin-left:14px;">
@@ -96,6 +96,10 @@
     <script th:inline="javascript">
 	    /*<![CDATA[*/
 			var boardNoti = [[${board.boardNoti}]];
+			var currUserNickname = [[${session.currentUser.nickname}]];
+		    var currUserImage = [[${session.currentUser.image}]];
+		    var teamNo = [[${session.currentUser.teamNo}]];
+		    var teamMember = [[${teamMember}]];
 		/*]]>*/
     
      	//summernote
@@ -164,13 +168,6 @@
  				return false;
  			}
  		});
- 		
- 		//공지사항 수정할시 checked
- 		if($('#boardNoti') != null){
- 			
- 		}
- 		
-	  	
     </script>
     
 

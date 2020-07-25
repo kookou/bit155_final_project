@@ -209,20 +209,17 @@
     <script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
     <!-- 컬러피커 -->
-<!--     <input id="colorPicker" type="color" class="form-control" value="#ffffff"> -->
- <script th:inline="javascript">
-		/*<![CDATA[*/
-			/* var bgColor = [[${team.backgroundColor}]];
-			if(bgColor != 'ffffff') {
-				$('.page-wrapper').css("background", "#"+bgColor);
-			} */
-			var currUserNickname = [[${session.currentUser.nickname}]];
-			var currUserImage = [[${session.currentUser.image}]];
-			var teamNo = [[${team.teamNo}]];
-			$('.page-wrapper').css('position', '');
-		/*]]>*/
-	</script>
-    <script language="JavaScript">
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+   	var currUserImage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
+	var teamMember = [[${teamMember}]];
+    /*]]>*/
+	//		$('.page-wrapper').css('position', '');
+   </script>
+   <script language="JavaScript">
     /*       var textareaList = ["history"]; */
     var canvas = document.querySelector("#canvas");
     var ctx = canvas.getContext("2d");
