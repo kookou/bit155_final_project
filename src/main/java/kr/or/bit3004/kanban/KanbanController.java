@@ -23,7 +23,6 @@ public class KanbanController {
 	private KanbanService service;
 	
 	@Autowired
-
 	private AsideService asideService;
 	
 	@RequestMapping("/kanban.do")
