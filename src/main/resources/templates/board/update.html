@@ -78,9 +78,9 @@
 		                      		</div>
 		                            <div class="form-actions">
 		                                <div class="text-right">
-		                                    <button type="submit" class="btn btn-info" id="updateBtn">수정</button>
-		                                    <button type="reset" class="btn btn-dark">초기화</button>
-		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록으로</a>
+		                                    <button type="submit" id="updateBtn">수정</button>
+		                                    <button type="reset" class="btn btn-light btn-sm">초기화</button>
+		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록</a>
 		                                </div>
 		                            </div>
 		                        </form>
@@ -102,6 +102,28 @@
 		    var teamMember = [[${teamMember}]];
 		/*]]>*/
     
+		if(bgColor == '5f76e8') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
+		}
+		if(bgColor == '5f76e8') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-success');
+		}
+		if(bgColor == 'fdc16a') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-warning');
+		}
+		if(bgColor == 'ff4f70') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-danger');
+		}
+		if(bgColor == 'e8eaec') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-light');
+		}
+		if(bgColor == '6c757d') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-secondary');
+		}
+		if(bgColor == '1c2d41') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-dark');
+		}
+		
      	//summernote
 	    $('#summernote').summernote({
 	       	height : 500,                 		 // 에디터 높이
