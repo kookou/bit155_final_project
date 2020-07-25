@@ -4,6 +4,17 @@ $('#outer').on('click', '.teamBtn', function() {
 	location.href = 'timeLine.do?teamNo=' + $(this).attr('data-teamNo');
 });
 
+//카드 배경색에 따라 글씨색상 바꾸기
+$('.card').each(function(index, ele) {
+	let bgColor = $(this).css('backgroundColor');
+	if(bgColor == 'rgb(253, 193, 106)' || bgColor == 'rgb(232, 234, 236)' || bgColor == 'rgb(255, 255, 255)') {
+		$(this).find('h4').css('color', 'black');
+	} else {
+		$(this).find('h4').css('color', '#fff');
+	}
+});
+
+
 //그룹 만들 때 
 var inputGroupNameHtml =
 	'<div class="row" id="inputGroupNameDiv">' + 
@@ -221,6 +232,16 @@ function makeListHtml(resData) {
 			html += 	'<div class="card" style="background-color:#'+ obj2.backgroundColor +'">';
 			html += 		'<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" data-teamNo="'+ obj2.teamNo +'">';
 			html += 			'<h4 class="card-title">'+ obj2.teamName +'</h4>';
+		$.each(resData.teamMemberList, function(index3, obj3) {
+			if(obj2.teamName == obj3.teamName) {
+			html += 			'<span>';
+	       	html += 				'<img src="assets/images/userImage/'+obj3.image+'" alt="user"';
+			html += 					'style="width: auto; height: 40px;" class="rounded-circle"';
+			html += 					'data-toggle="tooltip" data-placement="top" title="'+obj3.id+'">';
+       		html += 			'</span>';
+			}
+		})	;
+       		
 			html += 		'</div>';
 			html += 	'</div>';
 			html += '</div>';
@@ -282,6 +303,11 @@ $('#createTeamBtn').click(function() {
 			html += 	'<div class="card" style="background-color:#'+ $('input[name="backColor"]:checked').val() +'">';
 			html += 		'<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" data-teamNo="'+ resData +'">';
 			html += 			'<h4 class="card-title">'+ $('#teamName').val() +'</h4>';
+			html += 			'<span>';
+	       	html += 				'<img src="assets/images/userImage/'+currUserImage+'" alt="user"';
+			html += 					'style="width: auto; height: 40px;" class="rounded-circle"';
+			html += 					'data-toggle="tooltip" data-placement="top" title="'+currUser+'">';
+       		html += 			'</span>';
 			html += 		'</div>';
 			html += 	'</div>';
 			html += '</div>';
@@ -303,8 +329,8 @@ function allowDrop(ev) {
 //drag & drop 이벤트를 위한 모든 event listener method는 DataTransfer 객체를 반환합니다.
 //이렇게 반환된 DataTransfer 객체는 드래그 앤 드롭 동작에 관한 정보를 가지고 있게 됩니다.
 function drag(ev) {
-	console.log($(ev.target).attr('data-teamNo'));
-	console.log($(ev.target).parent().parent().parent().children().attr('data-groupno'));
+//	console.log($(ev.target).attr('data-teamNo'));
+//	console.log($(ev.target).parent().parent().parent().children().attr('data-groupno'));
     ev.dataTransfer.setData("teamNo", $(ev.target).attr('data-teamNo'));
     ev.dataTransfer.setData("dragGroupNo", $(ev.target).parent().parent().parent().children().attr('data-groupno'));
 }
@@ -315,12 +341,9 @@ function drop(ev) {
     let dragTeamNo = ev.dataTransfer.getData("teamNo");
     let dragGroupNo = ev.dataTransfer.getData("dragGroupNo");
     let dropGroupNo = $(ev.target).parents('.row').children().attr('data-groupNo');
-//	    if(dropListCode == undefined) {
-//	    	dropListCode = $(ev.target).attr('data-code');
-//	    }
-    console.log("dragTeamNo : " + dragTeamNo);
-    console.log("dragGroupNo : " + dragGroupNo);
-    console.log("dropGroupNo : " + dropGroupNo);
+//    console.log("dragTeamNo : " + dragTeamNo);
+//    console.log("dragGroupNo : " + dragGroupNo);
+//    console.log("dropGroupNo : " + dropGroupNo);
     
     if(dragGroupNo != dropGroupNo) {
     	var promise = 

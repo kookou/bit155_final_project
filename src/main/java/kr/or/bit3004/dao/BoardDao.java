@@ -21,6 +21,7 @@ public interface BoardDao {
 	//게시판 글쓰기
 	public void insertBoard(Board board);
 	
+	//boardNo 얻어오기
 	public int getBoardNo();
 	
 	//파일 업로드
@@ -28,6 +29,9 @@ public interface BoardDao {
 	
 	//파일 다운로드
 	public List<BoardUpload> selectBoardDownloadFile(int boardNo);
+	
+	//게시판 수정할때 업로드
+	public int deleteBoardUploadFile(int boardNo);
 	
 	//게시판 수정하기
 	public void updateBoard(Board board);

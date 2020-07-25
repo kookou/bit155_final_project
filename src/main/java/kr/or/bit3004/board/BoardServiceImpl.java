@@ -63,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
 		dao.insertBoard(board);
 	}
 	
+	//boardNo 가져오기
 	@Override
 	public int getBoardNo() {
 		return dao.getBoardNo();
@@ -91,7 +92,7 @@ public class BoardServiceImpl implements BoardService{
 				String fileName = uuid.toString() +"_"+ originFileName;
 				System.out.println(fileName);
 				
-				String path = System.getProperty("user.dir") + "/src/main/resources/static/cloud/" + teamNo; 
+				String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
 				File folder = new File(path);
 				System.out.println(path);
 				
@@ -158,6 +159,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardUpload> selectBoardDownloadFile(int boardNo){
 		return dao.selectBoardDownloadFile(boardNo);
+	}
+	
+	//게시판 수정할때 파일업로드를 위해 삭제하기
+	@Override
+	public int deleteBoardUploadFile(int boardNo) {
+		return dao.deleteBoardUploadFile(boardNo);
 	}
 	
 	//게시판 수정하기
