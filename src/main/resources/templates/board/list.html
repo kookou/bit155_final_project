@@ -100,8 +100,8 @@
 	                               <!--  <table class="table" id="table"> -->
 	                               <input type="hidden">
 	                               <span th:text="${selectBoardDownloadFile}"></span>
-	                                <table class="table table-bordered" id="table">
-	                                    <thead class="bg-primary text-white">
+	                                <table class="table" id="table">
+	                                    <thead id="tableThead">
 	                                    	<tr>
 	                                    		<th style="width:15%; text-align: center;">제목</th>
                                         		<th style="width:55%; text-align: center;">작성자</th>
@@ -164,7 +164,7 @@
 	                                </table>
 	                            </div>
 	                            <div class="form-actions text-right">
-	                            	<a th:href="@{insertBoard.do(teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white">
+	                            	<a th:href="@{insertBoard.do(teamNo=${session.currentUser.teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-sm" id="writeBtn">
 	                            		<i class="fas fa-pencil-alt"></i> 글쓰기
 	                            	</a>
 	                            </div>
@@ -191,7 +191,36 @@
 		    var currUserImage = [[${session.currentUser.image}]];
 		    var teamNo = [[${session.currentUser.teamNo}]];
 		    var teamMember = [[${teamMember}]];
+		    var bgColor = [[${team.backgroundColor}]];
 		/*]]>*/
+		if(bgColor == '5f76e8') {
+			$('#tableThead').attr("class", 'bg-primary text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-primary');
+		}
+		if(bgColor == '5f76e8') {
+			$('#tableThead').attr("class", 'bg-success text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-success');
+		}
+		if(bgColor == 'fdc16a') {
+			$('#tableThead').attr("class", 'bg-warning text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-warning');
+		}
+		if(bgColor == 'ff4f70') {
+			$('#tableThead').attr("class", 'bg-danger text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-danger');
+		}
+		if(bgColor == 'e8eaec') {
+			$('#tableThead').attr("class", 'bg-light');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-light');
+		}
+		if(bgColor == '6c757d') {
+			$('#tableThead').attr("class", 'bg-secondary text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-secondary');
+		}
+		if(bgColor == '1c2d41') {
+			$('#tableThead').attr("class", 'bg-dark text-white');
+			$('#writeBtn').attr("class", 'btn btn-sm btn-dark');
+		}
     </script>
 
 </body>
