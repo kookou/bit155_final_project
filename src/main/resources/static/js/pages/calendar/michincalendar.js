@@ -133,6 +133,8 @@ var calendar = $('#calendar').fullCalendar({
       }
     }
   },
+  
+  
   //헤더에 보여질 옵션
   header: {
     left: 'today, prevYear, nextYear, viewWeekends',
@@ -187,6 +189,8 @@ var calendar = $('#calendar').fullCalendar({
 //    }
 //  },
 
+  
+  
   // 일정 리사이즈
   eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
 	$(".fc-body").unbind('click');
@@ -250,7 +254,7 @@ var calendar = $('#calendar').fullCalendar({
 
   select: function (startDate, endDate, jsEvent, view) {
 	
-    $(".fc-body").unbind('click');
+    $(".fc-body").unbind();
     $(".fc-body").on('click', 'td', function (e) {
     	newEvent(startDate, endDate)
     });
@@ -554,36 +558,41 @@ var editEvent = function (event, element, view) {
                   }
               });
     });
+    
+    
+   
+  //삭제버튼
+  $('#deleteEvent').unbind();
+  $('#deleteEvent').on('click', function () {
+
+      $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
+     
+      var deleteevent = $(this)
+       console.log(deleteevent)
+      
+      editModal.modal('hide');
+      
+      // 삭제시
+      $.ajax({
+          url: "deletePlan.ajax",
+          data: {
+          	 no : event.no
+          },
+          success: function (response) {
+              alert('일정이 삭제되었습니다.');
+              $('#calendar').fullCalendar('removeEvents');
+              $('#calendar').fullCalendar('refetchEvents');
+          },error:function(){ 
+              alert("일정삭제에 실패하였습니다.");
+          }
+      });
+
+  });
+
 
 };
 
 
-//삭제버튼
-$('#deleteEvent').on('click', function () {
-    $('#deleteEvent').unbind();
-    $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
-   
-    var deleteevent = $(this)
-     console.log(deleteevent)
-    
-    editModal.modal('hide');
-    
-    // 삭제시
-    $.ajax({
-        url: "deletePlan.ajax",
-        data: {
-        	 no : deleteevent
-        },
-        success: function (response) {
-            alert('일정이 삭제되었습니다.');
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('refetchEvents');
-        },error:function(){ 
-            alert("일정삭제에 실패하였습니다.");
-        }
-    });
-
-});
 
 
 
