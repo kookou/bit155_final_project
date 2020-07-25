@@ -1,6 +1,7 @@
 package kr.or.bit3004.kanban;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,6 @@ public class KanbanController {
 	private KanbanService service;
 	
 	@Autowired
-
 	private AsideService asideService;
 	
 	@RequestMapping("/kanban.do")
@@ -30,16 +30,19 @@ public class KanbanController {
 		
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 		int teamNo = currentUser.getTeamNo();		
-		
+		Map<String, String> boardnamelist = new HashMap<String, String>();
 		List<KanbanCard> kanbancardlist = new ArrayList<>();
 		List<KanbanList> kanbanlist = new ArrayList<>();
 
 		kanbanlist = service.kanbanListFromAllBoardListNo(allBoardListNo);
 		kanbancardlist = service.kanbanCardList();
+		boardnamelist = service.boardNameSelect(allBoardListNo);
+		System.out.println("보드네임"+boardnamelist);
 		
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
-
+		model.addAttribute("boardnamelist" , boardnamelist);
+		
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));

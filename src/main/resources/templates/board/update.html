@@ -60,10 +60,7 @@
                                         		<input type="checkbox" name="boardNoti" id="notice" th:value="${board.boardNoti}" th:checked="${board.boardNoti} != null">
                                           		<label for="notice">공지사항</label>
                                       		</div>
-	                                        <div class="custom-file col-lg-6" style="margin-left:14px;">
-	                                            <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
-	                                            <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
-	                                        </div>
+	                                        
 	                                        <span th:each="boardFile:${selectBoardDownloadFile}">
 												<a href="javascript:void(0);" th:text="${boardFile.originFileName}" id="fileList" class="boardFileName" style="padding:15px; text-decoration: underline;"></a>
 												<input type="hidden" th:value="${boardFile.fileName}"><br>

@@ -1,5 +1,4 @@
-var teamNo = $('#teamNo').val();
-var no;
+
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
@@ -15,6 +14,28 @@ function getDisplayEventDate(event) {
     displayEventDate = "하루종일";
   }
   return displayEventDate;
+}
+
+function filtering(event) {
+	  var show_username = true;
+	  var show_type = true;
+
+	  var username = $('input:checkbox.filter:checked').map(function () {
+	    return $(this).val();
+	  }).get();
+	  var types = $('#type_filter').val();
+
+	  show_username = username.indexOf(event.username) >= 0;
+
+	  if (types && types.length > 0) {
+	    if (types[0] == "all") {
+	      show_type = true;
+	    } else {
+	      show_type = types.indexOf(event.type) >= 0;
+	    }
+	  }
+
+	  return show_username && show_type;
 }
 
 //캘린더 리사이즈 될때 새로운 날짜 불러오는 함수
@@ -39,8 +60,6 @@ function calDateWhenResize(event) {
 
 //캘린더 드래그앤 드랍시 새로운 날짜 불러오는 함수
 function calDateWhenDragnDrop(event) {
-	console.log("calDateWhenDragnDrop")
-	console.log(event)
 
   // 드랍시 수정된 날짜반영
   var newDates = {
@@ -74,7 +93,7 @@ var calendar = $('#calendar').fullCalendar({
 	
  //이벤트가 랜더링 될떄의 옵션?
   eventRender: function (event, element, view) {
-
+	  console.log(element)
     // 일정에 hover시 요약
     element.popover({
       title: $('<div />', {
@@ -88,7 +107,7 @@ var calendar = $('#calendar').fullCalendar({
           class: 'popoverInfoCalendar'
         }).append('<p><strong>등록자 : </strong> ' + event.id + '</p>')
         .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>일정 설명: </strong> ' + event.description + '</div>'),
+        .append('<div class="popoverDescCalendar"><strong>일정 설명 : </strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
@@ -100,7 +119,6 @@ var calendar = $('#calendar').fullCalendar({
       container: 'body'
     });
     return true;
-
   },
 
   // 주말 숨기기 & 보이기 버튼
@@ -115,6 +133,8 @@ var calendar = $('#calendar').fullCalendar({
       }
     }
   },
+  
+  
   //헤더에 보여질 옵션
   header: {
     left: 'today, prevYear, nextYear, viewWeekends',
@@ -142,6 +162,7 @@ var calendar = $('#calendar').fullCalendar({
   /***************************************************************************
   * 일정 받아옴 ***************/
   events: function (start, end, timezone, callback) {
+	  
     $.ajax({
     	  url: "showCalendar.ajax",
       data: {
@@ -162,17 +183,18 @@ var calendar = $('#calendar').fullCalendar({
   },
   
   //모든 이벤트 랜더링이 완료 되면 실행 
-  eventAfterAllRender: function (view) {
-    if (view.name == "month") {
-      $(".fc-content").css('height', 'auto');
-    }
-  },
+//  eventAfterAllRender: function (view) {
+//    if (view.name == "month") {
+//      $(".fc-content").css('height', 'auto');
+//    }
+//  },
 
+  
+  
   // 일정 리사이즈
-  eventResize: function (event, delta, revertFunc, jsEvent, ui,view) {
-	  console.log(event)
+  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
 	$(".fc-body").unbind('click');
-    $('.popover.fade.top').remove();
+    $('.popover').remove();
 
     /**
 	 * 리사이즈시 수정된 날짜반영 하루를 빼야 정상적으로 반영됨.
@@ -190,22 +212,17 @@ var calendar = $('#calendar').fullCalendar({
         },
         success: function (response) {
           alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-          $('#calendar').fullCalendar('removeEvents');
-          $('#calendar').fullCalendar('refetchEvents');
         }
       });
 
   },
 
   eventDragStart: function (event, jsEvent, ui, view) {
-	console.log(event)
     draggedEventIsAllDay = event.allDay;
   },
 
   // 일정 드래그앤드롭
   eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
-	  
-	console.log(event)
     $('.popover.fade.top').remove();
 
     // 주,일 view일때 종일 <-> 시간 변경불가
@@ -221,7 +238,6 @@ var calendar = $('#calendar').fullCalendar({
 
     // 드롭한 일정 업데이트
     $.ajax({
-        
         url: "updatePlanDrag.ajax",
         data: {
           no : event.no,
@@ -230,8 +246,6 @@ var calendar = $('#calendar').fullCalendar({
         },
         success: function (response) {
           alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-          $('#calendar').fullCalendar('removeEvents');
-          $('#calendar').fullCalendar('refetchEvents');
         }
       });
 
@@ -239,8 +253,8 @@ var calendar = $('#calendar').fullCalendar({
   },
 
   select: function (startDate, endDate, jsEvent, view) {
-	console.log(event)
-    $(".fc-body").unbind('click');
+	
+    $(".fc-body").unbind();
     $(".fc-body").on('click', 'td', function (e) {
     	newEvent(startDate, endDate)
     });
@@ -274,7 +288,7 @@ var calendar = $('#calendar').fullCalendar({
 	  console.log("이벤트 수정")
 	  console.log(event)
 	   $(".fc-body").unbind('click');
-    editEvent(event);
+       editEvent(event);
   },
 
   locale: 'ko',
@@ -283,9 +297,8 @@ var calendar = $('#calendar').fullCalendar({
   allDaySlot: true,
   displayEventTime: true,
   displayEventEnd: true,
-  firstDay: 0, // 월요일이 먼저 오게 하려면 1
+  firstDay: 0, //월요일이 먼저 오게 하려면 1
   weekNumbers: false,
-  dragRevertDuration: 200,
   selectable: true,
   weekNumberCalculation: "ISO",
   eventLimit: true,
@@ -294,7 +307,7 @@ var calendar = $('#calendar').fullCalendar({
       eventLimit: 12
     }
   },
-  eventLimitClick: 'week', // popover
+  eventLimitClick: 'week', //popover
   navLinks: true,
   timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
@@ -307,9 +320,7 @@ var calendar = $('#calendar').fullCalendar({
   dayPopoverFormat: 'MM/DD dddd',
   longPressDelay: 0,
   eventLongPressDelay: 0,
-  selectLongPressDelay: 0,
-  droppable: true,
-  handleWindowResize : true,
+  selectLongPressDelay: 0
  
 });
 
@@ -424,24 +435,34 @@ var newEvent = function (start, end, eventType) {
                      // DB연동시 중복이벤트 방지를 위한
                      $('#calendar').fullCalendar('removeEvents');
                      $('#calendar').fullCalendar('refetchEvents');
-                     $('#calendar').fullCalendar('option', 'contentHeight', 600);
+                     
                    },error:function(){ 
                        alert("일정등록에 실패하였습니다.");
                    }
                });
+        
+        
     });
 };
-
+$('#eventModal').on('hide.bs.modal', function () {
+	console.log("와아아앙")
+    $('#calendar').fullCalendar('refetchEvents');
+})
 
 /*******************************************************************************
  * 일정 편집 **************
  */
 var editEvent = function (event, element, view) {
+	
+	
+	
+//    $('#deleteEvent').data('elementid', event._id); // 클릭한 이벤트 ID
 
-    $('#deleteEvent').data('elementid', event._id); // 클릭한 이벤트 ID
     $('.popover.fade.top').remove();
     $(element).popover("hide");
-
+    
+    
+    
     if (event.allDay === true) {
         editAllDay.prop('checked', true);
     } else {
@@ -505,12 +526,11 @@ var editEvent = function (event, element, view) {
         event.title = editTitle.val();
         event.start = startDate;
         event.end = displayDate;
-// event.type = editType.val();
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
 
-// $("#calendar").fullCalendar('updateEvent', event);
-//        
+ $("#calendar").fullCalendar('updateEvent', event);
+ 
         console.log("updateEvent")
         console.log(event)
         // 일정 업데이트
@@ -533,39 +553,47 @@ var editEvent = function (event, element, view) {
                     // DB연동시 중복이벤트 방지를 위한
                     $('#calendar').fullCalendar('removeEvents');
                     $('#calendar').fullCalendar('refetchEvents');
-                    $('#calendar').fullCalendar('option', 'contentHeight', 600);
                   },error:function(){ 
                       alert("일정수정에 실패하였습니다.");
                   }
               });
     });
- // 삭제버튼
-    $('#deleteEvent').on('click', function () {
-        
-        $('#deleteEvent').unbind();
-        $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
-        
-        editModal.modal('hide');
-        
-        // 삭제시
-        $.ajax({
-            url: "deletePlan.ajax",
-            data: {
-            	 no : event.no
-            },
-            success: function (response) {
-                alert('일정이 삭제되었습니다.');
-                $('#calendar').fullCalendar('removeEvents');
-                $('#calendar').fullCalendar('refetchEvents');
-                $('#calendar').fullCalendar('option', 'contentHeight', 600);
-            },error:function(){ 
-                alert("일정삭제에 실패하였습니다.");
-            }
-        });
+    
+    
+   
+  //삭제버튼
+  $('#deleteEvent').unbind();
+  $('#deleteEvent').on('click', function () {
 
-    });
+      $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
+     
+      var deleteevent = $(this)
+       console.log(deleteevent)
+      
+      editModal.modal('hide');
+      
+      // 삭제시
+      $.ajax({
+          url: "deletePlan.ajax",
+          data: {
+          	 no : event.no
+          },
+          success: function (response) {
+              alert('일정이 삭제되었습니다.');
+              $('#calendar').fullCalendar('removeEvents');
+              $('#calendar').fullCalendar('refetchEvents');
+          },error:function(){ 
+              alert("일정삭제에 실패하였습니다.");
+          }
+      });
+
+  });
+
 
 };
+
+
+
 
 
 
