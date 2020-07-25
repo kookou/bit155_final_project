@@ -12,6 +12,9 @@ public interface BoardDao {
 	//게시판 목록보기
 	public List<Board> getBoardList(int allBoardListNo);
 	
+	//공지사항 목록보기
+	public List<Board> getBoardNoti(int allBoardListNo);
+	
 	//게시판 상세보기
 	public Board selectBoardByNo(int boardNo);
 	

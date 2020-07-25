@@ -1,3 +1,25 @@
+if(bgColor == '5f76e8') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-primary');
+}
+if(bgColor == '22ca80') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-success');
+}
+if(bgColor == 'fdc16a') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-warning');
+}
+if(bgColor == 'ff4f70') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-danger');
+}
+if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-light');
+}
+if(bgColor == '6c757d') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-secondary');
+}
+if(bgColor == '1c2d41') {
+	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-dark');
+}
+
 //팀이름 수정하기
 var teamTitleTag = "";
 $('#editTeamName').click(function() {

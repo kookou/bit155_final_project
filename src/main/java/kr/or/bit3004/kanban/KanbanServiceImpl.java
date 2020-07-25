@@ -3,21 +3,23 @@ package kr.or.bit3004.kanban;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.or.bit3004.cloud.UploadObject;
 import kr.or.bit3004.comment.KanbanComment;
 import kr.or.bit3004.dao.KanbanDao;
-import kr.or.bit3004.kanban.KanbanUpload;
+import kr.or.bit3004.user.SessionUser;
 
 @Service
 public class KanbanServiceImpl implements KanbanService {
@@ -26,11 +28,13 @@ public class KanbanServiceImpl implements KanbanService {
    private KanbanDao dao;
    
    @Override
-   public int insertListTitle(KanbanList kanbanlist, Principal principal) {
+   public int insertListTitle(KanbanList kanbanlist, HttpSession session) {
       System.out.println(kanbanlist);
       
+	  SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+      
       int newKanbanListNo = 0;
-      kanbanlist.setId(principal.getName());
+      kanbanlist.setId(currentUser.getId());
       
       //여기 트랜젝션 처리해야함
       dao.insertListTitle(kanbanlist);
@@ -42,8 +46,9 @@ public class KanbanServiceImpl implements KanbanService {
    
    
    @Override
-   public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal) {
-      kanbanlist.setId(principal.getName());
+   public KanbanList updateKanbanListTitle(KanbanList kanbanlist, HttpSession session) {
+	  SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");   
+	  kanbanlist.setId(currentUser.getId());
       
       dao.updateKanbanListTitle(kanbanlist);
       KanbanList newKanbanList = dao.getAKanbanListByKanbanListNo(kanbanlist.getKanbanListNo());
@@ -83,10 +88,11 @@ public class KanbanServiceImpl implements KanbanService {
    
    
    @Override
-   public int insertCardTitle(String title , int cardIndex, int kanbanListNo, Principal principal) {
+   public int insertCardTitle(String title, int cardIndex, int kanbanListNo, HttpSession session) {
       int newcardNo;
-      String id = principal.getName();
-      dao.insertCardTitle(title, id, cardIndex, kanbanListNo);
+	  SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");   
+      
+      dao.insertCardTitle(title, currentUser.getId(), cardIndex, kanbanListNo);
       
       newcardNo = dao.getANewCardNo();
       System.out.println(newcardNo);
@@ -209,6 +215,13 @@ public class KanbanServiceImpl implements KanbanService {
             
             //파일 객체 리스트를 보내도록 수정
             returnFileList.add(kanbanUpload);
+            
+          //클라우드에 저장하기
+			try {
+				UploadObject.uploadObject("final-project-281709", "king240",originFileName,filePath); 
+			} catch (Exception e) {
+			}
+		
          
          } // for end
       } // if end      

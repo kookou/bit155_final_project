@@ -57,7 +57,7 @@
 	                                        	<input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
 	                                        </div>
 	                                       	<div class="col-lg-6" style="margin-top:8px;">
-                                          		<input type="checkbox" name="boardNoti" th:value="${board.boardNoti}" id="notice">
+                                        		<input type="checkbox" name="boardNoti" id="notice" th:value="${board.boardNoti}" th:checked="${board.boardNoti} != null">
                                           		<label for="notice">공지사항</label>
                                       		</div>
 	                                        <div class="custom-file col-lg-6" style="margin-left:14px;">
@@ -78,9 +78,9 @@
 		                      		</div>
 		                            <div class="form-actions">
 		                                <div class="text-right">
-		                                    <button type="submit" class="btn btn-info" id="updateBtn">수정</button>
-		                                    <button type="reset" class="btn btn-dark">초기화</button>
-		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록으로</a>
+		                                    <button type="submit" id="updateBtn">수정</button>
+		                                    <button type="reset" class="btn btn-light btn-sm">초기화</button>
+		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록</a>
 		                                </div>
 		                            </div>
 		                        </form>
@@ -96,8 +96,34 @@
     <script th:inline="javascript">
 	    /*<![CDATA[*/
 			var boardNoti = [[${board.boardNoti}]];
+			var currUserNickname = [[${session.currentUser.nickname}]];
+		    var currUserImage = [[${session.currentUser.image}]];
+		    var teamNo = [[${session.currentUser.teamNo}]];
+		    var teamMember = [[${teamMember}]];
 		/*]]>*/
     
+		if(bgColor == '5f76e8') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
+		}
+		if(bgColor == '22ca80') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-success');
+		}
+		if(bgColor == 'fdc16a') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-warning');
+		}
+		if(bgColor == 'ff4f70') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-danger');
+		}
+		if(bgColor == 'e8eaec') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-light');
+		}
+		if(bgColor == '6c757d' || bgColor == 'ffffff') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-secondary');
+		}
+		if(bgColor == '1c2d41') {
+			$('#updateBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-dark');
+		}
+		
      	//summernote
 	    $('#summernote').summernote({
 	       	height : 500,                 		 // 에디터 높이
@@ -165,12 +191,11 @@
  			}
  		});
  		
- 		//공지사항 수정할시 checked
- 		if($('#boardNoti') != null){
- 			
- 		}
- 		
-	  	
+ 		//공지사항 check 여부
+ 		console.log($('input[name="boardNoti"]:checked').val());
+ 		$('#notice').click(function(){
+ 			$('input[name="boardNoti"]:checked').val('Y');
+ 		});
     </script>
     
 

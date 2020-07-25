@@ -1,3 +1,25 @@
+if(bgColor == '5f76e8') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-primary');
+}
+if(bgColor == '22ca80') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-success');
+}
+if(bgColor == 'fdc16a') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-warning');
+}
+if(bgColor == 'ff4f70') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-danger');
+}
+if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-light');
+	$('.kanban-list-add-header').css("color", 'black');
+}
+if(bgColor == '6c757d') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-secondary');
+}
+if(bgColor == '1c2d41') {
+	$('.kanban-list-add').attr("class", 'kanban-list-add btn-dark');
+}
 
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"

@@ -3,6 +3,8 @@ package kr.or.bit3004.kanban;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.or.bit3004.comment.KanbanComment;
+import kr.or.bit3004.user.SessionUser;
 
 @RestController
 public class KanbanAjaxController {
@@ -21,10 +24,10 @@ public class KanbanAjaxController {
 	
 
 	@RequestMapping("InsertKanbanList.ajax")
-	public String kanbanListInsert(KanbanList kanbanlist, Principal principal) {
+	public String kanbanListInsert(KanbanList kanbanlist, HttpSession session) {
 		System.out.println("Controller kanbanListInsert");
 		
-		int newKanbanListNo = service.insertListTitle(kanbanlist, principal);
+		int newKanbanListNo = service.insertListTitle(kanbanlist, session);
 		String newKanbanListNoString = Integer.toString(newKanbanListNo);
 		return newKanbanListNoString;
 	}
@@ -38,10 +41,10 @@ public class KanbanAjaxController {
 	
 	
 	@RequestMapping("updateKanbanList.ajax")
-	public KanbanList updateKanbanList(KanbanList kanbanlist, Principal principal) {
+	public KanbanList updateKanbanList(KanbanList kanbanlist, HttpSession session) {
 		System.out.println("Controller updateKanbanList");
 		System.out.println(kanbanlist);
-		return service.updateKanbanListTitle(kanbanlist, principal);
+		return service.updateKanbanListTitle(kanbanlist, session);
 	}
 	
 	
@@ -53,8 +56,14 @@ public class KanbanAjaxController {
 	
 		
 	@RequestMapping("InsertKanbanCard.ajax")
-	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo, Principal principal) {
-		int newcardNo = service.insertCardTitle(title, cardIndex, kanbanListNo, principal);
+	public String kanbanCardInsert(String title, int cardIndex, int kanbanListNo, HttpSession session) {
+		
+		//소셜로그인 유저의 경우 princiapl의 name과 db의 id가 다르다.
+		//principal 말고 session에서 받아와서 사용해야함 ㅠㅠㅠㅠㅠㅠ
+
+		
+		
+		int newcardNo = service.insertCardTitle(title, cardIndex, kanbanListNo, session);
 		String newcardNoString = Integer.toString(newcardNo);
 		return newcardNoString;
 	}
