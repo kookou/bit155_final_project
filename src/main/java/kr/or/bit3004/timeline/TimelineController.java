@@ -1,5 +1,8 @@
 package kr.or.bit3004.timeline;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,21 @@ public class TimelineController {
 		currentUser.setIsTeamLeader(
 				asideService.isTeamLeader(currentUser.getId(), teamNo));
 		
+		Map<String, String> chartInfo = new HashMap<String, String>();
+		
+		chartInfo.put("totalTodos", Integer.toString(service.countTotalTodos(teamNo)));
+		chartInfo.put("totalPosts", Integer.toString(service.countTotalPosts(teamNo)));
+		chartInfo.put("totalFiles", Integer.toString(service.countTotalUploadFiles(teamNo)));
+//		chartInfo.put("activeRate", value);
+		chartInfo.put("progress", Integer.toString(service.getProgress(teamNo)));
+		chartInfo.put("todaysNew", service.getTodaysNewPosts(teamNo));
+		
 		model.addAttribute("timelineList", service.getTimeline(teamNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
+		
+		model.addAttribute("chartInfo", chartInfo);
 		return "timeline/timeline";
 	}
 	

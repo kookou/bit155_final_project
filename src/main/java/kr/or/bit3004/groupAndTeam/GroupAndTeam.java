@@ -16,4 +16,6 @@ public class GroupAndTeam {
 	private String id;
 	private String leader;
 	private String group_name;
+	private String teamMemberId;
+	private String image;
 }

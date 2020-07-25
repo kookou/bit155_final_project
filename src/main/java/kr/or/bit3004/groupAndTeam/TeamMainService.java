@@ -6,6 +6,7 @@ import java.util.Map;
 public interface TeamMainService {
 	public List<GroupAndTeam> selectGroupName(String id);
 	public List<GroupAndTeam> selectGroupAndTeam(String id);
+	public List<GroupAndTeam> getTeamMemberList(String id);
 	public int getCurrGroupNo();
 	public void updateGroupName(GroupAndTeam group);
 	public void insertGroup(GroupAndTeam group);

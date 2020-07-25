@@ -89,8 +89,8 @@
 	
 	<insert id="insertCardTitle">
 	insert into kanban_card
-	(title, write_date, kanban_list_no , card_index)  <!-- `card_index` -->
-	values(#{title}, now(),#{kanbanListNo} , #{cardIndex})
+	(title, id, write_date, kanban_list_no , card_index)  <!-- `card_index` -->
+	values(#{title}, #{id}, now(),#{kanbanListNo} , #{cardIndex})
 	</insert>
 	
 	<update id="updateCardTitle">

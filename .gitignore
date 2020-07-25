@@ -4,6 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 **/application.properties
+**/*.json
 
 ### STS ###
 .apt_generated
@@ -30,5 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/resources/static/assets/images/userImage/
+
 src/main/resources/static/cloud/

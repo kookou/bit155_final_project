@@ -44,13 +44,6 @@
 	    <th:block th:replace="common/addAllBoardModal"></th:block>
 	    <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
 		<div class="page-wrapper">
-		    <div class="page-breadcrumb">
-		        <div class="row">
-		            <div class="col-5 align-self-center">
-		                <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">자유게시판</h2>
-		            </div>
-		        </div>
-		    </div>
 		    <div class="container-fluid">
 		        <div class="row">
 		            <div class="col-12">
@@ -59,31 +52,33 @@
 		                        <form method="post" th:action="@{updateBoard.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}" enctype="multipart/form-data">
 		                          <div class="form-body">
 		                                <div class="row">
-		                                    <div class="col-sm-12 col-md-6">
-		                                        <div class="form-group">
-		                                        	<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
-		                                        	<input type="text" class="form-control" name="title" th:value="${board.title}">
-		                                        </div>
-		                                        <div class="custom-file col-md-12">
-		                                            <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
-		                                            <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
-		                                        </div>
-		                                        <span th:each="boardFile:${selectBoardDownloadFile}">
-													<a href="javascript:void(0);" th:text="${boardFile.originFileName}" id="fileList" class="boardFileName" style="padding:15px; text-decoration: underline;"></a>
-													<input type="hidden" th:value="${boardFile.fileName}"><br>
-												</span>	
-		                                    </div>
-		                                    <div class="col-md-12">
-		                                        <h4 class="card-title"></h4>
-		                                        <div class="form-group">
-		                                    	    <textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" th:text="${board.content}"></textarea>
-		                                        </div>
-		                                    </div>
+	                                        <div class="form-group col-lg-6">
+	                                        	<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
+	                                        	<input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
+	                                        </div>
+	                                       	<div class="col-lg-6" style="margin-top:8px;">
+                                          		<input type="checkbox" name="boardNoti" th:value="${board.boardNoti}" id="notice">
+                                          		<label for="notice">공지사항</label>
+                                      		</div>
+	                                        <div class="custom-file col-lg-6" style="margin-left:14px;">
+	                                            <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
+	                                            <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>
+	                                        </div>
+	                                        <span th:each="boardFile:${selectBoardDownloadFile}">
+												<a href="javascript:void(0);" th:text="${boardFile.originFileName}" id="fileList" class="boardFileName" style="padding:15px; text-decoration: underline;"></a>
+												<input type="hidden" th:value="${boardFile.fileName}"><br>
+											</span>	
+	                                    	<div class="col-md-12">
+	                                        	<h4 class="card-title"></h4>
+	                                        	<div class="form-group">
+	                                    	    	<textarea style="resize: none;" class="form-control" rows="13" id="summernote" name="content" th:text="${board.content}"></textarea>
+	                                        	</div>
+	                                    	</div>
 		                                </div>
 		                      		</div>
 		                            <div class="form-actions">
 		                                <div class="text-right">
-		                                    <button type="submit" class="btn btn-info">수정</button>
+		                                    <button type="submit" class="btn btn-info" id="updateBtn">수정</button>
 		                                    <button type="reset" class="btn btn-dark">초기화</button>
 		                                    <a type="reset"class="btn btn-light btn-sm" th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${session.currentUser.teamNo})}">목록으로</a>
 		                                </div>
@@ -99,22 +94,82 @@
     </div><!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
     <div th:replace="common/scriptB :: scriptB"></div> 
     <script th:inline="javascript">
-    	$(document).ready(function() {
-	    	//summernote
-		  	$('#summernote').summernote({
-		       	height: 300,                 		// 에디터 높이
-		       	minHeight: null,             		// 최소 높이
-		       	maxHeight: null,             		// 최대 높이
-		       	focus: true,                  		// 에디터 로딩후 포커스를 맞출지 여부
-		       	lang: "ko-KR",               		// 한글 설정
-		       	placeholder: '내용을 입력하세요.'   		// placeholder 설정
-		  	});
-		  	
-		  	//업로드된 게시물 클릭했을때 삭제
-		   	$('#fileList').click(function(){
-		   		
-	   		});
-		});
+	    /*<![CDATA[*/
+			var boardNoti = [[${board.boardNoti}]];
+		/*]]>*/
+    
+     	//summernote
+	    $('#summernote').summernote({
+	       	height : 500,                 		 // 에디터 높이
+	       	disableResizeEditor: true,			 // textarea 스크롤 조절 못하게 막음
+	       	minHeight : null,             		 // 최소 높이
+	       	maxHeight : null,             		 // 최대 높이
+	       	focus : true,                  		 // 에디터 로딩후 포커스를 맞출지 여부
+	       	lang : "ko-KR",               		 // 한글 설정
+	       	placeholder : '내용을 입력하세요.',   	 // placeholder 설정
+		  	toolbar: [							 // summernote 툴바설정변경 및 글꼴추가
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+	       	callbacks : {						 //여기 부분이 이미지를 첨부하는 부분
+	       		onImageUpload : function(files) {
+	       			uploadSummernoteImageFile(files[0],this);
+				}
+			}
+	  	});
+     	
+	  	//이미지 첨부 드래그 앤 드랍
+ 		$("div.note-editable").on('drop',function(e){
+        	for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+   	 			uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+        	}
+        	e.preventDefault();
+	    });
+	  	
+ 		//callback에서 사용하는 onImageUpload.ajax 함수
+ 		function uploadSummernoteImageFile(file, editor){
+ 			data = new FormData();
+ 			data.append("file", file);
+ 			$.ajax({
+ 				data : data,
+ 				type : "POST",
+ 				url : "/uploadSummernoteImageFile",
+ 				contentType : false,
+ 				processData : false,
+ 				success : function(data){
+ 					//항상 업로드된 파일의 url이 있어야 한다.
+ 					console.log(data)
+ 					$(editor).summernote('insertImage', data.url);
+ 				},
+ 				error: function(e) {
+ 					console.log("에러");
+ 					console.log(e);
+ 				}
+ 			});
+ 		} 
+ 		//제목안쓰면 게시글 못쓰게 막기
+ 		$('#updateBtn').click(function(){
+ 			console.log($('#title').val());
+ 			if($('#title').val() == ""){
+ 				Swal.fire('', '제목을 입력하세요.', 'warning');
+ 				return false;
+ 			}
+ 		});
+ 		
+ 		//공지사항 수정할시 checked
+ 		if($('#boardNoti') != null){
+ 			
+ 		}
+ 		
 	  	
     </script>
     

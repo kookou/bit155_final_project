@@ -98,8 +98,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-	    
-		System.out.println("controller");
 		service.insertBoard(board);
 		service.insertBoardUploadFile(request);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
@@ -114,7 +112,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
@@ -132,7 +129,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		System.out.println(board);
 		service.insertReboard(board);
 		return "redirect:boardList.do?allBoardListNo="+board.getAllBoardListNo()+"&teamNo="+teamNo;
@@ -146,12 +142,11 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		model.addAttribute("board" , service.selectBoardByBoardNo(boardNo));
 		model.addAttribute("team", asideService.getTeam(teamNo));
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
-		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
+		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //아마도 업로드된 파일목록 보여줄려고 넣은거 같음 아마도
 		model.addAttribute("allBoardListNo",allBoardListNo);
 		model.addAttribute("teamNo", teamNo);
 		return "board/update";
@@ -159,13 +154,14 @@ public class BoardController {
 	
 	//게시판 수정하기
 	@RequestMapping(value = "updateBoard.do" , method = RequestMethod.POST)
-	public String updateBoardService(Board board, int allBoardListNo, int teamNo, HttpSession session) {
+	public String updateBoardService(Board board, int allBoardListNo, int teamNo, int boardNo, MultipartHttpServletRequest request, HttpSession session) {
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-	    
+	    service.insertBoardUploadFile(request);
+	    service.deleteBoardUploadFile(boardNo);
 		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
@@ -178,7 +174,6 @@ public class BoardController {
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
 		service.deleteBoard(boardNo);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
@@ -189,11 +184,10 @@ public class BoardController {
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
 		
-		String fileRoot = System.getProperty("user.dir") + "/src/main/resources/static/cloud/summernoteImage/"; //저장될 외부 파일 경로
+		String fileRoot = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\summernoteImage\\"; //저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //파일 확장자
 		String savedFileName = UUID.randomUUID() + extension; //저장될 파일명
-		
 		File targetFile = new File(fileRoot + savedFileName);
 		
 		try {
@@ -206,7 +200,6 @@ public class BoardController {
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		System.out.println("되는거니? : " + jsonObject);
 		return jsonObject;
 	}
 	

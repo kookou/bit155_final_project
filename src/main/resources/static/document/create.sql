@@ -103,6 +103,7 @@ ALTER TABLE `BOARD_COMMENT` modify `COMMENT_NO` INT auto_increment;
 -- 칸반보드카드
 CREATE TABLE `KANBAN_CARD` (
 	`CARD_NO`        INT           NOT NULL,   -- 카드식별번호
+    `ID`			 VARCHAR(50)   NOT NULL,   -- 카드 작성자
 	`TITLE`          VARCHAR(100)  NOT NULL,   -- 글제목
 	`CONTENT`        VARCHAR(2000) NULL,       -- 글내용
 	`WRITE_DATE`     DATETIME      NOT NULL,   -- 작성일
@@ -118,6 +119,15 @@ ALTER TABLE `KANBAN_CARD`
 		PRIMARY KEY (
 			`CARD_NO` -- 카드식별번호
 		);
+        
+ALTER TABLE `KANBAN_CARD`
+	ADD CONSTRAINT `FK_USER_TO_KANBAN_CARD` -- 사용자 -> 게시판
+		FOREIGN KEY (
+			`ID` -- 아이디
+		)
+		REFERENCES `USER` ( -- 사용자
+			`ID` -- 아이디
+		) ON DELETE CASCADE;
         
 -- 칸반보드카드 시퀀스
 ALTER TABLE `KANBAN_CARD` modify `CARD_NO` INT auto_increment;
@@ -306,10 +316,11 @@ CREATE TABLE `TIMELINE` (
     `TABLE_NAME`   VARCHAR(100) NOT NULL, -- 해당테이블 이름
 	`COLUMN_NAME`  VARCHAR(100) NOT NULL, -- 해당테이블의 기본키 컬럼명
 	`COLUMN_NO`    INT          NOT NULL, -- 해당테이블의 식별번호
+    `ALL_BOARD_NO` INT          NULL,     -- 보드일경우 all_board_list_no
     `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용
     `HISTORY`      VARCHAR(100) NOT NULL, -- 작업내용
     `DML_KIND`     varchar(20)  NOT NULL, -- 작업구분
-    `HISTORY_TIME` DATETIME NOT NULL,     -- 작업시간
+    `HISTORY_TIME` DATETIME     NOT NULL, -- 작업시간
 	`TEAM_NO`      INT          NOT NULL, -- 팀식별번호
 	`ID`           VARCHAR(50)  NOT NULL  -- 아이디
 );
