@@ -146,17 +146,7 @@
                         </div>
                     </div>
                     <!-- column -->
-
-
-
-                </div>
-
-			<!-- 값 확인용 임시 input -->
-	        <input type="text" th:value="${chartInfo}">
-	        <input type="text" th:value="${teamMember}">
-	        
-	        
-	        
+                </div>	        
 	        
 	        <div class="row">
 	            <div class="col-md-12">
@@ -340,6 +330,7 @@
 			var teamMember = [[${teamMember}]];
 			var timelineList = [[${timelineList}]];
 			var todaysNewData = [[${chartInfo.todaysNew}]];
+			var activeRate = [[${chartInfo.activeRate}]];
 		/*]]>*/
 		
 	  //현재시간
@@ -389,30 +380,26 @@
 		
         $(function () {
         	var todaysNewJson = JSON.parse(todaysNewData);
+        	var activeRateJson = JSON.parse(activeRate);
         	console.log(todaysNewJson);
         	
         	
             // knob
             $('[data-plugin="knob"]').knob();
             
-            var chartData = [                    
-            	{ label: '2008', value: 20 },
-                { label: '2009', value: 10 },
-                { label: '2010', value: 5 },
-                { label: '2011', value: 5 },
-                { label: '2012', value: 20 }
-                ];
             
             // Morris donut chart 
+            
+            //회원별 활동 비율
             Morris.Donut({
                 element: 'morris-donut-chart1',
-                data: chartData,
+                data: activeRateJson,
                 resize: true,
-                colors:['#5f76e8', '#01caf1', '#8fa0f3']
+                colors:['#5f76e8', '#01caf1', '#8fa0f3', '#ff4f70', '#22ca80', '#fdc16a']
             });
 
 
-             // Morris donut chart 
+             // 당일 신규 게시물 수 
             Morris.Donut({
                 element: 'morris-donut-chart2',
                 data: todaysNewJson,
@@ -420,54 +407,8 @@
                 colors:['#5f76e8', '#01caf1']
             });
              
-             
-            // ==============================================================
-            // Campaign
-            // ==============================================================
-
-            var chartData = {
-            		1:50,
-            		2:40,
-            		3:30,
-            		4:20
-            };
-            	
-            	
-            	
-            var chart1 = c3.generate({
-                bindto: '#memberActivityRate',
-                data: {
-                    json: [chartData],
-                    keys: {
-                    	value: Object.keys(chartData),
-                    },
-                    type: 'donut',
-                    tooltip: {
-                        show: true
-                    }
-                },
-                donut: {
-                    label: {
-                        show: false
-                    },
-                    title: '회원별 활동 비율',
-                    width: 25 // 원 두께 조절하는 부분
-                },
-                legend: {
-                    hide: true
-                },
-                color: {
-                    pattern: [ // 색상은 이름 가나다 순으로 위에서부터 적용됨
-                    	
-                        '#01caf1', //하늘색
-                        '#ff4f70', //분홍색
-                        '#5f76e8', //보라색
-                        '#edf2f6'  //현재 흰색
-                    ]
-                }
-            });
-
-            d3.select('#memberActivityRate .c3-chart-arcs-title').style('font-family', 'Rubik');
+            
+        
         });
 		
 	</script>
