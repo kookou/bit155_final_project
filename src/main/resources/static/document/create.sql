@@ -612,3 +612,41 @@ ALTER TABLE `GROUP_TEAM`
 		REFERENCES `TEAM` ( -- 팀
 			`TEAM_NO` -- 팀식별번호
 		) ON DELETE CASCADE;
+        
+        
+-- remember me
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) DEFAULT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `last_used` timestamp,
+  PRIMARY KEY (`series`)
+);
+
+-- 칸반 카드 정보 한번에 보기(카드번호, 작성자, 리스트번호, 게시판번호, 팀번호) 뷰        
+CREATE VIEW `CARDS_INFO` AS
+	SELECT KC.`CARD_NO`, KC.`ID`, U.`NICKNAME`, KL.`KANBAN_LIST_NO`, AL.`ALL_BOARD_LIST_NO`, AL.`TEAM_NO`
+	FROM `KANBAN_CARD` AS KC
+		JOIN `KANBAN_LIST` AS KL
+			ON KC.`KANBAN_LIST_NO` = KL.`KANBAN_LIST_NO`
+		JOIN `ALL_BOARD_LIST` AS AL
+			ON KL.`ALL_BOARD_LIST_NO` = AL.`ALL_BOARD_LIST_NO`
+		JOIN `USER` AS U
+			ON KC.`ID` = U.`ID`;
+            
+            
+-- 게시글 정보 한눈에 보기 (게시글 번호, 작성자, 게시판번호, 팀번호) 뷰       
+CREATE VIEW `BOARDS_INFO` AS
+	SELECT BL.`BOARD_NO`, BL.`ID`, U.`NICKNAME`, AL.`ALL_BOARD_LIST_NO`, AL.`TEAM_NO`
+	FROM `BOARD_LIST` AS BL
+		JOIN `ALL_BOARD_LIST` AS AL
+			ON BL.`ALL_BOARD_LIST_NO` = AL.`ALL_BOARD_LIST_NO`		
+		JOIN `USER` AS U
+			ON BL.`ID` = U.`ID`;
+            
+
+-- 전체 게시물(칸반+게시글) 요약 정보(작성자, 닉네임, 팀번호)
+CREATE VIEW `TOTAL_POSTS_SUMMARY` AS
+	select `card_no` as `no`, `id`, `NICKNAME`, `team_no` from `CARDS_INFO`
+	UNION ALL
+	select `BOARD_NO` as `no`, `id`, `NICKNAME`, `team_no` from `BOARDS_INFO`;

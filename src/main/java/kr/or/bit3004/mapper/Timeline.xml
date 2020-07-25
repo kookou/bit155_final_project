@@ -21,18 +21,19 @@
 	
 	<select id="countTotalKanbanCards" resultType="int">
 		select count(*)
-		from kanban_card as kc
-			join kanban_list as kl on kc.KANBAN_LIST_NO = kl.KANBAN_LIST_NO
-		    join all_board_list as al on kl.ALL_BOARD_LIST_NO = al.ALL_BOARD_LIST_NO
-		where team_no = #{teamNo};
+		from `CARDS_INFO`
+		where team_no = #{teamNo}
 	</select>
 	
 	<select id="countTotalBoards" resultType="int">
 		SELECT COUNT(*)
-		from BOARD_LIST AS BL
-			JOIN ALL_BOARD_LIST AS AL
-				ON BL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
-		WHERE TEAM_NO = ${teamNo};
+		from  `BOARDS_INFO`
+		WHERE TEAM_NO = ${teamNo}
+	</select>
+	
+	<select id="countTotalPosts" resultType="int">
+		SELECT COUNT(*) FROM `TOTAL_POSTS_SUMMARY`
+		WHERE TEAM_NO = #{teamNo}
 	</select>
 	
 	<select id="countTotalUploadFiles" resultType="int">
@@ -76,6 +77,14 @@
 				ON BL.ALL_BOARD_LIST_NO = AL.ALL_BOARD_LIST_NO
 		WHERE WRITE_DATE >= CURDATE()
 			AND TEAM_NO = #{teamNo}	
+	</select>
+	
+	<select id="countTotalPostsByMember" resultType="kr.or.bit3004.timeline.ChartData">
+		SELECT `NICKNAME` AS `LABEL`, COUNT(*) AS `VALUE`
+		FROM `TOTAL_POSTS_SUMMARY`
+		where team_no = #{teamNo}
+		group by `ID`
+	
 	</select>
 	
 	<select id="getTodoCountByState" resultType="kr.or.bit3004.timeline.ChartData">

@@ -11,7 +11,56 @@
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- 	
+<!-- datatablecss -->
+	<link href="assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	 <script type="text/javascript">
+	
+		var lang_kor = {
+			"decimal" : "",
+			"emptyTable" : "데이터가 없습니다.",
+			"info" : "_START_ - _END_ (전체 _TOTAL_ )",
+			"infoEmpty" : "0",
+			"infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
+			"infoPostFix" : "",
+			"thousands" : ",",
+			"lengthMenu" : "_MENU_개씩 보기",
+			"loadingRecords" : "로딩중...",
+			"processing" : "처리중...",
+			"search" : "검색 : ",
+			"zeroRecords" : "검색된 데이터가 없습니다.",
+			"paginate" : {
+			    "first" : "첫 페이지",
+			    "last" : "마지막 페이지",
+			    "next" : "다음",
+			    "previous" : "이전"
+			},
+			"aria" : {
+			    "sortAscending" : " :  오름차순 정렬",
+			    "sortDescending" : " :  내림차순 정렬"
+			}
+		}; 
+	<!--
+		$(document).ready(function(){
+			$("#table").DataTable({
+			  /*   "paging" : true,
+			    "pagingType"   : "full_numbers",
+			    "ordering" : true,
+			    "info" : true,
+			    "filter" : true,
+			    scroll:false,
+			   "lengthChange" : true,
+			   // "scrollX":true 
+			    "lengthMenu": [ 10, 20, 30, 40, 50 ],
+			    "displayLength": 10,
+			    "stateSave": true,*/
+			     language: lang_kor ,
+			     ordering: false
+			}); 
+		console.log("datatable실행");
+		});  -->
+
+	</script>  
 </head>
 <body>
 <div th:replace="common/scriptA :: scriptA"></div>
@@ -21,23 +70,43 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	<th:block th:replace="common/aside :: aside"></th:block> 
     <th:block th:replace="common/addAllBoardModal"></th:block>
 <div class="page-wrapper">
- 	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
-	 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
-		<div class="input-group">
-			<div class="custom-file">
-				<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
-				<label for="file" class="custom-file-label">Choose file</label>
+	<div class="page-breadcrumb">
+			<div class="row">
+				<div class="col-7 align-self-center">
+					<h4 class="page-title text-dark font-weight-medium mb-1">Cloud</h4>
+				</div>
 			</div>
-			<div class="input-group-append">
-				<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+				 	<form id="form" name="form" enctype="multipart/form-data" method="POST" class="mt-2 file-upload">
+					 	<input type="hidden" name="teamNo" th:value="${teamNo}" >
+						<div class="input-group">
+							<div class="custom-file">
+								<input id="file" name="file" type="file" multiple="multiple" class="custom-file-input"></input>
+								<label for="file" class="custom-file-label">Choose file</label>
+							</div>
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary" id="upload">등록</button> 
+							</div>
+						</div>
+					</form>
+					</div>
+						<div id="file-list"></div>
+				</div>
+			
+			
 			</div>
 		</div>
-		<div id="file-list"></div>
-	</form>
+	</div>
+	
 </div>
 </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
-
 <script th:inline="javascript">
     /*<![CDATA[*/
    	var currUserImage = [[${session.currentUser.image}]];
@@ -65,16 +134,33 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	//파일 목록 그리는 함수
 	function makeList(result){
 		var html="";
-			html+='<table><tr><th>제목</th><th>용량</th></tr>';
+			html+='<table id="table" class="table table-hover"><thead><tr><th>제목</th><th>용량</th><th>삭제</th></tr></thead>';
 		$.each(result, function(index,obj){
-			html+='<tr><td><a onClick="location.href=&quot;'+obj.fileLink+'&quot;">'+obj.fileName+'</a></td>';
+			html+='<tbody><tr><td><a onClick="location.href=&quot;'+obj.fileLink+'&quot;">'+obj.fileName+'</a></td>';
 			html+='<td>'+obj.fileSize+'B</td>';
 			html+='<td><a type="button" id="delFile"><i class="fas fa-trash-alt"></i>';
 			html+='<input type="hidden" value="'+obj.fileName+'">';
-			html+='</a></td></tr>';
+			html+='</a></td></tr></tbody>';
 		});
 			html+='</table>';
 		$('#file-list').append(html);
+		//데이터테이블그리기
+		var lang_kor = {
+			"info" : "_START_ - _END_ (전체 _TOTAL_ )",
+			"infoEmpty" : "0",
+			"infoFiltered" : "(전체 _MAX_ 개의 글 중 검색결과)",
+			"infoPostFix" : "",
+			"lengthMenu" : "_MENU_개씩 보기",
+			"search" : "검색 : ",
+			"paginate" : {
+			    "next" : "다음",
+			    "previous" : "이전"
+			},
+		}; 
+		var mytbl = $("#table").DataTable({
+			language: lang_kor 
+		});
+		mytbl.ajax.reload;
 	}
 	//파일 업로드 ajax
 	$('#upload').on('click',function(){
@@ -153,8 +239,11 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
    		return false;
    	}
 </script>
-<script th:inline="javascript">
-	
-	</script>
+	<!-- datatable -->
+	<script src="assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script> 
+	<script src="assets/extra-libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  	<script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/c3.min.js"></script>
+    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
 </body>
 </html>

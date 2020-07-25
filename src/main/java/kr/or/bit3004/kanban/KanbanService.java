@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -11,8 +13,9 @@ import kr.or.bit3004.comment.KanbanComment;
 
 @Service
 public interface KanbanService {
+	
 	//List title insert
-	public int insertListTitle(KanbanList kanbanlist, Principal principal);
+	public int insertListTitle(KanbanList kanbanlist, HttpSession session);
 
 	public List<KanbanCard> kanbanCardList();
 	public List<Map> kanbanListJoinCard(int allBoardListNo);
@@ -24,12 +27,12 @@ public interface KanbanService {
 	public void deleteKanbanList(int kanbanListNo);
 	
 	//update Kanban List
-	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, Principal principal);
+	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, HttpSession session);
 	
 	//resort Kanban List
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX);
 	
-	public int insertCardTitle(String title , int cardIndex, int kanbanListNo, Principal principal);
+	public int insertCardTitle(String title, int cardIndex, int kanbanListNo, HttpSession session);
 	
 	public List<KanbanList> kanbanListFromAllBoardListNo(int allBoardListNo);
 	public void kanbanCardTitleUpdate(String title , int cardNo);

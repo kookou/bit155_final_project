@@ -29,10 +29,8 @@ public class TimelineServiceImpl implements TimelineService {
 	}
 	
 	@Override
-	public int countTotalPosts(int teamNo) {		
-		int result = dao.countTotalKanbanCards(teamNo)
-				   + dao.countTotalBoards(teamNo);		
-		return result;
+	public int countTotalPosts(int teamNo) {			
+		return dao.countTotalPosts(teamNo);
 	}
 	
 	@Override
@@ -40,11 +38,11 @@ public class TimelineServiceImpl implements TimelineService {
 		return dao.countTotalUploadFiles(teamNo);
 	}
 
-	@Override // 구조만 짜놓고 아직 완성 안됨
+	@Override // 구조만 짜놓고 아직 완성 안됨 (작업중)
 	public String getActiveRate(int teamNo) {
 
 		JsonArray chartData = new JsonArray();
-		List<ChartData> dataList = new ArrayList<ChartData>();
+		List<ChartData> dataList = dao.countTotalPostsByMember(teamNo);
 		
 		String jsonStringData = JSONArray.toJSONString(dataList);
 		
