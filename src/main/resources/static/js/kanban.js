@@ -1,7 +1,7 @@
 if(bgColor == '5f76e8') {
 	$('.kanban-list-add').attr("class", 'kanban-list-add btn-primary');
 }
-if(bgColor == '5f76e8') {
+if(bgColor == '22ca80') {
 	$('.kanban-list-add').attr("class", 'kanban-list-add btn-success');
 }
 if(bgColor == 'fdc16a') {
@@ -10,8 +10,9 @@ if(bgColor == 'fdc16a') {
 if(bgColor == 'ff4f70') {
 	$('.kanban-list-add').attr("class", 'kanban-list-add btn-danger');
 }
-if(bgColor == 'e8eaec') {
+if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
 	$('.kanban-list-add').attr("class", 'kanban-list-add btn-light');
+	$('.kanban-list-add-header').css("color", 'black');
 }
 if(bgColor == '6c757d') {
 	$('.kanban-list-add').attr("class", 'kanban-list-add btn-secondary');

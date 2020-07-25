@@ -78,8 +78,8 @@
 	                                <div class="form-actions">
 	                                    <div class="text-right">
 	                                        <button type="submit" id="submitBtn">등록</button>
-	                                        <button type="reset" class="btn btn-light">초기화</button>
-	                                        <a type="reset" class="btn btn-light" th:href="@{boardList.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">목록</a>
+	                                        <button type="reset" class="btn btn-light btn-sm">초기화</button>
+	                                        <a type="reset" class="btn btn-light btn-sm" th:href="@{boardList.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">목록</a>
 	                                    </div>
 	                                </div>
 	                            </form>
@@ -103,25 +103,25 @@
  		/*]]>*/
  		
  		if(bgColor == '5f76e8') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-primary');
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
 		}
-		if(bgColor == '5f76e8') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-success');
+		if(bgColor == '22ca80') {
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-success');
 		}
 		if(bgColor == 'fdc16a') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-warning');
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-warning');
 		}
 		if(bgColor == 'ff4f70') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-danger');
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-danger');
 		}
 		if(bgColor == 'e8eaec') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-light');
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-light');
 		}
-		if(bgColor == '6c757d') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-secondary');
+		if(bgColor == '6c757d' || bgColor == 'ffffff') {
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-secondary');
 		}
 		if(bgColor == '1c2d41') {
-			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-dark');
+			$('#submitBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-dark');
 		}
  		
         //summernote

@@ -1,7 +1,7 @@
 if(bgColor == '5f76e8') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-primary');
 }
-if(bgColor == '5f76e8') {
+if(bgColor == '22ca80') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-success');
 }
 if(bgColor == 'fdc16a') {
@@ -10,7 +10,7 @@ if(bgColor == 'fdc16a') {
 if(bgColor == 'ff4f70') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-danger');
 }
-if(bgColor == 'e8eaec') {
+if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-light');
 }
 if(bgColor == '6c757d') {
