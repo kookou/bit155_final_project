@@ -102,6 +102,10 @@
     <script th:inline="javascript">
 	    /*<![CDATA[*/
 	       var currUser = [[${session.currentUser.id}]];
+	       var currUserNickname = [[${session.currentUser.nickname}]];
+	       var currUserImage = [[${session.currentUser.image}]];
+	       var teamNo = [[${session.currentUser.teamNo}]];
+	       var teamMember = [[${teamMember}]];
 	    /*]]>*/
 	    /*<![CDATA[*/
 		    $(document).ready(function() {

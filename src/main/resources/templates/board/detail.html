@@ -153,13 +153,16 @@
     <div th:replace="common/scriptB :: scriptB"></div>
     
     <!-- 여기서부터 java script -->
-    <script>
+    <script th:inline="javascript">
 	    /*<![CDATA[*/
-			var currUser = '[[${session.currentUser.id}]]';
-	    	var id = '[[${selectBoard.id}]]';
-	    	var boardContent = '[[${selectBoard.content}]]';
-	    	var fileName = '[[${selectBoardDownloadFile}]]';
-	    	var teamMember = '[[${teamMember}]]';
+			var currUser = [[${session.currentUser.id}]];
+	    	var id = [[${selectBoard.id}]];
+	    	var boardContent = [[${selectBoard.content}]];
+	    	var fileName = [[${selectBoardDownloadFile}]];
+	    	var teamMember = [[${teamMember}]];
+	    	var currUserNickname = [[${session.currentUser.nickname}]];
+	        var currUserImage = [[${session.currentUser.image}]];
+	        var teamNo = [[${session.currentUser.teamNo}]];
 		/*]]*/
 		
 		/* boardContent = boardContent.replace(/&lt;/gi, "<");
