@@ -38,7 +38,7 @@ public class TimelineServiceImpl implements TimelineService {
 		return dao.countTotalUploadFiles(teamNo);
 	}
 
-	@Override // 구조만 짜놓고 아직 완성 안됨 (작업중)
+	@Override 
 	public String getActiveRate(int teamNo) {
 
 		JsonArray chartData = new JsonArray();
