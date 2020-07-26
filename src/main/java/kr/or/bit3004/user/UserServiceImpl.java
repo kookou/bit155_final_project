@@ -1,5 +1,6 @@
 package kr.or.bit3004.user;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.List;
@@ -66,7 +67,20 @@ public class UserServiceImpl implements UserService, UserDetailsService{
          String path = System.getProperty("user.dir") 
         		 	 + "\\src\\main\\resources\\static\\assets\\images\\userImage";
          String fpath = path + "\\" + fileName;
-//         System.out.println(fpath);
+         
+         File folder = new File(path);
+         
+         if(!folder.exists()) {
+             try {
+                folder.mkdir();
+                
+             } catch (Exception e) {
+                System.out.println("폴더 생성 실패");
+                e.getMessage();
+             }
+             System.out.println("사용자 이미지 폴더가 생성되었습니다.");
+          }
+         
          
          FileOutputStream fs = null;
          

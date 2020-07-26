@@ -158,13 +158,28 @@ public class KanbanServiceImpl implements KanbanService {
             UUID uuid = UUID.randomUUID();            
             String fileName = uuid.toString() + originFileName;
             
-            String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud\\" + teamNo; 
-            File folder = new File(path);
+            String cPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\cloud"; 
+            File cFolder = new File(cPath);
             
-            //폴더가 없을경우 폴더 생성하기
-            if(!folder.exists()) {
+            //클라우드 폴더 없을경우 클라우드 폴더 생성하기
+            if(!cFolder.exists()) {
+                try {
+                	cFolder.mkdir();
+                   
+                } catch (Exception e) {
+                   System.out.println("폴더 생성 실패");
+                   e.getMessage();
+                }
+                System.out.println("클라우드 폴더가 생성되었습니다.");
+             }
+            
+            String path = cPath + "\\" + teamNo;
+            File tFolder = new File(path);
+            
+            //폴더가 없을경우 팀 폴더 생성하기
+            if(!tFolder.exists()) {
                try {
-                  folder.mkdir();
+            	   tFolder.mkdir();
                   
                } catch (Exception e) {
                   System.out.println("폴더 생성 실패");
