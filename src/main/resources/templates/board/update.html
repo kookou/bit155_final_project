@@ -77,7 +77,7 @@
                                       		</div>
 	                                        
 	                                        <span th:each="boardFile:${selectBoardDownloadFile}">
-												<a href="javascript:void(0);" th:text="${boardFile.originFileName}" id="fileList" class="boardFileName" style="padding:15px; text-decoration: underline;"></a>
+												<a href="javascript:void(0);" th:text="${boardFile.originFileName}" id="fileList" class="boardFileName" style="padding:15px; text-decoration: underline;"><i class="far fa-times-circle"></i></a>
 												<input type="hidden" th:value="${boardFile.fileName}"><br>
 											</span>	
 	                                    	<div class="col-md-12">
