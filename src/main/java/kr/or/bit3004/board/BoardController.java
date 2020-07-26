@@ -190,7 +190,6 @@ public class BoardController {
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
 	    service.insertBoardUploadFile(request);
-	    service.deleteBoardUploadFile(boardNo);
 		service.updateBoard(board);
 		return "redirect:boardList.do?allBoardListNo="+allBoardListNo+"&teamNo="+teamNo; 
 	}
