@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", 
 								   "/images/**", "/css/**", "/img/**", "/js/**", 
 								   "/console/**", "/favicon.ico/**", "/assets/**", 
-								   "/dist/**", "/error**");
+								   "/dist/**");
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.authorizeRequests()
 						.antMatchers("/user/**", "/resetpassword") 
 								.hasAnyRole("ADMIN", "USER")
-						.antMatchers("/", "/login/**", "/signin/**", "/signup/**", "/oauth2/**")
+						.antMatchers("/", "/login/**", "/signin/**", "/signup/**", "/oauth2/**", "/error/**")
 								.permitAll()
 						.anyRequest().authenticated();
 			
@@ -118,7 +118,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.formLogin()
 							.loginPage("/signin")
 							.defaultSuccessUrl("/")
-							.failureUrl("/signin?error=true")
 							.usernameParameter("id")
 							.passwordParameter("pwd")
 							
