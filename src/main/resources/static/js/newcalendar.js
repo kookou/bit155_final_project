@@ -16,7 +16,6 @@ function renderFullCalendar(){
 	// 풀캘린더 그리기
 	calendar = new FullCalendar.Calendar(calendarEl, {
 		defaultTimedEventDuration: '01:00:00',
-		nextDayThreshold: "09:00:00",
 		timeFormat: 'HH:mm',
 	
 		  
@@ -266,18 +265,11 @@ function renderFullCalendar(){
 		
 		console.log("======edit 함수 실행==========");
 		console.log(event)
-		console.log(event.event.end)
-		// JSON 형태로 데이터 출력해보고 싶으면 아래 실행 ---지우지 마세요---
-//		console.log("나와: "+JSON.stringify(event));
 
 		var title = event.event.title;
 		var content = event.event.extendedProps.description;
 		var no = event.event.extendedProps.no;
 		var allday = event.event.allDay; // 내가 넣은 allday  //exProps로 잡히지 않는다 undefined
-	
-		// calendar의 allDay는...
-//		var allDay = event.el.fcSeg.eventRange.def.allDay;
-//		console.log("이거? "+allDay);
 
 		var start = event.event.start;
 		var end = event.event.end; 
@@ -316,23 +308,6 @@ function renderFullCalendar(){
 
 		// 모달 열기 > 마지막에 열자
 		$('#eventModal').modal('show');
-
- 		//하루종일 체크시, 일정 끝 인풋창 숨김 메서드
-//		if($("#customCheck2").is(":checked")){
-//	           console.log('하루종일 체크함');
-//	           $('#edit-end').attr("type","hidden");
-//	    }
- 		
-//		$('#customCheck2').change(function(){
-//	        if($("#customCheck2").is(":checked")){
-//	           console.log('하루종일 체크함');
-//	           $('#edit-end').attr("type","hidden");
-//	        }else{
-//	        	console.log('하루종일 체크 해제함');
-//	        	$('#edit-end').attr("type","text");
-//	        }
-//	    }); 
-
 		
 		if($('#title').val() == "") {
 			alert('일정명을 입력하세요.');
@@ -343,6 +318,7 @@ function renderFullCalendar(){
 			alert('끝나는 날짜가 시작 날짜보다 앞설 수 없습니다.');
 			return false;
 		}
+		
 		$('#updateEvent').unbind();
 		$('#updateEvent').on('click', function() {
 
@@ -354,7 +330,6 @@ function renderFullCalendar(){
 			else { isAllDay = false; }
 			
 			console.log("올데이발:"+isAllDay);
-
 			
 			//event 객체 업데이트 (DB는 아님)
 			event.event.setProp("title", $('#edit-title').val());
@@ -364,10 +339,7 @@ function renderFullCalendar(){
 			event.event.setAllDay(isAllDay);
 			event.event.setExtendedProp("content", $('#edit-desc').val());
 			
-
 			$('#eventModal').modal('hide');
-
-			 $("#calendar").fullCalendar('updateEvent', event);
 
 			$.ajax({
 					type: "post",

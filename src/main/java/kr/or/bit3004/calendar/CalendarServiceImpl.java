@@ -37,4 +37,8 @@ public class CalendarServiceImpl implements CalendarService{
 	public void deletePlan(Calendar calendar) {
 		dao.deletePlan(calendar);
 	}
+	@Override
+	public int getLastNo() {
+		return dao.getLastNo();
+	}
 }

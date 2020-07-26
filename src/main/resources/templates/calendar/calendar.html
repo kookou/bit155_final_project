@@ -14,8 +14,7 @@
 <!-- Custom CSS -->
 <!-- Custom CSS -->
 <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet" />
-<link href="assets/libs/fullcalendar/dist/fullcalendar.min.css"
-	rel="stylesheet" />
+<link href='https://unpkg.com/fullcalendar@5.1.0/main.min.css' rel='stylesheet' />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
@@ -23,7 +22,6 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!-- <link rel="stylesheet" href="js/pages/calendar/calendar.css"/> -->
-<link href="css/style.min.css" rel="stylesheet">
 <link href="css/style.min.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
@@ -67,9 +65,6 @@
 			<!-- ============================================================== -->
 
 			<div class="container">
-				<input type=text id="teamNo" th:value="${param.teamNo}" hidden />
-
-
 				<div id="wrapper">
 					<div id="loading"></div>
 					<div id="calendar"></div>
@@ -118,8 +113,8 @@
 										id="edit-start">
 								</div>
 
-								<div class="form-group">
-									<label class="col-xs-4" for="edit-end">일정 마감 일시</label> <input
+								<div class="form-group" id="hide-end">
+									<label class="col-xs-4" for="edit-end" >일정 마감 일시</label> <input
 										type="text" class="form-control" name="edit-end" id="edit-end">
 								</div>
 
@@ -173,17 +168,24 @@
 	<!--This page JavaScript -->
 	<script src="js/pages/calendar/arraylist.js"></script>
 	<script src="assets/libs/moment/min/moment.min.js"></script>
-	<script src="js/pages/calendar/fullcalendar.min.js"></script>
+<!-- fullcalendar -->
+
+	<script src='https://unpkg.com/fullcalendar@5.1.0/main.min.js'></script>
+
+
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
 
-	<script src="js/pages/calendar/select2.min.js"></script>
+<!-- 	<script src="js/pages/calendar/select2.min.js"></script> -->
 	<script src="js/pages/calendar/ko.js"></script>
-	<script src="js/pages/calendar/michincalendar.js"></script>
+	<script src="js/newcalendar.js"></script>
 
 
 	<div th:replace="common/scriptB :: scriptB"></div>
 	<script th:inline="javascript">
+	$(function(){
+		renderFullCalendar();
+	});
     /*<![CDATA[*/
   	 var currUserId = [[${session.currentUser.id}]];
    	var currUserNickname = [[${session.currentUser.nickname}]];

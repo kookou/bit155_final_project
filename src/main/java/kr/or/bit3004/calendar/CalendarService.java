@@ -16,5 +16,5 @@ public interface CalendarService {
 	
 	public void deletePlan(Calendar calendar);
 	
-	
+	public int getLastNo();
 }

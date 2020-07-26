@@ -557,12 +557,14 @@ $(document).on('click', "#addcard",function(){
         console.log("index는 0부터 시작함");
 	    console.log(kanbanCardNo.index());
 	    
+	    let kanbancardtitleinput =  $(input).val().trim();
+	    
         $(input).blur(function() {
-            if($(input).val() == "") {
-                alert('Card title을 입력하세요');
-                $(input).focus();
-                return;
+            if(kanbancardtitleinput == "") {
+            	$(this).closest('.kanban-card-list').remove()
+                return ;
             }
+            
             var cardtitle = $(input).val();
             $(this).parent().text($(input).val());
             console.log("card")
