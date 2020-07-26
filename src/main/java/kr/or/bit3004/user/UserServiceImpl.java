@@ -125,12 +125,31 @@ public class UserServiceImpl implements UserService, UserDetailsService{
    }
 
    @Override
-   public void updateUserPwd(String id, String pwd) {
+   public String updateUserPwd(String pwd, String newPwd, HttpSession session) {
       
-      pwd = bCryptPasswordEncoder.encode(pwd);
+      User currentUser = dao.getUser(((User)session.getAttribute("currentUser")).getId());
+      String result = "";
       
-      dao.updateUserPwd(id, pwd);   
+      System.out.println("currentUser : "+ currentUser);   
+	  System.out.println(bCryptPasswordEncoder.matches(pwd, currentUser.getPwd()));
+      
+      if(!bCryptPasswordEncoder.matches(pwd, currentUser.getPwd())) {
+    	  result = "비밀번호 변경 실패";
+    	  
+      }else {
+    	  newPwd = bCryptPasswordEncoder.encode(newPwd);
+          dao.updateUserPwd(currentUser.getId(), newPwd);  
+    	  
+    	  result = "비밀번호 변경 시도 완료";
+      }
+      
+      System.out.println(result);
+      return result;
    }
+   
+   
+   
+   
 
    @Override
    public User getUser(String id) {

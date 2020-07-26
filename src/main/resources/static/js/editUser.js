@@ -29,7 +29,7 @@
                 
                 if(name == "비밀번호확인"){
                    if( $('#pwd').hasClass('is-valid') === true ){
-                        if($('#pwd').val() != input.val()){
+                        if($('#newPwd').val() != input.val()){
                             let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
                             input.removeClass("is-valid");
                             input.addClass("is-invalid");
@@ -45,6 +45,27 @@
                     input.next().append(invalidMessage);
                    }
                             
+                }else if(name == "새로운 비밀번호"){
+                	if( $('#pwd').hasClass('is-valid') === true ){
+                		
+                        if($('#pwd').val() == input.val()){
+                            let invalidMessage = '이미 사용중인 비밀번호입니다 <br>'
+                            				   + '다른 비밀번호를 사용해주세요 <br>';
+                            input.removeClass("is-valid");
+                            input.addClass("is-invalid");
+                            input.next().append(invalidMessage);
+                        }else{
+                            input.removeClass("is-invalid");
+                            input.addClass("is-valid");
+                        }
+                		
+                	}else{
+                        input.removeClass("is-valid");
+                        input.addClass("is-invalid");
+                        let invalidMessage = '형식에 맞는 현재 비밀번호를 먼저 입력하세요 <br>';
+                        input.next().append(invalidMessage);
+                    }
+                	
                 }else{
                     
                     if ( regExp.test(input.val()) == false) {
@@ -93,17 +114,14 @@
             inputCheck($('#newPwdCheck'), pwdRegExp, "비밀번호확인");
             
             //별명이 형식에 맞지 않을 시 submit 버튼 비활성화
-            $('input').on('change keyup', function() {
+            $('#editUserInfoFormDiv input').on('change keyup', function() {
                let nickNotOk = $('#nickName').hasClass('is-invalid');
                
-               console.log("===");
-               console.log(nickNotOk);
-               
                if(!nickNotOk){
-                   console.log("닉네임이 형식에 맞거나 수정안함");
+//                   console.log("닉네임이 형식에 맞거나 수정안함");
                    $('#submit').removeAttr('disabled');
                }else{
-            	   console.log("닉네임이 형식에 맞지 않음");
+//            	   console.log("닉네임이 형식에 맞지 않음");
                    if(!($('#submit').is(['disabled']))){
                         $('#submit').attr('disabled', 'disabled');
                    }
@@ -111,9 +129,67 @@
              });
             
             
+            //현재 비밀번호, 새 비밀번호가 형식에 맞지 않을 시 submit 버튼 비활성화
+            $('#editPassword input').on('change keyup', function() {
+               let pwdOk = $('#pwd').hasClass('is-valid');
+               let newPwdOk = $('#newPwd').hasClass('is-valid');
+               let newPwdCheckOk = $('#newPwdCheck').hasClass('is-valid');
+               
+               if(pwdOk && newPwdOk && newPwdCheckOk){
+//                   console.log("셋 다 형식에 맞음");
+                   $('#editPwdSubmit').removeAttr('disabled');
+               }else{
+//            	   console.log("적어도 하나가 형식에 맞지 않음");
+                   if(!($('#editPwdSubmit').is(['disabled']))){
+                        $('#editPwdSubmit').attr('disabled', 'disabled');
+                   }
+               }
+             });
             
-            // 수정 폼 리셋(ie에서는 작동하지 않을 수 있음)
+            
+            
+            
+            
+            //비밀번호 변경 모달 ajax
+            $('#editPwdSubmit').on('click', function(e) {
+//            	console.log("editPwdSubmit");
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "editUser/editPwd.ajax",
+                    data: {
+                    		"pwd" : $('#pwd').val().trim(),
+                    		"newPwd" : $('#newPwd').val().trim()
+                    	},
+                    success: function(response) {
+                    	console.log("editPwdSubmit");
+                    	let icon = "";
+                    	
+                    	if(response == '비밀번호 변경 시도 완료'){
+                    		icon = "success";
+                    	}else{
+                    		icon = "warning";
+                    	}
+                    	
+                    	Swal.fire('', response, icon);
+                    	
+                    	$('#editPassword input').val("");  
+                    	$('#editPassword input').removeClass('is-invalid');
+                    	$('#editPassword input').removeClass('is-valid');
+                    	$('#editPassword .invalid-feedback').empty();
+                    	
+                    },
+                    error: function() {
+                        alert('Error');
+                    }
+                });
+            });
+            
+            
+            
+            // 회원정보수정 폼 리셋(ie에서는 동작하지 않을 수 있음)
             $('#reset').on('click', function() {
+            	
                 $('input').removeClass('is-invalid');
                 $('input').removeClass('is-valid');
                 
@@ -132,6 +208,7 @@
             $('#editPassword').on('hide.bs.modal', function(){	
             	$('#editPassword input').val("");  
             	$('#editPassword input').removeClass('is-invalid');
+            	$('#editPassword input').removeClass('is-valid');
             	$('#editPassword .invalid-feedback').empty();
             	
             });
@@ -139,15 +216,26 @@
             
             //회원 탈퇴
             $('#delAccount').on('click', function() {
-                console.log("여기");
                 $(this).removeAttr("href"); // 여기서 href 속성을 없애줘야 controller에서 redirect가 제대로 먹는다
-               let result = confirm("정말 탈퇴하시겠습니까? \n지금까지의 모든 활동 기록이 사라집니다."); 
-               if(result){
-                   console.log("탈퇴진행"); 
-                   location.replace('deleteuser?id='+$('#id').val());
-               }else{
-            	   $(this).attr("href", "");
-               } 
+               
+                
+                Swal.fire({
+                	  title: '정말 탈퇴하시겠습니까?',
+                	  text: "지금까지의 모든 활동 기록이 사라집니다.",
+                	  icon: 'warning',
+                	  showCancelButton: true,
+                	  confirmButtonColor: '#3085d6',
+                	  cancelButtonColor: '#d33',
+                	  confirmButtonText: '탈퇴하기',
+                	  cancelButtonText: '취소'
+                	}).then((result) => {
+                	  if (result.value) {
+                          location.replace('deleteuser?id='+$('#id').val());
+                	  }else{
+                   	   $(this).attr("href", "");
+                	  }
+                	});
+                
             });
             
             
