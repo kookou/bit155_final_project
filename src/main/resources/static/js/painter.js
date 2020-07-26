@@ -810,12 +810,16 @@ function saveImage() {
 	var imageName;
 	var savedImage = document.getElementById("saveImage");
 	var image;
+	
 	Swal.fire({
-	    text: "Write something interesting:",
+	    text: "이미지 제목을 입력해 주세요",
 	    input: 'text',
-	    showCancelButton: true        
+	    showCancelButton: true,
+	    confirmButtonText: '저장',
+	    cancelButtonText: '취소'     
 	}).then((result) => {
 	    if (result.value) {
+	    var promise = 
 	    	imageName  = result.value
 	    	if (imageName.length == 0) {
 	    	    imageName = "image";
@@ -828,13 +832,12 @@ function saveImage() {
 	    	    .replace("image/png", "image/octet-stream");
 	    	  savedImage.setAttribute("download", imageName);
 	    	  savedImage.setAttribute("href", image);
+	    	  
+	    	promise.done(reloadListPromise);
+	        promise.fail(promiseError);
 	    }
 	});
-	 
-//	
-//  var imageName = document.getElementById("title").value;
-//  console.log(imageName.lenght);
-  
+
 }
 
 function addHistory(cmd) {
