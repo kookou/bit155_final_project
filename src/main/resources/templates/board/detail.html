@@ -33,18 +33,20 @@
 		    margin-bottom: 15px;
 		}
 		.comment-content {
-		    margin-left: 35px;
+		    margin-left: 42px;
 		}
-		.popover{
+		.popover {
 		 	/* height: 30px; */
 		 	max-height: 1000px;
 		 	/* width: 100px; */
 		 	max-width: 1000px
 		}
-		#boardName{
+		#boardName {
 			color:#5f76e8;
 		}
-		
+		.comment {
+			padding: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -86,11 +88,14 @@
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">
-	                                                <img src="assets/images/userImage/user.png" alt="user" class="rounded-circle" width="30">
+	                                                <img src="assets/images/userImage/user.png" alt="user" class="rounded-circle" width="35">
 	                                                <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
 	                                            </div>
 	                                            <div style="float: right;">
-	                                                <span th:text="${selectBoard.writeDate}"></span>
+	                                                <span th:if="${#dates.format(selectBoard.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+		                                         			th:text="${#dates.format(selectBoard.writeDate, 'HH:mm:ss')}"></span>
+			                                         <span th:unless="${#dates.format(selectBoard.writeDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+			                                         		th:text="${#dates.format(selectBoard.writeDate, 'yyyy-MM-dd')}"></span>
 	                                               	조회수 <span th:text="${selectBoard.views}"></span>
 	                                            </div>
 	                                            <div style="clear: both;">
@@ -344,22 +349,43 @@
 	    		} else {
 	    			html += '<div class="comment">';
 	    		}
-	   			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="30">';
-	  				html += 		'<b><span> '+ obj.nickname +'</span></b>';
+	   			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="35">&nbsp;';
+	  				html += 		'<b><span> '+ obj.nickname +'</span></b>&nbsp;&nbsp;';
 	  				if($('#writer').text() == obj.nickname) {
-					html += 	'<span class="text-info"> 작성자</span>';
+					html += 	'<span class="writerBadge">작성자</span>';
 	  				}
 				html += 		'<br>';
 				html += 		'<div class="comment-content">';
 				html += 			'<h5>'+ obj.content +'</h5>';
 				html += 			'<h6 style="color: rgb(180, 180, 180);">'+ obj.writeDate +'</h6>';
-				html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment" name="updateComment"><i class="fas fa-edit" ></i></a>';
-	               html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
+				html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment iconStyle" name="updateComment"><i class="fas fa-edit" ></i></a>&nbsp;';
+	               html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment iconStyle" name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
 				html += 		'</div>';
 				html += 	'</div>';
 				html += 	'<hr class="my-1">';
 	    	});
 	    	$('#comment-list').append(html);
+	    	if(bgColor == '5f76e8') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-primary');
+	    	}
+	    	if(bgColor == '22ca80') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-success');
+	    	}
+	    	if(bgColor == 'fdc16a') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-warning');
+	    	}
+	    	if(bgColor == 'ff4f70') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-danger');
+	    	}
+	    	if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-light');
+	    	}
+	    	if(bgColor == '6c757d') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-secondary');
+	    	}
+	    	if(bgColor == '1c2d41') {
+	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-dark');
+	    	}
 	    }
 	    
 	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
