@@ -5,6 +5,7 @@
   font-size: 13px;
   
 }
+
 .popover-body{
 	min-width :180px;
 	padding: 15px;
@@ -25,8 +26,6 @@
   height: 100%;
   padding: 15px 15px;
   font-size: 13px;
-  /* border-radius: 5px 5px 0 0;
-  */
   
 }
 
@@ -52,7 +51,7 @@
   -webkit-box-orient: vertical;
 }
 
-.popover-title {5
+.popover-title {
   background: transparent;
   font-weight: 600;
   padding: 0 !important;
@@ -66,14 +65,9 @@
   
 }
 
- 
-
 .opacityWeekend {
   background-color: #f4f4fb !important;
 }
-
-
-
 
 .fc-unthemed .fc-day-grid td:not(.fc-axis).fc-event-container {
   /* padding: 0.2rem 0.5rem; */
@@ -118,33 +112,6 @@
 .popover.bottom .arrow:after {
   border-bottom-color: #fff;
 }
-
-/* .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  Preferred icon size
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  Support for all WebKit browsers.
-  -webkit-font-smoothing: antialiased;
-  Support for Safari and Chrome.
-  text-rendering: optimizeLegibility;
-
-  Support for Firefox.
-  -moz-osx-font-smoothing: grayscale;
-
-  Support for IE.
-  -webkit-font-feature-settings: 'liga';
-          font-feature-settings: 'liga';
-} */
 
 #add-color,
 #edit-color {
