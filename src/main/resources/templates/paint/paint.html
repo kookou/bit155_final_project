@@ -84,12 +84,30 @@
     border: 1px solid #e9ecef;
     border-radius: 2px;
     transition: border-color .15s;
+    margin-bottom: 8px;
 	}
 	
 	.colorPickerarea{
-	margin-top: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	}
-      
+
+	.btn-group{
+	margin-bottom: 5px;
+	width : 86px;
+	}
+	.btttn{
+	margin-bottom: 5px;
+	width : 86px;
+	}
+	.form-control{
+	margin : 0px;
+	 width:100%;
+	}
+      .form-group{
+      margin : 0px;
+     width:86px;
+      }
     </style>
   </head>
 
@@ -121,75 +139,74 @@
        <!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
           <div>
           <input type="hidden" teamNo=${teamNo}>
-            <div class="jb_table" style="margin-left:20px">
+            <div class="jb_table" style="margin-left:30px; margin-right:10px">
               <div class="color-margin">
-                <span class="cell">
+                <span class="">
                   <img src="img/red.png" class="colorChip" onclick="selectColor('red')" />
                   <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')" style="margin-left:2px;"/>
                 </span>
               </div>
                <div class="color-margin">
-                <span class="cell">
+                <span class="">
                    <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
                    <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')" style="margin-left:2px"/>    		
                 </span>
               </div>
               <div class="color-margin">
-                <span class="cell">
+                <span class="">
                   <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" />
                   <img src="img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" style="margin-left:2px"/>
                 </span>
               </div>
                 <div class="color-margin">
-                <span class="cell">
+                <span class="">
                   <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')"/>
                   <img src="img/white.png" class="colorChip" onclick="selectColor('white')" style="margin-left:2px"/>
                 </span>
               </div>
                 <div class="color-margin">
-                <span class="cell">
+                <span class="">
                  <img src="img/green.png" class="colorChip" onclick="selectColor('green')"/>
                  <img src="img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')" style="margin-left:2px"/>
                 </span>
               </div>
                <div class="color-margin">
-                <span class="cell">
+                <span class="">
                 <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" />
                 <img src="img/gray.png" class="colorChip" onclick="selectColor('gray')" style="margin-left:2px"/>
                 </span>
               </div>
                 <div class="color-margin">
-                <span class="cell">
+                <span class="">
               	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" />
                    <img src="img/black.png" class="colorChip" onclick="selectColor('black')" style="margin-left:2px"/>
                 </span>
               </div>
               <div class="colorPickerarea">
-              		<h5>Color Picker</h5>
                   <span>
                   <input id="colorPicker" type="color" class="colorPicker-width" value="#BDB3FF">
                   </span>
               </div>
               <div class="btn1">
               <div class="btn-group" role="group" aria-label="First group">
-                   <button type="button" class="btn btn-secondary" onclick="selectTool('pencil')"><i class="fas fa-pencil-alt" ></i></button>
-                   <button type="button" class="btn btn-secondary" onclick="selectTool('filled')"><i class="fas fa-fill-drip" ></i></button>
+                   <button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="selectTool('pencil')"><i class="fas fa-pencil-alt" ></i></button>
+                   <button type="button" class="btn waves-effect waves-light btn-outline-secondary" id="fill" onclick="selectTool('filled')"><i class="fas fa-fill-drip" ></i></button>
                </div>
-                  </div>                     
+               </div>                     
  
            <div class="btn2">
               <div class="btn-group" role="group" aria-label="First group">
-  				<button type="button" class="btn btn-secondary" onclick="undo()"> <i class="fas fa-reply"></i></button>
-  				<button type="button" class="btn btn-secondary" onclick="redo()"><i class="fas fa-share"></i></button>
+  				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="undo()"> <i class="fas fa-reply"></i></button>
+  				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="redo()"><i class="fas fa-share"></i></button>
+				</div>
 			</div>
-			</div>
-            <button class="btn btn-secondary waves-effect waves-light" type="button" onClick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
-          <div class="padd"></div>
+            <button class="btn waves-effect waves-light btn-outline-secondary btttn" type="button" onClick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
 
-          <div>Title <input id="title" size="10" /></div>
+         <div class="form-group">
+              <input type="text" class="form-control" id="nametext" placeholder="제목">
+          </div>
           <div>
           <button class="btn btn-primary" type="submit" onClick="saveImage()">저장</button>
-            
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>
@@ -353,7 +370,18 @@
 	          console.log($('selectColor').val());
 	          ctx.fillRect(0, 0, 720, 720);
 	      });//색 채우기
-		      
+		  
+	      
+	      const { value: title } = await Swal.fire({
+	    	  text: '저장할 제목을 입력해 주세요',
+	    	  input: '제목',
+	    	  inputPlaceholder: '제목 입력'
+	    	})
+
+	    	if (title) {
+	    	  Swal.fire(`Entered email: ${email}`)
+	    	}
+	      
    </script>
   
   </body>
