@@ -218,7 +218,6 @@ function drwaCommand() {
           break;
       }
 
-      console.log("toCommand: " + newCommand);
       return newCommand;
     }
   }
@@ -802,21 +801,39 @@ function ellipseMouseUp(event) {
   }
 }
 
+//$('.saveimage').on('click',function(){
+//	
+//})
+
 function saveImage() {
-  console.log("saveImage()");
-  var imageName = document.getElementById("title").value;
-  console.log(imageName.lenght);
-  if (imageName.length == 0) {
-    imageName = "image";
-  }
-  imageName += ".png";
-  var savedImage = document.getElementById("saveImage");
-  var image = document
-    .getElementById("canvas")
-    .toDataURL("image/png")
-    .replace("image/png", "image/octet-stream");
-  savedImage.setAttribute("download", imageName);
-  savedImage.setAttribute("href", image);
+	console.log("오니?")
+	var imageName;
+	
+	Swal.fire({
+	    text: "Write something interesting:",
+	    input: 'text',
+	    showCancelButton: true        
+	}).then((result) => {
+	    if (result.value) {
+	    	imageName  = result.value
+	    	if (imageName.length == 0) {
+	    	    imageName = "image";
+	    	  }
+	    	  imageName += ".png";
+	    	  var savedImage = document.getElementById("saveImage");
+	    	  var image = document
+	    	    .getElementById("canvas")
+	    	    .toDataURL("image/png")
+	    	    .replace("image/png", "image/octet-stream");
+	    	  savedImage.setAttribute("download", imageName);
+	    	  savedImage.setAttribute("href", image);
+	    }
+	});
+	 
+//	
+//  var imageName = document.getElementById("title").value;
+//  console.log(imageName.lenght);
+  
 }
 
 function addHistory(cmd) {

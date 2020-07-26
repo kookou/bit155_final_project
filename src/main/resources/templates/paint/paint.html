@@ -92,7 +92,7 @@
 	margin-bottom: 10px;
 	}
 
-	.btn-group{
+	.btnn{
 	margin-bottom: 5px;
 	width : 86px;
 	}
@@ -188,25 +188,25 @@
                   </span>
               </div>
               <div class="btn1">
-              <div class="btn-group" role="group" aria-label="First group">
+              <div class="btn-group btnn" role="group" aria-label="First group">
                    <button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="selectTool('pencil')"><i class="fas fa-pencil-alt" ></i></button>
                    <button type="button" class="btn waves-effect waves-light btn-outline-secondary" id="fill" onclick="selectTool('filled')"><i class="fas fa-fill-drip" ></i></button>
                </div>
                </div>                     
  
            <div class="btn2">
-              <div class="btn-group" role="group" aria-label="First group">
+              <div class="btn-group btnn" role="group" aria-label="First group">
   				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="undo()"> <i class="fas fa-reply"></i></button>
   				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="redo()"><i class="fas fa-share"></i></button>
 				</div>
 			</div>
-            <button class="btn waves-effect waves-light btn-outline-secondary btttn" type="button" onClick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
+            <button class="btn waves-effect waves-light btn-outline-secondary btttn" type="button" onclick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
 
          <div class="form-group">
               <input type="text" class="form-control" id="nametext" placeholder="제목">
           </div>
-          <div>
-          <button class="btn btn-primary" type="submit" onClick="saveImage()">저장</button>
+          <div class="saveimage">
+          <button class="btn btn-primary" onclick="saveImage()">저장</button>
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>
@@ -223,10 +223,10 @@
     </div>
     </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
-    <script src="js/painter.js"></script>
+	<script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script> -->
+    
     <!-- 컬러피커 -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
@@ -237,8 +237,7 @@
 	var teamMember = [[${teamMember}]];
     /*]]>*/
 	//		$('.page-wrapper').css('position', '');
-   </script>
-   <script language="JavaScript">
+   
     /*       var textareaList = ["history"]; */
     var canvas = document.querySelector("#canvas");
     var ctx = canvas.getContext("2d");
@@ -371,16 +370,6 @@
 	          ctx.fillRect(0, 0, 720, 720);
 	      });//색 채우기
 		  
-	      
-	      const { value: title } = await Swal.fire({
-	    	  text: '저장할 제목을 입력해 주세요',
-	    	  input: '제목',
-	    	  inputPlaceholder: '제목 입력'
-	    	})
-
-	    	if (title) {
-	    	  Swal.fire(`Entered email: ${email}`)
-	    	}
 	      
    </script>
   
