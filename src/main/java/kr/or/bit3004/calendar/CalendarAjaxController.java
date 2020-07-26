@@ -28,9 +28,8 @@ public class CalendarAjaxController {
 	@RequestMapping("showCalendar.ajax")
 	 public List<Calendar> schedule(Model model, int teamNo){
 		System.out.println("캘린더 리스트");
-		  System.out.println(service.showCalendar(teamNo));
-//		  model.addAttribute("showCalendar",service.showCalendar());
-		  return service.showCalendar(teamNo);
+		System.out.println(service.showCalendar(teamNo));
+		return service.showCalendar(teamNo);
   }
 	@RequestMapping("updatePlanDrag.ajax")
 	public void updatePlanDrag(Calendar calendar) {

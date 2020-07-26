@@ -40,7 +40,7 @@
 					<component v-for="item in todoLists" :is="item"></component>
 	                
 	                <div class="col-xl-4">
-	                    <div class="btn waves-effect waves-light btn-primary" id="addTodoListBtn" @click="addTodoTitle" v-if="addListBtnisStatusOn">+ Add Todo-List</div>
+	                    <div id="addTodoListBtn" @click="addTodoTitle" v-if="addListBtnisStatusOn">+ Add Todo-List</div>
 	                </div>
                 </div>
 	        </div>
@@ -54,7 +54,29 @@
 		var currUserId = [[${session.currentUser.id}]];
 		var teamNo = [[${session.currentUser.teamNo}]];
 		var teamMember = [[${teamMember}]];
+		var bgColor = [[${team.backgroundColor}]];
 	/*]]>*/
+	if(bgColor == '5f76e8') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-primary');
+	}
+	if(bgColor == '22ca80') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-success');
+	}
+	if(bgColor == 'fdc16a') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-warning');
+	}
+	if(bgColor == 'ff4f70') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-danger');
+	}
+	if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-light');
+	}
+	if(bgColor == '6c757d') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-secondary');
+	}
+	if(bgColor == '1c2d41') {
+		$('#addTodoListBtn').attr("class", 'btn waves-effect waves-light btn-dark');
+	}
 	
 	    var todoListComponent = {
 	    		template: `

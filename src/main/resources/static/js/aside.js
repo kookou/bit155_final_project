@@ -1,7 +1,7 @@
 if(bgColor == '5f76e8') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-primary');
 }
-if(bgColor == '5f76e8') {
+if(bgColor == '22ca80') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-success');
 }
 if(bgColor == 'fdc16a') {
@@ -10,7 +10,7 @@ if(bgColor == 'fdc16a') {
 if(bgColor == 'ff4f70') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-danger');
 }
-if(bgColor == 'e8eaec') {
+if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-light');
 }
 if(bgColor == '6c757d') {
@@ -84,7 +84,7 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 });
 
 //수정완료 버튼 
-$('#allBoardList').on('click', '.editBoardNameOk', function() {
+$('#allBoardList').on('click', '.editBoardNameOk', function() {allBoardList
 	if($('.newBoardName').val() == "") {
 		Swal.fire('', '변경할 Board Name을 입력하세요', 'error');
 		return;
@@ -408,6 +408,8 @@ $('#passLeaderOkBtn').click(function() {
 		}
 	});
 });
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////페이지 이동
 $('#allBoardList').on('click', '.redirectBoard', function() {

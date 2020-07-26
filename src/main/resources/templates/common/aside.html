@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="invite-button">
-							<button type="button" id="InviteBtn" class="btn waves-effect waves-light btn-rounded btn-primary" data-toggle="modal" data-target="#InviteMember" >Invite</button>
+							<button type="button" id="InviteBtn" class="btn waves-effect waves-light btn-rounded" data-toggle="modal" data-target="#InviteMember" >Invite</button>
 						</div>
 					</li>
 
@@ -44,6 +44,7 @@
 						<li class="sidebar-item" th:each="board: ${allBoardList}">
 							<a class="sidebar-link redirectBoard" href="javascript:void(0);" aria-expanded="false" style="display: inline-block;">
 								<input type="hidden" th:value="${board.allBoardListNo}" class="hiddenAllBoardListNo">
+								<input type="hidden" th:value="${board.name}" class="hiddenAllBoardName">
 								<i th:class="${board.boardTypeNo == 1} ? 'fas fa-table' : 'fab fa-trello'"></i>
 								<span class="hide-menu board-name"  th:text="${board.name}"></span>
 							</a>

@@ -79,7 +79,10 @@
 	                                            <input type="hidden" name="teamNo" th:value=" ${session.currentUser.teamNo}">
 	                                            <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
 	                                            <input type="hidden" name="boardNo" th:value="${selectBoard.boardNo}" id="boardNo">
-                                            	<h6><a th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}" th:text="${selectBoard.name}" name="boardName" id="boardName"></a> ></h6>
+                                            	<h6>
+                                            		<a th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}" th:text="${selectBoard.name}" name="boardName" id="boardName"></a>
+                                            		<label for="boardName">></label>
+                                            	</h6>
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">
@@ -119,8 +122,8 @@
 	                      		</div>
 	                            <div class="form-actions">
 	                                <div style="float: left;">
-	                                <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-info btn-sm" style="color: white"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
-	                                <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i>답글</a>
+	                                <a th:href="@{insertBoard.do(teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" id="writeBtn"><i class="fas fa-pencil-alt"></i> 글쓰기</a>
+	                                <a th:href="@{insertReboard.do(boardNo=${selectBoard.boardNo},teamNo=${teamNo},allBoardListNo=${allBoardListNo})}" class="btn btn-light btn-sm"><i class="fas fa-pencil-alt"></i> 답글</a>
 	                                <span th:each="member: ${teamMember}" th:if="${member.id == session.currentUser.id}">
 	                                    <a class="btn btn-light btn-sm" style="color: black" id="editBtn" th:if="${session.currentUser.id == selectBoard.id || member.leader.equals('Y')}"
 	                                    	th:href="@{updateBoard.do(boardNo=${selectBoard.boardNo}, teamNo=${teamNo},allBoardListNo=${allBoardListNo})}">수정</a>
@@ -165,10 +168,27 @@
 	        var teamNo = [[${session.currentUser.teamNo}]];
 		/*]]*/
 		
-		/* boardContent = boardContent.replace(/&lt;/gi, "<");
-		boardContent = boardContent.replace(/&gt;/gi, ">");
-		console.log(boardContent);
-		$('#summernote').html(boardContent); */
+		if(bgColor == '5f76e8') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
+		}
+		if(bgColor == '22ca80') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-success');
+		}
+		if(bgColor == 'fdc16a') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-warning');
+		}
+		if(bgColor == 'ff4f70') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-danger');
+		}
+		if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-light');
+		}
+		if(bgColor == '6c757d') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-secondary');
+		}
+		if(bgColor == '1c2d41') {
+			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-dark');
+		}
 		
 	    //댓글 목록보기
 		$.ajax({

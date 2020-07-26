@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="assets/images/favicon.png">
+<title>Bit 155 Final Project</title>
+<!-- Custom CSS -->
+<!-- Custom CSS -->
+<link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet" />
+<link href='https://unpkg.com/fullcalendar@5.1.0/main.min.css' rel='stylesheet' />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/css/bootstrap-material-datetimepicker.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- <link rel="stylesheet" href="js/pages/calendar/calendar.css"/> -->
+<link href="css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+<link rel="stylesheet"
+	href="js/pages/calendar/vendor/css/select2.min.css" />
+<link rel="stylesheet" href="css/calendar.css" />
+
+<!-- <link href="css/calendar.css" rel="stylesheet"> -->
+
+</head>
+
+<body>
+	<div th:replace="common/scriptA :: scriptA"></div>
+	<div class="drag-container"></div>
+
+	<!-- <input type=text id="teamNo" th:value="${param.teamNo}" hidden/> -->
+
+	<div class="preloader">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
+	<!-- ============================================================== -->
+	<!-- Main wrapper - style you can find in pages.scss -->
+	<!-- ============================================================== -->
+	<div id="main-wrapper" data-theme="light" data-layout="vertical"
+		data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed"
+		data-boxed-layout="full">
+
+		<th:block th:replace="common/header :: header"></th:block>
+		<th:block th:replace="common/aside :: aside"></th:block>
+		<th:block th:replace="common/addAllBoardModal"></th:block>
+		<th:block th:replace="common/chat"></th:block>
+		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+
+		<div class="page-wrapper">
+			<!-- ============================================================== -->
+			<!-- Bread crumb and right sidebar toggle -->
+			<!-- ============================================================== -->
+
+			<div class="container">
+				<div id="wrapper">
+					<div id="loading"></div>
+					<div id="calendar"></div>
+				</div>
+
+				<!-- 일정 추가 MODAL -->
+				<div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+
+							</div>
+							<div class="modal-body" style="padding: 20px;">
+
+								<div class="text-center mt-2 mb-4">
+									<h3 class="modal-title"></h3>
+								</div>
+								<div class="form-group">
+									<span for="allday">하루종일</span>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox"
+											class="custom-control-input edit-allDay" id="customCheck2">
+										<label class="custom-control-label" for="customCheck2"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-4" for="edit-title">일정명</label> <input
+										class="form-control" type="text" name="edit-title"
+										id="edit-title" required="required" placeholder="일정명을 입력해 주세요" />
+								</div>
+
+								<div class="form-group">
+									<label class="col-xs-4" for="edit-desc">일정 상세</label>
+									<textarea rows="4" cols="50" class="inputModal form-control"
+										name="edit-desc" id="edit-desc"></textarea>
+								</div>
+
+
+								<div class="form-group">
+									<label class="col-xs-4" for="edit-start">일정 시작 일시</label> <input
+										type="text" class="form-control" name="edit-start"
+										id="edit-start">
+								</div>
+
+								<div class="form-group" id="hide-end">
+									<label class="col-xs-4" for="edit-end" >일정 마감 일시</label> <input
+										type="text" class="form-control" name="edit-end" id="edit-end">
+								</div>
+
+								<div class="form-group mb-4">
+									<label class="col-xs-4" for="edit-color">색상 선택</label> <select
+										class="inputModal form-control" name="color" id="edit-color">
+										<option value="#D25565" style="color: #D25565;">빨간색</option>
+										<option value="#ffa94d" style="color: #ffa94d;">주황색</option>
+										<option value="#f06595" style="color: #f06595;">핑크색</option>
+										<option value="#63e6be" style="color: #63e6be;">연두색</option>
+										<option value="#a9e34b" style="color: #a9e34b;">초록색</option>
+										<option value="#74c0fc" style="color: #74c0fc;">파란색</option>
+										<option value="#4d638c" style="color: #4d638c;">남색</option>
+										<option value="#9775fa" style="color: #9775fa;">보라색</option>
+										<option value="#495057" style="color: #495057;">검정색</option>
+									</select>
+								</div>
+
+							</div>
+							<div class="modal-footer modalBtnContainer-modifyEvent">
+								<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+								<button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+							</div>
+							<div class="modal-footer modalBtnContainer-addEvent">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">취소</button>
+								<button type="button" class="btn btn-primary" id="save-event">저장</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+			</div>
+			<!-- /.container -->
+
+
+		</div>
+		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+	</div>
+	<!--<<원래 있는거 맞음 삭제 ㄴㄴ해 -->
+	<!-- <div th:replace="common/script :: script"></div> -->
+
+	<!-- 저는 개인 script를 이용하겠습니다..-서폰지밥- -->
+	<!-- apps -->
+	<script src="assets/extra-libs/c3/d3.min.js"></script>
+	<script src="assets/extra-libs/c3/c3.min.js"></script>
+	<script src="js/feather.min.js"></script>
+
+	<!--This page JavaScript -->
+	<script src="js/pages/calendar/arraylist.js"></script>
+	<script src="assets/libs/moment/min/moment.min.js"></script>
+<!-- fullcalendar -->
+
+	<script src='https://unpkg.com/fullcalendar@5.1.0/main.min.js'></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js"></script>
+
+<!-- 	<script src="js/pages/calendar/select2.min.js"></script> -->
+	<script src="js/pages/calendar/ko.js"></script>
+	<script src="js/newcalendar.js"></script>
+
+
+	<div th:replace="common/scriptB :: scriptB"></div>
+	<script th:inline="javascript">
+	$(function(){
+		renderFullCalendar();
+	});
+    /*<![CDATA[*/
+  	 var currUserId = [[${session.currentUser.id}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
+	var teamMember = [[${teamMember}]];
+    /*]]>*/
+    
+
+    </script>
+
+</body>
+</html>

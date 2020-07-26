@@ -267,6 +267,18 @@
 			AND (KANBAN_LIST_NO = #{endListNo})
 	]]>
 	</update>
+	
+	<select id="boardNameSelect" resultMap="selectBoardName">
+	select distinct a.name 
+	from all_board_list a 
+	LEFT OUTER JOIN kanban_list k 
+	on a.all_board_list_no = k.all_board_list_no 
+	where a.all_board_list_no = #{allBoardListNo}
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="selectBoardName">
+	<result column="name" property="boardName" />
+	</resultMap>
 
 	 
 

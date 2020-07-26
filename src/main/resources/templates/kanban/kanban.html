@@ -17,11 +17,7 @@
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<!-- Murri -->
- <script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
- <script src="https://sortablejs.github.io/Sortable/st/prettify/prettify.js"></script>
- <script src="https://sortablejs.github.io/Sortable/st/app.js"></script>   
-<!-- Murri end -->
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -191,12 +187,12 @@
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-7 align-self-center">
-						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="board-name"th:text="${team.teamName}"></h3>
+						<h3 class="page-title text-truncate text-dark font-weight-medium mb-1" id="boardname" th:text="${boardnamelist.boardName}"></h3>
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb m-0 p-0">
 									<li class="breadcrumb-item"><i class="fab fa-trello"
-										style="margin-right: 8px;"></i><span class="boardName">Kanban</span></li>
+										style="margin-right: 8px;"></i><span class="boardName" >Kanban</span></li>
 								</ol>
 							</nav>
 						</div>
@@ -267,7 +263,7 @@
 						<!-- 칸반 add list 시작  -->
 						<!-- ============================================================== -->
 						<div class="kanban-list-add-wrapper" id="addlist">
-							<a class="kanban-list-add btn-primary">
+							<a class="kanban-list-add">
 								<div class="kanban-list-add-header">
 									<span class="icon">+</span> <span class="kanban-card-add-text">Add
 										List</span>
@@ -301,6 +297,7 @@
 	var currUserImage = [[${session.currentUser.image}]];
 	var teamNo = [[${session.currentUser.teamNo}]];
 	var teamMember = [[${teamMember}]];
+	var bgColor = [[${team.backgroundColor}]];
     /*]]>*/
     
 /*    	 var boardname;

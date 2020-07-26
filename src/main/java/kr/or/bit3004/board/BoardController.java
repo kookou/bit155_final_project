@@ -3,6 +3,8 @@ package kr.or.bit3004.board;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.JsonObject;
 
 import kr.or.bit3004.aside.AsideService;
+import kr.or.bit3004.kanban.KanbanService;
 import kr.or.bit3004.user.SessionUser;
 
 @Controller
@@ -35,15 +37,19 @@ public class BoardController {
 	@Autowired
 	private AsideService asideService;
 	
+	@Autowired
+	private KanbanService kanbanService;
+	
 	//게시판 목록보기
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo, int teamNo, HttpSession session) {
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
+		Map<String, String> boardnamelist = new HashMap<String, String>();
 	    //팀메인 페이지에서 session값(teamNo, teamMember) 리셋
         currentUser.setTeamNo(teamNo);
 	    currentUser.setIsTeamLeader(
 		asideService.isTeamLeader(currentUser.getId(), teamNo));
-		
+	    //boardnamelist = kanbanService.boardNameSelect(allBoardListNo);
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("allBoardListNo", allBoardListNo);
 		model.addAttribute("boardNoti", service.getBoardNoti(allBoardListNo));
