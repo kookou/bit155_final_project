@@ -44,7 +44,15 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
    @Override
    public void updateUser(User user, HttpSession session) {
-      
+             
+       SessionUser beforeEdit = (SessionUser)session.getAttribute("currentUser");
+       
+       if( (user.getFile().getSize() <= 0) && (beforeEdit.getNickname().equals(user.getNickname())) ) {
+    	   System.out.println("변경사항 없음");
+    	   return;
+       }
+       
+	   
       String fileName = user.getFile().getOriginalFilename();
       System.out.println("fileName : "+">"+ fileName+"<");
       System.out.println(user.getFile().getSize());
@@ -55,10 +63,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
       //사진 설정을 한 경우 
       if(user.getFile().getSize() > 0) {
 
-         String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\userImage";
-         
+         String path = System.getProperty("user.dir") 
+        		 	 + "\\src\\main\\resources\\static\\assets\\images\\userImage";
          String fpath = path + "\\" + fileName;
-         System.out.println(fpath);
+//         System.out.println(fpath);
          
          FileOutputStream fs = null;
          
@@ -75,26 +83,38 @@ public class UserServiceImpl implements UserService, UserDetailsService{
          //DB 파일명 저장
          user.setImage(fileName);
          
-         user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
-         
          System.out.println("serviceImpl");
          System.out.println(user);
+
          
-         dao.updateUser(user);
+         if(user.getNickname() == beforeEdit.getNickname()) { 
+             //사진수정, 별명 수정 안함
+        	 
+        	 dao.updateUserImage(user);
+        	 
+         }else {
+             // 사진수정, 별명수정
+             dao.updateUserNicknameNImage(user);
+        	 
+         }
+         
+         
+         
+
+
          
       }else { // 사진 설정을 안한경우
          
-         user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
          
          System.out.println("serviceImpl");
-         System.out.println(user);
+         System.out.println("nickname : "+ user.getNickname());
+          
+//         String nickname = user.getNickname();
          
-         dao.updateUserExceptImage(user);
+         //사진 수정 안함, 별명 수정
+         dao.updateUserNickname(user);
          
       }
-      
-      SessionUser beforeEdit = (SessionUser)session.getAttribute("currentUser");
-
 
       SessionUser currentUser = new SessionUser(dao.getUser(user.getId()));
       currentUser.setTeamNo(beforeEdit.getTeamNo());
@@ -105,12 +125,31 @@ public class UserServiceImpl implements UserService, UserDetailsService{
    }
 
    @Override
-   public void updateUserPwd(String id, String pwd) {
+   public String updateUserPwd(String pwd, String newPwd, HttpSession session) {
       
-      pwd = bCryptPasswordEncoder.encode(pwd);
+      User currentUser = dao.getUser(((User)session.getAttribute("currentUser")).getId());
+      String result = "";
       
-      dao.updateUserPwd(id, pwd);   
+      System.out.println("currentUser : "+ currentUser);   
+	  System.out.println(bCryptPasswordEncoder.matches(pwd, currentUser.getPwd()));
+      
+      if(!bCryptPasswordEncoder.matches(pwd, currentUser.getPwd())) {
+    	  result = "비밀번호 변경 실패";
+    	  
+      }else {
+    	  newPwd = bCryptPasswordEncoder.encode(newPwd);
+          dao.updateUserPwd(currentUser.getId(), newPwd);  
+    	  
+    	  result = "비밀번호 변경 시도 완료";
+      }
+      
+      System.out.println(result);
+      return result;
    }
+   
+   
+   
+   
 
    @Override
    public User getUser(String id) {

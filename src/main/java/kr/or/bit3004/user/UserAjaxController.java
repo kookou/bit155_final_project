@@ -1,5 +1,7 @@
 package kr.or.bit3004.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,19 @@ public class UserAjaxController {
 		}
 		
 		System.out.println(result);
+		
+		return result;
+	}
+	
+	
+	@RequestMapping("/editUser/editPwd.ajax")
+	public String editPassword(String pwd, String newPwd, HttpSession session) {
+		System.out.println("editPassword");
+		
+		String result = userService.updateUserPwd(pwd, newPwd, session);
+		
+
+		
 		
 		return result;
 	}
