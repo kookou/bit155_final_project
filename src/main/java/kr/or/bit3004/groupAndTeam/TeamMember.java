@@ -13,4 +13,5 @@ public class TeamMember {
 	private String leader;
 	private String nickname;
 	private String image;
+	private String teamOut;
 }

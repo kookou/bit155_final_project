@@ -3,7 +3,7 @@ CREATE TABLE `USER` (
 	`ID`       VARCHAR(50)   NOT NULL, -- 아이디
 	`PWD`      VARCHAR(1000) NOT NULL, -- 비밀번호
 	`NICKNAME` VARCHAR(50)   NOT NULL, -- 닉네임
-    `IMAGE`    VARCHAR(200)  default 'user.png',
+    `IMAGE`    VARCHAR(200)  default 'user.png', -- 이미지
 	`ENABLE`   INT           NOT NULL default 1, -- 사용여부
 	`QUIT`     VARCHAR(2)    NOT NULL default 0  -- 탈퇴여부
 );
@@ -188,9 +188,10 @@ ALTER TABLE `GROUP` modify `GROUP_NO` INT auto_increment;
 
 -- 팀구성원
 CREATE TABLE `TEAM_MEMBER` (
-	`TEAM_NO` INT         NOT NULL, -- 팀식별번호
-	`ID`      VARCHAR(50) NOT NULL, -- 아이디
-	`LEADER`  VARCHAR(2)  NOT NULL default 'N'  -- 팀장구분
+	`TEAM_NO`  INT         NOT NULL, -- 팀식별번호
+	`ID`       VARCHAR(50) NOT NULL, -- 아이디
+	`LEADER`   VARCHAR(2)  NOT NULL default 'N',  -- 팀장구분
+    `TEAM_OUT` VARCHAR(2)  default 'N' -- 팀탈퇴여부
 );
 
 -- 팀구성원
@@ -320,7 +321,7 @@ CREATE TABLE `TIMELINE` (
     `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용
     `HISTORY`      VARCHAR(100) NOT NULL, -- 작업내용
     `DML_KIND`     varchar(20)  NOT NULL, -- 작업구분
-    `HISTORY_TIME` DATETIME     NOT NULL, -- 작업시간
+    `HISTORY_TIME` DATETIME NOT NULL,     -- 작업시간
 	`TEAM_NO`      INT          NOT NULL, -- 팀식별번호
 	`ID`           VARCHAR(50)  NOT NULL  -- 아이디
 );

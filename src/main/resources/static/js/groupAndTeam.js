@@ -1,12 +1,10 @@
 //팀 클릭시 페이지 이동
 $('#outer').on('click', '.teamBtn', function() {
-	console.log($(this).attr('data-teamNo'));
 	location.href = 'timeLine.do?teamNo=' + $(this).attr('data-teamNo');
 });
 
 //카드 배경색에 따라 글씨색상 바꾸기
 $('.card').each(function(index, ele) {
-	console.log($(this).css('backgroundColor'));
 	let bgColor = $(this).css('backgroundColor');
 	if(bgColor == 'rgb(253, 193, 106)' || bgColor == 'rgb(232, 234, 236)' || bgColor == 'rgb(255, 255, 255)') {
 		$(this).find('h4').css('color', 'black');
@@ -19,7 +17,7 @@ $('.card').each(function(index, ele) {
 var inputGroupNameHtml =
 	'<div class="row" id="inputGroupNameDiv">' + 
 		'<div class="col-xl-3">' +
-			'<input type="text" placeholder="그룹명을 입력하세요" class="form-control" id="inputGroupName">' +
+			'<input type="text" placeholder="그룹명을 입력하세요" class="form-control inputGroupText" id="inputGroupName">' +
 		'</div>' +
 		'<div class="col-xl-3">' +
 			'<button class="btn btn-info btn-circle" id="addGroupName"><i class="fa fa-check"></i></button>&nbsp;&nbsp;' +
@@ -30,15 +28,15 @@ var inputGroupNameHtml =
 var editGroupNameHtml =
 	'<div class="row" id="editGroupNameDiv">' + 
 		'<div class="col-xl-3">' +
-			'<input type="text" placeholder="그룹명을 입력하세요" class="form-control" id="editGroupName" style="width:92%; display:inline-block;">&nbsp;&nbsp;' +
+			'<input type="text" placeholder="그룹명을 입력하세요" class="form-control inputGroupText" id="editGroupName" style="width:92%; display:inline-block;">&nbsp;&nbsp;' +
 			'<a href="javascript:void(0);"><i class="fas fa-times iconStyle" id="cancelEditGroupName"></i></a>' +
 		'</div>' +
 	'</div>';
 	
 //addGroupBtn 눌렀을 때
-$('#addGroupBtn').click(function() {
+$(document).on('click', '#addGroupBtn', function() {
 	//다른 열려있는 input 닫아주기
-	$('input').each(function(index, ele) {
+	$('.inputGroupText').each(function(index, ele) {
 		$(this).parent().parent().prev().show();
 		$(this).parent().parent().remove();
 	});
@@ -87,12 +85,12 @@ $(document).on('click', '#addGroupName', function() {
 	        			'</div>' +
         			'</div>' + 
         			'<div class="col-xl-3">' +
-        				'<div class="card" style="text-align: center;">' +
-        					'<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
-        						'+ Create New Team' +
-        					'</div>' +
-        				'</div>' +
-        			'</div>' +
+						'<div class="card">' +
+							'<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">' +
+								'+ Create New Team' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
         		'</div>';
 			$('#addGroupDiv').before(html);
 			$('#inputGroupNameDiv').remove();
@@ -107,7 +105,7 @@ $(document).on('click', '#addGroupName', function() {
 //그룹 수정버튼 눌렀을 때
 $('#outer').on('click', '.editGroupName', function() {
 	//다른 열려있는 input 닫아주기
-	$('input').each(function(index, ele) {
+	$('.inputGroupText').each(function(index, ele) {
 		$(this).parent().parent().prev().show();
 		$(this).parent().parent().remove();
 		$('#inputGroupNameDiv').remove();
@@ -165,8 +163,8 @@ $('#outer').on('click', '.delGroupName', function() {
 		text: "Group을 삭제하면 그 Group에 속한 Tema List는 Personal Group으로 이동됩니다.",
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Yes, delete it!',
-		cancelButtonText: 'No, keep it'
+		confirmButtonText: '네',
+		cancelButtonText: '아니오'
 	}).then((result) => {
 		if (result.value) {
 			var promise = 
@@ -194,7 +192,6 @@ function reloadListPromise() {
 				id: currUser
 			},
 			success: function(resData) {
-				console.log(resData.group);
 				$('#outer').empty();
 				makeListHtml(resData);
 			},
@@ -262,6 +259,15 @@ function makeListHtml(resData) {
 				        '</div>' +
 					'</div>';
 		$('#outer').append(html);
+		//카드 배경색에 따라 글씨색상 바꾸기
+		$('.card').each(function(index, ele) {
+			let bgColor = $(this).css('backgroundColor');
+			if(bgColor == 'rgb(253, 193, 106)' || bgColor == 'rgb(232, 234, 236)' || bgColor == 'rgb(255, 255, 255)') {
+				$(this).find('h4').css('color', 'black');
+			} else {
+				$(this).find('h4').css('color', '#fff');
+			}
+		});
 }
 
 /////////////////////////////////////////////////////////////////////////////////////// Team 만들기

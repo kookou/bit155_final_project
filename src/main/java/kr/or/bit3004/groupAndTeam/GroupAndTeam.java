@@ -18,4 +18,5 @@ public class GroupAndTeam {
 	private String group_name;
 	private String teamMemberId;
 	private String image;
+	private String teamOut;
 }

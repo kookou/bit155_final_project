@@ -142,6 +142,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">당일 신규 게시물 수</h4>
                                 <div id="morris-donut-chart2" class="timeline-chart-size"></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -156,7 +157,9 @@
 	                        <div class="col-md-12 activity font-color">
                                 <div class="d-flex align-items-start border-left-line pb-3" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
                                     <div>
-                                        <img th:src="'assets/images/userImage/' + ${timeline.image}"  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
+                                        <img  th:src="${#strings.startsWith(timeline.image, 'https')} 
+                               				? ${timeline.image} : @{assets/images/userImage/}+${timeline.image} " 
+                               			  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
                                     </div>
                                     <div class="ml-3 mt-12"  th:switch="${timeline.dmlKind}">
                                         <div th:case=" 'insert' ">
@@ -373,17 +376,13 @@
 		$('.timeBefore').each(function(index, ele) {
 			let timeArr = text.split(',');
 			$(this).text(timeArr[index+1]);
-			console.log(timeArr[index+1]);
-			console.log(index+1);
 		});
 		  
 		
         $(function () {
         	var todaysNewJson = JSON.parse(todaysNewData);
         	var activeRateJson = JSON.parse(activeRate);
-        	console.log(todaysNewJson);
-        	
-        	
+
             // knob
             $('[data-plugin="knob"]').knob();
             
@@ -397,15 +396,31 @@
                 resize: true,
                 colors:['#5f76e8', '#01caf1', '#8fa0f3', '#ff4f70', '#22ca80', '#fdc16a']
             });
+        	
+        	
+        	if(!(todaysNewJson[0].value == 0 && todaysNewJson[1].value == 0)){
+
+                // 당일 신규 게시물 수 
+               Morris.Donut({
+                   element: 'morris-donut-chart2',
+                   data: todaysNewJson,
+                   resize: true,
+                   colors:['#5f76e8', '#01caf1']
+               });
+                
+                
+        	}else{
+        		console.log("값없다");
+        		let noNewPosts = "<div class='pt-5 text-center h5'>"
+        					   + "<h5 class='pt-3'> 당일 신규 게시물이 없습니다 </h5>"
+        					   + "</div>";
+        		$('#morris-donut-chart2').append(noNewPosts);
+        	}
+
+            
 
 
-             // 당일 신규 게시물 수 
-            Morris.Donut({
-                element: 'morris-donut-chart2',
-                data: todaysNewJson,
-                resize: true,
-                colors:['#5f76e8', '#01caf1']
-            });
+
              
             
         
