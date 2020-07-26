@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
     	.paintcellborder{
-		border:1px solid grey;
+		border:2px solid #aeb3ba;
+		margin:-2px;
+		
     	}
 		.canvas-icon {
 		padding-top:12px;
@@ -32,7 +34,7 @@
 		padding-top:60px;
 		}
       canvas {
-        border: 1px solid grey;
+        border: 1px solid #c3c7cd;
         background-color: #ffffff;
       }
 		
@@ -48,6 +50,7 @@
       .cell {
         display: table-cell;
         vertical-align: top;
+        
       }
 
       textarea {
@@ -65,6 +68,26 @@
       .page-wrapper>.container-fluid {
     padding: 5px;
     min-height: calc(100vh - 210px);
+	}
+	.color-margin{
+	margin-bottom: 8px;
+	}
+	.colorPicker-width{
+	width : 86px;
+	display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: 4px;
+    line-height: 1.5;
+    color: #4F5467;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e9ecef;
+    border-radius: 2px;
+    transition: border-color .15s;
+	}
+	
+	.colorPickerarea{
+	margin-top: 15px;
 	}
       
     </style>
@@ -98,104 +121,75 @@
        <!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
           <div>
           <input type="hidden" teamNo=${teamNo}>
-            <div class="jb_table">
-              <div class="row">
+            <div class="jb_table" style="margin-left:20px">
+              <div class="color-margin">
                 <span class="cell">
-                  <img src="img/red.png" class="colorChip" onclick="selectColor('red')" style="margin-left:40px"/>
-                  <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
+                  <img src="img/red.png" class="colorChip" onclick="selectColor('red')" />
+                  <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')" style="margin-left:2px;"/>
                 </span>
               </div>
-              <div class="row">
+               <div class="color-margin">
                 <span class="cell">
-                   <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')" style="margin-left:40px"/>
-                   <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')"/>    		
+                   <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
+                   <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')" style="margin-left:2px"/>    		
                 </span>
               </div>
-              <div class="row">
+              <div class="color-margin">
                 <span class="cell">
-                  <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" style="margin-left:40px"/>
-                  <img src="img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" />
+                  <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" />
+                  <img src="img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" style="margin-left:2px"/>
                 </span>
               </div>
-              <div class="row">
+                <div class="color-margin">
                 <span class="cell">
-                  <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')" style="margin-left:40px"/>
-                  <img src="img/white.png" class="colorChip" onclick="selectColor('white')"/>
+                  <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')"/>
+                  <img src="img/white.png" class="colorChip" onclick="selectColor('white')" style="margin-left:2px"/>
                 </span>
               </div>
-              <div class="row">
+                <div class="color-margin">
                 <span class="cell">
-                 <img src="img/green.png" class="colorChip" onclick="selectColor('green')" style="margin-left:40px"/>
-                 <img src="img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')"/>
+                 <img src="img/green.png" class="colorChip" onclick="selectColor('green')"/>
+                 <img src="img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')" style="margin-left:2px"/>
                 </span>
               </div>
-              <div class="row">
+               <div class="color-margin">
                 <span class="cell">
-                <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" style="margin-left:40px" />
-                <img src="img/gray.png" class="colorChip" onclick="selectColor('gray')" />
+                <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" />
+                <img src="img/gray.png" class="colorChip" onclick="selectColor('gray')" style="margin-left:2px"/>
                 </span>
               </div>
-              <div class="row">
+                <div class="color-margin">
                 <span class="cell">
-              	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" style="margin-left:40px" />
-                   <img src="img/black.png" class="colorChip" onclick="selectColor('black')" />
+              	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" />
+                   <img src="img/black.png" class="colorChip" onclick="selectColor('black')" style="margin-left:2px"/>
                 </span>
               </div>
-              <div class="row">
-                  <span class="cell">
-                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF" style="margin-left:40px">
-                 <!--  <span class="cell canvas-icon">
-                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF"> -->
- 				<!--   <i class="fas fa-eye-dropper"></i>    -->
+              <div class="colorPickerarea">
+              		<h5>Color Picker</h5>
+                  <span>
+                  <input id="colorPicker" type="color" class="colorPicker-width" value="#BDB3FF">
                   </span>
               </div>
-                 <div class="row">
-                 <span class="cell">
-                  <i class="fas fa-pencil-alt" onclick="selectTool('pencil')" style="margin-left:40px"></i>
-                 <!--  <i class="fas fa-minus" onclick="selectTool('line')"></i> -->
-                </span>
-          	    </div> 
-              <!--  <div class="row">
-                 <span class="cell">
-                  <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
-                  <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
-                </span>
-          	    </div>  -->
-     	     <!--   <div class="row">
-                 <span class="cell">
-                  <i class="far fa-square"  onclick="selectTool('square')"></i>
-                  <i class="fas fa-square"  onclick="selectTool('filledsquare')"></i>
-                </span>
-          	    </div>
-               <div class="row">
-                <span class="cell">
-                  <img src="img/triangle_.png" class="pad hi" onclick="selectTool('tri')" />
-                  <img src="img/filledtriangle.png" class="pad" onclick="selectTool('filledtri')" />
-                </span>
-              </div> -->
-         	<div class="row">
-                <span class="cell">
-                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('filled')"style="margin-left:40px" />
-                </span>
-              </div>
-              <div class="row">
-
-                  <span class="cell">
-                   <i class="fas fa-angle-double-left" onclick="undo()"style="margin-left:40px"></i>
-                   <i class="fas fa-angle-double-right" onclick="redo()"></i>
-                  </span>
-              </div>
-                            
-          <div> <i class="fas fa-quidditch" onClick="initPage()" style="margin-left:40px"></i> Clear</div>
-  <!--         <div> <i class="fas fa-quidditch canvas-icon" onClick="initPage()"></i> Clear</div> -->
+              <div class="btn1">
+              <div class="btn-group" role="group" aria-label="First group">
+                   <button type="button" class="btn btn-secondary" onclick="selectTool('pencil')"><i class="fas fa-pencil-alt" ></i></button>
+                   <button type="button" class="btn btn-secondary" onclick="selectTool('filled')"><i class="fas fa-fill-drip" ></i></button>
+               </div>
+                  </div>                     
+ 
+           <div class="btn2">
+              <div class="btn-group" role="group" aria-label="First group">
+  				<button type="button" class="btn btn-secondary" onclick="undo()"> <i class="fas fa-reply"></i></button>
+  				<button type="button" class="btn btn-secondary" onclick="redo()"><i class="fas fa-share"></i></button>
+			</div>
+			</div>
+            <button class="btn btn-secondary waves-effect waves-light" type="button" onClick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
           <div class="padd"></div>
 
           <div>Title <input id="title" size="10" /></div>
           <div>
-            <a id="saveImage" download="image.png">
-                <i class="fas fa-save" onClick="saveImage()"></i>
-            </a>&nbsp;Save</div>
-           <!--  <INPUT type="button" value="History" onClick="showHistory()" /> -->
+          <button class="btn btn-primary" type="submit" onClick="saveImage()">저장</button>
+            
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>
@@ -212,6 +206,8 @@
     </div>
     </div>
 <div th:replace="common/scriptB :: scriptB"></div> 
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
     <script src="js/painter.js"></script>
     <script src="js/drawengine.js"></script>
     <!-- 컬러피커 -->
