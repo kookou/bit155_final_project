@@ -202,11 +202,11 @@
 			</div>
             <button class="btn waves-effect waves-light btn-outline-secondary btttn" type="button" onclick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
 
-         <div class="form-group">
-              <input type="text" class="form-control" id="nametext" placeholder="제목">
-          </div>
           <div class="saveimage">
-          <button class="btn btn-primary" onclick="saveImage()">저장</button>
+         <a  id="saveImage" download="image.png">
+         	<button class="btn btn-primary" onclick="saveImage()">저장</button>
+         </a>
+          
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>

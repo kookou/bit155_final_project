@@ -808,7 +808,8 @@ function ellipseMouseUp(event) {
 function saveImage() {
 	console.log("오니?")
 	var imageName;
-	
+	var savedImage = document.getElementById("saveImage");
+	var image;
 	Swal.fire({
 	    text: "Write something interesting:",
 	    input: 'text',
@@ -820,8 +821,8 @@ function saveImage() {
 	    	    imageName = "image";
 	    	  }
 	    	  imageName += ".png";
-	    	  var savedImage = document.getElementById("saveImage");
-	    	  var image = document
+	    	 
+	    	  image = document
 	    	    .getElementById("canvas")
 	    	    .toDataURL("image/png")
 	    	    .replace("image/png", "image/octet-stream");
