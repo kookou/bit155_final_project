@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="getTeamMember" resultType="kr.or.bit3004.groupAndTeam.TeamMember">
-		select m.team_no, m.id, leader, nickname, IFNULL(IMAGE, 'user.png') AS IMAGE
+		select m.team_no, m.id, leader, nickname, IFNULL(IMAGE, 'user.png') AS IMAGE, team_out
 		  from `team_member` m
 		  join `user` u
 		    on m.id = u.id
@@ -41,7 +41,7 @@
 	</select>
 	
 	<insert id="inviteMember" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		insert into `TEAM_MEMBER`(`team_no`, `id`) values(#{teamNo}, #{id})
+		insert into `TEAM_MEMBER`(`team_no`, `id`, `team_out`) values(#{teamNo}, #{id}, 'N')
 	</insert>
 	
 	<!-- 초대된 멤버의 Personal 그룹의 no 뽑아오기 -->
@@ -59,9 +59,9 @@
 	</select>
 	
 	<!-- 팀탈퇴 -->
-	<delete id="deleteTeamMember" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		delete from team_member where id=#{id} and team_no=#{teamNo}
-	</delete>
+	<update id="deleteTeamMember" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
+		update team_member set `team_out` = 'Y', `leader` = 'N' where id=#{id} and team_no=#{teamNo}
+	</update>
 	<delete id="deleteGroupTeam" parameterType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
 		delete from group_team where id=#{id} and team_no=#{teamNo}
 	</delete>

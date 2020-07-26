@@ -121,13 +121,6 @@
 		 where board_no = #{boardNo}
 	</select>
 	
-	<!-- 게시판 수정할때 업로드하기전 파일삭제 -->
-	<delete id="deleteBoardUploadFile" parameterType="int">
-		delete
-		  from board_file
-		 where board_no=#{boardNo}
-	</delete>
-	
 	<!-- 게시판 수정하기 -->
 	<update id="updateBoard" parameterType="kr.or.bit3004.board.Board">
 		update board_list
