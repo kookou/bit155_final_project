@@ -65,4 +65,6 @@ public interface KanbanService {
 //	public void dragCardUpdateCardno(int[] cardNo , int kanbanListNo);
 //	public void dragCardUpdateIndex(int[] cardIndex , int kanbanListNo);
 	public void dragCard(int[]cardNo , int[] cardindex, int kanbanListNo);
+	public Map<String, String> boardNameSelect(int allBoardListNo);
+
 }

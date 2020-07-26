@@ -8,15 +8,15 @@
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
 <title>Bit 155 Final Project</title>
+
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <style>
     	.paintcellborder{
 		border:1px solid grey;
     	}
-		i {
+		.canvas-icon {
 		padding-top:12px;
 		padding-right:12px;
 		padding-left:12px;
@@ -78,7 +78,6 @@
      <th:block th:replace="common/header :: header"></th:block>
      <th:block th:replace="common/aside :: aside"></th:block>
      <th:block th:replace="common/addAllBoardModal"></th:block>
-     <th:block th:replace="common/chat"></th:block>
      <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
    <div class="page-wrapper seo">
       <div class="container-fluid">
@@ -145,6 +144,8 @@
               <div class="row">
                   <span class="cell">
                   <input id="colorPicker" type="color" class="form-control" value="#BDB3FF" style="margin-left:40px">
+                 <!--  <span class="cell canvas-icon">
+                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF"> -->
  				<!--   <i class="fas fa-eye-dropper"></i>    -->
                   </span>
               </div>
@@ -178,6 +179,7 @@
                 </span>
               </div>
               <div class="row">
+
                   <span class="cell">
                    <i class="fas fa-angle-double-left" onclick="undo()"style="margin-left:40px"></i>
                    <i class="fas fa-angle-double-right" onclick="redo()"></i>
@@ -185,7 +187,9 @@
               </div>
                             
           <div> <i class="fas fa-quidditch" onClick="initPage()" style="margin-left:40px"></i> Clear</div>
-         <!--  <div class="padd"></div> -->
+  <!--         <div> <i class="fas fa-quidditch canvas-icon" onClick="initPage()"></i> Clear</div> -->
+          <div class="padd"></div>
+
           <div>Title <input id="title" size="10" /></div>
           <div>
             <a id="saveImage" download="image.png">

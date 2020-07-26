@@ -84,7 +84,7 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 });
 
 //수정완료 버튼 
-$('#allBoardList').on('click', '.editBoardNameOk', function() {
+$('#allBoardList').on('click', '.editBoardNameOk', function() {allBoardList
 	if($('.newBoardName').val() == "") {
 		Swal.fire('', '변경할 Board Name을 입력하세요', 'error');
 		return;
@@ -408,6 +408,8 @@ $('#passLeaderOkBtn').click(function() {
 		}
 	});
 });
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////페이지 이동
 $('#allBoardList').on('click', '.redirectBoard', function() {
