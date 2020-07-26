@@ -833,8 +833,7 @@ function saveImage() {
 	    	  savedImage.setAttribute("download", imageName);
 	    	  savedImage.setAttribute("href", image);
 	    	  
-	    	promise.done(reloadListPromise);
-	        promise.fail(promiseError);
+	    	
 	    }
 	});
 
