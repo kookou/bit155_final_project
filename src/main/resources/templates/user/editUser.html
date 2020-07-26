@@ -14,6 +14,8 @@
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="css/kanban.css" rel="stylesheet">
+    <link href="css/user.css" rel="stylesheet">
 </head>
 
 <body>
@@ -38,6 +40,59 @@
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative">
             <div class="auth-box row text-center"></div>
 
+            
+            <!-- modal -->
+            
+		<!-- content modal -->
+		 <!-- Signup modal content -->
+         <div id="editPassword" class="modal fade" tabindex="-1" role="dialog"
+             aria-hidden="true">
+             <div class="modal-dialog user-edit-user-modal-center">
+                 <div class="modal-content">
+
+                     <div class="modal-body">
+                         <div class="text-center mt-4 mb-4">
+                             <a href="index.html" class="text-success">
+                                 <span><img class="mr-2" src="../assets/images/logo-icon.png"
+                                         alt="" height="18"><img
+                                         src="../assets/images/logo-text.png" alt=""
+                                         height="18"></span>
+                             </a>
+                         </div>
+
+                         <form class="mt-5 pl-3 pr-3" action="#">
+                         
+	                        <div class="form-group mt-3 mb-4">
+	                            <input class="form-control mt-2" type="password" id="pwd" name="pwd" placeholder="현재 비밀번호를 입력하세요">                            
+	                            <div class="invalid-feedback">
+	                            </div>
+	                            <input class="form-control mt-2" type="password" id="newPwd" name="newPwd" placeholder="새 비밀번호를 입력하세요">                            
+	                            <div class="invalid-feedback">
+	                            </div>
+	                            <input class="form-control mt-2" type="password" id="newPwdCheck" placeholder="비밀번호 확인">                            
+	                            <div class="invalid-feedback">
+	                            </div>    
+	                        </div>
+
+                             <div class="form-group text-center mt-4 mb-3">
+                                 <button class="btn btn-primary" type="submit">비밀번호 변경</button>
+                             </div>
+
+                         </form>
+
+                     </div>
+                 </div><!-- /.modal-content -->
+             </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
+            
+            
+            <!-- modal end -->
+            
+            
+            
+            
+            
+            
                 
 
 
@@ -71,7 +126,7 @@
                         <div class="form-group col-lg-9" style="margin: 16px auto;">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="userImage" name="file" accept="image/*">
-                                <label class="custom-file-label form-control" for="userImage" style="overflow: hidden;" 
+                                <label class="custom-file-label form-control" id="userImageLabel" for="userImage" style="overflow: hidden;" 
                                 	   th:text="${(session.currentUser.image == 'user.png') 
                                 				|| #strings.startsWith(session.currentUser.image, 'https')} 
                                 				? '' : ${session.currentUser.image}"></label>
@@ -90,19 +145,15 @@
 							<div class="invalid-feedback">
                             </div>                            
                         </div>
+                     
 
-                        <div class="form-group">
-                            <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter your new password">                            
-                            <div class="invalid-feedback">
-                            </div>
-                            <input class="form-control mt-2" type="password" id="passwordCheck" placeholder="Password check">                            
-                            <div class="invalid-feedback">
-                            </div>                         
-                            
-                        </div>
+                        
+                                                
+                        <div class="btn btn-block btn-info mt-2 mb-2" data-toggle="modal" data-target="#editPassword"> 비밀번호 변경</div>
+ 
                         
                         <div class="col-lg-12 text-center mt-4">
-                            <button type="submit" id="submit" class="btn btn-info mr-2" disabled><i class="fas fa-check"></i>
+                            <button type="submit" id="submit" class="btn btn-info mr-2"><i class="fas fa-check"></i>
                                 &nbsp;Save&nbsp;</button>
                             <input type="reset" id="reset" class="btn btn-secondary ml-2" value=" reset ">
 
@@ -136,146 +187,16 @@
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
-    <script>
-    //이거 들어있으면 js 작동안함...
+    <script src="js/editUser.js"></script>
+    <script type="text/javascript">
     /*<![CDATA[*/
-   // var currUserNickname = [[${session.currentUser.nickname}]];
-    //var currUserImage = [[${session.currentUser.image}]];
-    //var teamNo = [[${teamNo}]];
- 	/*]]>*/
-
-    
-    
-        $(".preloader ").fadeOut();
-        //파일 미리보기
-        var file = document.querySelector('#userImage');
-        file.onchange = function() {
-        	console.log("=file.onchange=")
-            var fileList = file.files;
-            // 읽기
-            var reader = new FileReader();
-            reader.readAsDataURL(fileList[0]);
-            //로드 후 미리보기 적용
-            reader.onload = function() {
-                document.querySelector('#userImagePreview').src = reader.result;
-            };
-        };
-        
-        $(function() {
-             console.log("jquery start");
-            var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-            var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-            var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
-            function regCheck(input, regExp, name) { // 정규표현식 검증
-                
-                if(name == "비밀번호확인"){
-                   if( $('#pwd').hasClass('is-valid') === true ){
-                        if($('#pwd').val() != input.val()){
-                            let invalidMessage = '비밀번호가 일치하지 않습니다 <br>';
-                            input.removeClass("is-valid");
-                            input.addClass("is-invalid");
-                            input.next().append(invalidMessage);
-                        }else{
-                            input.removeClass("is-invalid");
-                            input.addClass("is-valid");
-                        }
-                   }else{
-                    input.removeClass("is-valid");
-                    input.addClass("is-invalid");
-                    let invalidMessage = '형식에 맞는 비밀번호를 먼저 입력하세요 <br>';
-                    input.next().append(invalidMessage);
-                   }
-                            
-                }else{
-                    
-                    if ( regExp.test(input.val()) == false) {
-                        input.removeClass("is-valid");
-                        input.addClass("is-invalid");
-                        
-                        let invalidMessage = name + ' 형식에 맞게 입력하세요 <br>';
-                        
-                        if(name == "비밀번호"){
-                        	invalidMessage += '영문 소문자, 대문자 , 숫자를 1자 이상 포함하여 8자 이상 입력해주세요 <br>';
-                        }
-                        
-                        input.next().append(invalidMessage);
-                    }else{
-                        input.removeClass("is-invalid");
-                        input.addClass("is-valid");
-                    }
-                  
-                }
-            }
- 
-            
-            //input 검증 @@ keyup일 때는 제대로 나오는데 blur 일 때는 css가 이상하다........................왜지 
-            // chrome 브라우저의 user agent stylesheet 설정 때문이었다............빡침
-            function inputCheck(input, regExp, name) {
-                input.on({
-                    blur : function() {
-                        input.next().empty();
-                        if (input.val() == "") {
-                            input.addClass("is-invalid");
-                            let invalidMessage = name + '을 입력하세요 <br>';
-                            input.next().append(invalidMessage);
-                        }else{
-                            regCheck($(this), regExp, name);
-                        }
-                    },
-                    keyup : function() {
-                        input.next().empty();
-                        regCheck(input, regExp, name);
-                    }
-                });
-            }
-            //inputCheck($('#id'), emailRegExp, "이메일");
-            inputCheck($('#nickName'), nickRegExp, "별명");
-            inputCheck($('#pwd'), pwdRegExp, "비밀번호"); 
-            inputCheck($('#passwordCheck'), pwdRegExp, "비밀번호확인");
-            //submit 버튼 활성화
-            $('input').on('change keyup', function() {
-               let nickOk = $('#nickName').hasClass('is-valid');
-               //let idOk = $('#id').hasClass('is-valid');
-               let pwdOk = $('#pwd').hasClass('is-valid');
-               let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
-               
-               console.log("===");
-               console.log(nickOk);
-               console.log(pwdOk);
-               console.log(pwdChckOk);
-               
-               if(nickOk && pwdOk && pwdChckOk){
-                   console.log("if");
-                   $('#submit').removeAttr('disabled');
-               }else{
-                   if(!($('#submit').is(['disabled']))){
-                        $('#submit').attr('disabled', 'disabled');
-                   }
-               }
-            });
-            // 리셋
-            $('#reset').on('click', function() {
-                $('input').removeClass('is-invalid');
-                $('input').removeClass('is-valid');
-            });
-            
-            //회원 탈퇴
-            console.log($('delAccount'));
-            $('#delAccount').on('click', function() {
-                console.log("여기");
-                $(this).removeAttr("href"); // 여기서 href 속성을 없애줘야 controller에서 redirect가 제대로 먹는다
-               let result = confirm("정말 탈퇴하시겠습니까? \n지금까지의 모든 활동 기록이 사라집니다."); 
-               if(result){
-                   console.log("탈퇴진행"); 
-                   location.replace('deleteuser?id='+$('#id').val());
-               }else{
-            	   $(this).attr("href", "");
-               }
-               
-               
-            });
-        });
-        
+   	var currUserImage = [[${session.currentUser.image}]];
+   	var currUserNickname = [[${session.currentUser.nickname}]];
+	var currUserImage = [[${session.currentUser.image}]];
+	var teamNo = [[${session.currentUser.teamNo}]];
+	var teamMember = [[${teamMember}]];
+	var bgColor = [[${team.backgroundColor}]];
+    /*]]>*/
     </script>
 </body>
 
