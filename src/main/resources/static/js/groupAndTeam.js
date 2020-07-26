@@ -163,8 +163,8 @@ $('#outer').on('click', '.delGroupName', function() {
 		text: "Group을 삭제하면 그 Group에 속한 Tema List는 Personal Group으로 이동됩니다.",
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Yes, delete it!',
-		cancelButtonText: 'No, keep it'
+		confirmButtonText: '네',
+		cancelButtonText: '아니오'
 	}).then((result) => {
 		if (result.value) {
 			var promise = 
