@@ -58,21 +58,15 @@
 		    position: static !important;
 		}
       
-/*  .page-wrapper-canvas{
-		transition: 0.2s ease-in;
-		display: block;
- 		 box-shadow: 0px 3px 9px 0px rgba(162, 176, 190, 0.15);
- 		 border-top-left-radius: 5px;
- 		 border-top-right-radius: 5px;
- 		 
- }
- @media (min-width: 768px)
-#main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse, #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .page-wrapper-canvas {
-    margin-left: 65px;
-}
-#main-wrapper[data-layout=vertical][data-header-position=fixed] .page-wrapper-canvas {
-    padding-top: 80px;
-} */
+      .form-control{
+      width:58%;
+      }
+      
+      .page-wrapper>.container-fluid {
+    padding: 5px;
+    min-height: calc(100vh - 210px);
+	}
+      
     </style>
   </head>
 
@@ -86,7 +80,11 @@
      <th:block th:replace="common/addAllBoardModal"></th:block>
      <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
    <div class="page-wrapper seo">
-      
+      <div class="container-fluid">
+		<div class="row">
+			<div class="col-12 seo">
+				<div class="card seo">
+					<div class="card-body seo">
     <div class="jb_table">
       <div class="row">
         
@@ -103,64 +101,66 @@
             <div class="jb_table">
               <div class="row">
                 <span class="cell">
-                  <img src="img/red.png" class="colorChip" onclick="selectColor('red')" />
+                  <img src="img/red.png" class="colorChip" onclick="selectColor('red')" style="margin-left:40px"/>
                   <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                   <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
+                   <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')" style="margin-left:40px"/>
                    <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')"/>    		
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" />
+                  <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" style="margin-left:40px"/>
                   <img src="img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" />
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                  <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')"/>
+                  <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')" style="margin-left:40px"/>
                   <img src="img/white.png" class="colorChip" onclick="selectColor('white')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                 <img src="img/green.png" class="colorChip" onclick="selectColor('green')"/>
+                 <img src="img/green.png" class="colorChip" onclick="selectColor('green')" style="margin-left:40px"/>
                  <img src="img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')"/>
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-                <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" />
+                <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" style="margin-left:40px" />
                 <img src="img/gray.png" class="colorChip" onclick="selectColor('gray')" />
                 </span>
               </div>
               <div class="row">
                 <span class="cell">
-              	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" />
-                   <img src="img/black.png" class="colorChip" onclick="selectColor('black')"/>
+              	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" style="margin-left:40px" />
+                   <img src="img/black.png" class="colorChip" onclick="selectColor('black')" />
                 </span>
               </div>
               <div class="row">
-                  <span class="cell canvas-icon">
-                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF">
+                  <span class="cell">
+                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF" style="margin-left:40px">
+                 <!--  <span class="cell canvas-icon">
+                  <input id="colorPicker" type="color" class="form-control" value="#BDB3FF"> -->
  				<!--   <i class="fas fa-eye-dropper"></i>    -->
                   </span>
               </div>
                  <div class="row">
                  <span class="cell">
-                  <i class="fas fa-pencil-alt" onclick="selectTool('pencil')"></i>
+                  <i class="fas fa-pencil-alt" onclick="selectTool('pencil')" style="margin-left:40px"></i>
                  <!--  <i class="fas fa-minus" onclick="selectTool('line')"></i> -->
                 </span>
           	    </div> 
-               <div class="row">
-                 <span class="cell" >
+              <!--  <div class="row">
+                 <span class="cell">
                   <i class="far fa-circle hi"  onclick="selectTool('circle')"></i>
                   <i class="fas fa-circle"  onclick="selectTool('filledcircle')"></i>
                 </span>
-          	    </div> 
+          	    </div>  -->
      	     <!--   <div class="row">
                  <span class="cell">
                   <i class="far fa-square"  onclick="selectTool('square')"></i>
@@ -175,18 +175,21 @@
               </div> -->
          	<div class="row">
                 <span class="cell">
-                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('filled')" />
+                  <img src="img/bucket1.png" class="pad fill" id="fill" onclick="selectTool('filled')"style="margin-left:40px" />
                 </span>
               </div>
               <div class="row">
-                  <span class="cell canvas-icon" >
-                   <i class="fas fa-angle-double-left" onclick="undo()"></i>
+
+                  <span class="cell">
+                   <i class="fas fa-angle-double-left" onclick="undo()"style="margin-left:40px"></i>
                    <i class="fas fa-angle-double-right" onclick="redo()"></i>
                   </span>
               </div>
                             
-          <div> <i class="fas fa-quidditch canvas-icon" onClick="initPage()"></i> Clear</div>
+          <div> <i class="fas fa-quidditch" onClick="initPage()" style="margin-left:40px"></i> Clear</div>
+  <!--         <div> <i class="fas fa-quidditch canvas-icon" onClick="initPage()"></i> Clear</div> -->
           <div class="padd"></div>
+
           <div>Title <input id="title" size="10" /></div>
           <div>
             <a id="saveImage" download="image.png">
@@ -196,11 +199,15 @@
           <div>
             <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
           </div>
-          
             </div>
           </div>
         </span>
       </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
     </div>
     </div>
