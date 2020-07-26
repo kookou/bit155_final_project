@@ -29,18 +29,22 @@
 		WHERE ID = #{param1} and PWD = #{param2}	
 	</select>
 	
-	<update id="updateUser" parameterType="kr.or.bit3004.user.User">
+	<update id="updateUserNicknameNImage" parameterType="kr.or.bit3004.user.User">
 		UPDATE USER
-		SET PWD = #{pwd},
-			NICKNAME = #{nickname},
+		SET NICKNAME = #{nickname},
 			IMAGE = #{image}
 		WHERE ID = #{id}
 	</update>
 	
-	<update id="updateUserExceptImage" parameterType="kr.or.bit3004.user.User">
+	<update id="updateUserNickname" parameterType="kr.or.bit3004.user.User">
 		UPDATE USER
-		SET PWD = #{pwd},
-			NICKNAME = #{nickname}
+		SET NICKNAME = #{nickname}
+		WHERE ID = #{id}
+	</update>
+	
+	<update id="updateUserImage" parameterType="kr.or.bit3004.user.User">
+		UPDATE USER
+		SET NICKNAME = #{image}
 		WHERE ID = #{id}
 	</update>
 	
