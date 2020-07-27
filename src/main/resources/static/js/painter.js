@@ -822,9 +822,11 @@ $('#cancle').on('click', function(){
 function saveImage() {
 	  var imageName = document.getElementById("title").value;
 	  console.log(imageName);
-	  if (imageName == "") {
+	  
+	  if (imageName.length == 0) {
 	    imageName = "image";
 	  }
+	  
 	  imageName += ".png";
 	  var savedImage = document.getElementById("saveImage");
 	 
@@ -832,7 +834,6 @@ function saveImage() {
 	    .getElementById("canvas")
 	    .toDataURL("image/png")
 	    .replace("image/png", "image/octet-stream");
-	  console.log(image)
 	  savedImage.setAttribute("download", imageName);
 	  savedImage.setAttribute("href", image);
 	}
