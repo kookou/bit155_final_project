@@ -376,8 +376,6 @@
 		$('.timeBefore').each(function(index, ele) {
 			let timeArr = text.split(',');
 			$(this).text(timeArr[index+1]);
-			console.log(timeArr[index+1]);
-			console.log(index+1);
 		});
 		  
         $(function () {
@@ -388,13 +386,26 @@
             $('[data-plugin="knob"]').knob();
             
             // Morris donut chart 
-            //회원별 활동 비율
-            Morris.Donut({
-                element: 'morris-donut-chart1',
-                data: activeRateJson,
-                resize: true,
-                colors:['#5f76e8', '#01caf1', '#8fa0f3', '#ff4f70', '#22ca80', '#fdc16a']
-            });
+
+            
+            console.log(activeRateJson.length == 0);
+         	if(!(activeRateJson.length == 0)){
+            
+	            //회원별 활동 비율
+	            Morris.Donut({
+	                element: 'morris-donut-chart1',
+	                data: activeRateJson,
+	                resize: true,
+	                colors:['#5f76e8', '#01caf1', '#8fa0f3', '#ff4f70', '#22ca80', '#fdc16a']
+	            });	            
+                
+        	}else{
+        		let noActiveRate = "<div class='pt-5 text-center h5'>"
+        					   + "<h5 class='pt-3'> 활동 기록이 없습니다 </h5>"
+        					   + "</div>";
+        		$('#morris-donut-chart1').append(noActiveRate);
+        	}
+
         	
         	if(!(todaysNewJson[0].value == 0 && todaysNewJson[1].value == 0)){
 
@@ -407,12 +418,12 @@
                });
                 
         	}else{
-        		console.log("값없다");
         		let noNewPosts = "<div class='pt-5 text-center h5'>"
         					   + "<h5 class='pt-3'> 당일 신규 게시물이 없습니다 </h5>"
         					   + "</div>";
         		$('#morris-donut-chart2').append(noNewPosts);
         	}
+
         });
 		
 	</script>

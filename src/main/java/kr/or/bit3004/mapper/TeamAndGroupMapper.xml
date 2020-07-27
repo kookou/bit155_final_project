@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="getTeamMemberList" resultType="kr.or.bit3004.groupAndTeam.GroupAndTeam">
-		select group_team_no, g.group_no, t.team_no, g.id, team_name, background_color, tm.id team_member_id, leader, image
+		select group_team_no, g.group_no, t.team_no, g.id, team_name, background_color, tm.id team_member_id, leader, IFNULL(IMAGE, 'user.png') AS IMAGE, team_out
 		  from `group_team` gt
 		  join `group` g
 			on gt.group_no = g.group_no

@@ -163,12 +163,6 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectBoardDownloadFile(boardNo);
 	}
 	
-	//게시판 수정할때 파일업로드를 위해 삭제하기
-	@Override
-	public int deleteBoardUploadFile(int boardNo) {
-		return dao.deleteBoardUploadFile(boardNo);
-	}
-	
 	//게시판 수정하기
 	@Override
 	public void updateBoard(Board board) {

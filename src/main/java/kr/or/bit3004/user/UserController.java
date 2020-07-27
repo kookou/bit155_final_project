@@ -75,12 +75,8 @@ public class UserController {
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
 	public String editUserInfo(HttpSession session, Model model) {
 
-		System.out.println(" GET ");
-		
+		System.out.println(" GET ");		
 		System.out.println("editUserInfo");
-		
-		System.out.println(session.getAttribute("currentUser").getClass().getName());
-		
 		
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 		int teamNo = currentUser.getTeamNo();
@@ -102,8 +98,7 @@ public class UserController {
 	@RequestMapping(value="/edituser", method=RequestMethod.POST)
 	public String editUserInfo(User user, HttpServletRequest request, HttpSession session) {
 		System.out.println(" POST ");
-		
-		System.out.println("===controller===");
+		System.out.println("editUserInfo");
 		System.out.println(user);
 		
 		service.updateUser(user, session);

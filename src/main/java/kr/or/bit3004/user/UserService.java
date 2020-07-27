@@ -8,9 +8,8 @@ import javax.servlet.http.HttpSession;
 public interface UserService {
 	public void insertUser(User user);
 	public int idCheck(String id);
-//	public User loginCheck(String id, String pwd);
 	public void updateUser(User user, HttpSession session);
-	public void updateUserPwd(String id, String pwd);
+	public String updateUserPwd(String pwd, String newPwd, HttpSession session);
 	
 	public User getUser(String id);
 	public List<User> getUserList();
