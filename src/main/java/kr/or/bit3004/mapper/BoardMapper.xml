@@ -30,6 +30,8 @@
 		 where a.all_board_list_no = #{allBoardListNo}
 		 order by refer desc, step asc
 	</select>
+	
+	<!-- d -->
 	 
 	<!-- 조회수 증가 -->
 	<update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">

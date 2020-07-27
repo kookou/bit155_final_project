@@ -77,6 +77,10 @@
                                             <!-- 	 <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}"> -->
                                             	<!--  <input type="hidden" name="refer" id="refer" th:value="${board.refer}"> -->
                                             </div>
+                                         	<div class="col-lg-6" style="margin-top:8px;">
+                                            	<input type="checkbox" name="boardNoti" th:value="Y" id="notice">
+                                            	<label for="notice">공지사항</label>
+                                        	</div>
                                             <div class="custom-file col-md-12">
                                                 <input multiple="multiple" type="file" class="custom-file-input" id="inputGroupFile01" name=file>
                                                 <label class="custom-file-label" for="inputGroupFile01">파일을 선택하세요.</label>

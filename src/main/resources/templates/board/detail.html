@@ -190,8 +190,6 @@
 	        var teamNo = [[${session.currentUser.teamNo}]];
 		/*]]*/
 		
-		console.log(boardNoti);
-		
 		if(bgColor == '5f76e8') {
 			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
 		}
@@ -377,8 +375,10 @@
 				html += 		'<div class="comment-content">';
 				html += 			'<h5>'+ obj.content +'</h5>';
 				html += 			'<h6 style="color: rgb(180, 180, 180);">'+ obj.writeDate +'</h6>';
-				html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment iconStyle" name="updateComment"><i class="fas fa-edit" ></i></a>&nbsp;';
-	               html += 			'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment iconStyle" name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
+					if(currUser == obj.id) {
+						html += 		'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="updateComment iconStyle" name="updateComment"><i class="fas fa-edit" ></i></a>&nbsp;';
+    	            	html += 		'<a href="javascript:void(0);" data-value="' + obj.commentNo + '" class="deleteComment iconStyle" name="deleteComment"><i class="fas fa-trash-alt"></i></a>';
+					}
 				html += 		'</div>';
 				html += 	'</div>';
 				html += 	'<hr class="my-1">';
@@ -407,18 +407,7 @@
 	    		$('.writerBadge').attr("class", 'writerBadge badge badge-pill badge-dark');
 	    	}
 	    }
-	    
-	   	//로그인한 사용자와 글쓴이가 같지 않을경우 수정, 삭제 버튼 숨기기
-	 	/*   	
-	 	if(currUser != id){
-	   		$('#editBtn').hide();
-	   		$('#deleteBtn').hide();
-	   	} else if(currUser == id){
-	   		$('#editBtn').show();
-	   		$('#deleteBtn').show();
-	   	} 
-	   	*/
-	   	
+
 	   	//다운로드 창
 	   	$("#downLoadBtn").popover({
 		    title: "Upload File",
