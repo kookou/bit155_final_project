@@ -25,7 +25,7 @@
 
 									<img th:src="${#strings.startsWith(member.image, 'https')} 
                                				? ${member.image} : @{assets/images/userImage/}+${member.image}" alt="user" 	
-										style="width: auto; height: 60px; transform: translate(-12% , -14%);" 
+										style="width: auto; height: 65px; transform: translate(-15% , -14%);" 
 										data-toggle="tooltip" data-placement="top" th:title="${member.id}">
 
 									<input type="hidden" class="hiddenMemberId" th:value="${member.id}">
