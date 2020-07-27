@@ -157,9 +157,15 @@
 	                        <div class="col-md-12 activity font-color">
                                 <div class="d-flex align-items-start border-left-line pb-3" th:each="timeline :  ${timelineList}" th:if="${timeline.oldHistory != timeline.history}">
                                     <div>
-                                        <img  th:src="${#strings.startsWith(timeline.image, 'https')} 
+                                    <div class="user-img rounded-circle mb-3 btn-item" style="float: left; background-color: white; overflow: hidden; height: 42px; width: 42px;">
+										<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+									<span>
+										<img th:src="${#strings.startsWith(timeline.image, 'https')} 
                                				? ${timeline.image} : @{assets/images/userImage/}+${timeline.image} " 
-                               			  alt="user" class="rounded-circle mb-3 btn-item" width="42px">
+                               			  alt="user" style="width: auto; height: 50px; transform: translate(-50%, -50%); display:block">
+									</span>
+										</div>
+									</div>
                                     </div>
                                     <div class="ml-3 mt-12"  th:switch="${timeline.dmlKind}">
                                         <div th:case=" 'insert' ">

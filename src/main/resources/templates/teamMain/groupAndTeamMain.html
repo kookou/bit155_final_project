@@ -60,12 +60,14 @@
        					<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" th:attr="data-teamNo=${team.teamNo}">
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        						<span th:each="member : ${teamMemberList}" th:if="${team.teamName == member.teamName && member.teamOut == 'N'}">
-	       						<img th:src="${#strings.startsWith(member.image, 'https')} 
+	       						<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">
+								<div style="top: 0; left: 0; right: 0; bottom: 0;">
+										<img th:src="${#strings.startsWith(member.image, 'https')} 
                                				? ${member.image} : @{assets/images/userImage/}+${member.image}" 
 	       						
-	       						alt="user" 
-											style="width: auto; height: 40px;" class="rounded-circle"
-											data-toggle="tooltip" data-placement="top" th:title="${member.teamMemberId}">
+	       						alt="user"  href="javascript:void(0)" style="width: auto; height: 60px; transform: translate(-16%, -16%); display:block"data-toggle="tooltip" data-placement="top" th:title="${member.teamMemberId}">
+								</div>
+							</div>
        						</span>
        					</div>
        				</div>
