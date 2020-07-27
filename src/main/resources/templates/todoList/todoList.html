@@ -165,6 +165,10 @@
 	            },
 	            addNewTodo() {
 	            	var content = this.userInput;
+	            	if(content == "") {
+	            		Swal.fire('', '내용을 입력하세요', 'warning');
+	            		return;
+	            	}
 	              	//axios통신으로 todoList Content DB에 insert하기
 		            var params = new URLSearchParams();
 		            params.append('content', this.userInput);
@@ -198,6 +202,10 @@
 		            });
 	            },
 	            addTodoList() {
+	            	if(this.title == "") {
+	            		Swal.fire('', '제목을 입력하세요', 'warning');
+	            		return;
+	            	}
 	                this.isStatusOn = false;
 	                this.isStatusOff = true;
 	                this.$root.addListBtnisStatusOn = true;
