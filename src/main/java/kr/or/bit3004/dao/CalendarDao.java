@@ -11,6 +11,7 @@ public interface CalendarDao {
 	public void updatePlanDrag(Calendar calendar);
 	public void updatePlan(Calendar calendar);
 	public void deletePlan(Calendar calendar);
+	public int getLastNo();
 	
 }
 /*
