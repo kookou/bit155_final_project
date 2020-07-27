@@ -801,37 +801,41 @@ function ellipseMouseUp(event) {
   }
 }
 
-$('.save').on('click',function(){
-	Swal.fire({
-	    text: "이미지 제목을 입력해 주세요",
-	    input: 'text',
-	    showCancelButton: true,
-	    confirmButtonText: '저장',
-	    cancelButtonText: '취소'     
-	}).then((result) => {
-		console.log(result.value)
-	    if (result.value) {
-	    	saveImage(result.value)
-	    }
-	});
+//$('.save').on('click',function(){
+//	Swal.fire({
+//	    text: "이미지 제목을 입력해 주세요",
+//	    input: 'text',
+//	    showCancelButton: true,
+//	    confirmButtonText: '저장',
+//	    cancelButtonText: '취소'     
+//	}).then((result) => {
+//		console.log(result)
+//	    if (result.value) {
+//	    	saveImage(result.value)
+//	    }
+//	});
+//})
+$('#cancle').on('click', function(){
+	$('#centermodal').modal("hide"); //닫기 
 })
 
-function saveImage(e) {
-	  console.log(e);
-	  var imageName = e
+function saveImage() {
+	  var imageName = document.getElementById("title").value;
+	  console.log(imageName);
 	  if (imageName == "") {
 	    imageName = "image";
 	  }
 	  imageName += ".png";
 	  var savedImage = document.getElementById("saveImage");
+	 
 	  var image = document
 	    .getElementById("canvas")
 	    .toDataURL("image/png")
 	    .replace("image/png", "image/octet-stream");
+	  
 	  savedImage.setAttribute("download", imageName);
 	  savedImage.setAttribute("href", image);
 	}
-
 
 function addHistory(cmd) {
   var history = document.getElementById("history").value;

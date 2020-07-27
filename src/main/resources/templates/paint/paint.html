@@ -6,228 +6,322 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="assets/images/favicon.png">
 <title>Bit 155 Final Project</title>
 
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <style>
-    	.paintcellborder{
-		border:2px solid #aeb3ba;
-		margin:-2px;
-		
-    	}
-		.canvas-icon {
-		padding-top:12px;
-		padding-right:12px;
-		padding-left:12px;
-		padding-bottom:12px;
-		}
-		.pad{
-		padding-top:10px;
-		padding-right:10px;
-		padding-left:10px;
-		padding-bottom:10px;
-		}
-		.padd{
-		padding-top:60px;
-		}
-      canvas {
-        border: 1px solid #c3c7cd;
-        background-color: #ffffff;
-      }
-		
-      .jb_table {
-        display: table;
-      }
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+.paintcellborder {
+	border: 2px solid #aeb3ba;
+	margin: -2px;
+}
 
-      .row {
-        border-radius: 10px;
-        display: table-row;
-      }
+.canvas-icon {
+	padding-top: 12px;
+	padding-right: 12px;
+	padding-left: 12px;
+	padding-bottom: 12px;
+}
 
-      .cell {
-        display: table-cell;
-        vertical-align: top;
-        
-      }
+.pad {
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
 
-      textarea {
-        background-color: #fcf3cf;
-      }
-      
-      .seo {
-		    position: static !important;
-		}
-      
-      .form-control{
-      width:58%;
-      }
-      
-      .page-wrapper>.container-fluid {
-    padding: 5px;
-    min-height: calc(100vh - 210px);
-	}
-	.color-margin{
+.padd {
+	padding-top: 60px;
+}
+
+canvas {
+	border: 1px solid #c3c7cd;
+	background-color: #ffffff;
+}
+
+.jb_table {
+	display: table;
+}
+
+.row {
+	border-radius: 10px;
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+	vertical-align: top;
+}
+
+textarea {
+	background-color: #fcf3cf;
+}
+
+.seo {
+	position: static !important;
+}
+
+
+
+.page-wrapper>.container-fluid {
+	padding: 5px;
+	min-height: calc(100vh - 210px);
+}
+
+.color-margin {
 	margin-bottom: 8px;
-	}
-	.colorPicker-width{
-	width : 86px;
+}
+
+.colorPicker-width {
+	width: 86px;
 	display: block;
-    height: calc(1.5em + .75rem + 2px);
-    padding: 4px;
-    line-height: 1.5;
-    color: #4F5467;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #e9ecef;
-    border-radius: 2px;
-    transition: border-color .15s;
-    margin-bottom: 8px;
-	}
-	
-	.colorPickerarea{
+	height: calc(1.5em + .75rem + 2px);
+	padding: 4px;
+	line-height: 1.5;
+	color: #4F5467;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #e9ecef;
+	border-radius: 2px;
+	transition: border-color .15s;
+	margin-bottom: 8px;
+}
+
+.colorPickerarea {
 	margin-top: 10px;
 	margin-bottom: 10px;
-	}
+}
 
-	.btnn{
+.btnn {
 	margin-bottom: 5px;
-	width : 86px;
-	}
-	.btttn{
-	margin-bottom: 5px;
-	width : 86px;
-	}
-	.form-control{
-	margin : 0px;
-	 width:100%;
-	}
-      .form-group{
-      margin : 0px;
-     width:86px;
-      }
-    </style>
-  </head>
+	width: 86px;
+}
 
-  <body>
-  <div th:replace="common/scriptA :: scriptA"></div> 
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-        
-     <th:block th:replace="common/header :: header"></th:block>
-     <th:block th:replace="common/aside :: aside"></th:block>
-     <th:block th:replace="common/addAllBoardModal"></th:block>
-     <!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
-   <div class="page-wrapper seo">
-      <div class="container-fluid">
-		<div class="row">
-			<div class="col-12 seo">
-				<div class="card seo">
-					<div class="card-body seo">
-    <div class="jb_table">
-      <div class="row">
-        
-        <span class="cell">
-          <div>
-            <canvas id="canvas" width="720" height="720"></canvas>
-          </div>
-        </span>
-        <span class="cell">
-        <!--   <INPUT type="file" id="load_filename" value="Load" onChange="loadFile()" /> -->
-       <!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
-          <div>
-          <input type="hidden" teamNo=${teamNo}>
-            <div class="jb_table" style="margin-left:30px; margin-right:10px">
-              <div class="color-margin">
-                <span class="">
-                  <img src="img/red.png" class="colorChip" onclick="selectColor('red')" />
-                  <img src="img/pink.png" class="colorChip" onclick="selectColor('#FFC7EC')" style="margin-left:2px;"/>
-                </span>
-              </div>
-               <div class="color-margin">
-                <span class="">
-                   <img src="img/orange.png" class="colorChip" onclick="selectColor('#FF8800')"/>
-                   <img src="img/deeppink.png" class="colorChip" onclick="selectColor('#FF61CA')" style="margin-left:2px"/>    		
-                </span>
-              </div>
-              <div class="color-margin">
-                <span class="">
-                  <img src="img/yellow.png" class="colorChip" onclick="selectColor('#FFF705')" />
-                  <img src="img/purple.png" class="colorChip" onclick="selectColor('darkviolet')" style="margin-left:2px"/>
-                </span>
-              </div>
-                <div class="color-margin">
-                <span class="">
-                  <img src="img/lightgreen.png" class="colorChip" onclick="selectColor('lightgreen')"/>
-                  <img src="img/white.png" class="colorChip" onclick="selectColor('white')" style="margin-left:2px"/>
-                </span>
-              </div>
-                <div class="color-margin">
-                <span class="">
-                 <img src="img/green.png" class="colorChip" onclick="selectColor('green')"/>
-                 <img src="img/lightgray.png" class="colorChip" onclick="selectColor('lightgray')" style="margin-left:2px"/>
-                </span>
-              </div>
-               <div class="color-margin">
-                <span class="">
-                <img src="img/lightblue.png" class="colorChip" onclick="selectColor('#3DB8FF')" />
-                <img src="img/gray.png" class="colorChip" onclick="selectColor('gray')" style="margin-left:2px"/>
-                </span>
-              </div>
-                <div class="color-margin">
-                <span class="">
-              	   <img src="img/blue.png" class="colorChip" onclick="selectColor('blue')" />
-                   <img src="img/black.png" class="colorChip" onclick="selectColor('black')" style="margin-left:2px"/>
-                </span>
-              </div>
-              <div class="colorPickerarea">
-                  <span>
-                  <input id="colorPicker" type="color" class="colorPicker-width" value="#BDB3FF">
-                  </span>
-              </div>
-              <div class="btn1">
-              <div class="btn-group btnn" role="group" aria-label="First group">
-                   <button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="selectTool('pencil')"><i class="fas fa-pencil-alt" ></i></button>
-                   <button type="button" class="btn waves-effect waves-light btn-outline-secondary" id="fill" onclick="selectTool('filled')"><i class="fas fa-fill-drip" ></i></button>
-               </div>
-               </div>                     
- 
-           <div class="btn2">
-              <div class="btn-group btnn" role="group" aria-label="First group">
-  				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="undo()"> <i class="fas fa-reply"></i></button>
-  				<button type="button" class="btn waves-effect waves-light btn-outline-secondary" onclick="redo()"><i class="fas fa-share"></i></button>
+.btttn {
+	margin-bottom: 5px;
+	width: 86px;
+}
+
+
+</style>
+</head>
+
+<body>
+	<div class="modal fade" id="centermodal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="text-center mt-2 mb-4">
+						<span>이미지 제목을 입력해 주세요</span>
+					</div>
+					
+						<div class="form-group">
+
+							<input class="form-control" id="title" required=""
+								placeholder="제목 입력">
+						</div>
+
+						<div class="form-group text-center">
+							<button class="btn btn-primary" id="cancle">취소</button>
+							<button class="btn btn-primary" onClick="saveImage()">저장</button>
+						</div>
 				</div>
 			</div>
-            <button class="btn waves-effect waves-light btn-outline-secondary btttn" type="button" onclick="initPage()"><span class="btn-label"><i class="fas fa-eraser"></i></span> Clear</button>          
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
-          <div class="saveimage">
-         <a  id="saveImage" download="image.png">
-         	<button class="btn btn-primary save" >저장</button>
-         </a>
-          
-          <div>
-            <textarea id="history" cols="40" rows="37" style="display: none;"></textarea>
-          </div>
-            </div>
-          </div>
-        </span>
-      </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-<div th:replace="common/scriptB :: scriptB"></div> 
+
+
+
+
+	<div id="save" class="modal fade" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="text-center mt-2 mb-4">
+						<span>이미지 제목을 입력해 주세요</span>
+					</div>
+					<form class="pl-3 pr-3" action="#">
+						<div class="form-group">
+
+							<input class="form-control" id="title" required=""
+								placeholder="제목 입력">
+						</div>
+
+						<div class="form-group text-center">
+							<button class="btn btn-primary">취소</button>
+								<a id="saveImage" download="image.png">
+							<button class="btn btn-primary" onClick="saveImage()">저장</button>
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+
+	<div th:replace="common/scriptA :: scriptA"></div>
+	<div id="main-wrapper" data-theme="light" data-layout="vertical"
+		data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed"
+		data-boxed-layout="full">
+
+		<th:block th:replace="common/header :: header"></th:block>
+		<th:block th:replace="common/aside :: aside"></th:block>
+		<th:block th:replace="common/addAllBoardModal"></th:block>
+		<!-- ////////////////////////////// 여기에 내용 넣어주세요 ////////////////////////////////////// -->
+		<div class="page-wrapper seo">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 seo">
+						<div class="card seo">
+							<div class="card-body seo">
+								<div class="jb_table">
+									<div class="row">
+
+										<span class="cell">
+											<div>
+												<canvas id="canvas" width="720" height="720"></canvas>
+											</div>
+										</span> <span class="cell"> <!--   <INPUT type="file" id="load_filename" value="Load" onChange="loadFile()" /> -->
+											<!--   <INPUT type="button" value="Redraw" onClick="reDrawCanvas()" />-->
+											<div>
+												<input type="hidden" teamNo=${teamNo}>
+												<div class="jb_table"
+													style="margin-left: 30px; margin-right: 10px">
+													<div class="color-margin">
+														<span class=""> <img src="img/red.png"
+															class="colorChip" onclick="selectColor('red')" /> <img
+															src="img/pink.png" class="colorChip"
+															onclick="selectColor('#FFC7EC')"
+															style="margin-left: 2px;" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/orange.png"
+															class="colorChip" onclick="selectColor('#FF8800')" /> <img
+															src="img/deeppink.png" class="colorChip"
+															onclick="selectColor('#FF61CA')" style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/yellow.png"
+															class="colorChip" onclick="selectColor('#FFF705')" /> <img
+															src="img/purple.png" class="colorChip"
+															onclick="selectColor('darkviolet')"
+															style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/lightgreen.png"
+															class="colorChip" onclick="selectColor('lightgreen')" />
+															<img src="img/white.png" class="colorChip"
+															onclick="selectColor('white')" style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/green.png"
+															class="colorChip" onclick="selectColor('green')" /> <img
+															src="img/lightgray.png" class="colorChip"
+															onclick="selectColor('lightgray')"
+															style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/lightblue.png"
+															class="colorChip" onclick="selectColor('#3DB8FF')" /> <img
+															src="img/gray.png" class="colorChip"
+															onclick="selectColor('gray')" style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="color-margin">
+														<span class=""> <img src="img/blue.png"
+															class="colorChip" onclick="selectColor('blue')" /> <img
+															src="img/black.png" class="colorChip"
+															onclick="selectColor('black')" style="margin-left: 2px" />
+														</span>
+													</div>
+													<div class="colorPickerarea">
+														<span> <input id="colorPicker" type="color"
+															class="colorPicker-width" value="#BDB3FF">
+														</span>
+													</div>
+													<div class="btn1">
+														<div class="btn-group btnn" role="group"
+															aria-label="First group">
+															<button type="button"
+																class="btn waves-effect waves-light btn-outline-secondary"
+																onclick="selectTool('pencil')">
+																<i class="fas fa-pencil-alt"></i>
+															</button>
+															<button type="button"
+																class="btn waves-effect waves-light btn-outline-secondary"
+																id="fill" onclick="selectTool('filled')">
+																<i class="fas fa-fill-drip"></i>
+															</button>
+														</div>
+													</div>
+
+													<div class="btn2">
+														<div class="btn-group btnn" role="group"
+															aria-label="First group">
+															<button type="button"
+																class="btn waves-effect waves-light btn-outline-secondary"
+																onclick="undo()">
+																<i class="fas fa-reply"></i>
+															</button>
+															<button type="button"
+																class="btn waves-effect waves-light btn-outline-secondary"
+																onclick="redo()">
+																<i class="fas fa-share"></i>
+															</button>
+														</div>
+													</div>
+													<button
+														class="btn waves-effect waves-light btn-outline-secondary btttn"
+														type="button" onclick="initPage()">
+														<span class="btn-label"><i class="fas fa-eraser"></i></span>
+														Clear
+													</button>
+
+													<div class="saveimage">
+															<button class="btn btn-primary save" data-toggle="modal"
+																data-target="#centermodal">저장</button>
+														<div>
+															<textarea id="history" cols="40" rows="37"
+																style="display: none;"></textarea>
+														</div>
+													</div>
+												</div></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="common/scriptB :: scriptB"></div>
 	<script src="js/painter.js"></script>
-    <script src="js/drawengine.js"></script>
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script> -->
-    
-    <!-- 컬러피커 -->
+	<script src="js/drawengine.js"></script>
+	<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script> -->
+
+	<!-- 컬러피커 -->
 	<script th:inline="javascript">
     /*<![CDATA[*/
    	var currUserImage = [[${session.currentUser.image}]];
@@ -372,6 +466,6 @@
 		  
 	      
    </script>
-  
-  </body>
+
+</body>
 </html>
