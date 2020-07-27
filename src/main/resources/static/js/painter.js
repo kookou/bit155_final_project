@@ -832,10 +832,12 @@ function saveImage() {
 	    .getElementById("canvas")
 	    .toDataURL("image/png")
 	    .replace("image/png", "image/octet-stream");
-	  
+	  console.log(image)
 	  savedImage.setAttribute("download", imageName);
 	  savedImage.setAttribute("href", image);
 	}
+
+
 
 function addHistory(cmd) {
   var history = document.getElementById("history").value;
