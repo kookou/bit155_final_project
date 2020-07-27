@@ -95,9 +95,15 @@ function makeChatBox(data) {
 		} else {
 			html += '<li class="chat-item list-style-none mt-3">';
 			html += 	'<div class="chat-img d-inline-block">';
-			html += 		'<img src="assets/images/userImage/'+ image +'" alt="user" class="rounded-circle" width="45">';
+			html +=				'<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">'
+			html +=				'<div style="top: 0; left: 0; right: 0; bottom: 0;">'
+			html += 				'<img src="assets/images/userImage/'+ image +'" alt="user"';
+			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
+			html += 					'data-toggle="tooltip" data-placement="top" title="'+currUser+'">';
+			html +=				'</div>'
+			html +=				'</div>'
 			html += 	'</div>';
-			html += 	'<div class="chat-content d-inline-block">';
+			html += 	'<div class="chat-content d-inline-block" style="margin-left:5px;">';
 			html += 		'<h6 class="font-weight-medium">'+ nick +'</h6>';
 			html += 		'<div class="msg p-2 d-inline-block mb-1">'+ msg +'</div>';
 			html += 	'</div>';
@@ -105,6 +111,10 @@ function makeChatBox(data) {
 			html += '</li>';
 		}
 	}
+	
+	
+	
+		
 	$(".popover #msgUl").append(html);
 	$(".popover .chat-box").scrollTop($(".popover #msgUl")[0].scrollHeight);
 }

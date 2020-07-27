@@ -237,6 +237,8 @@ function makeListHtml(resData) {
 			html += 				'<img src="assets/images/userImage/'+obj3.image+'" alt="user"';
 			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
 			html += 					'data-toggle="tooltip" data-placement="top" title="'+obj3.id+'">';
+			html +=				'</div>'
+			html +=				'</div>'
        		html += 			'</span>';
 			}
 		})	;
@@ -320,6 +322,8 @@ $('#createTeamBtn').click(function() {
 		    html += 				'<img src="assets/images/userImage/'+currUserImage+'" alt="user"';
 			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
 			html += 					'data-toggle="tooltip" data-placement="top" title="'+currUser+'">';
+			html +=				'</div>'
+			html +=				'</div>'
        		html += 			'</span>';
 			html += 		'</div>';
 			html += 	'</div>';
