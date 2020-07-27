@@ -109,52 +109,22 @@ textarea {
 	margin-bottom: 5px;
 	width: 86px;
 }
-.dmdkdkkd{
-	margin-top: 60px;
-}
-#title{
-margin-bottom: 5px;
-width:200px;
-}
 
+#title{
+margin-bottom: 10px;
+width:150px;
+}
+.savebtn{
+width:150px;
+}
+.saveinput{
+	margin-top: 60px;
+	margin-left: 15px
+}
 </style>
 </head>
 
 <body>
-<!-- 	<div class="modal fade" id="centermodal" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="text-center mt-2 mb-4">
-						<span>이미지 제목을 입력해 주세요</span>
-					</div>
-
-					<div class="form-group">
-
-						<input class="form-control" id="title" required=""
-							placeholder="제목 입력">
-					</div>
-
-					<div class="form-group text-center">
-						<button class="btn btn-primary" id="cancle">취소</button>
-						<button class="btn btn-primary" onClick="saveImage()">저장</button>
-					</div>
-				</div>
-			</div>
-			/.modal-content
-		</div>
-		/.modal-dialog
-	</div>
-	/.modal -->
-
-
-
-
-
-
-
-
 
 	<div th:replace="common/scriptA :: scriptA"></div>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical"
@@ -184,7 +154,7 @@ width:200px;
 											<div>
 												<input type="hidden" teamNo=${teamNo}>
 												<div class="jb_table"
-													style="margin-left: 30px; margin-right: 10px">
+													style="margin-left: 50px;">
 													<div class="color-margin">
 														<span class=""> <img src="img/red.png"
 															class="colorChip" onclick="selectColor('red')" /> <img
@@ -280,17 +250,18 @@ width:200px;
 														Clear
 													</button>
 
-													<div class="dmdkdkkd">
+													
+												</div></span>
+												<div class="saveinput">
 														<input class="form-control" id="title" required=""
 															placeholder="제목 입력">
-															<a id="saveImage"
+														<a id="saveImage"
 															download="image.png">
-															<button class="btn btn-primary" onClick="saveImage()">저장</button>
+															<button class="btn btn-primary savebtn" onClick="saveImage()">저장</button>
 														</a>
 														<textarea id="history" cols="40" rows="37"
 															style="display: none;"></textarea>
 													</div>
-												</div></span>
 									</div>
 								</div>
 							</div>
