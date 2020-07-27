@@ -101,7 +101,7 @@
                                             		<label for="boardName">></label>
                                             	</h6>
                                             	<!-- 글이 공지사항일 경우 -->
-	                                         	<span  th:if="${boardNoti} != null" class="badge badge-danger">공지사항</span>
+	                                         	<span th:if="${selectBoard.boardNoti} != null" class="badge badge-danger">공지사항</span>
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">
@@ -189,6 +189,8 @@
 	        var currUserImage = [[${session.currentUser.image}]];
 	        var teamNo = [[${session.currentUser.teamNo}]];
 		/*]]*/
+		
+		console.log(boardNoti);
 		
 		if(bgColor == '5f76e8') {
 			$('#writeBtn').attr("class", 'btn waves-effect waves-light btn-sm btn-primary');
