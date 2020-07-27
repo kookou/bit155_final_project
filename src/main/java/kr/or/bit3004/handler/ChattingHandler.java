@@ -62,7 +62,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 			wSession.sendMessage(new TextMessage("notice∥"+removeUser.getTeamNo()+"∥"+currentUser.getNickname() + "∥님 접속종료∥" +time.format(new Date())));
 		}
 		users.remove(removeUser);
-		System.out.println("빠졌나"+chatUserInfo);
+//		System.out.println("빠졌나"+chatUserInfo);
 	}
 	
 	@Override
@@ -78,6 +78,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		String teamNo = arr[1]; 			  // 팀번호
 		String userNickname = arr[2]; // 접속한 유저의 닉네임
 		String msg = arr[3]; 				  // 메세지
+		String image = arr[4];			  // 유저의 닉네임
 		
 		if (condition.equals("connent")) {
 			if(!chatUserInfo.containsKey(teamNo)){
@@ -96,13 +97,13 @@ public class ChattingHandler extends TextWebSocketHandler {
 				List<ChatUser> users = chatUserInfo.get(teamNo);
 				users.add(user);
 			}
-			sendMsg = "notice"+"∥"+teamNo+"∥"+userNickname+"∥"+msg+"∥"+time.format(new Date());
+			sendMsg = "notice"+"∥"+teamNo+"∥"+userNickname+"∥"+msg+"∥"+image+"∥"+time.format(new Date());
 		} else {
-			sendMsg = rcvMsg + "∥" + time.format(new Date());
+			sendMsg = rcvMsg + "∥" +image+"∥"+time.format(new Date());
 		}
 		
-		System.out.println("sendMsg : " + sendMsg);
-		System.out.println("chatUserInfo : " + chatUserInfo);
+//		System.out.println("sendMsg : " + sendMsg);
+//		System.out.println("chatUserInfo : " + chatUserInfo);
 
 		Set<String> keys = chatUserInfo.keySet();
 		// 메세지가 전송된 방 찾기
@@ -110,13 +111,13 @@ public class ChattingHandler extends TextWebSocketHandler {
 		for (String key : keys) {
 			if(key.equals(teamNo)) {
 				teamLiveUser = chatUserInfo.get(key);
-				System.out.println("teamLiveUser: " + teamLiveUser);
+//				System.out.println("teamLiveUser: " + teamLiveUser);
 			}
 		}
 		// 메세지가 전송된 방에만 메세지 뿌리기
 		for(ChatUser user : teamLiveUser) {
 			WebSocketSession wSession = user.getSessionInfo();
-			System.out.println("wSession: " + wSession);
+//			System.out.println("wSession: " + wSession);
 			wSession.sendMessage(new TextMessage(sendMsg));
 		}
 	}
