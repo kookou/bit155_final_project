@@ -8,3 +8,10 @@
 	max-width: 500px;
 }
 
+.user-signup-btn-padding{
+	padding: 6px !important;
+}
+
+.user-signup-btn-padding-0{
+	padding: 0px !important;
+}
