@@ -40,8 +40,8 @@ function filtering(event) {
 
 //캘린더 리사이즈 될때 새로운 날짜 불러오는 함수
 function calDateWhenResize(event) {
-	console.log("calDateWhenResize");	  
-	console.log(event);
+//	console.log("calDateWhenResize");	  
+//	console.log(event);
 
   var newDates = {
     startDate: '',
@@ -93,7 +93,7 @@ var calendar = $('#calendar').fullCalendar({
 	
  //이벤트가 랜더링 될떄의 옵션?
   eventRender: function (event, element, view) {
-	  console.log(element)
+
     // 일정에 hover시 요약
     element.popover({
       title: $('<div />', {
@@ -193,6 +193,7 @@ var calendar = $('#calendar').fullCalendar({
   
   // 일정 리사이즈
   eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+	  console.log(event)
 	$(".fc-body").unbind('click');
     $('.popover').remove();
 
@@ -320,6 +321,7 @@ var calendar = $('#calendar').fullCalendar({
   dayPopoverFormat: 'MM/DD dddd',
   longPressDelay: 0,
   eventLongPressDelay: 0,
+  dayMaxEventRows: true,
   selectLongPressDelay: 0
  
 });
@@ -407,8 +409,8 @@ var newEvent = function (start, end, eventType) {
         
 // $("#calendar").fullCalendar('renderEvent', eventData, true);
         
-        console.log("eventData");
-        console.log(eventData);
+//        console.log("eventData");
+//        console.log(eventData);
         
         addModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
@@ -531,8 +533,8 @@ var editEvent = function (event, element, view) {
 
  $("#calendar").fullCalendar('updateEvent', event);
  
-        console.log("updateEvent")
-        console.log(event)
+//        console.log("updateEvent")
+//        console.log(event)
         // 일정 업데이트
         $.ajax({
          	 url: "updatePlan.ajax",
@@ -568,7 +570,7 @@ var editEvent = function (event, element, view) {
       $("#calendar").fullCalendar('removeEvents', $(this).data('elementid'));
      
       var deleteevent = $(this)
-       console.log(deleteevent)
+//       console.log(deleteevent)
       
       editModal.modal('hide');
       

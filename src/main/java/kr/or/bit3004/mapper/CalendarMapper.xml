@@ -48,4 +48,8 @@
 		FROM PLAN
 		WHERE NO = #{no}
 	</delete>
+	
+	<select id="getLastNo" resultType="int">
+		select max(`no`) from `plan`
+	</select>
 </mapper>

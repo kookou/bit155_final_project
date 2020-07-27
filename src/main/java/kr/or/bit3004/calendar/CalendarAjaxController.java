@@ -21,9 +21,11 @@ public class CalendarAjaxController {
 
 
 	@RequestMapping("addPlan.ajax")
-	public void addPlan(Calendar calendar){
+	public int addPlan(Calendar calendar){
 		System.out.println("인서트 완료");
 		service.addPlan(calendar);
+		return service.getLastNo();
+		
 	}
 	@RequestMapping("showCalendar.ajax")
 	 public List<Calendar> schedule(Model model, int teamNo){
