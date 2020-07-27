@@ -9,15 +9,18 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
-    <title>sign up</title>
+    <title>TIKA</title>
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="css/kanban.css" rel="stylesheet">
     <link href="css/user.css" rel="stylesheet">
 
 
 </head>
 
 <body>
+   <div th:replace="common/scriptA :: scriptA"></div> 
     <div class="main-wrapper">
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
@@ -59,7 +62,7 @@
                         <div class="form-group">
                             <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="email" id="id" name="id"
                                 required="" placeholder="john@deo.com">
-                            <label class="btn btn-info col-3" id="checkEmail">인증 요청</label>
+                            <label class="btn btn-info col-3 user-signup-btn-padding" id="checkEmail">인증 요청</label>
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -69,7 +72,7 @@
                         <div class="form-group">
                             <input class="form-control user-signup-form-control-w-button col-8 mr-2" type="text" id="authNum" name="authNum"
                                 required="" placeholder="인증번호를 입력하세요">
-                            <label class="btn btn-info col-3" id="authNumCheck">인증 확인</label>                                
+                            <label class="btn btn-info col-3 user-signup-btn-padding" id="authNumCheck">인증 확인</label>                                
                             <div class="invalid-feedback"id="confirmEmail">
                             </div>
                         </div>
@@ -77,7 +80,7 @@
 
                         <div class="form-group">
                             <input class="form-control" type="text" id="nickName" name="nickname"
-                                required="" placeholder="Nick Name">
+                                required="" placeholder="별명">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -85,7 +88,7 @@
 
                         <div class="form-group">
                             <input class="form-control" type="password" required=""
-                                id="password" name="pwd" placeholder="Enter your password">
+                                id="password" name="pwd" placeholder="비밀번호">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -93,24 +96,16 @@
 
                         <div class="form-group">
                             <input class="form-control mt-2" type="password" required=""
-                            id="passwordCheck" placeholder="password check">
+                            id="passwordCheck" placeholder="비밀번호 확인">
                             <div class="invalid-feedback">
                             </div>
                         </div>
-
-                        <div class="form-group mt-5">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" id="agreement" class="custom-control-input">
-                                <label class="custom-control-label" for="agreement">I
-                                    accept <a href="#">Terms and Conditions</a></label>
-                            </div>
-                        </div>
                         
-                        <div class="col-lg-12 text-center mt-4">
-                            <button type="submit" id="submit" class="btn btn-block btn-info" disabled>Sign Up</button>
+                        <div class="col-lg-12 text-center mt-4 user-signup-btn-padding-0">
+                            <button type="submit" id="submit" class="btn btn-block btn-info" disabled>가입하기</button>
                         </div>
                         <div class="col-lg-12 text-center mt-5 mb-2">
-                            Already have an account? <a href="signin" class="text-danger">Sign In</a>
+                            이미 계정이 있으신가요? <a href="signin" class="text-danger">들어가기</a>
                         </div>
                     </form>
                 </div>
@@ -123,10 +118,9 @@
     <!-- ============================================================== -->
     <!-- All Required js -->
     <!-- ============================================================== -->
-    <script src="assets/libs/jquery/dist/jquery.min.js "></script>
+    <div th:replace="common/scriptB :: scriptB"></div>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/libs/popper.js/dist/umd/popper.min.js "></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
@@ -193,8 +187,18 @@
             //이메일 중복체크 기능 들어가야함(Ajax)
           
             $('#checkEmail').on('click', function(){
+              	let inputId = $('#id').val().trim();
+              	console.log(inputId);
               	
-              	console.log($('#id').val());
+              	if(inputId == ""){
+              		Swal.fire('', '이메일을 입력하세요', 'warning');
+              		return;
+              	}
+              	
+              	if($('#id').hasClass('is-invalid')){
+              		Swal.fire('', '이메일 형식에 맞게 입력하세요', 'warning');
+              		return;
+              	}
               	
               	let asyncResult = "";
               	
@@ -203,49 +207,68 @@
               		url: "signup/duplicateCheck.ajax",
               		//async: false,
               		data: {
-              				id : $('#id').val()
+              				"id" : inputId
               			},
               		success: function(data){
               			console.log(data);
               			
                           if(data == 1) {
-                              alert("이미 가입한 이메일 입니다!");
+                              Swal.fire('', '이미 가입한 이메일 입니다!', 'warning');
                               $('#id').removeClass('is-valid is-invalid');
                               $('#id').addClass('is-exist is-invalid');
                               $('#id').focus();
                               return false;
                           }else{
-                        	  confirm("입력하신 메일주소로 인증번호가 발송됩니다");
+                        	                                
+                              Swal.fire({
+                              	  title: '',
+                              	  text: "입력하신 메일주소로 인증번호가 발송됩니다",
+                              	  icon: 'info',
+                              	  showCancelButton: true,
+                              	  confirmButtonColor: '#3085d6',
+                              	  cancelButtonColor: '#d33',
+                              	  confirmButtonText: '인증메일 받기',
+                              	  cancelButtonText: '취소'
+                              	}).then((result) => {
+                              	  if (result.value) {
+
+        							  $.ajax({
+  								  		type: "post",
+  								  		url: "signup/confirmEmail.ajax",
+  								  		data: {
+  				              					"to" : $('#id').val()									  				
+  									  		},
+  								  		success: function(data){
+  								  			
+  								  			console.log(data);
+  								  			
+  								  			Swal.fire('', '인증번호를 발송했습니다. \n메일을 확인해주세요', 'info');
+  								  			
+  								  			$('#authNumCheck').click(function(){
+  								  				console.log(data);
+  								  				
+  								  				if($('#authNum').val() != data){
+  								              		Swal.fire('', '인증번호가 일치하지 않습니다', 'warning');
+  								  				}else{
+
+  		  								  			Swal.fire('', '인증이 완료됐습니다', 'success');
+  								  					$('#authNum').addClass('is-valid').trigger('change');
+  								  					$('#id').addClass('is-confirmed');
+  								  					$('#authNum').attr('readonly', true);
+  								  					$('#id').attr('readonly', true);
+  								  				}
+  								  			});
+  								  		} //success end
+  							  });
+                              	  
+                              	  }else{
+                                 	   $(this).attr("href", "");
+                              	  }
+                              	});
                         	  
                         	  
-							  $.ajax({
-								  		type: "post",
-								  		url: "signup/confirmEmail.ajax",
-								  		data: {
-				              					"to" : $('#id').val()									  				
-									  		},
-								  		success: function(data){
-								  			
-								  			console.log(data);
-								  			
-								  			alert("인증번호를 발송했습니다. \n메일을 확인해주세요");
-								  			
-								  			$('#authNumCheck').click(function(){
-								  				console.log(data);
-								  				
-								  				if($('#authNum').val() != data){
-								  					alert("인증번호가 일치하지 않습니다.");
-								  				}else{
-								  					alert("인증이 완료됐습니다.");
-								  					$('#authNum').addClass('is-valid').trigger('change');
-								  					$('#id').addClass('is-confirmed');
-								  					$('#authNum').attr('readonly', true);
-								  					$('#id').attr('readonly', true);
-								  				}
-								  			});
-								  			
-								  		}
-							  });
+                        	  
+
                           }
               			
               			},
@@ -264,8 +287,7 @@
            
             
             
-            //input 검증 @@ keyup일 때는 제대로 나오는데 blur 일 때는 css가 이상하다........................왜지 
-            // chrome 브라우저의 user agent stylesheet 설정 때문이었다............빡침
+            //input 검증 
             function inputCheck(input, regExp, name) {
                 input.on({
                     blur : function() {
@@ -301,9 +323,8 @@
                let idConfirmOk = $('#authNum').hasClass('is-valid');
                let pwdOk = $('#password').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
-               let agreeOk = $('#agreement').is(":checked");
                console.log(agreeOk);
-               if(nickOk && idOk && pwdOk && pwdChckOk && agreeOk && idConfirmOk){
+               if(nickOk && idOk && pwdOk && pwdChckOk && idConfirmOk){
                    console.log("if");
                    $('#submit').removeAttr('disabled');
                }else{
