@@ -378,14 +378,12 @@
 			$(this).text(timeArr[index+1]);
 		});
 		  
-		
         $(function () {
         	var todaysNewJson = JSON.parse(todaysNewData);
         	var activeRateJson = JSON.parse(activeRate);
 
             // knob
             $('[data-plugin="knob"]').knob();
-            
             
             // Morris donut chart 
             
@@ -406,7 +404,7 @@
         					   + "</div>";
         		$('#morris-donut-chart1').append(noActiveRate);
         	}
-        	
+
         	
         	if(!(todaysNewJson[0].value == 0 && todaysNewJson[1].value == 0)){
 
@@ -418,14 +416,12 @@
                    colors:['#5f76e8', '#01caf1']
                });
                 
-                
         	}else{
         		let noNewPosts = "<div class='pt-5 text-center h5'>"
         					   + "<h5 class='pt-3'> 당일 신규 게시물이 없습니다 </h5>"
         					   + "</div>";
         		$('#morris-donut-chart2').append(noNewPosts);
         	}
-
         });
 		
 	</script>

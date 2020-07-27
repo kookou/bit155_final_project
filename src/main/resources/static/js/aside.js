@@ -144,11 +144,14 @@ $('#allBoardList').on('click', '.delBoard', function() {
 				},
 				success: function() {
 					deleteBoard.remove();
-					Swal.fire(
-							'Deleted!',
-							'"' + boardName + '" Board가 삭제되었습니다.',
-							'success'
-					)
+					Swal.fire({
+						title: 'Deleted!',
+						text: '"' + boardName + '" Board가 삭제되었습니다.',
+						icon: 'success',
+						confirmButtonText: 'OK',
+					}).then((result) => {
+						location.href = 'timeLine.do?teamNo=' + teamNo;
+					});
 				},
 				error: function(e) {
 					console.log(e);

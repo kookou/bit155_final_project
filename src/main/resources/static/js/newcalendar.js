@@ -12,11 +12,9 @@
 	var editEnd = $('#edit-end');
 	
 function renderFullCalendar(){
-	console.log("잉??");
 	// 풀캘린더 그리기
 	calendar = new FullCalendar.Calendar(calendarEl, {
 		defaultTimedEventDuration: '01:00:00',
-		nextDayThreshold: "09:00:00",
 		timeFormat: 'HH:mm',
 	
 		  
@@ -37,13 +35,11 @@ function renderFullCalendar(){
 		displayEventTime: true,
 		
 		events: function(Info, successCallback, failureCallback) {
-			console.log(Info)
 			$.ajax({
 				url: "showCalendar.ajax",
 				data: { teamNo :teamNo },
 				
 				success: function(response) {
-					console.log(response)
 					var fixedDate = response.map(function(array) {
 						//db의 allDay 컬럼은 String값으로 true/false를 저장해놓았기 때문에 fullcalendar가 인식하는 boolean 타입으로 수정해줘야 함
 						if(array.allDay == 'true'){array.allDay=true}
@@ -77,9 +73,6 @@ function renderFullCalendar(){
 			selectend = moment(selectend).subtract(1, 'days');
 			end = moment(selectend).format('YYYY-MM-DD HH:mm');
 			
-			
-			
-			
 			// 모달 안 태그값 초기화
 			$('#eventModal input, textarea').val("");
 			$('#customCheck2').prop("checked", false);
@@ -88,7 +81,6 @@ function renderFullCalendar(){
 			//모달에 데이터 쏴주기
 			$('#edit-start').val(start);
 			$('#edit-end').val(end);
-			
 			
 			// 모달 타이틀 바꾸기
 			modalTitle.html('새로운 일정');
@@ -99,18 +91,6 @@ function renderFullCalendar(){
 
 			// 모달 열기
 			$('#eventModal').modal('show');
-
-			//하루종일 체크시, 일정 끝 인풋창 숨김 메서드
-						
-//			$('#customCheck2').change(function(){
-//		        if($("#customCheck2").is(":checked")){
-//		           console.log('하루종일 체크함');
-//		           $('#edit-end').attr("type","hidden");
-//		        }else{
-//		        	console.log('하루종일 체크 해제함');
-//		        	$('#edit-end').attr("type","text");
-//		        }
-//		    });
 
 			$('#save-event').unbind();
 			$('#save-event').on('click', function() {
@@ -142,12 +122,18 @@ function renderFullCalendar(){
 				};
 
 				if(eventData.title == "") {
-					alert('일정명을 입력하세요.');
+					Swal.fire({
+						  icon: 'warning',
+						  text: '일정명을 입력해주세요.'
+						})
 					return false;
 				}
 		
 				if(eventData.start > eventData.end) {
-						alert('끝나는 날짜가 시작 날짜보다 앞설 수 없습니다.');
+					Swal.fire({
+						  icon: 'warning',
+						  text: '끝나는 날짜가 시작하는 날짜보다 앞설 수 없습니다.'
+						})
 						return false;
 				}
 				//var allDay = $('#allDay');
@@ -187,13 +173,18 @@ function renderFullCalendar(){
 					url: "addPlan.ajax",
 					async: false, //eventData객체에 DB에서 가져온 sindex값을 넣기 위해서 동기식 처리 옵션 지정
 					success: function(data) {
-						console.log(data); //result값인 0(실패) 또는 1(성공) 출력
-						  alert("일정이 등록되었습니다.");
+						Swal.fire({
+							  icon: 'success',
+							  text: '일정이 등록되었습니다.'
+							})
 						eventData.no=data;
 						
 					},
 					error: function(e) {
-						console.log("insert에러: "+e);
+						Swal.fire({
+							  icon: 'error',
+							  text: '일정 등록에 실패하였습니다.'
+							})
 					}
 				});
 				// 이벤트 추가
@@ -208,18 +199,22 @@ function renderFullCalendar(){
 			$(event.el).popover({
 				title: $('<div />', {
 			        class: 'popoverTitleCalendar',
+			        //일정명
 			        text: event.event.title
 			      }).css({
+			    	  //타이틀 색상을 일정 색상에 맞게 변경
 			        'background': event.event.backgroundColor,
 			        'color' : '#ffffff'
 			      }),
 			      content: $('<div />', {
 			          class: 'popoverInfoCalendar'
 			        }).append('<p><strong>등록자 : </strong> ' + event.event.id+ '</p>')
-			        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventDate(event) + '</p>')
-			        .append('<div class="popoverDescCalendar"><strong>일정 설명 : </strong> ' + hoverdescription(event.event.extendedProps.description) + '</div>'),
+			        .append('<p><strong>일정 기간 : </strong> ' + getDisplayEventDate(event) + '</p>')
+			        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventTime(event) + '</p>')
+			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event.event.extendedProps.description) + '</div>'),
 			      delay: {
-			        show: "80",
+			    	  //모달 창 뜨는 시간 
+			        show: "200",
 			        hide: "50"
 			      },
 			      trigger: 'hover',
@@ -245,7 +240,10 @@ function renderFullCalendar(){
 			//주,일 view일때 종일 <-> 시간 변경불가
 			 if (event.view.type === 'timeGridWeek' || event.view.type === 'timeGridDay') { 
 		     	if (draggedEventIsAllDay !== event.event.allDay) {
-			        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
+		     		Swal.fire({
+						  icon: 'warning',
+						  text: '드래그앤드롭으로 종일<->시간 변경은 불가합니다.'
+						})
 			        location.reload();  //임시로 리로드로 예외처리
 		        	return false;
 		        }
@@ -264,27 +262,17 @@ function renderFullCalendar(){
 	//일정을 클릭하면 수정창이 나와 처리하는 메서드	
 	var editEvent = function(event, element, view) {
 		
-		console.log("======edit 함수 실행==========");
-		console.log(event)
-		console.log(event.event.end)
-		// JSON 형태로 데이터 출력해보고 싶으면 아래 실행 ---지우지 마세요---
-//		console.log("나와: "+JSON.stringify(event));
 
 		var title = event.event.title;
 		var content = event.event.extendedProps.description;
 		var no = event.event.extendedProps.no;
 		var allday = event.event.allDay; // 내가 넣은 allday  //exProps로 잡히지 않는다 undefined
-	
-		// calendar의 allDay는...
-//		var allDay = event.el.fcSeg.eventRange.def.allDay;
-//		console.log("이거? "+allDay);
 
 		var start = event.event.start;
 		var end = event.event.end; 
 		var color = event.event.backgroundColor;
 		var id = event.event._def.publicId;
 		
-		console.log("데이터 확인: "+ no);
 		
 		// input 태그 초기화
 		$('#customCheck2').prop("checked", false);
@@ -316,33 +304,23 @@ function renderFullCalendar(){
 
 		// 모달 열기 > 마지막에 열자
 		$('#eventModal').modal('show');
-
- 		//하루종일 체크시, 일정 끝 인풋창 숨김 메서드
-//		if($("#customCheck2").is(":checked")){
-//	           console.log('하루종일 체크함');
-//	           $('#edit-end').attr("type","hidden");
-//	    }
- 		
-//		$('#customCheck2').change(function(){
-//	        if($("#customCheck2").is(":checked")){
-//	           console.log('하루종일 체크함');
-//	           $('#edit-end').attr("type","hidden");
-//	        }else{
-//	        	console.log('하루종일 체크 해제함');
-//	        	$('#edit-end').attr("type","text");
-//	        }
-//	    }); 
-
 		
 		if($('#title').val() == "") {
-			alert('일정명을 입력하세요.');
+			Swal.fire({
+				  icon: 'warning',
+				  text: '일정명을 입력해주세요.'
+				})
 			return false;
 		}
 
 		if($('#start').val() > $('#end').val() ) {
-			alert('끝나는 날짜가 시작 날짜보다 앞설 수 없습니다.');
+			Swal.fire({
+				  icon: 'warning',
+				  text: '끝나는 날짜가 시작하는 날짜보다 앞설 수 없습니다.'
+				})
 			return false;
 		}
+		
 		$('#updateEvent').unbind();
 		$('#updateEvent').on('click', function() {
 
@@ -353,8 +331,6 @@ function renderFullCalendar(){
 			if(allDay.is(':checked')) { isAllDay = true; }
 			else { isAllDay = false; }
 			
-			console.log("올데이발:"+isAllDay);
-
 			
 			//event 객체 업데이트 (DB는 아님)
 			event.event.setProp("title", $('#edit-title').val());
@@ -364,10 +340,7 @@ function renderFullCalendar(){
 			event.event.setAllDay(isAllDay);
 			event.event.setExtendedProp("content", $('#edit-desc').val());
 			
-
 			$('#eventModal').modal('hide');
-
-			 $("#calendar").fullCalendar('updateEvent', event);
 
 			$.ajax({
 					type: "post",
@@ -385,11 +358,16 @@ function renderFullCalendar(){
 					url: "updatePlan.ajax",
 					async: false,
 					success: function(response) {
-							console.log(response);
-							alert("일정이 수정되었습니다.")
+							Swal.fire({
+								  icon: 'success',
+								  text: '일정이 수정되었습니다.'
+								})
 						},
 					error: function(e) {
-							console.log("update error: "+e);
+						Swal.fire({
+							  icon: 'error',
+							  text: '일정 수정에 실패하였습니다.'
+							})
 						}
 
 				});
@@ -401,39 +379,53 @@ function renderFullCalendar(){
 		
 		$('#deleteEvent').unbind();
 		$('#deleteEvent').on('click', function() {
-
-			event.event.remove();
+			
 			$('#eventModal').modal('hide');
-	
-			$.ajax({
-					data: {
-						no : no			
-					},
-					url: "deletePlan.ajax",
-					async: false,
-					success: function(response) {
-						  alert("일정이 삭제되었습니다.");
-							console.log(response);
-						},
-					error: function(e) {
-							console.log("update error: "+e);
-						}
+			Swal.fire({
+			      text: "정말로 일정을 삭제하시겠습니까?",
+			      icon: 'warning',
+			      showCancelButton: true,
+			      confirmButtonText: '네',
+			      cancelButtonText: '아니오'
+			   }).then((result) => {
+			      if (result.value) {
+			         var promise = 
+			        	 $.ajax({
+								data: {
+									no : no			
+								},
+								url: "deletePlan.ajax",
+								async: false,
+								success: function(response) {
+									Swal.fire({
+										  icon: 'success',
+										  text: '일정이 삭제되었습니다.'
+										})
+										event.event.remove();
+									},
+								error: function(e) {
+									Swal.fire({
+										  icon: 'error',
+										  text: '일정 삭제에 실패하였습니다.'
+										})
+									}
 
-				});
-
+							});
+			          promise.done(reloadListPromise);
+			          promise.fail(promiseError);
+			      }
+			   });
 			});
 
 	}
 
 	//재사용을 위해 모듈화
 	function dndResize(event){
-		console.log(event);
 	     // 드랍시 수정된 날짜반영
 		 //var newDates = calDateWhenDragnDrop(event);  //퍼올 커스텀 함수인데 우선 보류
 		  var no = event.event.extendedProps.no;
 		  var newStart = event.event.start;
 		  var newEnd = event.event.end;
-		  console.log('데이터 확인: '+ no); 
 		 
 		  //드롭한 일정 업데이트
 		  $.ajax({
@@ -445,39 +437,65 @@ function renderFullCalendar(){
 				},
 				url: "updatePlanDrag.ajax",
 				success: function(response) {
-					  alert("일정이 수정되었습니다.");
-						console.log(response);
+					Swal.fire({
+						  icon: 'success',
+						  text: '일정이 수정되었습니다.'
+						})
 					},
 				error: function(e) {
-						console.log("update error: "+e);
+					Swal.fire({
+						  icon: 'error',
+						  text: '일정 수정에 실패하였습니다.'
+						})
+					
 					}
 			});
 		   	calendar.render();
 		
 	}
-	//호버 할떄 검증 하는 함수
+	
+	//호버 할때 내용 검증 하는 함수
 	function hoverdescription(event){
-		var displayeventde;
-		if(event == ""){
+		var displayeventde = $.trim(event)
+		
+		if(displayeventde == ""){
 			displayeventde = "일정 내용이 없습니다.";
 		}else{
 			displayeventde = event
 		}
 		return displayeventde;
 	}
+	
 	//마우스 호버시 보여질 시간 항목 함수
+	function getDisplayEventTime(event) {
+	
+	  var displayEventTime;
+
+	  if (event.event.allDay == false) {
+	    var startTimeEventInfo = moment(event.event.start).format('HH:mm');
+	    var endTimeEventInfo = moment(event.event.end).format('HH:mm');
+	    displayEventTime = startTimeEventInfo + " - " + endTimeEventInfo;
+	  } else {
+		displayEventTime = "하루종일";
+	  }
+	  return displayEventTime;
+	}
+	
+	//마우스 호버시 보여질 날짜 항목 함수
 	function getDisplayEventDate(event) {
 	  var displayEventDate;
 
-	  if (event.allDay == false) {
-	    var startTimeEventInfo = moment(event.event.start).format('HH:mm');
-	    var endTimeEventInfo = moment(event.event.end).format('HH:mm');
-	    displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
-	  } else {
-	    displayEventDate = "하루종일";
-	  }
+	    var startTimeEventInfo = moment(event.event.start).format('YYYY/MM/DD');
+	    var endTimeEventInfo = moment(event.event.end).format('YYYY/MM/DD');
+	    if(startTimeEventInfo== endTimeEventInfo){
+	    	displayEventDate = startTimeEventInfo
+	    }else{
+	    	displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
+	    }
+	
 	  return displayEventDate;
 	}
+	
 	
 	// datetimepicker
 	$("#edit-start, #edit-end").bootstrapMaterialDatePicker({
