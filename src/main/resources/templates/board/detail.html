@@ -100,6 +100,8 @@
                                             		<a th:href="@{boardList.do(allBoardListNo=${allBoardListNo},teamNo=${teamNo})}" th:text="${selectBoard.name}" name="boardName" id="boardName"></a>
                                             		<label for="boardName">></label>
                                             	</h6>
+                                            	<!-- 글이 공지사항일 경우 -->
+	                                         	<span  th:if="${boardNoti} != null" class="badge badge-danger">공지사항</span>
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">

@@ -79,6 +79,7 @@ public class BoardController {
 		model.addAttribute("teamNo", teamNo);
 		model.addAttribute("boardnamelist" , boardnamelist);
 		model.addAttribute("allBoardListNo", allBoardListNo);
+		model.addAttribute("boardNoti", service.getBoardNoti(allBoardListNo));
 		model.addAttribute("selectBoardDownloadFile", service.selectBoardDownloadFile(boardNo)); //다운로드 서비스
 		service.updateReadCount(boardNo, request);
 		model.addAttribute("selectBoard", service.selectBoardByBoardNo(boardNo));
