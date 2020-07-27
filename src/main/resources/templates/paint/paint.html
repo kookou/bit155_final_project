@@ -114,7 +114,7 @@ textarea {
 margin-bottom: 10px;
 width:150px;
 }
-.savebtn{
+#saveBtn{
 width:150px;
 }
 .saveinput{
@@ -257,7 +257,7 @@ width:150px;
 															placeholder="제목 입력">
 														<a id="saveImage"
 															download="image.png">
-															<button class="btn btn-primary savebtn" onClick="saveImage()">저장</button>
+															<button id="saveBtn" onClick="saveImage()">저장</button>
 														</a>
 														<textarea id="history" cols="40" rows="37"
 															style="display: none;"></textarea>
@@ -287,6 +287,28 @@ width:150px;
     /*]]>*/
 	//		$('.page-wrapper').css('position', '');
    
+    if(bgColor == '5f76e8') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-primary');
+	}
+	if(bgColor == '22ca80') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-success');
+	}
+	if(bgColor == 'fdc16a') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-warning');
+	}
+	if(bgColor == 'ff4f70') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-danger');
+	}
+	if(bgColor == 'e8eaec' || bgColor == 'ffffff') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-light');
+	}
+	if(bgColor == '6c757d') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-secondary');
+	}
+	if(bgColor == '1c2d41') {
+		$('#saveBtn').attr("class", 'btn waves-effect waves-light btn-dark');
+	}
+    
     /*       var textareaList = ["history"]; */
     var canvas = document.querySelector("#canvas");
     var ctx = canvas.getContext("2d");
