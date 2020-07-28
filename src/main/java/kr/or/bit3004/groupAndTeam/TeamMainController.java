@@ -15,6 +15,15 @@ public class TeamMainController {
 	@Autowired
 	private TeamMainService service;
 	
+	/*
+	* @Method Name : selectTeamName
+	* @작성일 : 2020.07.28
+	* @작성자 : 김혜린
+	* @Method 설명 : 개인 group과 team List 가져오기 (ajax)
+	* @param session
+	* @param model
+	* @return groupAndTeam List
+	**/
 	@RequestMapping("teamMain.do")
 	public String selectTeamName(HttpSession session, Model model) {
 		//session에서 id값 가져오기

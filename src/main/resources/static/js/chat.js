@@ -23,9 +23,9 @@ var ws = null;
 var loginId = null;
 
 $(function () {
-    ws = new WebSocket('ws://192.168.0.56:8090/chatting');
+    ws = new WebSocket('ws://localhost:8090/chatting');
 	ws.onopen = function() {
-   	    console.log('웹소켓 서버 접속 성공-chat.js');
+   	 /*   console.log('웹소켓 서버 접속 성공-chat.js');*/
    	    ws.send('connent∥'+teamNo+"∥"+currUserNickname+"∥"+"님 접속∥"+currUserImage);
     };
     // 메세지 받기
@@ -36,7 +36,7 @@ $(function () {
     	console.log('웹소켓 에러 발생-chat.js : ' + evt.data);
     };
     ws.onclose = function() {
-    	console.log("웹소켓 연결이 종료됨-chat.js");
+    	/*console.log("웹소켓 연결이 종료됨-chat.js");*/
     };
 });
 
@@ -63,7 +63,12 @@ $('#fixedBtn').on({
     }
 });
 
-
+/**
+* @함수명 : makeChatBox(data)
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 채팅박스 그리는 함수
+**/
 function makeChatBox(data) {
 	var nickAndMsg = data.split("∥");
 	var notice = nickAndMsg[0];
@@ -111,22 +116,7 @@ function makeChatBox(data) {
 			html += '</li>';
 		}
 	}
-	
-	
-	
 		
 	$(".popover #msgUl").append(html);
 	$(".popover .chat-box").scrollTop($(".popover #msgUl")[0].scrollHeight);
 }
-
-//$('#logoutBtn').click(function() { 
-//	$.ajax({
-//		url: "<c:url value='/websocket/logout.do' />"
-//	})
-//	.done(function (result) {
-//		ws.send("logout:" + loginId);
-//		$("#loginBox, #msgBox, #logoutBox").toggle();
-//		loginId = null;
-//		$("#result").html("");
-//	});
-//});

@@ -68,13 +68,10 @@
                             <input type="hidden" name="teamNo" th:value="${session.currentUser.teamNo}">
                             <input type="hidden" name="allBoardListNo" th:value="${allBoardListNo}">
                             <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
-                            <!-- @{selectBoard.do(boardNo=${board.boardNo},teamNo=1)} -->
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="form-group col-lg-6">
                                         	<input type="text" class="form-control" name="title" placeholder="제목을 입력하세요." value="Re: ">
-                                            <!-- 	 <input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}"> -->
-                                            <!--  <input type="hidden" name="refer" id="refer" th:value="${board.refer}"> -->
                                         </div>
                                       	<div class="col-lg-6" style="margin-top:8px;">
                                          	<input type="checkbox" name="boardNoti" th:value="Y" id="notice">
@@ -170,7 +167,7 @@
 		 				processData : false,
 		 				success : function(data){
 		 					//항상 업로드된 파일의 url이 있어야 한다.
-		 					console.log(data)
+		 					/* console.log(data) */
 		 					$(editor).summernote('insertImage', data.url);
 		 				},
 		 				error: function(e) {

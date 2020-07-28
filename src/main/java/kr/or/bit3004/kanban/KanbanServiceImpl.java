@@ -293,18 +293,16 @@ public class KanbanServiceImpl implements KanbanService {
    }
 
    @Override
-   public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
+   public void resortKanbanList(int kanbanListNo, int startListIDX, int endListIDX) {
       dao.updateKanbanListIndex(kanbanListNo, endListIDX);
       
-      int difference = Math.abs(endListIDX-startListIDX);
-      
       if(endListIDX-startListIDX > 0) {
-         System.out.println("큰 index로 이동");
+//         System.out.println("큰 index로 이동");
          // 중간 index들 -1
          dao.resortKanbanListIndexSTB(kanbanListNo, startListIDX, endListIDX);
 
       }else if(endListIDX-startListIDX < 0) {
-         System.out.println("작은 index로 이동");
+//         System.out.println("작은 index로 이동");
          // 중간 index들 +1
          dao.resortKanbanListIndexBTS(kanbanListNo, startListIDX, endListIDX);
       }   
@@ -312,24 +310,22 @@ public class KanbanServiceImpl implements KanbanService {
 
 
    @Override
-   public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
-      System.out.println("ServiceImpl resortKanbanCard");
-      System.out.println("kanbanCardNo : "+kanbanCardNo);
-      System.out.println(endListNo +"/"+ kanbanCardNo +"/"+ startCardIDX +"/"+ endCardIDX);
-            
-      int difference = Math.abs(endCardIDX-startCardIDX);
-      System.out.println(difference);
-      
+   public void resortKanbanCard(int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX) {
+//      System.out.println("ServiceImpl resortKanbanCard");
+//      System.out.println("kanbanCardNo : "+kanbanCardNo);
+//      System.out.println(endListNo +"/"+ kanbanCardNo +"/"+ startCardIDX +"/"+ endCardIDX);
+//            
+
       if(startListNo == endListNo) { // 같은 리스트 내에서 카드 이동
          //업데이트
          dao.updateKanbanCardIndex(kanbanCardNo, endCardIDX);
          
          if(endCardIDX-startCardIDX > 0) {
-            System.out.println("큰 index로 이동");
+//            System.out.println("큰 index로 이동");
             // 중간 index들 -1
             dao.resortKanbanCardIndexSTB(endListNo, kanbanCardNo, startCardIDX, endCardIDX);
          }else{
-            System.out.println("작은 index로 이동");
+//            System.out.println("작은 index로 이동");
             // 중간 index들 +1
             dao.resortKanbanCardIndexBTS(endListNo, kanbanCardNo, startCardIDX, endCardIDX);
          }
