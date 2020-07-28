@@ -19,20 +19,13 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	@Autowired
-	private MailService mailService;
-	
 	@Autowired	
 	private AsideService asideService;
 	
-	//handlers test
-	@GetMapping("/handlers")
-	public String handlers() {
-		return "email-template";
-	}
+
 	
 	
-	//로그인 폼
+	//로그인 폼 이동
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signIn() {
 		return "user/signIn";
@@ -40,79 +33,83 @@ public class UserController {
 
 	
 	
-	// 가입 폼
+	// 가입 폼 이동
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signUp() {
 		return "user/signUp";
 	}
 	
 
-	//가입 처리 
+	/*
+    * @Method Name : signUp (가입 처리)
+    * @작성자 : 김선
+    * @변경이력 :
+    * @Method 설명 : 사용자에게 입력받은 정보로 만들어진 User 객체를 DB에 저장해서 가입처리
+    * @param : User user
+    * @return : String
+    */
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signUp(User user) {
-		System.out.println("controller");
-		System.out.println(user);
-		
 		service.insertUser(user);
 		return "redirect:signin";
 	}
 	
 	
 	
-	// 비번 수정 요청 폼
-	@RequestMapping(value="/forgotpwd", method=RequestMethod.GET)
-	public String resetPassword() {
-		return "user/forgotPwd";
-
-	}
-	
-	// 비번 수정 처리
-	// 이메일로 비밀번호 수정 페이지 링크를 메일로 보내기 
-	//		>	링크를 클릭하면 비밀번호 수정 페이지 
-	//		>	해당 페이지에서 새 비밀번호를 입력하면 DB에 반영 
-	
-	//회원 수정 폼
+	/*
+    * @Method Name : editUserInfo (회원정보 수정 폼 이동)
+    * @작성자 : 김선
+    * @변경이력 :
+    * @Method 설명 : session에서 로그인된 사용자 정보를 가져와서 model에 필요한 값들을 저장한 후 회원정보 수정 페이지로 이동
+    * @param : HttpSession session
+    * @param : Model model
+    * @return : String
+    */
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
 	public String editUserInfo(HttpSession session, Model model) {
-
-		System.out.println(" GET ");		
-		System.out.println("editUserInfo");
 		
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 		int teamNo = currentUser.getTeamNo();
 		
 		if(teamNo > 0) {
-			System.out.println("teamNo : "+teamNo);
 			   model.addAttribute("teamNo", teamNo);
-			   System.out.println("team : "+ asideService.getTeam(teamNo));
 			   model.addAttribute("team", asideService.getTeam(teamNo));
 			   model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 			   model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		}
-
 		return "user/editUser";
 	}
 	
 	
-	//회원 수정 처리
+	/*
+    * @Method Name : editUserInfo (회원정보 수정 처리)
+    * @작성자 : 김선
+    * @변경이력 :
+    * @Method 설명 : 사용자한테 입력받은 정보로 DB 회원정보를 수정
+    * @param : User user
+    * @param : HttpServletRequest request
+    * @param : HttpSession session
+    * @return : String
+    */
 	@RequestMapping(value="/edituser", method=RequestMethod.POST)
 	public String editUserInfo(User user, HttpServletRequest request, HttpSession session) {
-		System.out.println(" POST ");
-		System.out.println("editUserInfo");
-		System.out.println(user);
-		
 		service.updateUser(user, session);
-
-		
 		return "redirect:edituser";
 	}
 	
-	//회원 삭제 : ROLE_MEMBER 테이블에서 먼저 지우면 TRIGGER로 USER 테이블 데이터가 지워진다
+	
+	/*
+    * @Method Name : deleteUser (회원 탈퇴 처리)
+    * @작성자 : 김선
+    * @변경이력 :
+    * @Method 설명 : 회원 탈퇴 처리
+    * @param : String id
+    * @param : HttpSession session
+    * @return : String
+    */
 	@RequestMapping(value="/deleteuser", method=RequestMethod.GET)
 	public String deleteUser(String id, HttpSession session) {
 		service.deleteUser(id, session);
 		return "redirect:signin"; 
 	}
-
-	
 }

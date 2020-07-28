@@ -136,7 +136,16 @@
     <script>
         $(".preloader ").fadeOut();
         
-        function submitCheck() { // 바깥에 있어야 실행됨
+        
+        
+        
+        /**
+        * @함수명 : submitCheck()
+        * @작성자 : 김선
+        * @설명 : input에 사용자 입력값이 없는 상태로 submit을 시도하는 경우 안내 메시지를 출력
+        **/
+        
+        function submitCheck() { 
             let invalidMessage = "을 입력하세요 <br>";
             $('.invalid-feedback').empty();
             $('input').removeClass('is-invalid');
@@ -157,7 +166,14 @@
         }
         
         
+        /**
+        * @함수명 : 익명함수(projectName)
+        * @작성자 : 김선
+        * @설명 : 소셜로그인 버튼 클릭시 해당 플랫폼에 맞는 주소로 소셜로그인 요청을 보냄
+        * @param : 없음 (클릭 이벤트에 따라 소셜타입을 가져옴)
+        **/
         let socials = document.getElementsByClassName("btn_social");
+        
 		for(let social of socials) {
 		social.addEventListener('click', function(){
 			let socialType = this.getAttribute('data-social');
@@ -166,10 +182,6 @@
 			})
 		}
         
-        
-        $(function() {
-            // console.log("jquery start");
-        });
     </script>
 </body>
 

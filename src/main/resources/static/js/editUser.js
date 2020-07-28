@@ -2,10 +2,15 @@
     
     
         $(".preloader ").fadeOut();
+        
+        /**
+         * @함수명 : 익명함수
+         * @작성자 : 김선
+         * @설명 : 사용자가 업로드한 이미지파일의 미리보기를 출력
+         **/ 
         //파일 미리보기
         var file = document.querySelector('#userImage');
         file.onchange = function() {
-        	console.log("=file.onchange=")
             var fileList = file.files;
             // 읽기
             var reader = new FileReader();
@@ -19,12 +24,16 @@
         
         $(function() {
         	
-             console.log("jquery start");
+//             console.log("jquery start");
              
             var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
             var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
             
-            // 정규표현식 검증
+            /**
+             * @함수명 : regCheck(input, regExp, name)
+             * @작성자 : 김선
+             * @설명 : input에 입력한 값이 정규표현식에 맞는지 확인하고 name값에 따라  경우에 맞는 메시지 출력 (이벤트 연동 안돼있음)
+             **/ 
             function regCheck(input, regExp, name) { 
                 
                 if(name == "비밀번호확인"){
@@ -88,7 +97,11 @@
             }
  
             
-            //input 검증
+            /**
+             * @함수명 : inputCheck(input, regExp, name)
+             * @작성자 : 김선
+             * @설명 : input 이벤트에 따라 파라미터로 regCheck함수를 실행
+             **/ 
             function inputCheck(input, regExp, name) {
                 input.on({
                     blur : function() {
@@ -152,7 +165,6 @@
             
             //비밀번호 변경 모달 ajax
             $('#editPwdSubmit').on('click', function(e) {
-//            	console.log("editPwdSubmit");
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
@@ -162,7 +174,6 @@
                     		"newPwd" : $('#newPwd').val().trim()
                     	},
                     success: function(response) {
-                    	console.log("editPwdSubmit");
                     	let icon = "";
                     	
                     	if(response == '비밀번호 변경 시도 완료'){
@@ -187,7 +198,11 @@
             
             
             
-            // 회원정보수정 폼 리셋(ie에서는 동작하지 않을 수 있음)
+            /**
+             * @함수명 : 익명함수
+             * @작성자 : 김선
+             * @설명 : reset 버튼 클릭시 input 내용 초기화(파일포함 : ie에서는 동작하지 않을 수 있음)
+             **/ 
             $('#reset').on('click', function() {
             	
                 $('input').removeClass('is-invalid');
@@ -204,7 +219,11 @@
             });
             
             
-            //모달 닫히면 모달 창 reset
+            /**
+             * @함수명 : 익명함수
+             * @작성자 : 김선
+             * @설명 : 모달 닫힐 때 모달 input 초기화
+             **/ 
             $('#editPassword').on('hide.bs.modal', function(){	
             	$('#editPassword input').val("");  
             	$('#editPassword input').removeClass('is-invalid');
@@ -214,7 +233,11 @@
             });
             
             
-            //회원 탈퇴
+            /**
+             * @함수명 : 익명함수
+             * @작성자 : 김선
+             * @설명 : 탈퇴 요청이 들어왔을 때 alert창 실행
+             **/ 
             $('#delAccount').on('click', function() {
                 $(this).removeAttr("href"); // 여기서 href 속성을 없애줘야 controller에서 redirect가 제대로 먹는다
                

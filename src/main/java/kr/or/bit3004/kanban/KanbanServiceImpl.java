@@ -29,8 +29,6 @@ public class KanbanServiceImpl implements KanbanService {
    
    @Override
    public int insertListTitle(KanbanList kanbanlist, HttpSession session) {
-      System.out.println(kanbanlist);
-      
 	  SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
       
       int newKanbanListNo = 0;
@@ -39,7 +37,6 @@ public class KanbanServiceImpl implements KanbanService {
       //여기 트랜젝션 처리해야함
       dao.insertListTitle(kanbanlist);
       newKanbanListNo = dao.getANewKanbanListNo();
-      System.out.println(newKanbanListNo);
       
       return newKanbanListNo;
    }
@@ -52,7 +49,6 @@ public class KanbanServiceImpl implements KanbanService {
       
       dao.updateKanbanListTitle(kanbanlist);
       KanbanList newKanbanList = dao.getAKanbanListByKanbanListNo(kanbanlist.getKanbanListNo());
-      System.out.println("newKanbanList:"+newKanbanList);
       return newKanbanList;
    }
    
@@ -73,8 +69,6 @@ public class KanbanServiceImpl implements KanbanService {
    //delete kanban list
    @Override
    public void deleteKanbanList(int kanbanListNo) {
-      System.out.println("deleteKanbanList");
-      System.out.println("kanbanListNo : " + kanbanListNo);
       dao.deleteKanbanList(kanbanListNo);
       
    }
@@ -82,7 +76,6 @@ public class KanbanServiceImpl implements KanbanService {
 
    @Override
    public List<Map> kanbanList(int teamNo) {
-      // TODO Auto-generated method stub
       return null;
    }
    
@@ -95,7 +88,6 @@ public class KanbanServiceImpl implements KanbanService {
       dao.insertCardTitle(title, currentUser.getId(), cardIndex, kanbanListNo);
       
       newcardNo = dao.getANewCardNo();
-      System.out.println(newcardNo);
       
       return newcardNo;
    }
@@ -140,13 +132,11 @@ public class KanbanServiceImpl implements KanbanService {
 
    @Override
    public List<KanbanUpload> kanbanFilesUpload(MultipartHttpServletRequest request) {
-      System.out.println("= kanbanFilesUpload Impl =");
       
       List<MultipartFile> fileList = request.getFiles("kanbanFiles");
       int allBoardListNo = Integer.parseInt(request.getParameter("allBoardListNo"));
       int cardNo = Integer.parseInt(request.getParameter("cardNo"));
       int teamNo = Integer.parseInt(request.getParameter("teamNo"));
-      System.out.println(teamNo);
       
       List<KanbanUpload> returnFileList = new ArrayList<KanbanUpload>(); //      ajax return용 업로드파일목록
       
@@ -264,7 +254,6 @@ public class KanbanServiceImpl implements KanbanService {
                   + "\\src\\main\\resources\\static\\cloud\\" + teamNo
                   + "\\" + selectedFile.getFileName();
       
-      System.out.println(filePath);
       
       File file = new File(filePath);
       
@@ -299,19 +288,15 @@ public class KanbanServiceImpl implements KanbanService {
       }
       for(int i = 0; i < cardNo.length; i ++) {
          dao.dragCardUpdate(cardnomap.get(i), cardindexmap.get(i), kanbanListNo);
-         System.out.println(cardnomap.get(i));
-         System.out.println(cardnomap.get(i));
       }
       
    }
 
    @Override
    public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
-      System.out.println("ServiceImpl resortKanbanList");
       dao.updateKanbanListIndex(kanbanListNo, endListIDX);
       
       int difference = Math.abs(endListIDX-startListIDX);
-      System.out.println(difference);
       
       if(endListIDX-startListIDX > 0) {
          System.out.println("큰 index로 이동");

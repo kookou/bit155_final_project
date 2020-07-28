@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import kr.or.bit3004.dao.UserDao;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService{
    
    @Autowired
    private UserDao dao;
@@ -30,16 +30,13 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
    @Override
    public void insertUser(User user) {
-      System.out.println("dao");
-      
       user.setPwd(bCryptPasswordEncoder.encode(user.getPwd()));
       dao.insertUser(user);   
    }
 
    @Override
    public int idCheck(String id) {
-      return dao.idCheck(id);
-      
+      return dao.idCheck(id);  
    }
 
 
@@ -49,17 +46,14 @@ public class UserServiceImpl implements UserService, UserDetailsService{
        SessionUser beforeEdit = (SessionUser)session.getAttribute("currentUser");
        
        if( (user.getFile().getSize() <= 0) && (beforeEdit.getNickname().equals(user.getNickname())) ) {
-    	   System.out.println("변경사항 없음");
+//    	   System.out.println("변경사항 없음");
     	   return;
        }
        
 	   
       String fileName = user.getFile().getOriginalFilename();
-      System.out.println("fileName : "+">"+ fileName+"<");
-      System.out.println(user.getFile().getSize());
-      
-      
-      System.out.println(fileName == null);
+//      System.out.println("fileName : "+">"+ fileName+"<");
+//      System.out.println(user.getFile().getSize());
       
       //사진 설정을 한 경우 
       if(user.getFile().getSize() > 0) {
@@ -96,38 +90,21 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
          //DB 파일명 저장
          user.setImage(fileName);
-         
-         System.out.println("serviceImpl");
-         System.out.println(user);
 
-         
          if(user.getNickname() == beforeEdit.getNickname()) { 
              //사진수정, 별명 수정 안함
-        	 
         	 dao.updateUserImage(user);
         	 
          }else {
              // 사진수정, 별명수정
-             dao.updateUserNicknameNImage(user);
-        	 
+             dao.updateUserNicknameNImage(user);	 
          }
          
-         
-         
-
-
-         
+  
       }else { // 사진 설정을 안한경우
-         
-         
-         System.out.println("serviceImpl");
-         System.out.println("nickname : "+ user.getNickname());
-          
-//         String nickname = user.getNickname();
          
          //사진 수정 안함, 별명 수정
          dao.updateUserNickname(user);
-         
       }
 
       SessionUser currentUser = new SessionUser(dao.getUser(user.getId()));
@@ -135,17 +112,14 @@ public class UserServiceImpl implements UserService, UserDetailsService{
       currentUser.setIsTeamLeader(beforeEdit.getIsTeamLeader());
       
       session.setAttribute("currentUser", currentUser);
-      
    }
+   
 
    @Override
    public String updateUserPwd(String pwd, String newPwd, HttpSession session) {
       
       User currentUser = dao.getUser(((User)session.getAttribute("currentUser")).getId());
       String result = "";
-      
-      System.out.println("currentUser : "+ currentUser);   
-	  System.out.println(bCryptPasswordEncoder.matches(pwd, currentUser.getPwd()));
       
       if(!bCryptPasswordEncoder.matches(pwd, currentUser.getPwd())) {
     	  result = "비밀번호 변경 실패";
@@ -156,13 +130,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     	  
     	  result = "비밀번호 변경 시도 완료";
       }
-      
-      System.out.println(result);
+//      System.out.println(result);
       return result;
    }
-   
-   
-   
    
 
    @Override
@@ -177,18 +147,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
    @Override
    public void deleteUser(String id, HttpSession session) {
-      System.out.println("dao deleteUser");
       dao.deleteUser(id);
       session.invalidate();
       
    }
-
-   @Override
-   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-
    
 }
