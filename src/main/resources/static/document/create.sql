@@ -3,9 +3,8 @@ CREATE TABLE `USER` (
 	`ID`       VARCHAR(50)   NOT NULL, -- 아이디
 	`PWD`      VARCHAR(1000) NOT NULL, -- 비밀번호
 	`NICKNAME` VARCHAR(50)   NOT NULL, -- 닉네임
-    `IMAGE`    VARCHAR(200)  default 'user.png', -- 이미지
-	`ENABLE`   INT           NOT NULL default 1, -- 사용여부
-	`QUIT`     VARCHAR(2)    NOT NULL default 0  -- 탈퇴여부
+    `IMAGE`    VARCHAR(200)  NULL, -- 이미지
+	`ENABLE`   INT           NOT NULL default 1 -- 사용여부
 );
 
 -- 사용자

@@ -67,7 +67,6 @@ public class ChattingHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void handleTextMessage(WebSocketSession wss, TextMessage message) throws Exception {
-		debug("보낸 아이디 - " + wss.getId());
 		debug("보낸 메세지 - " + message.getPayload());
 		
 		String rcvMsg = message.getPayload();

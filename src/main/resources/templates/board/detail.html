@@ -260,7 +260,7 @@
 	       		});
 	   		promise.done(reloadListPromise);
 	    	promise.fail(promiseError);
-	    	console.log($(this).data("value"));
+	    	/* console.log($(this).data("value")); */
 	   	});
 	   	
 	   	//댓글수정
@@ -304,7 +304,7 @@
 			    				content: $('#updateContent').val()
 			    			},
 			    			success:function() {
-			    				console.log("아무거나");
+			    				/* console.log("아무거나"); */
 			    			},
 			    			error: function(e) {
 			    				console.log(e);
@@ -421,7 +421,7 @@
 	   	
 	   	//파일 경로 찾아서 다운로드
 	   	$('#download_list .boardFileName').each(function() {
-	   		console.log('cloud/'+teamNo+'/'+$(this).next().val());
+	   		/* console.log('cloud/'+teamNo+'/'+$(this).next().val()); */
 	   		$(this).attr('href', 'cloud/'+teamNo+'/'+$(this).next().val());
 		});
 	   	

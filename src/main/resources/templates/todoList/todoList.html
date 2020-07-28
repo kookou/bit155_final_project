@@ -176,7 +176,7 @@
 		            params.append('id', currUserId);
 		            axios.post('insertTodoContent.do', params
 		    	    ).then(response => {
-		    	    	console.log(response.data);
+		    	    	/* console.log(response.data); */
 		    	    	this.todoList.push({
 		                    content: content,
 		                    state: 'active', //완료하지 않은 항목
