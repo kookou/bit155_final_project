@@ -50,6 +50,8 @@ public class UserAjaxController {
 			e.printStackTrace();
 		}
 		
+		System.out.println("인증번호 : " + result);
+		
 		return result;
 	}
 	
