@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.bit3004.dao.BoardCommentDao">
 	<!-- 댓글 목록출력 -->
 	<select id="getCommentList" resultType="kr.or.bit3004.comment.BoardComment">
-		select comment_no, content, write_date, b.id, nickname, image
+		select comment_no, content, write_date, b.id, nickname, IFNULL(IMAGE, 'user.png') AS IMAGE
 		  from board_comment b
 		 inner join `user` u
 		    on b.id = u.id

@@ -55,13 +55,13 @@
 	</update>
 	
 	<select id="getUser" resultType="kr.or.bit3004.user.User">
-		SELECT ID, PWD, NICKNAME, IFNULL(IMAGE, 'user.png') AS IMAGE, ENABLE, QUIT
+		SELECT ID, PWD, NICKNAME, IFNULL(IMAGE, 'user.png') AS IMAGE, ENABLE
 		FROM USER
 		WHERE ID = #{id}
 	</select>
 	
 	<select id="getUserList" resultType="kr.or.bit3004.user.User">
-		SELECT ID, PWD, NICKNAME, IFNULL(IMAGE, 'user.png') AS IMAGE, ENABLE, QUIT
+		SELECT ID, PWD, NICKNAME, IFNULL(IMAGE, 'user.png') AS IMAGE, ENABLE
 		FROM USER
 	</select>
 	
