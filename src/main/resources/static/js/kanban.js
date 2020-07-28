@@ -890,12 +890,20 @@ $('#card-content').on('click', '.reply-done', function(){
 function makereply(resData) {
 		var replyhtml ="";
 		$.each(resData, function(index, obj){
+			let imagesrc = ""
+			let objimage = obj.image;
+			if(objimage.startsWith('https')){
+				imagesrc = obj.image;
+			}else{
+				imagesrc = "assets/images/userImage/"+obj.image;
+			}
+			
 			if(cardNo == obj.cardNo){
 				replyhtml += "<div class='card-modal-reply'>" 
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/userImage/"+currUserImage+"' alt='user' href='javascript:void(0)'"
+				        + "<img src='"+imagesrc+"' alt='user'"
 				                + "style='width :auto; height: 35px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		
