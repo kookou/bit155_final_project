@@ -495,6 +495,8 @@ $(document).on('click', "#addcard",function(){
                          +"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none; '></textarea>"
                          +"</span>"
                          +"<div class='kanban-card-badges'>"
+                         +'<div title="content">'
+                         +"</div>"
                          +'<div  title="comments">'
                          +'</div>'
                          +'<div title="file">'
@@ -767,10 +769,6 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				});
 			} 
 		});
-	 
-	 
-	 
-	 
 
 });
 
@@ -1020,11 +1018,11 @@ $('#card-content').on('click','.card-modal-title',function() {
 // 모달 닫힐때 화면에 뿌리는 이벤트 (댓글 갯수, 파일 갯수)
 $('#card-content').on('hide.bs.modal', function () {
 	
-	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
+	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file]');
 	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
 	
-	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
-	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
+	let fileDiv = '<span class="ri-attachment-2 badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
+	let commentDiv = '<span class="ri-chat-1-line badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
 
 	//파일,리플 없을떄
 	if(cardFilecount == 0 && cardCommentcount == 0){
@@ -1032,6 +1030,7 @@ $('#card-content').on('hide.bs.modal', function () {
 		fileElement.removeClass('kanban-card-badge')
 		commentElement.empty();
 		commentElement.removeClass('kanban-card-badge')
+		
 		return;
 	}
 	//파일만 있을때
@@ -1052,6 +1051,7 @@ $('#card-content').on('hide.bs.modal', function () {
 		fileElement.removeClass('kanban-card-badge')
 		return;
 	}
+
 	//파일, 리플 둘다 있을때
 	if(cardFilecount > 0 && cardCommentcount > 0){
 		fileElement.empty();
@@ -1083,7 +1083,6 @@ $('.modal-textarea-description-edit').on('focus',function(){
 						data: {
 								cardNo: cardNo,
 								content :cardDescription
-								
 								},
 				        dataType: "html",
 				        
@@ -1091,7 +1090,16 @@ $('.modal-textarea-description-edit').on('focus',function(){
 							
 						}
 					});
+				 let contentval = $('#modallDescrioption').text();
+				 let contentElement = $('[data-cardno='+cardNo+']').find('[title=content]');
+				 let contentDiv = '<span class="ri-align-left badge-icon"></span>'
+			     if(contentval !=""){
+					contentElement.empty();
+					contentElement.append(contentDiv);
+					contentElement.addClass('kanban-card-badge');
+				}	
 			 }
+			
 	 })
 });
 
