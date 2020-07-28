@@ -23,10 +23,10 @@ var ws = null;
 var loginId = null;
 
 $(function () {
-    ws = new WebSocket('ws://localhost:8090/chatting');
+    ws = new WebSocket('ws://192.168.0.56:8090/chatting');
 	ws.onopen = function() {
    	    console.log('웹소켓 서버 접속 성공-chat.js');
-   	    ws.send('connent∥'+teamNo+"∥"+currUserNickname+"∥"+"님 접속");
+   	    ws.send('connent∥'+teamNo+"∥"+currUserNickname+"∥"+"님 접속∥"+currUserImage);
     };
     // 메세지 받기
     ws.onmessage = function(evt) {
@@ -48,7 +48,7 @@ $('#fixedBtn').on({
         	if (key.keyCode == 13) {
         		if(input.val() != "") {
         			// 웹소켓 서버에 데이터 전송하기
-        			ws.send('send∥'+teamNo+"∥"+currUserNickname+"∥"+input.val());
+        			ws.send('send∥'+teamNo+"∥"+currUserNickname+"∥"+input.val()+"∥"+currUserImage);
         			input.val("");
         		}
         	}
@@ -56,7 +56,7 @@ $('#fixedBtn').on({
 		$(document).on('click', '#sendBtn', function() {
 			if(input.val() != "") {
 				// 웹소켓 서버에 데이터 전송하기
-				ws.send('send∥'+teamNo+"∥"+currUserNickname+"∥"+input.val());
+				ws.send('send∥'+teamNo+"∥"+currUserNickname+"∥"+input.val()+"∥"+currUserImage);
 				input.val("");
 			}
 		});
@@ -69,10 +69,12 @@ function makeChatBox(data) {
 	var notice = nickAndMsg[0];
 	var nick = nickAndMsg[2];
 	var msg = nickAndMsg[3];
-	var time = nickAndMsg[4];
-	console.log("에코닉네임:"+nick);
+	var image = nickAndMsg[4];
+	var time = nickAndMsg[6];
+	/*console.log("에코닉네임:"+nick);
 	console.log("에코메세지:"+msg);
 	console.log("에코타임:"+time);
+	console.log("에코image:"+image);*/
 	let html = "";
 	if(notice.trim() == "notice") {
 		html += '<li class="chat-item odd list-style-none mt-3">';
@@ -93,9 +95,15 @@ function makeChatBox(data) {
 		} else {
 			html += '<li class="chat-item list-style-none mt-3">';
 			html += 	'<div class="chat-img d-inline-block">';
-			html += 		'<img src="assets/images/userImage/'+ currUserImage +'" alt="user" class="rounded-circle" width="45">';
+			html +=				'<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">'
+			html +=				'<div style="top: 0; left: 0; right: 0; bottom: 0;">'
+			html += 				'<img src="assets/images/userImage/'+ image +'" alt="user"';
+			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
+			html += 					'data-toggle="tooltip" data-placement="top" title="'+currUser+'">';
+			html +=				'</div>'
+			html +=				'</div>'
 			html += 	'</div>';
-			html += 	'<div class="chat-content d-inline-block">';
+			html += 	'<div class="chat-content d-inline-block" style="margin-left:5px;">';
 			html += 		'<h6 class="font-weight-medium">'+ nick +'</h6>';
 			html += 		'<div class="msg p-2 d-inline-block mb-1">'+ msg +'</div>';
 			html += 	'</div>';
@@ -103,6 +111,10 @@ function makeChatBox(data) {
 			html += '</li>';
 		}
 	}
+	
+	
+	
+		
 	$(".popover #msgUl").append(html);
 	$(".popover .chat-box").scrollTop($(".popover #msgUl")[0].scrollHeight);
 }

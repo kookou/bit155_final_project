@@ -232,13 +232,17 @@ function makeListHtml(resData) {
 		$.each(resData.teamMemberList, function(index3, obj3) {
 			if(obj2.teamName == obj3.teamName) {
 			html += 			'<span>';
-	       	html += 				'<img src="assets/images/userImage/'+obj3.image+'" alt="user"';
-			html += 					'style="width: auto; height: 40px;" class="rounded-circle"';
+			html +=				'<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">'
+	       	html +=				'<div style="top: 0; left: 0; right: 0; bottom: 0;">'
+			html += 				'<img src="assets/images/userImage/'+obj3.image+'" alt="user"';
+			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
 			html += 					'data-toggle="tooltip" data-placement="top" title="'+obj3.id+'">';
+			html +=				'</div>'
+			html +=				'</div>'
        		html += 			'</span>';
 			}
 		})	;
-       		
+	
 			html += 		'</div>';
 			html += 	'</div>';
 			html += '</div>';
@@ -313,15 +317,23 @@ $('#createTeamBtn').click(function() {
 				html += 		'<h4 class="card-title" style="color:white;">'+ $('#teamName').val() +'</h4>';
 			}
 			html += 			'<span>';
-	       	html += 				'<img src="assets/images/userImage/'+currUserImage+'" alt="user"';
-			html += 					'style="width: auto; height: 40px;" class="rounded-circle"';
+			html +=				'<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">'
+		    html +=				'<div style="top: 0; left: 0; right: 0; bottom: 0;">'
+		    html += 				'<img src="assets/images/userImage/'+currUserImage+'" alt="user"';
+			html += 					'style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block;"';
 			html += 					'data-toggle="tooltip" data-placement="top" title="'+currUser+'">';
+			html +=				'</div>'
+			html +=				'</div>'
        		html += 			'</span>';
 			html += 		'</div>';
 			html += 	'</div>';
 			html += '</div>';
 			appendTeam.before(html);
 		},
+		
+		
+			
+			
 		error: function(e) {
 			console.log(e);
 		}

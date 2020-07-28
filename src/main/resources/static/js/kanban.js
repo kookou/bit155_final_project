@@ -495,6 +495,35 @@ $(document).on('click', "#addcard",function(){
         
         kanbanCardNo.attr('data-cardindex', cardIndex)
         
+        
+        $(input).keydown(function(key) {
+        		if (key.keyCode == 13) {
+        			 if(input.val().trim() == "") {
+        	            	$(this).closest('.kanban-card-list').remove()
+        	                return ;
+        	            }
+        			 var cardtitle = $(input).val();
+        	            $(this).parent().text($(input).val());
+        	            $(input).remove();
+        	            $('.kanban-card-element').attr('data-toggle' ,'modal')
+        	            $('.kanban-card-element').attr( 'data-target', '#card-content')
+        	            
+        	            $.ajax({
+        	    			url: "InsertKanbanCard.ajax",
+        	    			data: { title: cardtitle,
+        	    					cardIndex :cardIndex,
+        	    					kanbanListNo: kanbanListNo,
+        	    					},
+        	    	        dataType: "html",
+        	    	        
+        	    			success: function(resData) {
+        	    				 kanbanCardNo.attr('data-cardno', resData);
+        	    			}
+        	    		}); 
+        		}
+        });
+
+        
         $(input).blur(function() {
             if(input.val().trim() == "") {
             	$(this).closest('.kanban-card-list').remove()
