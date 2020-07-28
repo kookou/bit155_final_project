@@ -16,8 +16,7 @@
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,7 +24,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif] -->
-
 </head>
 <body>
 <div th:replace="common/scriptA :: scriptA"></div> 
@@ -209,12 +207,15 @@
 												data-target="#card-content" >
 												<span class="kanban-card-title" th:text="${card.title}"></span>
 												<div class="kanban-card-badges">
+													<div th:classappend = "${card.content != null} ? 'kanban-card-badge' : ''" title="content">
+														<span th:if="${card.content != null}" class="ri-align-left badge-icon"></span>
+													</div>
 													<div th:classappend = "${card.commentCount > 0} ? 'kanban-card-badge' : ''" title="comments">
-														<span th:if="${card.commentCount > 0}" class="icon-bubble badge-icon"></span> <span
+														<span th:if="${card.commentCount > 0}" class="ri-chat-1-line badge-icon"></span> <span
 															 th:if="${card.commentCount > 0}" class="badge-text" th:text="${card.commentCount}"></span>
 													</div>
 													<div th:classappend = "${card.fileCount > 0} ? 'kanban-card-badge' : ''" title="file">
-														<span th:if="${card.fileCount > 0}" class="icon-paper-clip badge-icon"></span> <span
+														<span th:if="${card.fileCount > 0}" class="ri-attachment-2 badge-icon"></span> <span
 															th:if="${card.fileCount > 0}" class="badge-text" th:text="${card.fileCount}"></span>
 													</div>
 												</div>
