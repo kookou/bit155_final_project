@@ -58,6 +58,8 @@
        			<div class="col-xl-3" th:each="team: ${groupAndTeam}" th:if="${item.groupNo == team.groupNo}">
        				<div class="card" th:style="'background-color:#' + ${team.backgroundColor}">
        					<div class="card-body collapse show teamBtn" draggable="true" ondragstart="drag(event)" th:attr="data-teamNo=${team.teamNo}">
+       						<div class="mainbar" style="height:5px; color:#000000"></div>
+       						
        						<h4 class="card-title" th:text="${team.teamName}"></h4>
        						
        						<span th:each="member : ${teamMemberList}" th:if="${team.teamNo == member.teamNo && member.teamOut == 'N'}">
@@ -76,7 +78,7 @@
        			</div>
        			<div class="col-xl-3">
        				<div class="card" >
-       					<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center;">
+       					<div class="card-body collapse show newTeamBtn" data-toggle="modal" data-target="#createNewTeamModal" style="text-align: center; height:120px;">
        						+ Create New Team
        					</div>
        				</div>

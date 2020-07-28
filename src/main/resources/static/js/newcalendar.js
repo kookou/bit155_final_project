@@ -1,5 +1,9 @@
-
-
+/**
+파일명: newcalendar.js
+    설명: 캘린더 script 파일
+    작성일: 2020-07-28
+    작성자: 박혜정
+**/
 
 //풀캘린더가 사용하는 변수들
 	var calendarEl = document.getElementById('calendar');
@@ -11,13 +15,18 @@
 	var editStart = $('#edit-start');
 	var editEnd = $('#edit-end');
 	
+/**
+* @함수명 : renderFullCalendar()
+* @작성일 : 2020-07-28
+* @작성자 : 박혜정
+* @설명 : 풀캘린더를 생성하는 함수
+**/	
 function renderFullCalendar(){
-	// 풀캘린더 그리기
+	
+	// 풀캘린더 옵션들
 	calendar = new FullCalendar.Calendar(calendarEl, {
 		defaultTimedEventDuration: '01:00:00',
 		timeFormat: 'HH:mm',
-	
-		  
 		editable: true,
 		eventResizableFromStart: true,	
 		selectable: true,
@@ -26,14 +35,17 @@ function renderFullCalendar(){
 		contentHeight: 1000,
 		dayMaxEventRows: true,
 		
+		//캘린더 헤더 설정
 		headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		},
+		
 		eventColor: '#E6CDED', //default 컬러 설정
 		displayEventTime: true,
 		
+		//캘린더 내용을 셀렉트 하여 보내주는 콜백 함수
 		events: function(Info, successCallback, failureCallback) {
 			$.ajax({
 				url: "showCalendar.ajax",
@@ -41,7 +53,8 @@ function renderFullCalendar(){
 				
 				success: function(response) {
 					var fixedDate = response.map(function(array) {
-						//db의 allDay 컬럼은 String값으로 true/false를 저장해놓았기 때문에 fullcalendar가 인식하는 boolean 타입으로 수정해줘야 함
+						
+						//db의 allDay 컬럼은 String값으로 true/false를 저장해놓았기 때문에 fullcalendar가 인식할 수 있게 boolean 타입으로 수정해줘야 함
 						if(array.allDay == 'true'){array.allDay=true}
 						else{array.allDay=false};
 						return array;
@@ -52,8 +65,16 @@ function renderFullCalendar(){
 
 		},
 		
+		
+		
+		/**
+		* @함수명 : select: function(start, end, allDay)
+		* @작성일 : 2020-07-28
+		* @작성자 : 박혜정
+		* @설명 : 풀캘린더 선택시 불리는 함수
+		**/	
 		select: function(start, end, allDay) {
-			//원본 start 데이터를 사용하기 위해 담았다 (근데 이거 안하면 오류남 왜인지 모르겠음)
+			//원본 start 데이터를 사용하기 위해 담았다 
 			var instart = start;
 			var inend = start;
 			
@@ -77,8 +98,9 @@ function renderFullCalendar(){
 			$('#eventModal input, textarea').val("");
 			$('#customCheck2').prop("checked", false);
 			$('#eventModal option:eq(0)').prop("selected", true);
-			$('#edit-color option:eq(0)').prop("selected", true); // 위에서 적용됐어야 하는데 왜...
-			//모달에 데이터 쏴주기
+			$('#edit-color option:eq(0)').prop("selected", true); 
+			
+			//모달에 현재 시간을 세팅한 날짜 데이터 보내기
 			$('#edit-start').val(start);
 			$('#edit-end').val(end);
 			
@@ -91,15 +113,23 @@ function renderFullCalendar(){
 
 			// 모달 열기
 			$('#eventModal').modal('show');
-
+			
+			//중복 이벤트 방지를 위해 이벤트 unbind
 			$('#save-event').unbind();
+			
+			
+			/**
+			* @함수명 : $('#save-event').on('click', function()
+			* @작성일 : 2020-07-28
+			* @작성자 : 박혜정
+			* @설명 : 풀캘린더 일정 저장하는 이벤트
+			**/	
 			$('#save-event').on('click', function() {
-
+				
 				var start = $('#edit-start').val();
 				var end = $('#edit-end').val();
 				var titleVal = $('#edit-title').val();
 				var contentVal = $('#edit-desc').val();
-				
 				var colorVal = $('#edit-color').val();
 				
 				// #allday 체크 여부에 따라 값 부여하기 
@@ -110,7 +140,6 @@ function renderFullCalendar(){
 				else {isAllDay = false; }
 	
 				var eventData = {
-
 					id: currUserId,
 					title: titleVal,
 					content: contentVal,
@@ -136,8 +165,7 @@ function renderFullCalendar(){
 						})
 						return false;
 				}
-				//var allDay = $('#allDay');
-
+				
 				if (isAllDay == true) {
 					eventData.start = moment(eventData.start).format('YYYY-MM-DD');
 					eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
@@ -165,7 +193,7 @@ function renderFullCalendar(){
 					end: realEndDay,
 					teamNo : teamNo
 				};
-
+				
 				$('#eventModal').modal('hide');
 
 				$.ajax({
@@ -194,7 +222,13 @@ function renderFullCalendar(){
 			}); // /.저장하기
 			
 		},
-		//popover로 일정 뜨게 하는 함수 작동 안되서 보류
+		
+		/**
+		* @함수명 : eventMouseEnter: function(event)
+		* @작성일 : 2020-07-28
+		* @작성자 : 박혜정
+		* @설명 : popover 로 일정 내용 띄워주는 함수
+		**/	
 		eventMouseEnter: function(event){
 			$(event.el).popover({
 				title: $('<div />', {
@@ -206,6 +240,8 @@ function renderFullCalendar(){
 			        'background': event.event.backgroundColor,
 			        'color' : '#ffffff'
 			      }),
+			      
+			      //popover 화면에 뿌릴 데이터 
 			      content: $('<div />', {
 			          class: 'popoverInfoCalendar'
 			        }).append('<p><strong>등록자 : </strong> ' + event.event.id+ '</p>')
@@ -213,7 +249,8 @@ function renderFullCalendar(){
 			        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventTime(event) + '</p>')
 			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event.event.extendedProps.description) + '</div>'),
 			      delay: {
-			    	  //모달 창 뜨는 시간 
+			    	  
+			     //popover 창 뜨는 시간 
 			        show: "200",
 			        hide: "50"
 			      },
@@ -222,19 +259,19 @@ function renderFullCalendar(){
 			      html: true,
 			      container: 'body'
 			    });
-
 			    return true;
-
 			  }, 
 
-		
-		eventClick: function(event, jsEvent, view) { //일정을 클릭하면 수정창이 나와 처리하는 메서드
+		//일정을 클릭하면 수정창이 나와 처리하는 메서드
+		eventClick: function(event, jsEvent, view) { 
 			editEvent(event);
 //			calendar.render();
 		},
+		
 		eventDragStart: function (event, jsEvent, ui, view) {
 			    draggedEventIsAllDay = event.el.fcSeg.eventRange.def.allDay;
 		},
+		
 		//일정 드래그앤드롭으로 변경하는 메서드
 		eventDrop: function (event) {
 			//주,일 view일때 종일 <-> 시간 변경불가
@@ -253,7 +290,6 @@ function renderFullCalendar(){
 		eventResize: function(event){
 			dndResize(event);
 		}
-		
 	});
 		calendar.render(); //init
 }
@@ -262,11 +298,10 @@ function renderFullCalendar(){
 	//일정을 클릭하면 수정창이 나와 처리하는 메서드	
 	var editEvent = function(event, element, view) {
 		
-
 		var title = event.event.title;
 		var content = event.event.extendedProps.description;
 		var no = event.event.extendedProps.no;
-		var allday = event.event.allDay; // 내가 넣은 allday  //exProps로 잡히지 않는다 undefined
+		var allday = event.event.allDay; 
 
 		var start = event.event.start;
 		var end = event.event.end; 
@@ -375,9 +410,9 @@ function renderFullCalendar(){
 			});
 
 
-		//삭제버튼 눌렀을 때 삭제 처리 함수
-		
+		//이벤트 중복 방지를 위해 unbind
 		$('#deleteEvent').unbind();
+		//삭제버튼 눌렀을 때 삭제 처리 함수
 		$('#deleteEvent').on('click', function() {
 			
 			$('#eventModal').modal('hide');
@@ -416,13 +451,19 @@ function renderFullCalendar(){
 			      }
 			   });
 			});
-
 	}
 
 	//재사용을 위해 모듈화
+	
+	/**
+	* @함수명 : function dndResize(event)
+	* @작성일 : 2020-07-28
+	* @작성자 : 박혜정
+	* @설명 : 드래그 앤 드랍, 리사이즈 구현
+	**/	
 	function dndResize(event){
-	     // 드랍시 수정된 날짜반영
-		 //var newDates = calDateWhenDragnDrop(event);  //퍼올 커스텀 함수인데 우선 보류
+		  // 드랍시 수정된 날짜반영
+		  //var newDates = calDateWhenDragnDrop(event);  //퍼올 커스텀 함수인데 우선 보류
 		  var no = event.event.extendedProps.no;
 		  var newStart = event.event.start;
 		  var newEnd = event.event.end;
@@ -454,7 +495,7 @@ function renderFullCalendar(){
 		
 	}
 	
-	//호버 할때 내용 검증 하는 함수
+	//마우스 호버시 보여질 내용 항목 함수
 	function hoverdescription(event){
 		var displayeventde = $.trim(event)
 		

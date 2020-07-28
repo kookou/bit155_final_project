@@ -1272,8 +1272,8 @@ h3 {
      left: 0px;
      min-width: 100%;
      min-height: 100%;
-     width: auto;
-     height: 1000px;
+/*      width: 1200px; */
+     height: 1100px;
      z-index: -1000;
      overflow: hidden;
      
@@ -1295,7 +1295,7 @@ h3 {
 }
 /* line 8, ../../Arafath/CL/CL October/213. Business/HTML/scss/_slider.scss */
 .slider_area .single_slider {
-  height: 1000px;
+  height: 1100px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
