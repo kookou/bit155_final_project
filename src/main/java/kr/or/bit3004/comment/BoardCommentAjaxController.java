@@ -12,6 +12,14 @@ public class BoardCommentAjaxController {
 	@Autowired
 	private BoardCommentService boardCommentService;
 	
+	/*
+	* @Method Name : getCommentList
+	* @작성일 : 2020.07.28
+	* @작성자 : 박혜정, 조진원
+	* @Method 설명 : Comment List 가져오기 (ajax)
+	* @param boardNo
+	* @return Comment List
+	**/
 	//댓글목록 가져오기
 	@RequestMapping("CommentList.ajax")
 	public List<BoardComment> getCommentList(int boardNo){

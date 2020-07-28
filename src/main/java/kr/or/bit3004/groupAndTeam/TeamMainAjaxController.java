@@ -64,6 +64,14 @@ public class TeamMainAjaxController {
 		return teamNo;
 	}
 	
+	/*
+	* @Method Name : moveTeamFromGroup
+	* @작성일 : 2020.07.28
+	* @작성자 : 김혜린
+	* @Method 설명 : team을 drag&drop으로 다른 그룹으로 옮기기 (ajax)
+	* @param group
+	* @return map
+	**/
 	@RequestMapping("moveTeamFromGroup.do")
 	public Map<String, Object> moveTeamFromGroup(GroupAndTeam group) {
 		return service.moveTeamFromGroup(group);

@@ -14,8 +14,6 @@ import kr.or.bit3004.user.SessionUser;
 public class TodoListController {
 	
 	@Autowired
-	private TodoListService service;
-	@Autowired
 	private AsideService asideService;
 	
 	@RequestMapping("todoList.do")
