@@ -31,7 +31,7 @@ public interface KanbanService {
 	public KanbanList updateKanbanListTitle(KanbanList kanbanlist, HttpSession session);
 	
 	//resort Kanban List
-	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX);
+	public void resortKanbanList(int kanbanListNo, int startListIDX, int endListIDX);
 	
 	public int insertCardTitle(String title, int cardIndex, int kanbanListNo, HttpSession session);
 	
@@ -49,7 +49,7 @@ public interface KanbanService {
 	public void deleteKanbanCard(int cardNo);
 	
 	//resort Kanban Card
-	public void resortKanbanCard(int allBoardListNo, int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX);
+	public void resortKanbanCard(int kanbanCardNo, int startListNo, int endListNo, int startCardIDX, int endCardIDX);
 
 	
 	//upload file to Kanban Card

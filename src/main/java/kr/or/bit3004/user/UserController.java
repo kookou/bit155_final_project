@@ -40,14 +40,14 @@ public class UserController {
 	}
 	
 
-	/*
+	/**
     * @Method Name : signUp (가입 처리)
     * @작성자 : 김선
     * @변경이력 :
     * @Method 설명 : 사용자에게 입력받은 정보로 만들어진 User 객체를 DB에 저장해서 가입처리
     * @param : User user
     * @return : String
-    */
+    **/
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signUp(User user) {
 		service.insertUser(user);
@@ -56,7 +56,7 @@ public class UserController {
 	
 	
 	
-	/*
+	/**
     * @Method Name : editUserInfo (회원정보 수정 폼 이동)
     * @작성자 : 김선
     * @변경이력 :
@@ -64,7 +64,7 @@ public class UserController {
     * @param : HttpSession session
     * @param : Model model
     * @return : String
-    */
+    **/
 	@RequestMapping(value="/edituser", method=RequestMethod.GET)
 	public String editUserInfo(HttpSession session, Model model) {
 		
@@ -81,7 +81,7 @@ public class UserController {
 	}
 	
 	
-	/*
+	/**
     * @Method Name : editUserInfo (회원정보 수정 처리)
     * @작성자 : 김선
     * @변경이력 :
@@ -98,7 +98,7 @@ public class UserController {
 	}
 	
 	
-	/*
+	/**
     * @Method Name : deleteUser (회원 탈퇴 처리)
     * @작성자 : 김선
     * @변경이력 :
