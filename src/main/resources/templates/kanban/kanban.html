@@ -127,8 +127,9 @@
 									style="float: left; background-color: white; overflow: hidden; height: 35px; width: 35px;">
 									<div
 										style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-										<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
-											href="javascript:void(0)"
+										<img th:src="${#strings.startsWith(session.currentUser.image, 'https')} 
+                               				? ${session.currentUser.image} : @{assets/images/userImage/}+${session.currentUser.image}"
+                               				alt="user"
 											style="width: auto; height: 35px; transform: translate(-50%, -50%);">
 									</div>
 								</div>

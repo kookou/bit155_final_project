@@ -116,7 +116,7 @@
 	</delete>
 	
 	<select id="getKanbanCommentList" resultType="kr.or.bit3004.comment.KanbanComment">
-		select b.comment_no, b.content, b.write_date, b.id, b.card_no , u.nickname, u.image
+		select b.comment_no, b.content, b.write_date, b.id, b.card_no , u.nickname, IFNULL(IMAGE, 'user.png') AS IMAGE
 		 from board_comment b
 		 inner join `user` u on b.id = u.id
 		 where card_no = #{cardNo} order by b.comment_no desc
