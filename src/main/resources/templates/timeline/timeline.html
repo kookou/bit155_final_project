@@ -388,12 +388,10 @@
         	var todaysNewJson = JSON.parse(todaysNewData);
         	var activeRateJson = JSON.parse(activeRate);
 
-            // knob
+            // knob chart
             $('[data-plugin="knob"]').knob();
             
-            // Morris donut chart 
-
-           /*  console.log(activeRateJson.length == 0); */
+            // Morris donut chart
          	if(!(activeRateJson.length == 0)){
             
 	            //회원별 활동 비율
@@ -427,7 +425,6 @@
         					   + "</div>";
         		$('#morris-donut-chart2').append(noNewPosts);
         	}
-
         });
 		
 	</script>
