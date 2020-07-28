@@ -185,7 +185,7 @@
  				processData : false,
  				success : function(data){
  					//항상 업로드된 파일의 url이 있어야 한다.
- 					console.log(data)
+ 					/* console.log(data) */
  					$(editor).summernote('insertImage', data.url);
  				},
  				error: function(e) {
@@ -196,7 +196,7 @@
  		} 
  		//제목안쓰면 게시글 못쓰게 막기
  		$('#updateBtn').click(function(){
- 			console.log($('#title').val());
+ 			/* console.log($('#title').val()); */
  			if($('#title').val() == ""){
  				Swal.fire('', '제목을 입력하세요.', 'warning');
  				return false;
@@ -204,7 +204,7 @@
  		});
  		
  		//공지사항 check 여부
- 		console.log($('input[name="boardNoti"]:checked').val());
+ 		/* console.log($('input[name="boardNoti"]:checked').val()); */
  		$('#notice').click(function(){
  			$('input[name="boardNoti"]:checked').val('Y');
  		});

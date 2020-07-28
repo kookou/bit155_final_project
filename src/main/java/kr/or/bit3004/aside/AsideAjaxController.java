@@ -18,6 +18,14 @@ public class AsideAjaxController {
 	@Autowired
 	private AsideService service;
 	
+	/*
+	* @Method Name : insertAllBoard
+	* @작성일 : 2020.07.28
+	* @작성자 : 김혜린
+	* @Method 설명 : Board 추가하기
+	* @param allBoard
+	* @return 들어간 Board의 No값
+	**/
 	@RequestMapping("insertAllBoard.do")
 	public int insertAllBoard(AllBoardList allBoard) {
 		service.insertAllBoard(allBoard);
@@ -29,6 +37,14 @@ public class AsideAjaxController {
 		return service.searchUser(id);
 	}
 	
+	/*
+	* @Method Name : selectInvitedMemberInfo
+	* @작성일 : 2020.07.28
+	* @작성자 : 김혜린
+	* @Method 설명 : 팀원 초대하기
+	* @param groupAndTeam
+	* @return 검색한 회원의 정보
+	**/
 	@RequestMapping("inviteMember.do")
 	public User selectInvitedMemberInfo(GroupAndTeam groupAndTeam) {
 		service.inviteMember(groupAndTeam);

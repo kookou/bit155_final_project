@@ -151,7 +151,7 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 	});
 	//파일 삭제 ajax
 	$('#file-list').on('click','#delFile',function(){
-		console.log($(this).children('input[type="hidden"]').val());
+		/* console.log($(this).children('input[type="hidden"]').val()); */
 		var a=
 			$.ajax({
 				url:"DeleteFile.ajax",
@@ -160,7 +160,7 @@ data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="fu
 					"delFile": $(this).children('input[type="hidden"]').val()
 				},
 				success:function() {
-					console.log("삭제성공");
+					/* console.log("삭제성공"); */
 				},
 				error:function(e){
 					console.log("에러"); 

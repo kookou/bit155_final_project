@@ -39,10 +39,17 @@ public class CloudController {
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		model.addAttribute("teamNo",teamNo);
-		System.out.println(teamNo);
 		return "cloud/cloud";
 	}
 	 
+	/*
+	* @Method Name : getFileList
+	* @작성일 : 2020.07.28
+	* @작성자 : 이서영
+	* @Method 설명 : Cloud List 가져오기 (ajax)
+	* @param teamNo
+	* @return Cloud List
+	**/
 	 @RequestMapping("CloudList.ajax")
 	 public @ResponseBody List<CloudUpload> getFileList(int teamNo){
 		 return cloudService.getFileList(teamNo);
@@ -55,9 +62,5 @@ public class CloudController {
 	 public @ResponseBody void deleteFile(int teamNo,String delFile){
 		 cloudService.deleteFile(teamNo,delFile);
 	 } 
-	
-	
-	 
-	 
 	 
 }

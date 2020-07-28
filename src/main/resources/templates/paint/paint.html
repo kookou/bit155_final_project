@@ -319,10 +319,10 @@ width:150px;
 	 var isPress = false;
 	 
 	 $(document).ready(function(){
-	 paintWs  = new WebSocket("ws://192.168.0.35:8090/paint"); 
+	 paintWs  = new WebSocket("ws://localhost:8090/paint"); 
  	/*  paintWs  = new WebSocket("ws://192.168.0.35:8090/paint.do?teamNo="+${team.teamNo}); */
 		paintWs.onopen=function(){
-			console.log("웹소켓 접속 성공-paint");
+			/* console.log("웹소켓 접속 성공-paint"); */
 			paintWs.send('connect-'+teamNo+"-"+currUserNickname+"-"+"님 페인트 접속");
 		};
 		$("canvas").on({
@@ -332,7 +332,7 @@ width:150px;
                 ctx.beginPath();
 				prevX = e.offsetX;
 				prevY = e.offsetY;
-				console.log("추주툴",chooseTool);
+				/* console.log("추주툴",chooseTool); */
           		now.push({"prevX":prevX, "prevY":prevY, "color":pos.color,"mode":chooseTool}); //now 배열에 이거 집어넣음
           /* 		if(chooseTool=="filled"){
           			ctx.fillStyle=pos.color;
@@ -358,14 +358,14 @@ width:150px;
           mouseup: function (e) {
               isPress = false;
               ctx.closePath();
-            console.log("now배열모양 : "+JSON.stringify(now));
+           /*  console.log("now배열모양 : "+JSON.stringify(now)); */
           	paintWs.send('send-'+teamNo+"-"+currUserNickname+"-"+JSON.stringify(now));//now를 json객체로변환
           	now =[]; //now 배열을 다시 비워줌
           }
       });
 		paintWs.onmessage = function(evt){
 			makePaintBox(evt.data);
-			console.log("evt.data"+evt.data);
+		/* 	console.log("evt.data"+evt.data); */
 			var c = document.querySelector("#canvas");
      	    var otherCtx = c.getContext("2d");
       		var drawData;
@@ -383,11 +383,11 @@ width:150px;
       	} //안탄다.*/
       	if (evt.data.startsWith('[{"')) {
       		drawData = JSON.parse(evt.data);
-		        console.log("drawData: ",drawData);
+		     /*    console.log("drawData: ",drawData); */
 		        //if(drawData[0])
 	            otherCtx.strokeStyle = drawData[0].color;
 	            otherCtx.beginPath();
-		        console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color,drawData[0].mode)
+		      /*   console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color,drawData[0].mode) */
 	            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
 				for (let i = 1; i < drawData.length; i++) {
 //					console.log(drawData[i].x, drawData[i].y);
@@ -408,7 +408,7 @@ width:150px;
 			console.log("웹소켓 에러 발생-paint"+e.data);	
 		}
 		paintWs.onclose=function(){
-			console.log("웹소켓 접속 종료-paint");
+		/* 	console.log("웹소켓 접속 종료-paint"); */
 		}
 		 });	
 
@@ -416,7 +416,6 @@ width:150px;
 		var nickAndMsg = data.split("-");
 		var notice = nickAndMsg[0];
 		var nick = nickAndMsg[1];
-		console.log("내이름은 바로: "+nick+"from paint");
 	 }
 	 
 	 function clearText(idOfTextArea) {
@@ -437,7 +436,7 @@ width:150px;
 			}); */
 	      $("#fill").click ( function () {
 	           ctx.fillStyle=pos.color;
-	          console.log($('selectColor').val());
+	       /*    console.log($('selectColor').val()); */
 	          ctx.fillRect(0, 0, 720, 720);
 	      });//색 채우기
 		  
