@@ -19,9 +19,18 @@ public class CalendarController {
 	@Autowired
 	private AsideService asideService;
 	
+	
+	/**
+	 * @Method Name : calendar
+	 * @작성일 : 2020.07.28
+	 * @작성자 : 박혜정
+	 * @Method 설명 : calendar 초기 로딩시 동기로 보여줄 일정 내용 셀렉트
+	 * @param : session
+	 * @param : model
+	 * @return : kanban/kanban
+	 **/
 	@RequestMapping("calendar.do")
 	public String calendar(HttpSession session,Model model) {
-		System.out.println("컨트롤러 타니??");
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
 		int teamNo = currentUser.getTeamNo();
 		
@@ -34,7 +43,6 @@ public class CalendarController {
 		System.out.println("캘린더" +service.showCalendar(teamNo));
 		return "calendar/calendar";
 	}
-	//모델에 담더닞.. ajax를..
 	
 	
 	

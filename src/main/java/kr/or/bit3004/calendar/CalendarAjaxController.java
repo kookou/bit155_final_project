@@ -19,14 +19,20 @@ public class CalendarAjaxController {
 	@Autowired
 	private CalendarService service;
 
-
+	/**
+	 * @Method Name : addPlan
+	 * @작성일 : 2020.07.28
+	 * @작성자 : 박혜정
+	 * @Method 설명 : calendar 일정 인서트 인서트. 비동기 처리를 위해 시퀀스로 부여된 일정 번호를 다시 리턴 해줌
+	 * @param : calendar 객체
+	 * @return : 일정 번호
+	 **/
 	@RequestMapping("addPlan.ajax")
 	public int addPlan(Calendar calendar){
-		System.out.println("인서트 완료");
 		service.addPlan(calendar);
 		return service.getLastNo();
-		
 	}
+	
 	@RequestMapping("showCalendar.ajax")
 	 public List<Calendar> schedule(Model model, int teamNo){
 		System.out.println("캘린더 리스트");
