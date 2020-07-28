@@ -51,7 +51,6 @@ public class KanbanAjaxController {
 		service.deleteKanbanList(kanbanListNo);
 	}
 	
-	
 	@RequestMapping("resortKanbanList.ajax")
 	public void resortKanbanList(int allBoardListNo, int kanbanListNo, int startListIDX, int endListIDX) {
 		service.resortKanbanList(allBoardListNo, kanbanListNo, startListIDX, endListIDX);

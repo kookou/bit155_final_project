@@ -35,7 +35,6 @@ public class KanbanController {
     * @param : model
     * @return : kanban/kanban
     **/
-	
 	@RequestMapping("/kanban.do")
 	public String kanbanList(HttpSession session, int allBoardListNo, Model model) {
 		
