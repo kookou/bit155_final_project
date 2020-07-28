@@ -25,4 +25,5 @@ public class Board {
 	private String name;
 	private String fileCount;
 	private String boardNoti;
+	private String image;
 }

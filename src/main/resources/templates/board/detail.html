@@ -105,7 +105,8 @@
 	                                            <h2><a th:text="${selectBoard.title}"></a></h2>
 	                                            <!-- <input type="hidden" th:value="${selectBoard.boardNo}" id="boardNo"> -->
 	                                            <div style="float: left; margin-bottom: 15px;">
-	                                                <img src="assets/images/userImage/user.png" alt="user" class="rounded-circle" width="35">
+	                                                <img th:src="${#strings.startsWith(selectBoard.image, 'https')} 
+                               				? ${selectBoard.image} : @{assets/images/userImage/}+${selectBoard.image}" alt="user" class="rounded-circle" width="35">
 	                                                <span th:text ="${selectBoard.nickname}" id="writer"></span><br>
 	                                            </div>
 	                                            <div style="float: right;">
@@ -361,12 +362,21 @@
 	    function makeCommnet(result) {
 	    	var html = "";
 	    	$.each(result, function(index , obj){
+	    		
+	    		let imagesrc = "";
+	    		if((obj.image).startsWith('https')){
+					imagesrc = obj.image;
+				}else{
+					imagesrc = "assets/images/userImage/"+obj.image;
+				}
+
+	    		
 	    		if(currUser == obj.id) {
 	    			html += '<div class="comment" style="background-color:rgb(242, 242, 242)">';
 	    		} else {
 	    			html += '<div class="comment">';
 	    		}
-	   			html += 		'<img src="assets/images/userImage/'+ obj.image +'" alt="user" class="rounded-circle" width="35">&nbsp;';
+	   			html += 		'<img src="'+imagesrc+'" alt="user" class="rounded-circle" width="35">&nbsp;'
 	  				html += 		'<b><span> '+ obj.nickname +'</span></b>&nbsp;&nbsp;';
 	  				if($('#writer').text() == obj.nickname) {
 					html += 	'<span class="writerBadge">작성자</span>';

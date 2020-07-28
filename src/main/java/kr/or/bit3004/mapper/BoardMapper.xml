@@ -40,7 +40,7 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname, board_noti, b.refer
+		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname, board_noti, b.refer, IFNULL(IMAGE, 'user.png') AS IMAGE
 		  from board_list b
 		 inner join `user` u
 			on b.id = u.id

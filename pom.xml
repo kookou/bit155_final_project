@@ -103,10 +103,10 @@
 	<!-- 클라우드  Error creating bean with name 오류날때 이거 주석.-->
 		<!-- @ConfigurationProperties 을 사용할 때는 spring-boot-configuration-processor를 
 			클래스패스에 설정하는 것을 권장 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
-		</dependency>  -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
