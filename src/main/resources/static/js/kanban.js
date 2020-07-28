@@ -63,6 +63,12 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"</p>"
 					+"</div>";
 
+
+/**
+ * @함수명 : addUploadFileTag(parent, file)
+ * @작성자 : 김선
+ * @설명 : parent element에 file 내용을 반영해서 html append, attribute 값 변경 
+ **/  
 function addUploadFileTag(parent, file){
 	
 	let filePath = 'cloud/'+ $('#teamNo').val() + '/' + file.fileName;
@@ -73,6 +79,12 @@ function addUploadFileTag(parent, file){
 	parent.find('.card-modal-fileLink').last().attr('download', file.originFileName);
 }
 
+
+/**
+ * @함수명 : addCardFileCountTag(parent, fileCount)
+ * @작성자 : 김선
+ * @설명 : parent element에 fileCount 내용을 반영해서 html append
+ **/  
 function addCardFileCountTag(parent, fileCount){
 	let cardFileCountIcon = "<div class='kanban-card-badge' title='file'>"
 								+"<span class='icon-paper-clip badge-icon'></span>"
@@ -158,8 +170,11 @@ var endCardIDX = "";
 	 }
 	 
  });
+ 
+ 
+ 
 
-//리스트 그래그 앤 드롭
+//리스트 그래그 앤 드롭 
  $('#kanban').sortable({ // 상위요소
    	 items: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
@@ -178,7 +193,6 @@ var endCardIDX = "";
 	       		 $.ajax({
 	       				url: "resortKanbanList.ajax",
 	       				data: {
-	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
 	       						"kanbanListNo": $.trim(currentListNo),
 	       						"startListIDX": $.trim(startListIDX),
 	       						"endListIDX": $.trim(endListIDX)
@@ -220,7 +234,12 @@ function resize(obj) {
 });
 
     
-//리스트 추가
+    
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가
+ **/         
 $(document).on('click', '#addlist', function() {
 
     $(this).before(addlistTag);
@@ -277,7 +296,13 @@ $(document).on('click', '#addlist', function() {
     
 });
 
-//리스트 추가 취소
+
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가 취소
+ **/         
 $(document).on('click', '.kanban-addlistCancle', function(){
 	let listWrapper = $(this).parents('.kanban-list-wrapper');
 	
@@ -286,7 +311,12 @@ $(document).on('click', '.kanban-addlistCancle', function(){
 	
 });
 
-//리스트 추가 완료
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가 완료
+ **/         
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
     let listName = $(this).parent().find('textarea').val();
@@ -344,7 +374,11 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 });
 
 
-//리스트 타이틀 수정
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 제목 수정
+ **/         
 $('#kanban').on('click', '.kanban-list-title', function() {
 
     let allBoardListNo = Number($('#allBoardListNo').val());
@@ -398,7 +432,11 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 
 
 
-//리스트 삭제 하기
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 삭제
+ **/         
 $('#kanban').on('click', '.kanban-list-menu', function() {
 	
     var listName = $(this).parent().children().eq(0).text()
@@ -559,7 +597,6 @@ $(document).on('click', "#addcard",function(){
               		 $.ajax({
               				url: "resortKanbanCard.ajax",
               				data: {
-              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
               						"kanbanCardNo": $.trim(currentCardNo),
               						"startListNo": $.trim(startListNo),
               						"endListNo": $.trim(endListNo),
@@ -575,7 +612,7 @@ $(document).on('click', "#addcard",function(){
        	 },
        	 stop( event, ui ){ // 같은 리스트 내에서 이동
             	
-            	//같은 카드 내에서 이동될 경우 recive를 사용할 수 없다
+            	//같은 카드 내에서 이동될 경우 receive를 사용할 수 없다
             	endCardIDX = ui.item.index();
             	endListNo = ui.item.parents('div.kanban-list-content').data('listno');
 
@@ -1061,7 +1098,11 @@ $('.card-modal-list-description').on('click',function(){
 	 
 })
 
-//모달 카드 파일 업로드
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 모달 카드 파일 업로드
+ **/         
 $('#kanbanFileInputBtn').on('click',function(){
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
@@ -1101,7 +1142,12 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 	});
 });
 
-//모달 카드 파일 삭제
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 모달 카드 파일 삭제
+ **/         
 $(document).on('click','.card-modal-file-delete',function() {
 	
 	let fileNo = $(this).attr('fileno')
