@@ -28,7 +28,7 @@ select * from `GROUP_TEAM`;
 
 -- 게시판 목록
 insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('자유게시판', 1, 'cho@3004.com', 1);
-insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('장부게시판', 1, 'hrin@3004.com', 2);
+insert into `ALL_BOARD_LIST`(`NAME`, `TEAM_NO`, `ID`, `BOARD_TYPE_NO`) values('회의칸반게시판', 1, 'hrin@3004.com', 2);
 select * from `ALL_BOARD_LIST`;
 
 -- 게시판
@@ -47,3 +47,11 @@ insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 UI 구
 insert into `TODO_CONTENT`(`content`, `no`, `id`) values('투두리스트 기능 구현하기', 1, 'hrin@3004.com');
 insert into `TODO_CONTENT`(`content`, `no`, `id`) values('타임라인 UI 구현하기', 1, 'hrin@3004.com');
 insert into `TODO_CONTENT`(`content`, `no`, `id`, `state`) values('타임라인 기능 구현하기', 1, 'hrin@3004.com', 'done');
+
+-- 칸반 리스트
+INSERT INTO `kanban_list` (`KANBAN_LIST_INDEX`, `LIST_TITLE`, `ALL_BOARD_LIST_NO`, `ID`) 
+VALUES ('0', '프로젝트 회의', '2', 'hrin@3004.com');
+
+-- 칸반 카드
+INSERT INTO `kanban_card` (`ID`, `TITLE`, `WRITE_DATE`, `FILE_COUNT`, `COMMENT_COUNT`, `CARD_INDEX`, `KANBAN_LIST_NO`) 
+VALUES ('hrin@3004.com', '6/16', '2020-07-28 15:12:42', '0', '0', '0', '1');
