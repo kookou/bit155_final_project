@@ -27,8 +27,9 @@ public class CalendarController {
 	 * @Method 설명 : calendar 초기 로딩시 동기로 보여줄 일정 내용 셀렉트
 	 * @param : session
 	 * @param : model
-	 * @return : kanban/kanban
+	 * @return : calendar/calendar
 	 **/
+	
 	@RequestMapping("calendar.do")
 	public String calendar(HttpSession session,Model model) {
 		SessionUser currentUser = (SessionUser)session.getAttribute("currentUser");
@@ -40,7 +41,7 @@ public class CalendarController {
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		model.addAttribute("teamNo",teamNo);
 		
-		System.out.println("캘린더" +service.showCalendar(teamNo));
+//		System.out.println("캘린더" +service.showCalendar(teamNo));
 		return "calendar/calendar";
 	}
 	
