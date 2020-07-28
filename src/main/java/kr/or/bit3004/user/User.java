@@ -17,5 +17,5 @@ public class User {
 	private MultipartFile file; //파일 첨부를 위한 file
 	
 	private int enable;
-		
+
 }

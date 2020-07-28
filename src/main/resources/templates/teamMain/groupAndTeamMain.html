@@ -64,9 +64,9 @@
        						
        						<span th:each="member : ${teamMemberList}" th:if="${team.teamNo == member.teamNo && member.teamOut == 'N'}">
 	       						<div class="user-img rounded-circle" style="float: left; background-color: white; overflow: hidden; height: 40px; width: 40px;">
-								<div style="top: 0; left: 0; right: 0; bottom: 0;">
+								<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 									<img th:src="${#strings.startsWith(member.image, 'https')} ? ${member.image} : @{assets/images/userImage/}+${member.image}" 
-	       									alt="user"  href="javascript:void(0)" style="width: auto; height: 55px; transform: translate(-20%, -16%); display:block" 
+	       									alt="user"  href="javascript:void(0)" style="width: auto; height: 40px; transform: translate(-50%, -50%); display:block;" 
 	       									data-toggle="tooltip" data-placement="top" th:title="${member.teamMemberId}">
 
 								</div>

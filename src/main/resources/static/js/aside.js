@@ -365,7 +365,7 @@ $('#sendInvitationBtn').click(function() {
 			html += '<div class="rounded-circle popover-item" style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">';
 			html += 	'<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">';
 			html += 		'<img src="assets/images/userImage/'+ resData.image +'" alt="user"';
-			html +=				'style="width: auto; height: 70px; transform: translate(-50%, -50%);"';
+			html +=				'style="width: auto; height: 50px; transform: translate(-50%, -50%);"';
 			html += 			'data-toggle="tooltip" data-placement="top" title="'+ resData.id +'">';
 			html += 		'<input type="hidden" class="hiddenMemberId" value="'+ resData.id +'">';
 			html +=		'</div>';
