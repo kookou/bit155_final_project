@@ -1,0 +1,7 @@
+DB
+1. create.sql 전체 만들기
+2. trigger.sql 전체 만들기
+3. insert.sql 필수 데이터(위에 4줄) 넣기
+4. 홈페이지에서 hrin@3004.com, cho@3004.com 아이디로 회원가입하기(security때문에..) 
+   > 인증번호는 자바 콘솔창에도 뜨니까 확인가능합니다.
+5. insert.sql 기본 데이터 삽입(필수아님)
