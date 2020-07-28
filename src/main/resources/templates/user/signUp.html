@@ -126,12 +126,21 @@
     <!-- ============================================================== -->
     <script>
         $(".preloader ").fadeOut();
+        
+        
         $(function() {
             // console.log("jquery start");
             var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             var pwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
             var nickRegExp = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/;
             
+            
+            
+            /**
+             * @함수명 : regCheck(input, regExp, name)
+             * @작성자 : 김선
+             * @설명 : input에 입력한 값이 정규표현식에 맞는지 확인하고 name값에 따라  경우에 맞는 메시지 출력 (이벤트 연동 안돼있음)
+             **/            
             function regCheck(input, regExp, name) { // 정규표현식 검증
                 
                 if(name == "비밀번호확인"){
@@ -178,17 +187,19 @@
                 }                        
             }
             
-            
+            /*
             function time(){
 				          	  asyncResult = "메일 인증 성공";
 				      	  }
+            */
             
-            
-            //이메일 중복체크 기능 들어가야함(Ajax)
-          
+            /**
+             * @함수명 : 익명함수
+             * @작성자 : 김선
+             * @설명 : email input 입력값에 따라 경우에 맞는 alert창을 띄우거나 인증 메일을 전송
+             **/ 
             $('#checkEmail').on('click', function(){
               	let inputId = $('#id').val().trim();
-              	console.log(inputId);
               	
               	if(inputId == ""){
               		Swal.fire('', '이메일을 입력하세요', 'warning');
@@ -200,17 +211,13 @@
               		return;
               	}
               	
-              	let asyncResult = "";
-              	
                   $.ajax({
               		type: "post",
               		url: "signup/duplicateCheck.ajax",
-              		//async: false,
               		data: {
               				"id" : inputId
               			},
               		success: function(data){
-              			console.log(data);
               			
                           if(data == 1) {
                               Swal.fire('', '이미 가입한 이메일 입니다!', 'warning');
@@ -240,12 +247,9 @@
   									  		},
   								  		success: function(data){
   								  			
-  								  			console.log(data);
-  								  			
   								  			Swal.fire('', '인증번호를 발송했습니다. \n메일을 확인해주세요', 'info');
   								  			
   								  			$('#authNumCheck').click(function(){
-  								  				console.log(data);
   								  				
   								  				if($('#authNum').val() != data){
   								              		Swal.fire('', '인증번호가 일치하지 않습니다', 'warning');
@@ -287,7 +291,11 @@
            
             
             
-            //input 검증 
+            /**
+             * @함수명 : inputCheck(input, regExp, name)
+             * @작성자 : 김선
+             * @설명 : input 이벤트에 따라 파라미터로 regCheck함수를 실행
+             **/ 
             function inputCheck(input, regExp, name) {
                 input.on({
                     blur : function() {
@@ -309,6 +317,7 @@
                     }
                 });
             }
+				      	  
             inputCheck($('#id'), emailRegExp, "이메일");
             inputCheck($('#nickName'), nickRegExp, "별명");
             inputCheck($('#password'), pwdRegExp, "비밀번호"); 
@@ -316,16 +325,19 @@
             
             
             
-            //submit 버튼 활성화
+            /**
+             * @함수명 : 익명함수
+             * @작성자 : 김선
+             * @설명 : input 이벤트에 따라 submit버튼을 활성화
+             **/ 
             $('input').on('change keyup', function() {
                let nickOk = $('#nickName').hasClass('is-valid');
                let idOk = $('#id').hasClass('is-valid');
                let idConfirmOk = $('#authNum').hasClass('is-valid');
                let pwdOk = $('#password').hasClass('is-valid');
                let pwdChckOk = $('#passwordCheck').hasClass('is-valid');
-               console.log(agreeOk);
+               
                if(nickOk && idOk && pwdOk && pwdChckOk && idConfirmOk){
-                   console.log("if");
                    $('#submit').removeAttr('disabled');
                }else{
                    if(!($('#submit').is(['disabled']))){
