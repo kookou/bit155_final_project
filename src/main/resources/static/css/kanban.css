@@ -110,11 +110,15 @@
     width: 20px;
 }
 .badge-text{
-    font-size: 12px;
+	
+    font-size: 14px;
     padding: 0 4px 0 2px;
-    vertical-align: top;
+    vertical-align: text-bottom;
     white-space: nowrap;
 }
+/* .ri-attachment-2{
+	vertical-align: bottom;
+} */
 .kanban-card-element{
     overflow: hidden;
     padding: 8px 8px 2px 8px;
@@ -145,7 +149,7 @@
 .kanban-card-badge{
     color: #5e6c84;
     display: inline-block;
-    margin: 0 4px 4px 0;
+    margin: 0 2px 2px 0;
     max-width: 100%;
     overflow: hidden;
     position: relative;
