@@ -247,7 +247,7 @@ function renderFullCalendar(){
 			        }).append('<p><strong>등록자 : </strong> ' + event.event.id+ '</p>')
 			        .append('<p><strong>일정 기간 : </strong> ' + getDisplayEventDate(event) + '</p>')
 			        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventTime(event) + '</p>')
-			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event.event.extendedProps.description) + '</div>'),
+			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event) + '</div>'),
 			      delay: {
 			    	  
 			     //popover 창 뜨는 시간 
@@ -264,6 +264,7 @@ function renderFullCalendar(){
 
 		//일정을 클릭하면 수정창이 나와 처리하는 메서드
 		eventClick: function(event, jsEvent, view) { 
+			console.log("오나?")
 			editEvent(event);
 //			calendar.render();
 		},
@@ -297,7 +298,7 @@ function renderFullCalendar(){
 	
 	//일정을 클릭하면 수정창이 나와 처리하는 메서드	
 	var editEvent = function(event, element, view) {
-		
+		console.log(event.event.extendedProps.description)
 		var title = event.event.title;
 		var content = event.event.extendedProps.description;
 		var no = event.event.extendedProps.no;
@@ -373,7 +374,7 @@ function renderFullCalendar(){
 			event.event.setEnd($('#edit-end').val());
 			event.event.setProp("backgroundColor", $('#edit-color').val());
 			event.event.setAllDay(isAllDay);
-			event.event.setExtendedProp("content", $('#edit-desc').val());
+			event.event.setExtendedProp("description", $('#edit-desc').val());
 			
 			$('#eventModal').modal('hide');
 
@@ -497,13 +498,17 @@ function renderFullCalendar(){
 	
 	//마우스 호버시 보여질 내용 항목 함수
 	function hoverdescription(event){
-		var displayeventde = $.trim(event)
+		console.log(event.event.extendedProps.description)
+		var displayeventde = $.trim(event.event.extendedProps.description)
+		
+		console.log(displayeventde)
 		
 		if(displayeventde == ""){
 			displayeventde = "일정 내용이 없습니다.";
-		}else{
-			displayeventde = event
 		}
+//		else{
+//			displayeventde = displayeventde
+//		}
 		return displayeventde;
 	}
 	
@@ -528,6 +533,11 @@ function renderFullCalendar(){
 
 	    var startTimeEventInfo = moment(event.event.start).format('YYYY/MM/DD');
 	    var endTimeEventInfo = moment(event.event.end).format('YYYY/MM/DD');
+	    
+	    if(event.event.allDay == true){
+	    	endTimeEventInfo = moment(event.event.end).subtract(1, 'days').format('YYYY/MM/DD')
+	    }
+	    
 	    if(startTimeEventInfo== endTimeEventInfo){
 	    	displayEventDate = startTimeEventInfo
 	    }else{
