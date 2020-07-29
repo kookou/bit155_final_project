@@ -374,7 +374,7 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -404,7 +404,7 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
@@ -435,7 +435,7 @@ BEGIN
 	DECLARE kanban_list_name varchar(50);
     DECLARE team_no1 int;
     DECLARE all_board_list_no1 varchar(50);
-	select `list_title`, `team_no`, l.`id`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
+	select `list_title`, `team_no`, l.`all_board_list_no` into kanban_list_name, team_no1, all_board_list_no1
 	  from `KANBAN_CARD` c
 	  join `KANBAN_LIST` l
 		on c.`kanban_list_no` = l.`kanban_list_no`
