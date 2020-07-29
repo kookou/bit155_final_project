@@ -247,7 +247,7 @@ function renderFullCalendar(){
 			        }).append('<p><strong>등록자 : </strong> ' + event.event.id+ '</p>')
 			        .append('<p><strong>일정 기간 : </strong> ' + getDisplayEventDate(event) + '</p>')
 			        .append('<p><strong>일정 시간 : </strong> ' + getDisplayEventTime(event) + '</p>')
-			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event.event.extendedProps.description) + '</div>'),
+			        .append('<div class="popoverDescCalendar"><strong>일정 내용 : </strong> ' + hoverdescription(event) + '</div>'),
 			      delay: {
 			    	  
 			     //popover 창 뜨는 시간 
@@ -498,13 +498,17 @@ function renderFullCalendar(){
 	
 	//마우스 호버시 보여질 내용 항목 함수
 	function hoverdescription(event){
-		var displayeventde = $.trim(event)
+		console.log(event.event.extendedProps.description)
+		var displayeventde = $.trim(event.event.extendedProps.description)
+		
+		console.log(displayeventde)
 		
 		if(displayeventde == ""){
 			displayeventde = "일정 내용이 없습니다.";
-		}else{
-			displayeventde = event
 		}
+//		else{
+//			displayeventde = displayeventde
+//		}
 		return displayeventde;
 	}
 	
@@ -529,6 +533,11 @@ function renderFullCalendar(){
 
 	    var startTimeEventInfo = moment(event.event.start).format('YYYY/MM/DD');
 	    var endTimeEventInfo = moment(event.event.end).format('YYYY/MM/DD');
+	    
+	    if(event.event.allDay == true){
+	    	endTimeEventInfo = moment(event.event.end).subtract(1, 'days').format('YYYY/MM/DD')
+	    }
+	    
 	    if(startTimeEventInfo== endTimeEventInfo){
 	    	displayEventDate = startTimeEventInfo
 	    }else{
