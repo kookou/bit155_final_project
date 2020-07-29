@@ -264,6 +264,7 @@ function renderFullCalendar(){
 
 		//일정을 클릭하면 수정창이 나와 처리하는 메서드
 		eventClick: function(event, jsEvent, view) { 
+			console.log("오나?")
 			editEvent(event);
 //			calendar.render();
 		},
@@ -297,7 +298,7 @@ function renderFullCalendar(){
 	
 	//일정을 클릭하면 수정창이 나와 처리하는 메서드	
 	var editEvent = function(event, element, view) {
-		
+		console.log(event.event.extendedProps.description)
 		var title = event.event.title;
 		var content = event.event.extendedProps.description;
 		var no = event.event.extendedProps.no;
@@ -373,7 +374,7 @@ function renderFullCalendar(){
 			event.event.setEnd($('#edit-end').val());
 			event.event.setProp("backgroundColor", $('#edit-color').val());
 			event.event.setAllDay(isAllDay);
-			event.event.setExtendedProp("content", $('#edit-desc').val());
+			event.event.setExtendedProp("description", $('#edit-desc').val());
 			
 			$('#eventModal').modal('hide');
 
