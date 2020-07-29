@@ -25,6 +25,16 @@ public class KanbanController {
 	@Autowired
 	private AsideService asideService;
 	
+	/**
+    * @Method Name : kanbanList
+    * @작성일 : 2020.07.28
+    * @작성자 : 박혜정
+    * @Method 설명 : kanban 게시판 초기 로딩시 필요한 동기 데이터
+    * @param : session
+    * @param : allBoardListNo
+    * @param : model
+    * @return : kanban/kanban
+    **/
 	@RequestMapping("/kanban.do")
 	public String kanbanList(HttpSession session, int allBoardListNo, Model model) {
 		
@@ -37,7 +47,6 @@ public class KanbanController {
 		kanbanlist = service.kanbanListFromAllBoardListNo(allBoardListNo);
 		kanbancardlist = service.kanbanCardList();
 		boardnamelist = service.boardNameSelect(allBoardListNo);
-		System.out.println("보드네임"+boardnamelist);
 		
 		model.addAttribute("kanbanlist",kanbanlist);
 		model.addAttribute("kanbancardlist",kanbancardlist);
@@ -47,8 +56,6 @@ public class KanbanController {
 		model.addAttribute("teamMember", asideService.getTeamMember(teamNo));
 		model.addAttribute("allBoardList", asideService.getAllBoardList(teamNo));
 		
-		System.out.println(kanbanlist);
-		System.out.println(kanbancardlist);
 		return "kanban/kanban";
 	}
 

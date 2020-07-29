@@ -13,6 +13,12 @@ var bufCtx;
 var commandHistory = [];
 var redoHistory = [];
 
+/**
+* @함수명 : paintMode
+* @작성일 : 2020. 7. 28.
+* @작성자 : 이서영
+* @설명 : 페인트 모드 선택
+**/
 var paintMode = [
   "point",
   "line",
@@ -53,6 +59,12 @@ var pointShape = {
 
 var shapeList = [pointShape];
 
+/**
+* @함수명 : paintMouseDownAction
+* @작성일 : 2020. 7. 28.
+* @작성자 : 이서영
+* @설명 : 마우스를 클릭했을 때, 선택되는 모양 나열
+**/
 var paintMouseDownAction = {
   point: pointMouseDown,
   line: lineMouseDown,
@@ -98,6 +110,12 @@ var paintMouseMoveAction = {
   filledellipse: ellipseMouseMove
 };
 
+/**
+* @함수명 : pos
+* @작성일 : 2020. 7. 28.
+* @작성자 : 이서영
+* @설명 : 툴을 직접적으로 선택했을 때, 속성들
+**/
 var pos = {
   isDraw: false,
   color: "black",
@@ -852,7 +870,11 @@ function clearCanvas() {
   cvs.clearRect(0, 0, canvas.width, canvas.height);
   bufCtx.clearRect(0, 0, canvas.width, canvas.height);
 }
-
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 이서영
+* @설명 : 작업내역을 저장하는 함수
+**/
 function initHistory() {
   commandHistory = [];
   redoHistory = [];

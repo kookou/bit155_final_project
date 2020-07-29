@@ -1,3 +1,10 @@
+/**
+	파일명: aside.js
+	설명: 사이드바 메뉴
+	작성일: 2020-07-28
+	작성자: 김혜린
+**/
+
 if(bgColor == '5f76e8') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-primary');
 }
@@ -20,10 +27,14 @@ if(bgColor == '1c2d41') {
 	$('#InviteBtn').attr("class", 'btn waves-effect waves-light btn-rounded btn-dark');
 }
 
-//팀이름 수정하기
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 팀이름 수정하는 함수
+**/
 var teamTitleTag = "";
 $('#editTeamName').click(function() {
-	console.log($(this).parents('#teaminfo-nav').find('.team-title').text());
+	/*console.log($(this).parents('#teaminfo-nav').find('.team-title').text());*/
 	teamTitleTag = $(this).parents('#teaminfo-nav').find('.team-title');
 	let teamTitleText = $(this).parents('#teaminfo-nav').find('.team-title').text();
 	$('#inputTeamName').val(teamTitleText);
@@ -47,7 +58,11 @@ $('#editOkBtn').click(function() {
 	});
 });
 
-// 보드이름 수정하기
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : board 이름 수정하는 함수
+**/
 var aTag = "";
 var icon = "";
 var boardTag = "";
@@ -83,8 +98,12 @@ $('#allBoardList').on('click', '.editBoardName', function() {
 	allBoardListNo = $(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val();
 });
 
-//수정완료 버튼 
-$('#allBoardList').on('click', '.editBoardNameOk', function() {allBoardList
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : Board 이름 수정하는 함수
+**/
+$('#allBoardList').on('click', '.editBoardNameOk', function() {
 	if($('.newBoardName').val() == "") {
 		Swal.fire('', '변경할 Board Name을 입력하세요', 'error');
 		return;
@@ -111,7 +130,11 @@ $('#allBoardList').on('click', '.editBoardNameOk', function() {allBoardList
 	});
 });
 
-//보드이름 바꾸기 취소
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 보드이름 바꾸기 취소
+**/
 $('#allBoardList').on('click', '.cancelEditBoardName', function() {
 	aTag.attr('class', 'sidebar-link redirectBoard');
 	icon.show();
@@ -120,7 +143,11 @@ $('#allBoardList').on('click', '.cancelEditBoardName', function() {
 	$('.newBoardName').remove();
 });
 
-//보드 삭제하기
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 보드 삭제하기
+**/
 $('#allBoardList').on('click', '.delBoard', function() {
 	var boardName = $(this).parents('.sidebar-item').find('.board-name').text();
 	allBoardListNo = $(this).parents('.sidebar-item').find('.hiddenAllBoardListNo').val();
@@ -168,7 +195,11 @@ $('#InviteBtn').click(function() {
 	$('#searchUser').focus();
 });
 
-////////////////////////////////////////////////////////////// All Board 추가하는 모달 부분 
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : Board 추가하는 함수
+**/
 $('#addBaordBtn').click(function() {
 	$('#commonBoard').prop('checked', true);
 	$('#kanbanBoard').prop('checked', false);
@@ -230,6 +261,11 @@ $('#createBoardBtn').click(function() {
 });
 
 //////////////////////////////////////////////////////////////////////////////////////// autocomplete
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : autocomplete 적용
+**/
 $("#searchUser").autocomplete({
     source : function(request, response) {
     	$.ajax({
@@ -305,6 +341,11 @@ $("body").tooltip({
     selector: '[data-toggle="tooltip"]'
 });
 
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 팀원 초대하기
+**/
 $('#sendInvitationBtn').click(function() {
 	if($("#searchUser").val() == "") {
 		Swal.fire('초대할 Email을 입력하세요.');
@@ -324,7 +365,7 @@ $('#sendInvitationBtn').click(function() {
 			html += '<div class="rounded-circle popover-item" style="float: left; background-color: white; overflow: hidden; height: 50px; width: 50px;">';
 			html += 	'<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">';
 			html += 		'<img src="assets/images/userImage/'+ resData.image +'" alt="user"';
-			html +=				'style="width: auto; height: 70px; transform: translate(-50%, -50%);"';
+			html +=				'style="width: auto; height: 50px; transform: translate(-50%, -50%);"';
 			html += 			'data-toggle="tooltip" data-placement="top" title="'+ resData.id +'">';
 			html += 		'<input type="hidden" class="hiddenMemberId" value="'+ resData.id +'">';
 			html +=		'</div>';
@@ -337,7 +378,11 @@ $('#sendInvitationBtn').click(function() {
 	});
 });
 
-//팀원이 팀 탈퇴하기
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 팀원이 팀 탈퇴하기
+**/
 $('#teamOut').click(function() {
 	Swal.fire({
 		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
@@ -374,7 +419,11 @@ $('#teamOut').click(function() {
 	});
 });
 
-//팀장이 팀 탈퇴하기
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : 팀장이 팀 탈퇴하기
+**/
 $('#passLeaderOkBtn').click(function() {
 	Swal.fire({
 		title: '"' + teamName + '" Team에서<br>정말 탈퇴하시겠습니까?',
@@ -413,8 +462,12 @@ $('#passLeaderOkBtn').click(function() {
 });
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////페이지 이동
+/**
+* @작성일 : 2020. 7. 28.
+* @작성자 : 김혜린
+* @설명 : board클릭시 그 페이지로 이동하는 함수
+**/
 $('#allBoardList').on('click', '.redirectBoard', function() {
 	//console.log($(this).find('.hiddenAllBoardListNo').val());
 	console.log($(this).find('i').attr('class'));
@@ -424,8 +477,3 @@ $('#allBoardList').on('click', '.redirectBoard', function() {
 		location.href = 'kanban.do?allBoardListNo=' + $(this).find('.hiddenAllBoardListNo').val() + '&teamNo=' + teamNo;
 	}
 });
-
-/*$('#canvas').on('click',function(){
-console.log('hi');
-location.href = 'paint.do?teamNo=' + teamNo;
-});*/

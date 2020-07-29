@@ -30,7 +30,7 @@
 		 where a.all_board_list_no = #{allBoardListNo}
 		 order by refer desc, step asc
 	</select>
-	 
+	
 	<!-- 조회수 증가 -->
 	<update id="updateReadCount" parameterType="kr.or.bit3004.board.Board">
 		update board_list 
@@ -40,7 +40,7 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoardByNo" resultType="kr.or.bit3004.board.Board">
-		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname, board_noti, b.refer
+		select b.board_no, b.title, b.content, b.views, b.write_date, b.comment_count, b.all_board_list_no, b.id, a.name, u.nickname, board_noti, b.refer, IFNULL(IMAGE, 'user.png') AS IMAGE
 		  from board_list b
 		 inner join `user` u
 			on b.id = u.id
@@ -97,8 +97,8 @@
 	
 	<!-- 답글 등록하기 -->
 	<insert id="insertReboard" parameterType="kr.or.bit3004.board.Board">
-		insert into board_list(`all_board_list_no`,`title`, `content`, `write_date`,`id`,`refer`,`depth`,`step`)
-		values(#{allBoardListNo}, #{title}, #{content}, now(), #{id}, #{refer}, #{depth}, #{step})
+		insert into board_list(`all_board_list_no`, `title`, `content`, `write_date`, `id`, `board_noti`, `refer`, `depth`, `step`)
+		values(#{allBoardListNo}, #{title}, #{content}, now(), #{id}, #{boardNoti}, #{refer}, #{depth}, #{step})
 	</insert>
 	<!-- //////////////////////////////////////////////게시판답글 END///////////////////////////////////////////////////////////// -->
 	

@@ -24,6 +24,7 @@ if(bgColor == '1c2d41') {
 }
 
 
+//카드 추가 버튼
 var addcardbtn = 
 "<div class='kanban-card-add-list' id='addcardel'>"
 + "<a class='kanban-card-add-el btn-light-my' id='addcard'>"
@@ -33,6 +34,7 @@ var addcardbtn =
 + "</div>"
 
 
+//리스트
 var addlistTag = 
   "<div class='kanban-list-wrapper'>"
     + "<div class='kanban-list-content'>"
@@ -50,6 +52,7 @@ var addlistTag =
 + "</div>";
 
 
+//파일 추가 
 var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"<p class='card-modal-list-cloud'>"
 							   +"<a class='card-modal-fileLink' download>"
@@ -60,10 +63,15 @@ var uploadFileTag =  "<div class='card-modal-list-cloudfile'>"
 						   +"</p>"
 					+"</div>";
 
+
+/**
+ * @함수명 : addUploadFileTag(parent, file)
+ * @작성자 : 김선
+ * @설명 : parent element에 file 내용을 반영해서 html append, attribute 값 변경 
+ **/  
 function addUploadFileTag(parent, file){
 	
 	let filePath = 'cloud/'+ $('#teamNo').val() + '/' + file.fileName;
-	
 	parent.append(uploadFileTag);
 	parent.find('.card-modal-filename').last().append(file.originFileName);
 	parent.find('.card-modal-file-delete').last().attr('fileNo', file.fileNo);
@@ -71,6 +79,12 @@ function addUploadFileTag(parent, file){
 	parent.find('.card-modal-fileLink').last().attr('download', file.originFileName);
 }
 
+
+/**
+ * @함수명 : addCardFileCountTag(parent, fileCount)
+ * @작성자 : 김선
+ * @설명 : parent element에 fileCount 내용을 반영해서 html append
+ **/  
 function addCardFileCountTag(parent, fileCount){
 	let cardFileCountIcon = "<div class='kanban-card-badge' title='file'>"
 								+"<span class='icon-paper-clip badge-icon'></span>"
@@ -81,19 +95,15 @@ function addCardFileCountTag(parent, fileCount){
 	parent.append(cardFileCountIcon);
 }
 
-
 var startListIDX = "";
 var endListIDX = "";
-
 var currentCardNo = "";
 var startListNo = "";
 var endListNo = "";
 var startCardIDX = "";
 var endCardIDX = "";
 
-
-
-
+//카드 드래그 앤 드롭
  $('.divForDragNDrop').sortable({
 	 connectWith: '.divForDragNDrop',
 	 start( event, ui ){
@@ -160,8 +170,11 @@ var endCardIDX = "";
 	 }
 	 
  });
+ 
+ 
+ 
 
-
+//리스트 그래그 앤 드롭 
  $('#kanban').sortable({ // 상위요소
    	 items: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
@@ -180,7 +193,6 @@ var endCardIDX = "";
 	       		 $.ajax({
 	       				url: "resortKanbanList.ajax",
 	       				data: {
-	       						"allBoardListNo": $.trim($('#allBoardListNo').val()),
 	       						"kanbanListNo": $.trim(currentListNo),
 	       						"startListIDX": $.trim(startListIDX),
 	       						"endListIDX": $.trim(endListIDX)
@@ -203,16 +215,6 @@ var endCardIDX = "";
     });
 
 
-// $( ".kanban-list-add-wrapper" ).sortable( "disable" );
-	
-
-	 
-	
-	
-
-
-
-
 	
 var boardName =""
 
@@ -231,7 +233,13 @@ function resize(obj) {
         resize(this);
 });
 
-//리스트 추가
+    
+    
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가
+ **/         
 $(document).on('click', '#addlist', function() {
 
     $(this).before(addlistTag);
@@ -244,6 +252,7 @@ $(document).on('click', '#addlist', function() {
     
     titleInputBox.focus();
 
+    //새로 생성된 리스트에 드래그앤 드롭 적용
     $('#kanban').sortable({ // 상위요소
    	 items: ".kanban-list-wrapper",
         itemOrientation: "horizontal",
@@ -287,7 +296,13 @@ $(document).on('click', '#addlist', function() {
     
 });
 
-//리스트 추가 취소
+
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가 취소
+ **/         
 $(document).on('click', '.kanban-addlistCancle', function(){
 	let listWrapper = $(this).parents('.kanban-list-wrapper');
 	
@@ -296,7 +311,12 @@ $(document).on('click', '.kanban-addlistCancle', function(){
 	
 });
 
-//리스트 추가 완료
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 추가 완료
+ **/         
 $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
     let listName = $(this).parent().find('textarea').val();
@@ -353,7 +373,12 @@ $('#kanban').on('click', '.kanban-addlistdone', function() {
 	
 });
 
-//리스트 타이틀 수정
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 제목 수정
+ **/         
 $('#kanban').on('click', '.kanban-list-title', function() {
 
     let allBoardListNo = Number($('#allBoardListNo').val());
@@ -407,7 +432,11 @@ $('#kanban').on('click', '.kanban-list-title', function() {
 
 
 
-//리스트 삭제 하기
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 칸반 리스트 삭제
+ **/         
 $('#kanban').on('click', '.kanban-list-menu', function() {
 	
     var listName = $(this).parent().children().eq(0).text()
@@ -453,13 +482,11 @@ $('#kanban').on('click', '.kanban-list-menu', function() {
 
 
 
-    //카드 추가
+//카드 추가
 $(document).on('click', "#addcard",function(){
-//	   let cardCount = $(this).parents().prev().children().prevAll('.kanban-card-list')    카드 갯수 
 
 	   let kanbanListNo = $(this).parents('.kanban-list-content').attr('data-listno');
 	   let DnDdiv = $(this).parent().siblings('.divForDragNDrop');
-//	   console.log(cardIndex)
 	   
         var addcardTag = "<div class='kanban-card-list btn-card-hover'>"
                          +"<span class='icon-pencil active-card-icon' style='position: relative;'></span>"
@@ -468,10 +495,12 @@ $(document).on('click', "#addcard",function(){
                          +"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none; '></textarea>"
                          +"</span>"
                          +"<div class='kanban-card-badges'>"
-                         +'<div  title="comments">'
-                         +'</div>'
-                         +'<div title="file">'
-                         +'</div>'
+                         +'<span title="content">'
+                         +"</span>"
+                         +'<span title="comments">'
+                         +'</span>'
+                         +'<span title="file">'
+                         +'</span>'
                          +"</div>"
                          +"</div>"
                          +"</div>"
@@ -495,7 +524,7 @@ $(document).on('click', "#addcard",function(){
         
         kanbanCardNo.attr('data-cardindex', cardIndex)
         
-        
+        //카드 추가 엔터키 이벤트
         $(input).keydown(function(key) {
         		if (key.keyCode == 13) {
         			 if(input.val().trim() == "") {
@@ -523,7 +552,7 @@ $(document).on('click', "#addcard",function(){
         		}
         });
 
-        
+        //카드 추가 이벤트
         $(input).blur(function() {
             if(input.val().trim() == "") {
             	$(this).closest('.kanban-card-list').remove()
@@ -549,7 +578,8 @@ $(document).on('click', "#addcard",function(){
     			}
     		}); 
         });  
-
+        
+        //새로 생성된 카드에 드래그 앤 드롭 적용
         $('.divForDragNDrop').sortable({
        	 connectWith: '.divForDragNDrop',
        	 start( event, ui ){
@@ -569,7 +599,6 @@ $(document).on('click', "#addcard",function(){
               		 $.ajax({
               				url: "resortKanbanCard.ajax",
               				data: {
-              						"allBoardListNo": $.trim($('#allBoardListNo').val()),
               						"kanbanCardNo": $.trim(currentCardNo),
               						"startListNo": $.trim(startListNo),
               						"endListNo": $.trim(endListNo),
@@ -585,7 +614,7 @@ $(document).on('click', "#addcard",function(){
        	 },
        	 stop( event, ui ){ // 같은 리스트 내에서 이동
             	
-            	//같은 카드 내에서 이동될 경우 recive를 사용할 수 없다
+            	//같은 카드 내에서 이동될 경우 receive를 사용할 수 없다
             	endCardIDX = ui.item.index();
             	endListNo = ui.item.parents('div.kanban-list-content').data('listno');
 
@@ -608,13 +637,10 @@ $(document).on('click', "#addcard",function(){
               				}
               		 });
               	 }
-            	
 //           	kanbanListArr = ui.item.parent().find('.kanban-list-content');
-//           	
 //           	$.each(kanbanListArr, function(index, item){
 //           		$(item).attr('data-listindex', index); // 재정렬된 요소에 index 속성 새로 부여하기
 //           	});
-       		 
        	 }
        	 
         });
@@ -625,7 +651,6 @@ $(document).on('click', "#addcard",function(){
 $('#kanban').on('mouseenter','.kanban-card-list',function(){
     var mouseeven = $(this).children().eq(0)
     $(this).children().eq(0).show()
-    
     $('#kanban').on('mouseleave','.kanban-card-list',function(){
         $(mouseeven).hide()
     })
@@ -633,9 +658,10 @@ $('#kanban').on('mouseenter','.kanban-card-list',function(){
 
 //card 수정 
 $('#kanban').on('click','.active-card-icon',function(){
+	
     $('.kanban-card-element').removeAttr('data-toggle' ,'modal')
     $('.kanban-card-element').removeAttr( 'data-target', '#card-content')
-    $(this).mouseleave()
+    $(this).mouseleave();
     let cardNo = $(this).parent().children().eq(1).children().eq(0).parent().parent().attr("data-cardno")
     var cardelement = $(this).parent().children().eq(1).children().eq(0)
     var cardtext =  $(cardelement).text()
@@ -644,11 +670,7 @@ $('#kanban').on('click','.active-card-icon',function(){
     $(cardelement).before("<span class='kanban-card-title'>"+"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none;'>"+cardtext+"</textarea>"+"</span>")
     $(cardelement).remove();
     var textarea = $(this).parent().children().eq(1).children().find('textarea')
-
     $(textarea).focus()
-
-    
-   
     
     $(textarea).blur(function() {
         if($(textarea).val() == "") {
@@ -677,11 +699,12 @@ $('#kanban').on('click','.active-card-icon',function(){
 
 var cardCommentcount="";
 var cardFilecount="";
+
+
 //모달
-
 $('#kanban').on('click', '.kanban-card-element', function() {
+	
 	 cardElements = $(this).parent();
-
      listtitle = $(this).parent().parent().parent().children().eq(0).text()
      cardtitletext = $(this).children().eq(0).text()
      cardtitle = $(this).children().eq(0)
@@ -689,10 +712,8 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 
      $('#modaltitle').text(cardtitletext)
      $('.card-in-list').text("in list "+listtitle)
-
-
      
-    //카드 내용 유무 체크 후 뿌려줌 
+    //카드 내용 유무 체크 후 뿌려주기
      $.ajax({ 
 			url: "CardContentSelect.ajax",
 			data: {
@@ -716,7 +737,7 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 			} 
 		});
 	 
-
+     //모달 리플 내용 유무 체크 후 뿌려주기 
 	 $.ajax({ 
 			url: "CardReplySelect.ajax",
 			data: {
@@ -748,17 +769,71 @@ $('#kanban').on('click', '.kanban-card-element', function() {
 				});
 			} 
 		});
-	 
-	 
-	 
-	 
 
 });
 
 
-//리플달기 
+//모달 리플 달기 엔터키 이벤트 
+var textarea = document.getElementById('modalreply');
+$(textarea).keydown(function(key) {
+if (key.keyCode == 13) {
+	$(textarea).blur();
+	  if($('#modalreply').val() == "") {
+	        alert('내용을 입력해 주세요');
+	        $('#modalreply').focus();
+	        return;
+	    }
+	  
+	    var replycontent = $('#modalreply').val()
+	    $('#modalreply').val("")
+	    
+	    $.ajax({
+			url: "CardReplyInsert.ajax",
+			data: {
+					cardNo: cardNo,
+					content :replycontent,
+					id : currUser
+					},
+	        dataType: "html",
+	        
+			success: function(resData) {
+				
+				$.ajax({ 
+					url: "CardReplySelect.ajax",
+					data: {
+							cardNo: cardNo
+							},
+			        dataType: "json",
+			        
+					success: function(resData) {
+						 $.ajax({ 
+								url: "CardContentSelect.ajax",
+								data: {
+										cardNo: cardNo
+										},
+						        dataType: "json",
+						        
+								success: function(result) {
+									
+									var cardComment = result.commentCount;
+									cardCommentcount = cardComment;
+									
+
+								} 
+							});
+						$('.reply-list').empty();
+						makereply(resData);
+					} 
+				});
+			}
+		});
+	}
+});	
+
+
+//모달 리플 달기 버튼클락 이벤트
 $('#card-content').on('click', '.reply-done', function(){
-	 
+
     if($('#modalreply').val() == "") {
         alert('내용을 입력해 주세요');
         $('#modalreply').focus();
@@ -798,8 +873,6 @@ $('#card-content').on('click', '.reply-done', function(){
 								
 								var cardComment = result.commentCount;
 								cardCommentcount = cardComment;
-								
-
 							} 
 						});
 					$('.reply-list').empty();
@@ -810,17 +883,26 @@ $('#card-content').on('click', '.reply-done', function(){
 	});
 });
 
-//리플 그리는 함수 
+
+//리플 그리는 함수 (재사용성을 위해 따로 뻄)
 function makereply(resData) {
 		var replyhtml ="";
 		$.each(resData, function(index, obj){
+			let imagesrc = ""
+			let objimage = obj.image;
+			if(objimage.startsWith('https')){
+				imagesrc = obj.image;
+			}else{
+				imagesrc = "assets/images/userImage/"+obj.image;
+			}
+			
 			if(cardNo == obj.cardNo){
 				replyhtml += "<div class='card-modal-reply'>" 
 				    + "<div class='rounded-circle card-modal-profile'"
 				    + "style='float:left; background-color: white; overflow: hidden; height:35px; width:35px;'>"
 				    + "<div style='top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);'>"
-				        + "<img src='assets/images/userImage/"+currUserImage+"' alt='user' href='javascript:void(0)'"
-				                + "style='width :auto; height: 50px; transform: translate(-50%, -50%);'>"
+				        + "<img src='"+imagesrc+"' alt='user'"
+				                + "style='width :auto; height: 35px; transform: translate(-50%, -50%);'>"
 				        + "</div>"
 				    + "</div>"		
 				    + "<div class='card-modal-reply-userinfo'>"
@@ -850,8 +932,7 @@ function makereply(resData) {
 	}
 
 
-
-//모달 카드 삭제
+//모달 창에 카드 삭제
 $('.card-modal-close').on('click',function(){
 	 var cardtitle = $(this).next().children().find('#modaltitle').text()
 	 
@@ -891,13 +972,8 @@ $('.card-modal-close').on('click',function(){
 	   });
 });
 
-
-
-//모달 타이틀 수정  
+//모달 창에서 타이틀 수정  
 $('#card-content').on('click','.card-modal-title',function() {
-	
-	console.log("타이틀 클릭 ")
-	console.log(cardCommentcount)
     
 	var newCardTitle="";
 	
@@ -916,7 +992,6 @@ $('#card-content').on('click','.card-modal-title',function() {
 		$('.card-modal-title').show();
 		
         $('.card-modal-title').text($('#modallisttitle').val());
-        console.log($('#modallisttitle').val());
         newCardTitle = $('#modallisttitle').val();
         
         newCardTitleList = newCardTitle //모달 밖 카드 타이틀 바꾸기 
@@ -933,7 +1008,6 @@ $('#card-content').on('click','.card-modal-title',function() {
 	        dataType: "html",
 	        
 			success: function(resData) {
-				console.log("card update 완료");
 
 			}
 		});
@@ -941,33 +1015,26 @@ $('#card-content').on('click','.card-modal-title',function() {
 });
 
 
-// 모달 닫힐때 화면에 뿌리는 이벤트 
-
+// 모달 닫힐때 화면에 뿌리는 이벤트 (댓글 갯수, 파일 갯수)
 $('#card-content').on('hide.bs.modal', function () {
 	
-	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file] ');
+	let fileElement = $('[data-cardno='+cardNo+']').find('[title=file]');
 	let commentElement = $('[data-cardno='+cardNo+']').find('[title=comments]');
 	
-	let fileDiv = '<span class="icon-paper-clip badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
-	let commentDiv = '<span class="icon-bubble badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
-	console.log("파일 카운트?")	
-	console.log((cardFilecount == 0));
-	console.log(cardFilecount);
-	console.log("코멘트 카운트?")	
-	console.log((cardCommentcount == 0));
-	console.log(cardCommentcount);
+	let fileDiv = '<span class="ri-attachment-2 badge-icon"></span> <span class="badge-text">'+cardFilecount+'</span>'
+	let commentDiv = '<span class="ri-chat-1-line badge-icon"></span> <span class="badge-text">'+cardCommentcount+'</span>'
 
+	//파일,리플 없을떄
 	if(cardFilecount == 0 && cardCommentcount == 0){
-		console.log("파일 0 / 코멘트 0")
 		fileElement.empty();
 		fileElement.removeClass('kanban-card-badge')
 		commentElement.empty();
 		commentElement.removeClass('kanban-card-badge')
+		
 		return;
 	}
-	
+	//파일만 있을때
 	if(cardFilecount > 0 && cardCommentcount == 0){
-		console.log("파일 n / 코멘트 0")
 		fileElement.empty();
 		fileElement.append(fileDiv);
 		fileElement.addClass('kanban-card-badge');
@@ -975,9 +1042,8 @@ $('#card-content').on('hide.bs.modal', function () {
 		commentElement.removeClass('kanban-card-badge')
 		return;
 	}
-	
+	//리플만 있을때
 	if(cardFilecount == 0 && cardCommentcount > 0){
-		console.log("파일 0 / 코멘트 n")
 		commentElement.empty();
 		commentElement.append(commentDiv);
 		commentElement.addClass('kanban-card-badge')
@@ -985,8 +1051,9 @@ $('#card-content').on('hide.bs.modal', function () {
 		fileElement.removeClass('kanban-card-badge')
 		return;
 	}
+
+	//파일, 리플 둘다 있을때
 	if(cardFilecount > 0 && cardCommentcount > 0){
-		console.log("파일 n / 코멘트 n")
 		fileElement.empty();
 		fileElement.append(fileDiv);
 		fileElement.addClass('kanban-card-badge');
@@ -995,20 +1062,16 @@ $('#card-content').on('hide.bs.modal', function () {
 		commentElement.addClass('kanban-card-badge')
 		return;
 	};
-	
 });
 
-//모달 카드 내용 인서트 
+//모달 카드 내용 인서트
 $('.modal-textarea-description-edit').on('focus',function(){
 	 
-	 console.log(cardNo);
 	 $('#modallDescrioptiontextarea').val("");
 	 $('.modal-textarea-description-edit').on('blur',function(){
 			 if($('#modallDescrioptiontextarea').val() ==""){
-				 console.log("히")
-				 return
+				 return;
 			 }else{
-				 console.log($('#modallDescrioptiontextarea').val())
 				 var cardDescription = $('#modallDescrioptiontextarea').val()
 				 $('#modallDescrioptiontextarea').hide();
 				 $('#modallDescrioption').text(cardDescription);
@@ -1020,26 +1083,30 @@ $('.modal-textarea-description-edit').on('focus',function(){
 						data: {
 								cardNo: cardNo,
 								content :cardDescription
-								
 								},
 				        dataType: "html",
 				        
 						success: function(resData) {
-							console.log("card 내용 업데이트 완료");
 							
 						}
 					});
+				 let contentval = $('#modallDescrioption').text();
+				 let contentElement = $('[data-cardno='+cardNo+']').find('[title=content]');
+				 let contentDiv = '<span class="ri-align-left badge-icon"></span>'
+			     if(contentval !=""){
+					contentElement.empty();
+					contentElement.append(contentDiv);
+					contentElement.addClass('kanban-card-badge');
+				}	
 			 }
+			
 	 })
 });
 
 
 //모달 카드 내용 수정 
 $('.card-modal-list-description').on('click',function(){
-	 console.log($('#modallDescrioption').text())
-	 console.log(cardNo)
 	 var cardDescription = $('#modallDescrioption').text()
-	 console.log(cardDescription)
 	 $('#modallDescrioptiontextarea').show();
 	 $('#modallDescrioptiontextarea').focus();
 	 $('#modallDescrioptiontextarea').val(cardDescription);
@@ -1047,15 +1114,17 @@ $('.card-modal-list-description').on('click',function(){
 	 
 })
 
-//모달 카드 파일 업로드
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 모달 카드 파일 업로드
+ **/         
 $('#kanbanFileInputBtn').on('click',function(){
-	 console.log("kanbanFileInputBtn 클릭");
 	 
 	 let allBoardListNo = $('#allBoardListNo').val();
 
 	 $('#inputAllBoardListNo').val(allBoardListNo);
 	 $('#inputCardNo').val(cardNo);
-	 console.log(cardNo);
 	 $('#inputTeamNo').val(teamNo);
 	 
 	 let formData = new FormData($('#kanbanFileInput')[0]);
@@ -1070,35 +1139,11 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 		cache: false, 
 		 		success: function(resData) { // 여기 resData 파일 객체 가져오는걸로 바꿔야함
 		 			if(resData.length > 0){
-		 				console.log(resData.length);
-		 				console.log("파일 업로드 성공");	
 		 				
 		 				$.each(resData, function(index, item){
 		 					addUploadFileTag($('#cardModalFileList'), item);
 		 				});
-		 				
 		 				cardFilecount += resData.length;
-		 				
-//		 				일단 주석처리 Sunn
-		 				///////////////// 다시 셀렉트 ////////////////////
-//
-//		 				 $.ajax({ 
-//								url: "CardContentSelect.ajax",
-//								data: {
-//										cardNo: cardNo
-//										},
-//						        dataType: "json",
-//						        
-//								success: function(result) {
-//									console.log("인서트 파일/코멘트 카운트 셀렉트");
-//									var cardComment = result.commentCount;
-//									cardCommentcount = cardComment;
-//									
-//									var cardFile = result.fileCount;
-//									cardFilecount = cardFile;
-//								} 
-//							});
-		 				 		 				 
 
 		 				 // input label 비우기
 		 				 $('#kanbanFiles').siblings('.custom-file-label').text("Choose file");
@@ -1106,7 +1151,6 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 			}else{
 		 				console.log("업로드된 파일이 없습니다");
 		 			}
-		 			
 		 		}, 
 		 		error: function (e) { 
 		 			console.log("ajax 에러발생");
@@ -1114,7 +1158,12 @@ $('#kanbanFileInputBtn').on('click',function(){
 		 	});
 });
 
-//모달 카드 파일 삭제
+
+/**
+ * @함수명 : 익명함수
+ * @작성자 : 김선
+ * @설명 : 모달 카드 파일 삭제
+ **/         
 $(document).on('click','.card-modal-file-delete',function() {
 	
 	let fileNo = $(this).attr('fileno')
@@ -1150,17 +1199,9 @@ $(document).on('click','.card-modal-file-delete',function() {
 	
 });
 
-
-
-
-
-
-
-
-//모달 리플 삭제 
+//모달창에서 리플 삭제 
 $('#card-content').on('click', '.card-modal-reply-delete',function(){
     var commentNo = $(this).parent().prev().children().attr('data-cardreplyno')
-    console.log(commentNo)
     
     Swal.fire({
 	      text: "정말로 리플을 삭제하시겠습니까?",
@@ -1178,7 +1219,6 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 	        					},
 	        	        dataType: "html",
 	        			success: function() {
-	        				console.log("reply delete 완료");
 	        				$.ajax({ 
 	        					url: "CardReplySelect.ajax",
 	        					data: {
@@ -1187,7 +1227,6 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 	        			        dataType: "json",
 	        			        
 	        					success: function(resData) {
-	        						console.log("reply select 완료2");
 	        						 $.ajax({ 
 	        								url: "CardContentSelect.ajax",
 	        								data: {
@@ -1196,7 +1235,6 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 	        						        dataType: "json",
 	        						        
 	        								success: function(result) {
-	        									console.log("딜리트 코멘트 카운트 셀렉트");
 	        									var cardComment = result.commentCount;
 	        									cardCommentcount = cardComment;
 
@@ -1213,11 +1251,6 @@ $('#card-content').on('click', '.card-modal-reply-delete',function(){
 	      }
 	   });
     
-    
-    
-    
-    
-    
 })
 
 //모달 리플 수정
@@ -1231,12 +1264,9 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
     
     $(this).parent().prev().children().children().eq(1).focus()
     replyinput.text(replycontent.text());
-	console.log(replycontent.text())
     var display= $(this).parent().prev();
 
     $(display).removeClass('display')
-
-
 
     $(replyinput).blur(function() {
     	
@@ -1245,13 +1275,10 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
         return;
     }
 
-    console.log(cardCommentcount)
     var newRelycontent = $(replyinput).val()
     
     $(replycontent).val(newRelycontent)
    
-    console.log(newRelycontent)
-    
     $(display).addClass('display');
     
     $.ajax({
@@ -1264,7 +1291,6 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
         dataType: "html",
         
 		success: function() {
-			console.log("reply Update 완료");
 			
 			$.ajax({ 
 				url: "CardReplySelect.ajax",
@@ -1275,122 +1301,16 @@ $('#card-content').on('click', '.card-modal-reply-edit',function(){
 		        
 				success: function(resData) {
 				
-					console.log("reply select 완료2");
-					console.log(resData);
 					$('.reply-list').empty();
 					makereply(resData);
 				} 
 			});
 		}
 	});
-
     })
-    
-	
 })
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////// 드래그앤 드랍 ////////////////////////////////////////////
-
-//혜정 짠것 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//$(document).ready(function() {
-//	var selectcard = "";
-//	$('.kanban-card-list').on('mousedown', function(e) {
-//		selectcard = $(this).outerHeight(true);
-//		// console.log(selectcard)
-//	});
-//
-//	const list_items = document.querySelectorAll('.kanban-card-list');
-//	const lists = document.querySelectorAll('.divForDragNDrop');
-//	let draggedItem = null;
-//
-//	for (let i = 0; i < list_items.length; i++) {
-//		const item = list_items[i];
-//
-//		item.addEventListener('dragstart', function(e) {
-//
-//			draggedItem = item;
-//
-//			setTimeout(function() {
-//				item.style.display = 'none';
-//			}, 0);
-//		});
-//		item.addEventListener('dragend', function(h) {
-//
-//			setTimeout(function() {
-//				draggedItem.style.display = 'block';
-//				draggedItem = null;
-//			}, 0);
-//		})
-//
-//		for (let j = 0; j < lists.length; j++) {
-//			const list = lists[j];
-//
-//			list.addEventListener('dragover', function(e) {
-//				e.preventDefault();
-//
-//			})
-//
-//			list.addEventListener('dragenter', function() {
-//				// e.preventDefault();
-//				console.log('dragenter');
-//				console.log(this.parentNode)
-//				var cardlistheight = this.parentNode.offsetHeight;
-//
-////				this.style.height = cardlistheight + selectcard + 'px';
-//				console.log(cardlistheight)
-//			})
-//			list.addEventListener('dragleave', function() {
-//				// this.style.backgroundColor = 'rgba(0,0,0,0.5)';
-//				var cardlistheight = this.parentNode.offsetHeight;
-//				console.log(this)
-//				this.style.height = 'auto';
-//			})
-//			list.addEventListener('drop', function() {
-//				this.append(draggedItem);
-//				this.style.height = 'auto';
-//			});
-//
-//		}
-//	}
-//});
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////

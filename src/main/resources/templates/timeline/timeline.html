@@ -162,7 +162,7 @@
 									<span>
 										<img th:src="${#strings.startsWith(timeline.image, 'https')} 
                                				? ${timeline.image} : @{assets/images/userImage/}+${timeline.image} " 
-                               			  alt="user" style="width: auto; height: 55px; transform: translate(-50%, -60%); display:block">
+                               			  alt="user" style="width: auto; height: 42px; transform: translate(-50%, -50%); display:block">
 									</span>
 										</div>
 									</div>
@@ -201,7 +201,8 @@
 			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'TODO_LIST' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'TODO_CONTENT' " th:href="@{todoList.do(teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
-			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history.length() > 50 ? #strings.substring(timeline.history, 1, 50) : timeline.history}" 
+			                                			 style="text-decoration:underline;"></a>
 			                                	</b>을(를) 추가했습니다.
 			                                </p>
 		                                </div>
@@ -223,12 +224,13 @@
 			                                			<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
 			                                		</span>
 			                                	</b>
-			                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory}"></b><span th:if="${timeline.oldHistory}">을(를)</span>
+			                                	<b style="text-decoration:underline;" th:text="${timeline.oldHistory.length() > 50 ? #strings.substring(timeline.oldHistory, 1, 50) : timeline.oldHistory}" ></b><span th:if="${timeline.oldHistory}">을(를)</span>
 			                                	<b th:switch="${timeline.tableName}">
 			                                		<a th:case=" 'BOARD_LIST' " th:href="@{selectBoard.do(boardNo=${timeline.columnNo},allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'KANBAN_LIST' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
 			                                		<a th:case=" 'KANBAN_CARD' " th:href="@{kanban.do(allBoardListNo=${timeline.allBoardNo},teamNo=${timeline.teamNo})}" th:text="${timeline.history}" style="text-decoration:underline;"></a>
-			                                		<a th:case="*" href="javascript:void(0);" th:text="${timeline.history}" style="text-decoration:underline;"></a>
+			                                		<a th:case="*" href="javascript:void(0);" style="text-decoration:underline;"
+			                                			th:text="${timeline.history.length() > 50 ? #strings.substring(timeline.history, 1, 50) : timeline.history}" ></a>
 			                                	</b>(으)로 수정했습니다.
 			                                </p>
 		                                </div>
@@ -256,7 +258,7 @@
 				                                		<a href="javascript:void(0);" th:text="${timeline.columnName}" style="text-decoration:underline;"></a>의
 			                                		</span>
 			                                	</b>
-			                                	<b style="text-decoration:underline;" th:text="${timeline.history}"></b>을(를) 삭제했습니다.
+			                                	<b style="text-decoration:underline;" th:text="${timeline.history.length() > 50 ? #strings.substring(timeline.history, 1, 50) : timeline.history}" ></b>을(를) 삭제했습니다.
 			                                </p>
 		                                </div>
 		                                <div th:case=" 'join team' ">
@@ -388,12 +390,10 @@
         	var todaysNewJson = JSON.parse(todaysNewData);
         	var activeRateJson = JSON.parse(activeRate);
 
-            // knob
+            // knob chart
             $('[data-plugin="knob"]').knob();
             
-            // Morris donut chart 
-
-            console.log(activeRateJson.length == 0);
+            // Morris donut chart
          	if(!(activeRateJson.length == 0)){
             
 	            //회원별 활동 비율
@@ -427,7 +427,6 @@
         					   + "</div>";
         		$('#morris-donut-chart2').append(noNewPosts);
         	}
-
         });
 		
 	</script>

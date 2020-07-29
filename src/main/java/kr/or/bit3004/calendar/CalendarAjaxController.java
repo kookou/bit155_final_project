@@ -19,33 +19,41 @@ public class CalendarAjaxController {
 	@Autowired
 	private CalendarService service;
 
-
+	/**
+	 * @Method Name : addPlan
+	 * @작성일 : 2020.07.28
+	 * @작성자 : 박혜정
+	 * @Method 설명 : calendar 일정 인서트 인서트. 비동기 처리를 위해 시퀀스로 부여된 일정 번호를 다시 리턴 해줌
+	 * @param : calendar 객체
+	 * @return : 일정 번호
+	 **/
 	@RequestMapping("addPlan.ajax")
 	public int addPlan(Calendar calendar){
-		System.out.println("인서트 완료");
 		service.addPlan(calendar);
 		return service.getLastNo();
-		
 	}
+	
+	//화면에 뿌릴 캘린더 일정 내용
 	@RequestMapping("showCalendar.ajax")
 	 public List<Calendar> schedule(Model model, int teamNo){
-		System.out.println("캘린더 리스트");
-		System.out.println(service.showCalendar(teamNo));
 		return service.showCalendar(teamNo);
-  }
+	}
+	
+	//드래그앤 드롭,리사이즈시 일정 업데이트
 	@RequestMapping("updatePlanDrag.ajax")
 	public void updatePlanDrag(Calendar calendar) {
-		System.out.println("드래그 업데이트 완료");
 		service.updatePlanDrag(calendar);
 	}
+	
+	//모달창으로 일정 업데이트
 	@RequestMapping("updatePlan.ajax")
 	public void updatePlan(Calendar calendar) {
-		System.out.println("업데이트 완료");
 		service.updatePlan(calendar);
 	}
+	
+	//모달 창으로 일정 삭제
 	 @RequestMapping("deletePlan.ajax")
 	 public void deletePlan(Calendar calendar) {
-		 System.out.println("삭제완료");
 		 service.deletePlan(calendar);
 	 }
 

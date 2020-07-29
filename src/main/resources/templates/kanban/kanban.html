@@ -16,8 +16,7 @@
 <link href="css/style.min.css" rel="stylesheet">
 <link href="css/kanban.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,7 +24,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif] -->
-
 </head>
 <body>
 <div th:replace="common/scriptA :: scriptA"></div> 
@@ -127,9 +125,10 @@
 									style="float: left; background-color: white; overflow: hidden; height: 35px; width: 35px;">
 									<div
 										style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-										<img th:src="@{assets/images/userImage/}+${session.currentUser.image}" alt="user"
-											href="javascript:void(0)"
-											style="width: auto; height: 50px; transform: translate(-50%, -50%);">
+										<img th:src="${#strings.startsWith(session.currentUser.image, 'https')} 
+                               				? ${session.currentUser.image} : @{assets/images/userImage/}+${session.currentUser.image}"
+                               				alt="user"
+											style="width: auto; height: 35px; transform: translate(-50%, -50%);">
 									</div>
 								</div>
 
@@ -208,14 +207,17 @@
 												data-target="#card-content" >
 												<span class="kanban-card-title" th:text="${card.title}"></span>
 												<div class="kanban-card-badges">
-													<div th:classappend = "${card.commentCount > 0} ? 'kanban-card-badge' : ''" title="comments">
-														<span th:if="${card.commentCount > 0}" class="icon-bubble badge-icon"></span> <span
+													<span th:classappend = "${card.content != null} ? 'kanban-card-badge' : ''" title="content">
+														<span th:classappend ="${card.content != null} ? 'ri-align-left badge-icon' : ''"></span>
+													</span>
+													<span th:classappend = "${card.commentCount > 0} ? 'kanban-card-badge' : ''" title="comments">
+														<span th:classappend="${card.commentCount > 0} ? 'ri-chat-1-line ' : 'badge-icon'"></span> <span
 															 th:if="${card.commentCount > 0}" class="badge-text" th:text="${card.commentCount}"></span>
-													</div>
-													<div th:classappend = "${card.fileCount > 0} ? 'kanban-card-badge' : ''" title="file">
-														<span th:if="${card.fileCount > 0}" class="icon-paper-clip badge-icon"></span> <span
+													</span>
+													<span th:classappend = "${card.fileCount > 0} ? 'kanban-card-badge' : ''" title="file">
+														<span th:if="${card.fileCount > 0}" class="ri-attachment-2 badge-icon"></span> <span
 															th:if="${card.fileCount > 0}" class="badge-text" th:text="${card.fileCount}"></span>
-													</div>
+													</span>
 												</div>
 											</div>
 										</div>

@@ -3,9 +3,8 @@ CREATE TABLE `USER` (
 	`ID`       VARCHAR(50)   NOT NULL, -- 아이디
 	`PWD`      VARCHAR(1000) NOT NULL, -- 비밀번호
 	`NICKNAME` VARCHAR(50)   NOT NULL, -- 닉네임
-    `IMAGE`    VARCHAR(200)  default 'user.png', -- 이미지
-	`ENABLE`   INT           NOT NULL default 1, -- 사용여부
-	`QUIT`     VARCHAR(2)    NOT NULL default 0  -- 탈퇴여부
+    `IMAGE`    VARCHAR(200)  NULL, -- 이미지
+	`ENABLE`   INT           NOT NULL default 1 -- 사용여부
 );
 
 -- 사용자
@@ -318,8 +317,8 @@ CREATE TABLE `TIMELINE` (
 	`COLUMN_NAME`  VARCHAR(100) NOT NULL, -- 해당테이블의 기본키 컬럼명
 	`COLUMN_NO`    INT          NOT NULL, -- 해당테이블의 식별번호
     `ALL_BOARD_NO` INT          NULL,     -- 보드일경우 all_board_list_no
-    `OLD_HISTORY`  VARCHAR(100) NULL,     -- 원래 내용
-    `HISTORY`      VARCHAR(100) NOT NULL, -- 작업내용
+    `OLD_HISTORY`  text         NULL,     -- 원래 내용
+    `HISTORY`      text         NOT NULL, -- 작업내용
     `DML_KIND`     varchar(20)  NOT NULL, -- 작업구분
     `HISTORY_TIME` DATETIME NOT NULL,     -- 작업시간
 	`TEAM_NO`      INT          NOT NULL, -- 팀식별번호

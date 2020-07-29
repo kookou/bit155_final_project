@@ -40,6 +40,17 @@ public class BoardController {
 	@Autowired
 	private KanbanService kanbanService;
 	
+	/*
+	* @Method Name : selectBoardListService
+	* @작성일 : 2020.07.28
+	* @작성자 : 조진원
+	* @Method 설명 : 일반 Board List 가져오기
+	* @param model
+	* @param allBoardListNo
+	* @param teamNo
+	* @param session
+	* @return Board List
+	**/
 	//게시판 목록보기
 	@RequestMapping("boardList.do")
 	public String selectBoardListService(Model model, int allBoardListNo, int teamNo, HttpSession session) {
