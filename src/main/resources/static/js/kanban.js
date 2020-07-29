@@ -495,12 +495,12 @@ $(document).on('click', "#addcard",function(){
                          +"<textarea rows='1' class='autosize list-card-composer-textarea' placeholder='Enter a title for this card' style='overflow: hidden; overflow-wrap: break-word; resize: none; '></textarea>"
                          +"</span>"
                          +"<div class='kanban-card-badges'>"
-                         +'<div title="content">'
-                         +"</div>"
-                         +'<div  title="comments">'
-                         +'</div>'
-                         +'<div title="file">'
-                         +'</div>'
+                         +'<span title="content">'
+                         +"</span>"
+                         +'<span title="comments">'
+                         +'</span>'
+                         +'<span title="file">'
+                         +'</span>'
                          +"</div>"
                          +"</div>"
                          +"</div>"
