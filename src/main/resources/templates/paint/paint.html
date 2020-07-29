@@ -319,7 +319,7 @@ width:150px;
 	 var isPress = false;
 	 
 	 $(document).ready(function(){
-	 paintWs  = new WebSocket("ws://localhost:8090/paint"); 
+	 paintWs  = new WebSocket("ws://192.168.0.56:8090/paint"); 
  	/*  paintWs  = new WebSocket("ws://192.168.0.35:8090/paint.do?teamNo="+${team.teamNo}); */
 		paintWs.onopen=function(){
 			/* console.log("웹소켓 접속 성공-paint"); */
